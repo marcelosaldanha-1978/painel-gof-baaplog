@@ -190,7 +190,18 @@ def coletar_atas(processos, buscar=None):
 
 
 # ------------------------------------------------------------------ B4 acao imediata
-def bloco_b4(atas, processos, vinculos, pendencias, hoje):
+def resumo_conferencia(obj):
+    """D19 parte 1: ultimo.json do confronto semanal (runner, so leitura) -> bloco enxuto para o B4. None se nao houver."""
+    if not obj:
+        return None
+    itens = [{k: str(i.get(k, "")) for k in ("linha", "celula", "pregao", "tipo", "detalhe")} for i in obj.get("itens", [])][:25]
+    return {"data": obj.get("data"), "divergencias": obj.get("divergencias", 0), "eventos": obj.get("eventos", 0),
+            "gravaveis": obj.get("gravaveis", 0), "atas_diferentes": obj.get("atas_diferentes", 0), "pendencia": bool(obj.get("pendencia")),
+            "linhas_lidas_pncp": obj.get("linhas_lidas_pncp"), "publicados": obj.get("publicados"), "itens": itens,
+            "fonte": "confronto semanal planilha x PNCP/Compras.gov no runner (D19 parte 1); a gravacao do provado e sessao do Claude"}
+
+
+def bloco_b4(atas, processos, vinculos, pendencias, hoje, conferencia=None):
     vig = [a for a in atas if not a["cancelada"] and a["vigencia_fim"]]
     for a in vig:
         a["dias"] = (dt.date.fromisoformat(a["vigencia_fim"]) - hoje).days
@@ -213,7 +224,7 @@ def bloco_b4(atas, processos, vinculos, pendencias, hoje):
                                         "data": v["data"], "nivel": v["nivel"],
                                         "pregoes": v.get("candidatos") or ([v["pregao"]] if v["pregao"] else [])}
                                        for v in lista]},
-            "pendencias": pendencias}
+            "pendencias": pendencias, "conferencia": resumo_conferencia(conferencia)}
 
 
 # ------------------------------------------------------------------ extrato sem pessoa (ponte para a nuvem)
@@ -252,7 +263,7 @@ def ler_extrato(extrato):
 
 
 # ------------------------------------------------------------------ montagem e HTML
-def montar(regs, data_execucao, processos, kpis, atas, fichas, pendencias, hoje, fontes, vinculos=None):
+def montar(regs, data_execucao, processos, kpis, atas, fichas, pendencias, hoje, fontes, vinculos=None, conferencia=None):
     if vinculos is None:
         vinculos = tr.vincular(regs, fichas)
     pend = ler_pendencias(pendencias)
@@ -264,7 +275,7 @@ def montar(regs, data_execucao, processos, kpis, atas, fichas, pendencias, hoje,
                       "b1_fresco": idade_b1 <= DIAS_UTEIS_FRESCO, "dias_uteis_fresco": DIAS_UTEIS_FRESCO,
                       "dias_pendencias_amarelo": DIAS_PENDENCIAS_AMARELO},
              "b1": bloco_b1(regs, data_execucao), "b3": bloco_b3(processos, kpis),
-             "b4": bloco_b4(atas, processos, vinculos, pend, hoje)}
+             "b4": bloco_b4(atas, processos, vinculos, pend, hoje, conferencia)}
     dados["b4"]["data_dado_atas"] = next((f["data_dado"] for f in fontes if f["nome"] == "atas"), None)
     return dados
 
@@ -305,6 +316,7 @@ def main(argv=None):
     ap.add_argument("--kpis")
     ap.add_argument("--atas", help="JSON de atas; se nao existir, coleta do PNCP e grava")
     ap.add_argument("--pendencias")
+    ap.add_argument("--conferencia", default=None, help="dados/conferencia/ultimo.json do confronto semanal (D19 parte 1)")
     ap.add_argument("--extrato-portal", default=None, help="extrato SEM PESSOA do Portal (gof_portal.py); reserva do B1 pela D17")
     ap.add_argument("--saida")
     ap.add_argument("--hoje", default=dt.date.today().isoformat())
@@ -365,7 +377,8 @@ def main(argv=None):
                  {"nome": "kpis_painel", "arquivo": Path(o.kpis).name, "sha256": sha256(o.kpis), "data_dado": kpis.get("lido_em")},
                  {"nome": "atas", "arquivo": pa.name, "sha256": sha256(pa), "data_dado": atas_j.get("coletado_em")},
                  {"nome": "fichas_pncp", "arquivo": Path(o.fichas).name, "sha256": sha256(o.fichas), "data_dado": data_fichas}])
-    dados = montar(regs, data_exec, processos, kpis, atas_j["atas"], fichas, pend, hoje, fontes, vinculos=vinculos)
+    conf = json.load(open(o.conferencia, encoding="utf-8")) if o.conferencia and Path(o.conferencia).exists() else None
+    dados = montar(regs, data_exec, processos, kpis, atas_j["atas"], fichas, pend, hoje, fontes, vinculos=vinculos, conferencia=conf)
     dados["meta"].update({"fonte_b1": fonte_b1, "fonte_b1_motivo": motivo_b1, "data_portal": data_portal,
                           "data_tg": data_exec if (o.execucao or fonte_b1 == "tg") else ext["data_execucao"]})
     s = Path(o.saida)

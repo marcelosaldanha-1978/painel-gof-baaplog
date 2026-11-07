@@ -1,0 +1,59 @@
+# painel-gof-baaplog — CONFRONTO SEMANAL (D19 parte 1, PLANO v2.4): le a planilha GCALC pela conta de servico SO DE LEITURA,
+# confronta com PNCP e Compras.gov e grava relatorio e JSON em dados/conferencia/<data>/ e dados/conferencia/ultimo.json
+# (o B4 do painel le o ultimo.json). Nunca escreve na planilha: a gravacao do que o portal prova e sessao do Claude (D19 parte 2).
+name: Confronto semanal (planilha x portais)
+
+on:
+  schedule:
+    - cron: '3 11 * * 1'  # segunda 08:03 BRT, antes da gravacao semanal pelo Claude
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: montagem
+  cancel-in-progress: false
+
+jobs:
+  confrontar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: write  # grava dados/conferencia no main (historico dos confrontos)
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          ref: main
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.14'
+      - run: pip install requests google-auth
+      - name: Confronto (so leitura)
+        env:
+          GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
+        run: |
+          set +e
+          dia="$(TZ=America/Sao_Paulo date +%Y-%m-%d)"
+          mkdir -p "dados/conferencia/$dia"
+          cp dados/conferencia/estado_conferencia.json "dados/conferencia/$dia/" 2>/dev/null || true
+          (cd motor && python gof_conferencia.py --saida "../dados/conferencia/$dia")
+          rc=$?
+          echo "rc=$rc"
+          # 0 = sem pendencia; 2 = ha divergencia (normal); 1 = abortado (nao grava)
+          if [ "$rc" = "1" ]; then exit 1; fi
+          cp "dados/conferencia/$dia/ultimo.json" dados/conferencia/ultimo.json
+          cp "dados/conferencia/$dia/estado_conferencia.json" dados/conferencia/estado_conferencia.json
+      - name: Gravar em dados/conferencia
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          dia="$(TZ=America/Sao_Paulo date +%Y-%m-%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dados/conferencia
+          if git diff --cached --quiet; then echo "sem mudanca"; exit 0; fi
+          git commit --quiet -m "confronto: $dia (run ${GITHUB_RUN_ID})"
+          git push --quiet "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main

@@ -16,6 +16,7 @@ fi
 DATA_CARTEIRA="$(python -c "import json;print(json.load(open('dados/carteira_processos.json'))['lido_em'])")"
 PORTAL=()
 if [ -f dados/portal/extrato_portal.json ]; then PORTAL=(--extrato-portal dados/portal/extrato_portal.json); fi
+if [ -f dados/conferencia/ultimo.json ]; then PORTAL+=(--conferencia dados/conferencia/ultimo.json); fi
 python motor/gof_painel.py \
   --extrato dados/execucao/ultimo.json --fichas dados/pncp/ultimo.json \
   --carteira dados/carteira_processos.json --data-carteira "$DATA_CARTEIRA" \
