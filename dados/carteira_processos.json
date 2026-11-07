@@ -1,8 +1,8 @@
 {
- "versao": "2026-11-07",
+ "versao": 2,
  "lido_em": "2026-11-07",
- "fonte": "Planilha GCALC_BAAPLOG_-_VF, aba Controle Processos, lida em 07/11/2026 pelo conector do Google Drive. Só colunas públicas (sem contatos nem observações).",
- "atualizar_quando": "um processo muda de fase, prazo, situação ou número; até a leitura automática da planilha na nuvem (segredo da conta de serviço)",
+ "fonte": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-07 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Controle Processos, só colunas públicas (sem contatos nem observações)",
+ "atualizar_quando": "todo dia, na montagem (passo 5 do PLANO v2.4)",
  "processos": [
   {
    "ordem": "1",

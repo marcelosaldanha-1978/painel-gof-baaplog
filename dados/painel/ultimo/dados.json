@@ -15,13 +15,13 @@
    {
     "nome": "carteira",
     "arquivo": "carteira_processos.json",
-    "sha256": "18ce39fd5a8e8948e3ed6cdcc2766930f8c67f5614c40fb63f64ef0bffad338d",
+    "sha256": "72952c2d06f1c3173d3ef8fa464149f62642ecd289407e9cc6768486ce134a31",
     "data_dado": "2026-11-07"
    },
    {
     "nome": "kpis_painel",
     "arquivo": "kpis_painel.json",
-    "sha256": "6d08816e4da7579ae0999dca366c8c85107fd7aa3753d7d7551998e4ce875da4",
+    "sha256": "2a26da3706ffc0f146f3af86225a39615a31b0db6b1f107b58fd81943b77763f",
     "data_dado": "2026-11-07"
    },
    {
@@ -41,7 +41,10 @@
   "idade_b1_dias_uteis": 0,
   "b1_fresco": true,
   "dias_uteis_fresco": 2,
-  "dias_pendencias_amarelo": 14
+  "dias_pendencias_amarelo": 14,
+  "fonte_b1_motivo": "TG fresco (0 dias uteis)",
+  "data_portal": "2026-11-04",
+  "data_tg": "2026-11-06"
  },
  "b1": {
   "fonte": "Tesouro Gerencial, conta 522920101 (Movim. Líquido > 0), NE emitidas em 2026, UG 160xxx e 167xxx",
@@ -429,8 +432,8 @@
   },
   "kpis_painel": {
    "lido_em": "2026-11-07",
-   "origem": "Planilha GCALC_BAAPLOG_-_VF, aba Painel, linha 5 (A5:E5), lida pelo conector do Google Drive em 07/11/2026",
-   "processos": 12,
+   "origem": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-07 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Painel, linha 5 (A5:E5)",
+   "processos": "12",
    "valor_estimado": "R$ 75.312.730,52",
    "score_bsc": "66,9%",
    "pct_no_prazo": "33,3%",
@@ -1792,6 +1795,26 @@
     }
    ],
    "dias": 0
+  },
+  "conferencia": {
+   "data": "2026-11-07",
+   "divergencias": 1,
+   "eventos": 0,
+   "gravaveis": 0,
+   "atas_diferentes": 0,
+   "pendencia": true,
+   "linhas_lidas_pncp": 10,
+   "publicados": 10,
+   "itens": [
+    {
+     "linha": "14",
+     "celula": "",
+     "pregao": "PE 108/2026",
+     "tipo": "RELANCAMENTO?",
+     "detalhe": "mesmo processo na UASG 160307: PE 114/2026 (seq. 23583), situacao Divulgada no PNCP. Nao consta nas observacoes da linha"
+    }
+   ],
+   "fonte": "confronto semanal planilha x PNCP/Compras.gov no runner (D19 parte 1); a gravacao do provado e sessao do Claude"
   },
   "data_dado_atas": "2026-11-07"
  }
