@@ -48,9 +48,14 @@ def test_extrato_publico_reproduz_o_log_131(extrato):
     assert (n["CONFIRMADO"], n["ALERTA"], n["CITADO_SEM_ATA"], n["AMBIGUO"], n["PROVAVEL"]) == (85, 1, 83, 34, 196)
 
 
-def test_carteira_json_reproduz_o_painel():
+def test_carteira_json_coerente_com_o_kpi_da_planilha():
+    # a carteira muda com o tempo (lida todo dia pela conta de servico): o teste confere a coerencia com o KPI do Painel,
+    # lido da mesma planilha no mesmo dia, e nao um valor congelado
     r = gp.bloco_b3(gp.ler_carteira_json(DADOS / "carteira_processos.json"), {})["resumo"]
-    assert (r["processos"], r["estimado"], r["homologado"]) == (12, 75312730.52, 19117236.67)
+    k = json.load(open(DADOS / "kpis_painel.json", encoding="utf-8"))
+    assert r["processos"] == 12 == int(k["processos"])
+    assert abs(r["estimado"] - gp._num_br(k["valor_estimado"])) <= 0.01
+    assert abs(r["homologado"] - gp._num_br(k["capacidade_instalada"])) <= 0.01
 
 
 # ----------------------------------------------------------------- D17 revista: dias uteis
@@ -129,3 +134,32 @@ def test_vigia_em_dias_uteis(saida):
     assert vg.avaliar(d, dt.date(2026, 11, 9), 2)["ok"]  # segunda: montagem de sabado (1 util), B1 de sexta (1 util)
     r = vg.avaliar(d, dt.date(2026, 11, 12), 2)  # quinta: 4 e 4 dias uteis
     assert not r["ok"] and not r["b1_ok"] and not r["montagem_ok"]
+
+
+# ----------------------------------------------------------------- D17 revista: Portal como reserva (so quando parado E mais atual)
+def _montar(tmp_path, extrato, hoje, portal=None):
+    s = tmp_path / ("saida_" + hoje)
+    atas = DADOS / "painel" / "2026-11-07" / "atas_pncp_2026-11-07.json"
+    args = ["--extrato", str(extrato), "--fichas", str(FICHAS), "--carteira", str(DADOS / "carteira_processos.json"),
+            "--data-carteira", "2026-11-07", "--kpis", str(DADOS / "kpis_painel.json"), "--atas", str(atas),
+            "--pendencias", str(DADOS / "pendencias_coordenador.json"), "--saida", str(s), "--hoje", hoje]
+    if portal:
+        args += ["--extrato-portal", str(portal)]
+    assert gp.main(args) == 0
+    return json.load(open(s / "dados.json", encoding="utf-8"))
+
+
+def test_d17_portal_so_substitui_tg_parado_e_mais_atual(tmp_path, extrato):
+    # "portal" sintetico: o mesmo extrato publico com data de emissao mais recente e metade das NE
+    portal = dict(extrato, data_execucao="2026-11-10", ne=extrato["ne"][: len(extrato["ne"]) // 2])
+    pp = tmp_path / "portal.json"
+    pp.write_text(json.dumps(portal), encoding="utf-8")
+    fresco = _montar(tmp_path, EXTRATO, "2026-11-09", pp)  # segunda: TG de sexta tem 1 dia util -> TG
+    assert fresco["meta"]["fonte_b1"] == "tg" and fresco["b1"]["ne"] == 3032
+    parado = _montar(tmp_path, EXTRATO, "2026-11-12", pp)  # quinta: 4 dias uteis e Portal mais atual -> Portal
+    assert parado["meta"]["fonte_b1"] == "portal" and parado["b1"]["data_dado"] == "2026-11-10" and parado["b1"]["ne"] == 1516
+    velho = dict(portal, data_execucao="2026-11-05")
+    pv = tmp_path / "portal_velho.json"
+    pv.write_text(json.dumps(velho), encoding="utf-8")
+    fica = _montar(tmp_path, EXTRATO, "2026-11-12", pv)  # Portal mais velho que o TG parado -> fica o TG
+    assert fica["meta"]["fonte_b1"] == "tg" and "nao e mais atual" in fica["meta"]["fonte_b1_motivo"]

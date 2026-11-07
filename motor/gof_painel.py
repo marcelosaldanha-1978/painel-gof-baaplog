@@ -305,6 +305,7 @@ def main(argv=None):
     ap.add_argument("--kpis")
     ap.add_argument("--atas", help="JSON de atas; se nao existir, coleta do PNCP e grava")
     ap.add_argument("--pendencias")
+    ap.add_argument("--extrato-portal", default=None, help="extrato SEM PESSOA do Portal (gof_portal.py); reserva do B1 pela D17")
     ap.add_argument("--saida")
     ap.add_argument("--hoje", default=dt.date.today().isoformat())
     o = ap.parse_args(argv)
@@ -312,6 +313,7 @@ def main(argv=None):
     conj = json.load(open(o.fichas, encoding="utf-8"))
     fichas = tr.ficha_de_pncp(conj)
     data_fichas = str(conj.get("coletado_em") or "2026-11-03")[:10]
+    fonte_b1, motivo_b1, data_portal = "tg", None, None
     if o.execucao:
         if not o.data_execucao:
             raise SystemExit("--data-execucao e obrigatoria com --execucao")
@@ -333,6 +335,19 @@ def main(argv=None):
         data_exec = ext["data_execucao"]
         f_exec = [{"nome": "execucao_tg", "arquivo": Path(o.extrato).name, "sha256": sha256(o.extrato), "data_dado": data_exec,
                    "nota": "extrato sem pessoa; vínculo v%s" % ext.get("regra_vinculo")}]
+    # D17 revista: o Portal so substitui o TG parado ha mais de DIAS_UTEIS_FRESCO dias uteis E mais atual que ele
+    if o.extrato_portal and Path(o.extrato_portal).exists():
+        ext_p = json.load(open(o.extrato_portal, encoding="utf-8"))
+        data_portal = ext_p.get("data_execucao")
+        idade_tg = dias_uteis(dt.date.fromisoformat(data_exec), hoje)
+        if idade_tg > DIAS_UTEIS_FRESCO and data_portal and data_portal > data_exec:
+            regs, vinculos = ler_extrato(ext_p)
+            fonte_b1, data_exec = "portal", data_portal
+            motivo_b1 = "TG parado ha %d dias uteis e Portal mais atual (%s > %s)" % (idade_tg, data_portal, ext["data_execucao"])
+            f_exec = [{"nome": "execucao_portal", "arquivo": Path(o.extrato_portal).name, "sha256": sha256(o.extrato_portal),
+                       "data_dado": data_exec, "nota": "RESERVA (D17): Portal da Transparencia, lacunas e atraso de ~7 dias; extrato sem pessoa"}]
+        else:
+            motivo_b1 = "TG fresco (%d dias uteis)" % idade_tg if idade_tg <= DIAS_UTEIS_FRESCO else "TG parado, mas Portal nao e mais atual (%s <= %s)" % (data_portal, data_exec)
     for k in ("carteira", "kpis", "atas", "pendencias", "saida"):
         if not getattr(o, k):
             raise SystemExit("--%s e obrigatorio para montar o painel" % k)
@@ -351,6 +366,8 @@ def main(argv=None):
                  {"nome": "atas", "arquivo": pa.name, "sha256": sha256(pa), "data_dado": atas_j.get("coletado_em")},
                  {"nome": "fichas_pncp", "arquivo": Path(o.fichas).name, "sha256": sha256(o.fichas), "data_dado": data_fichas}])
     dados = montar(regs, data_exec, processos, kpis, atas_j["atas"], fichas, pend, hoje, fontes, vinculos=vinculos)
+    dados["meta"].update({"fonte_b1": fonte_b1, "fonte_b1_motivo": motivo_b1, "data_portal": data_portal,
+                          "data_tg": data_exec if (o.execucao or fonte_b1 == "tg") else ext["data_execucao"]})
     s = Path(o.saida)
     s.mkdir(parents=True, exist_ok=True)
     (s / "dados.json").write_text(json.dumps(dados, ensure_ascii=False, indent=1), encoding="utf-8")

@@ -10,6 +10,11 @@ on:
     - cron: '33 10 * * *'  # 07:33 BRT
     - cron: '33 15 * * *'  # 12:33 BRT
   workflow_dispatch:
+    inputs:
+      portal_desde:
+        description: 'Carga inicial do Portal desde esta data (AAAA-MM-DD); vazio = janela de 10 dias uteis'
+        required: false
+        default: ''
   repository_dispatch:
     types: [csv-chegou]
 
@@ -23,7 +28,7 @@ concurrency:
 jobs:
   montar:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 120
     permissions:
       contents: write  # grava dados/painel no main (historico das montagens)
     outputs:
@@ -45,6 +50,19 @@ jobs:
           zizmor --min-severity low --min-confidence low .github/workflows
           ruff check motor tests
           python -m pytest tests -q
+      - name: Ler a planilha GCALC (conta de servico so de leitura, D14); falha mantem o JSON versionado
+        env:
+          GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
+        run: cd motor && python gof_planilha.py --saida ../dados || echo "::warning::planilha nao lida; segue com o JSON versionado"
+      - name: Portal da Transparencia como reserva do B1 (D17); falha mantem o extrato anterior
+        env:
+          PORTAL_TRANSPARENCIA_API_KEY: ${{ secrets.PORTAL_TRANSPARENCIA_API_KEY }}
+          PORTAL_DESDE: ${{ inputs.portal_desde }}
+        run: |
+          cd motor
+          extra=""
+          if [ -n "${PORTAL_DESDE:-}" ]; then extra="--desde ${PORTAL_DESDE}"; fi
+          python gof_portal.py --fichas ../dados/pncp/ultimo.json --saida ../dados/portal $extra || echo "::warning::Portal nao coletado; segue com o extrato anterior"
       - name: Portoes 3, 4 e 5 (montagem com atas do PNCP, recalculo independente, verificador)
         id: portao
         run: |
@@ -67,7 +85,7 @@ jobs:
           cp saida/dados.json saida/index.html "saida/atas_pncp_${hoje}.json" "dados/painel/$hoje/"
           cp saida/dados.json saida/index.html dados/painel/ultimo/
           (cd "dados/painel/$hoje" && sha256sum ./* > SHA256SUMS)
-          git add dados/painel
+          git add dados/painel dados/carteira_processos.json dados/kpis_painel.json dados/portal
           if git diff --cached --quiet; then echo "sem mudanca"; exit 0; fi
           git commit --quiet -m "montagem: $hoje (run ${GITHUB_RUN_ID})"
           git push --quiet "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
