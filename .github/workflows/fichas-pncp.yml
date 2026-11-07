@@ -1,0 +1,51 @@
+# painel-gof-baaplog — recoleta semanal das fichas PNCP da carteira GCALC (vinculo NE -> pregao; P-038). Somente leitura
+# no PNCP e no Compras.gov. Grava em dados/pncp/<data> e dados/pncp/ultimo.json (historico, sem force push). Sem segredo.
+name: Fichas PNCP (semanal)
+
+on:
+  schedule:
+    - cron: '17 10 * * 1'  # segunda 07:17 BRT
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: montagem
+  cancel-in-progress: false
+
+jobs:
+  fichas:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: write  # grava dados/pncp no main (historico das fichas)
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          ref: main
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.14'
+      - run: pip install requests
+      - name: Coleta PNCP (somente leitura)
+        run: |
+          mkdir -p saida
+          python motor/gcalc_pncp_fichas.py --carteira dados/carteira_processos.json --saida saida/pncp_12_processos.json
+      - name: Gravar em dados/pncp
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          dia="$(TZ=America/Sao_Paulo date +%Y-%m-%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p "dados/pncp/$dia"
+          cp saida/pncp_12_processos.json "dados/pncp/$dia/pncp_12_processos.json"
+          cp saida/pncp_12_processos.json dados/pncp/ultimo.json
+          (cd "dados/pncp/$dia" && sha256sum pncp_12_processos.json > SHA256SUMS)
+          git add dados/pncp
+          if git diff --cached --quiet; then echo "sem mudanca"; exit 0; fi
+          git commit --quiet -m "fichas PNCP: $dia (run ${GITHUB_RUN_ID})"
+          git push --quiet "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main

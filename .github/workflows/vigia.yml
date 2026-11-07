@@ -1,0 +1,54 @@
+# painel-gof-baaplog — VIGIA (D18): toda segunda e quinta confere, em dias uteis, se houve montagem e se o dado do B1 anda;
+# se nao, abre (ou atualiza) uma issue "VIGIA". Em outubro lembra de recadastrar a subscricao do TG (cancelamento anual
+# pela STN em 31/10). Somente leitura no repositorio; `issues: write` so neste job.
+name: Vigia
+
+on:
+  schedule:
+    - cron: '41 11 * * 1,4'  # segunda e quinta 08:41 BRT
+    - cron: '41 11 1 10 *'   # 1 de outubro: lembrete do TG
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vigia
+  cancel-in-progress: false
+
+jobs:
+  vigiar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write  # abre ou comenta a issue VIGIA
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          ref: main
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.14'
+      - name: Avaliar
+        id: vigia
+        run: |
+          set +e
+          cd motor && python gof_vigia.py --dados ../dados/painel/ultimo/dados.json --outubro --json ../vigia.json | tee ../vigia.txt
+          echo "rc=$?" >> "$GITHUB_OUTPUT"
+      - name: Abrir ou atualizar a issue VIGIA
+        if: steps.vigia.outputs.rc != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          corpo="$(cat vigia.txt)"
+          titulo="VIGIA: painel sem montagem ou com dado parado"
+          n="$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "in:title VIGIA" --json number --jq '.[0].number // empty')"
+          if [ -n "$n" ]; then
+            gh issue comment "$n" --repo "$GITHUB_REPOSITORY" --body "$corpo (run ${GITHUB_RUN_ID})"
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$titulo" --body "$corpo (run ${GITHUB_RUN_ID})" --label vigia || \
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$titulo" --body "$corpo (run ${GITHUB_RUN_ID})"
+          fi

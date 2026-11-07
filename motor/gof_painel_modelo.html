@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>__TITULO__</title>
+<style>
+:root{--bg:#EEF0EA;--panel:#FAFBF7;--ink:#1B2119;--muted:#5A6355;--line:#D6DACF;--accent:#4B5E26;
+--crit:#A8321F;--warn:#A86400;--ok:#2F6B45;--info:#34597A;--u160:#4B5E26;--u167:#9DB070;--fs:14px;
+--titulo:"Barlow Condensed","Arial Narrow",Arial,sans-serif;--corpo:"IBM Plex Sans","Segoe UI",Arial,sans-serif;
+--mono:"IBM Plex Mono",Consolas,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:var(--fs)/1.45 var(--corpo)}
+header{background:var(--accent);color:#fff;padding:14px 20px}
+header h1{font:600 26px/1.1 var(--titulo);margin:0;letter-spacing:.3px}
+header p{margin:4px 0 0;opacity:.9}
+.faixa{display:flex;flex-wrap:wrap;gap:8px;padding:10px 20px;background:#F6EBD6;border-bottom:1px solid var(--line)}
+.faixa span{font-size:13px}
+.faixa.vermelha{background:#F3D9D4;border-bottom:2px solid var(--crit)}
+.vigia{font-weight:600}
+main{max-width:1180px;margin:0 auto;padding:16px}
+section{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin-bottom:16px}
+h2{font:600 22px/1.2 var(--titulo);margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 12px}
+.chip{display:inline-block;border-radius:999px;padding:1px 9px;font-size:12px;border:1px solid currentColor;white-space:nowrap}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.crit{color:var(--crit)}.info{color:var(--info)}
+.heroi{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;margin-bottom:12px}
+.num{font:600 40px/1 var(--titulo)}
+.rot{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+.grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.cartao{border:1px solid var(--line);border-radius:6px;padding:10px 12px;background:#fff}
+.cartao h3{font:600 18px/1.2 var(--titulo);margin:0 0 4px}
+.barra{display:flex;height:10px;border-radius:3px;overflow:hidden;background:var(--line);margin:6px 0}
+.barra i{display:block;height:100%}
+.legenda{font-size:12px;color:var(--muted)}
+.legenda b{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px -1px 8px}
+svg.mes{width:100%;height:46px;display:block}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.kpis div{background:#fff;border:1px solid var(--line);border-radius:6px;padding:8px 10px}
+.kpis strong{display:block;font:600 24px/1.1 var(--titulo)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;background:#F1F3EC}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.mono{font-family:var(--mono);font-size:12px}
+td.mono{white-space:nowrap}
+.vazio{color:var(--muted);font-style:italic}
+details summary{cursor:pointer;color:var(--info);margin:8px 0}
+footer{max-width:1180px;margin:0 auto;padding:0 16px 24px;color:var(--muted);font-size:12px;overflow-wrap:anywhere}
+footer code{font-family:var(--mono);word-break:break-all}
+@media (max-width:700px){
+ table.cards thead{display:none}
+ table.cards tr{display:block;border:1px solid var(--line);border-radius:6px;margin-bottom:8px;background:#fff}
+ table.cards td{display:flex;justify-content:space-between;gap:12px;border:0;padding:4px 10px}
+ table.cards td::before{content:attr(data-r);color:var(--muted);font-size:12px}
+ .num{font-size:32px}
+}
+@media print{.faixa,details summary{display:none}section{break-inside:avoid}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><h1>Gestão Orçamentária e Financeira da BaApLog</h1>
+<p>Painel das 6 OMDS com o módulo GCALC · fase A (sem percentual sobre o crédito)</p></header>
+<div class="faixa" id="faixa" role="status"></div>
+<main>
+<section id="b1" aria-labelledby="t1"></section>
+<section id="b3" aria-labelledby="t3"></section>
+<section id="b4" aria-labelledby="t4"></section>
+</main>
+<footer id="rodape"></footer>
+<script type="application/json" id="dados">__DADOS__</script>
+<script>
+"use strict";
+(function(){
+var D;
+try{D=JSON.parse(document.getElementById("dados").textContent);}catch(e){
+ document.querySelector("main").innerHTML='<section><h2>Dados ilegíveis</h2><p>O bloco de dados embutido está corrompido. Use a última versão boa do painel.</p></section>';return;}
+var R=new Intl.NumberFormat("pt-BR",{style:"currency",currency:"BRL"});
+var N=new Intl.NumberFormat("pt-BR");
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function mi(v){return "R$ "+(v/1e6).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})+" mi";}
+function dbr(iso){if(!iso)return "—";var p=String(iso).slice(0,10).split("-");return p.length===3?p[2]+"/"+p[1]+"/"+p[0]:esc(iso);}
+var hoje=new Date();hoje.setHours(0,0,0,0);
+function idade(iso){if(!iso)return null;var d=new Date(String(iso).slice(0,10)+"T00:00:00");return Math.round((hoje-d)/864e5);}
+// dias uteis (seg a sex, sem feriados) entre a data do dado e hoje — mesma regra do motor (D17 revista)
+function uteis(iso){if(!iso)return null;var d=new Date(String(iso).slice(0,10)+"T00:00:00"),n=0;while(d<hoje){d.setDate(d.getDate()+1);if(d.getDay()>0&&d.getDay()<6)n++;}return n;}
+var LIM=(D.meta&&D.meta.dias_uteis_fresco)||2;
+function frescor(iso,rot){var a=uteis(iso);if(a===null)return '<span class="chip warn">'+esc(rot)+': data desconhecida</span>';
+ var c=a<=LIM?"ok":(a<=5?"warn":"crit");return '<span class="chip '+c+'" title="idade do dado em dias úteis">'+esc(rot)+': '+dbr(iso)+' · '+a+' dia'+(a===1?'':'s')+' útil'+(a===1?'':'eis')+'</span>';}
+// faixa de estado + vigia (D18): vermelha com o dado do B1 parado ha mais de LIM dias uteis
+var fim=new Date(hoje.getFullYear(),11,31),dias=Math.round((fim-hoje)/864e5),ub1=uteis(D.b1.data_dado),faixa=document.getElementById("faixa");
+var fonte=(D.meta&&D.meta.fonte_b1==="portal")?"Portal da Transparência (reserva; lacunas e atraso de ~7 dias)":"Tesouro Gerencial";
+var vig=(ub1===null||ub1>LIM)?'<span class="chip crit vigia">VIGIA: execução parada há '+(ub1===null?"? ":ub1+" ")+'dias úteis (limite '+LIM+')</span>':'';
+if(vig)faixa.className="faixa vermelha";
+faixa.innerHTML=vig+'<span class="chip info">Fonte do B1: '+esc(fonte)+'</span>'+frescor(D.b1.data_dado,"Execução")+frescor(D.b3.data_dado,"Carteira")+
+ frescor(D.b4.data_dado_atas,"Atas (PNCP)")+'<span class="chip info">'+dias+' dias até 31/12</span>'+
+ '<span class="chip warn">Percentual sobre o crédito: aguardando P-034</span>';
+// B1
+var b1=D.b1,max=0;b1.omds.forEach(function(o){o.por_mes.forEach(function(v){if(v>max)max=v;});});
+function meses(o){var w=12,s='<svg class="mes" viewBox="0 0 '+(12*w)+' 46" preserveAspectRatio="none" role="img" aria-label="Empenhado por mês">';
+ o.por_mes.forEach(function(v,i){var h=max?Math.max(v>0?1:0,40*v/max):0;s+='<rect x="'+(i*w+1)+'" y="'+(42-h)+'" width="'+(w-2)+'" height="'+h+'" fill="var(--accent)"><title>'+["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"][i]+": "+R.format(v)+'</title></rect>';});
+ return s+'<line x1="0" y1="42.5" x2="'+(12*w)+'" y2="42.5" stroke="var(--line)"/></svg>';}
+var h='<h2 id="t1">Quanto cada OMDS empenhou em 2026</h2><p class="sub">'+esc(b1.fonte)+'. Lastro: '+esc(b1.lastro)+'.</p>'+
+ '<div class="heroi"><div><div class="rot">Empenhado nas 6 OMDS</div><div class="num">'+mi(b1.total)+'</div></div>'+
+ '<div><div class="rot">Notas de empenho</div><div class="num">'+N.format(b1.ne)+'</div></div></div>'+
+ '<p class="sub"><strong>Marco da Diretriz:</strong> '+esc(b1.marco)+'</p><div class="grade">';
+b1.omds.slice().sort(function(a,b){return b.total-a.total;}).forEach(function(o){
+ var p160=o.total?100*o.valor160/o.total:0;
+ h+='<div class="cartao"><h3>'+esc(o.rotulo)+'</h3><div class="num" style="font-size:28px">'+mi(o.total)+'</div>'+
+ '<div class="barra" aria-hidden="true"><i style="width:'+p160+'%;background:var(--u160)"></i><i style="width:'+(100-p160)+'%;background:var(--u167)"></i></div>'+
+ '<div class="legenda"><b style="background:var(--u160)"></b>UG '+esc(o.ug160||"160")+' '+R.format(o.valor160)+' ('+o.ne160+' NE)<br>'+
+ '<b style="background:var(--u167)"></b>UG '+esc(o.ug167||"167")+' '+R.format(o.valor167)+' ('+o.ne167+' NE)</div>'+meses(o)+
+ '<div class="legenda">ritmo mensal de jan a dez, escala comum às 6 OMDS (toque ou passe o mouse para o valor)</div></div>';});
+h+='</div><details><summary>Tabela (mesmos números)</summary><table class="cards"><thead><tr><th>OMDS</th><th class="n">UG 160</th><th class="n">UG 167</th><th class="n">Total</th><th class="n">NE</th></tr></thead><tbody>';
+b1.omds.forEach(function(o){h+='<tr><td data-r="OMDS">'+esc(o.rotulo)+'</td><td class="n" data-r="UG 160">'+R.format(o.valor160)+'</td><td class="n" data-r="UG 167">'+R.format(o.valor167)+'</td><td class="n" data-r="Total">'+R.format(o.total)+'</td><td class="n" data-r="NE">'+o.ne+'</td></tr>';});
+h+='<tr><th>Total</th><th></th><th></th><th class="n">'+R.format(b1.total)+'</th><th class="n">'+b1.ne+'</th></tr></tbody></table></details>';
+document.getElementById("b1").innerHTML=h;
+// B3
+var b3=D.b3,r=b3.resumo,k=b3.kpis_painel||{};
+h='<h2 id="t3">Como está a carteira de licitações</h2><p class="sub">'+esc(b3.fonte)+'.</p><div class="kpis">'+
+ '<div><span class="rot">Processos</span><strong>'+r.processos+'</strong></div>'+
+ '<div><span class="rot">Estimado</span><strong>'+mi(r.estimado)+'</strong></div>'+
+ '<div><span class="rot">Capacidade instalada (homologado)</span><strong>'+mi(r.homologado)+'</strong></div>'+
+ '<div><span class="rot">Concluídos</span><strong>'+r.concluidos+'</strong></div>'+
+ '<div><span class="rot">Atrasados</span><strong class="'+(r.atrasados?"crit":"ok")+'">'+r.atrasados+'</strong></div>'+
+ '<div><span class="rot">Suspensos no PNCP</span><strong class="'+(r.suspensos?"warn":"ok")+'">'+r.suspensos+'</strong></div>'+
+ '<div><span class="rot">Não publicados</span><strong>'+r.nao_publicados+'</strong></div>'+
+ '<div><span class="rot">Score BSC (Painel)</span><strong>'+esc(k.score_bsc||"—")+'</strong><span class="legenda">'+esc(k.classe||"")+'</span></div></div>'+
+ '<table class="cards"><thead><tr><th>Processo</th><th>Objeto</th><th>UGG</th><th>Fase</th><th class="n">Estimado</th><th class="n">Homologado</th><th>Prazo meta</th><th>Prazo</th><th>PNCP</th></tr></thead><tbody>';
+b3.processos.forEach(function(p){var cp=p.status_prazo==="Atrasado"?"crit":(p.status_prazo.indexOf("atraso")>=0?"warn":"ok");
+ var cs=p.situacao_pncp==="Suspenso"?"warn":(p.situacao_pncp==="Ativo"?"ok":"info");
+ h+='<tr><td data-r="Processo" class="mono">'+esc(p.processo)+'</td><td data-r="Objeto">'+esc(p.objeto)+'</td><td data-r="UGG">'+esc(p.ugg==="1oDSup"?"1º D Sup":p.ugg)+'</td><td data-r="Fase">'+esc(p.fase)+' · '+esc(p.pct_total)+'</td>'+
+ '<td class="n" data-r="Estimado">'+(p.estimado!=null?R.format(p.estimado):"—")+'</td><td class="n" data-r="Homologado">'+(p.homologado!=null?R.format(p.homologado):"—")+'</td>'+
+ '<td data-r="Prazo meta">'+esc(p.prazo_meta)+'</td><td data-r="Prazo"><span class="chip '+cp+'">'+esc(p.status_prazo)+'</span></td><td data-r="PNCP"><span class="chip '+cs+'">'+esc(p.situacao_pncp)+'</span></td></tr>';});
+document.getElementById("b3").innerHTML=h+'</tbody></table>';
+// B4
+var b4=D.b4,a=b4.atas;
+h='<h2 id="t4">O que fazer agora</h2><p class="sub">Só itens com evidência; o vermelho exige lastro.</p>';
+h+='<h3>Atas a vencer em até '+a.limite_dias+' dias</h3>';
+if(a.a_vencer.length){h+='<table class="cards"><thead><tr><th>Processo</th><th>Ata</th><th>Fim da vigência</th><th class="n">Dias</th></tr></thead><tbody>';
+ a.a_vencer.forEach(function(x){h+='<tr><td data-r="Processo">'+esc(x.processo)+'</td><td data-r="Ata">'+esc(x.ata)+'</td><td data-r="Fim">'+dbr(x.vigencia_fim)+'</td><td class="n" data-r="Dias">'+x.dias+'</td></tr>';});h+='</tbody></table>';}
+else{h+='<p class="vazio">Nenhuma das '+a.n_vigentes+' atas vigentes vence em até '+a.limite_dias+' dias.'+(a.proxima?' A próxima: '+esc(a.proxima.processo)+', ata '+esc(a.proxima.ata)+', em '+dbr(a.proxima.vigencia_fim)+' ('+a.proxima.dias+' dias).':'')+'</p>';}
+h+='<h3>Processos atrasados ou suspensos</h3><table class="cards"><thead><tr><th>Processo</th><th>Objeto</th><th>Situação</th><th>Próxima ação</th></tr></thead><tbody>';
+b4.processos.forEach(function(p){h+='<tr><td data-r="Processo" class="mono">'+esc(p.processo)+'</td><td data-r="Objeto">'+esc(p.objeto)+'</td><td data-r="Situação"><span class="chip '+(p.situacao_pncp==="Suspenso"?"warn":"crit")+'">'+esc(p.status_prazo)+' · '+esc(p.situacao_pncp)+'</span></td><td data-r="Próxima ação">'+esc(p.proxima_acao)+'</td></tr>';});
+h+='</tbody></table>';
+var nv=b4.ne_verificar,rot={ALERTA:"Alerta",AMBIGUO:"Ambíguo",CITADO_SEM_ATA:"Citado sem ata"},cls={ALERTA:"crit",AMBIGUO:"warn",CITADO_SEM_ATA:"info"};
+h+='<h3>NE a verificar ('+esc(nv.regra)+')</h3><p class="sub">Alerta: cita pregão e UASG, favorecido fora das atas. Ambíguo: fornecedor com ata em mais de um pregão, não atribuído. Citado sem ata: número citado, favorecido fora das atas (colisão de número ou compra fora de ata). Nenhum entra em soma.</p>'+
+ '<table class="cards"><thead><tr><th>Nível</th>'+["BaApLog","BCMS","BMSA","ECT","DCMun","1oDSup"].map(function(o){return '<th class="n">'+(o==="1oDSup"?"1º D Sup":o)+'</th>';}).join("")+'</tr></thead><tbody>';
+Object.keys(nv.contagem).forEach(function(n){h+='<tr><td data-r="Nível"><span class="chip '+cls[n]+'">'+rot[n]+'</span></td>'+["BaApLog","BCMS","BMSA","ECT","DCMun","1oDSup"].map(function(o){return '<td class="n" data-r="'+(o==="1oDSup"?"1º D Sup":o)+'">'+nv.contagem[n][o]+'</td>';}).join("")+'</tr>';});
+h+='</tbody></table><details><summary>Lista das '+nv.lista.length+' NE</summary><table class="cards"><thead><tr><th>NE</th><th>OMDS</th><th>Emissão</th><th class="n">Valor</th><th>Nível</th><th>Pregão(ões)</th></tr></thead><tbody>';
+nv.lista.forEach(function(x){h+='<tr><td data-r="NE" class="mono">'+esc(x.documento)+'</td><td data-r="OMDS">'+esc(x.omds==="1oDSup"?"1º D Sup":x.omds)+'</td><td data-r="Emissão">'+esc(x.data)+'</td><td class="n" data-r="Valor">'+R.format(x.valor)+'</td><td data-r="Nível"><span class="chip '+cls[x.nivel]+'">'+rot[x.nivel]+'</span></td><td data-r="Pregão">'+esc(x.pregoes.join(" | "))+'</td></tr>';});
+var pe=b4.pendencias,pit=pe.itens||pe,ped=pe.editado_em||null,pdias=ped?idade(ped):null,plim=(D.meta&&D.meta.dias_pendencias_amarelo)||14;
+h+='</tbody></table></details><h3>Pendências do coordenador</h3><p class="sub">Lista editada em '+(ped?dbr(ped)+' ('+pdias+' dias'+(pe.editado_por?', '+esc(pe.editado_por):'')+')':'<span class="chip warn">data desconhecida</span>')+(pdias!==null&&pdias>plim?' <span class="chip warn">lista com mais de '+plim+' dias: pode estar desatualizada</span>':'')+'. Fonte: registro de pendências do projeto (D20).</p><table class="cards"><thead><tr><th>ID</th><th>Grau</th><th>O que decidir</th><th>Desde</th></tr></thead><tbody>';
+pit.forEach(function(p){h+='<tr><td data-r="ID" class="mono">'+esc(p.id)+'</td><td data-r="Grau"><span class="chip '+(p.grau==="ALTO"?"crit":"warn")+'">'+esc(p.grau)+'</span></td><td data-r="Decidir">'+esc(p.texto)+'</td><td data-r="Desde">'+dbr(p.desde)+'</td></tr>';});
+document.getElementById("b4").innerHTML=h+'</tbody></table>';
+// rodape
+h='<p><strong>Fontes:</strong> ';D.meta.fontes.forEach(function(f,i){h+=(i?"; ":"")+esc(f.arquivo)+" ("+dbr(f.data_dado)+', sha256 <code>'+esc(f.sha256.slice(0,12))+'</code>'+(f.nota?"; "+esc(f.nota):"")+")";});
+h+='.</p><p>Motor v'+esc(D.meta.versao_motor)+' · regra de vínculo v'+esc(D.meta.regra_vinculo)+' · gerado com a data de '+dbr(D.meta.hoje)+' · hash dos dados <code>__HASH__</code>. Fora da fase A: percentual sobre o crédito (P-034) e uso das atas (B2).</p>';
+document.getElementById("rodape").innerHTML=h;
+})();
+</script>
+</body>
+</html>

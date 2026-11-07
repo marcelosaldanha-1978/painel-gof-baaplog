@@ -1,0 +1,54 @@
+# painel-gof-baaplog — CI como PORTAO (PLANO v2.4, D12 revista): a cada push ou pull request roda zizmor, ruff, a suite,
+# uma montagem com os dados versionados, o recalculo independente, o verificador de saida (sem dado pessoal) e o navegador
+# headless. A publicacao (montagem.yml) refaz os mesmos portoes antes de publicar; aqui o objetivo e barrar o push ruim.
+# Padrao: actions por SHA, entradas por env, permissao minima, persist-credentials: false.
+name: CI (portao)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  portao:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.14'
+      - name: Dependencias
+        run: pip install -r requirements.txt
+      - name: 7. zizmor nos workflows
+        env:
+          GH_TOKEN: ${{ github.token }}  # so para listar tags das actions (auditoria artipacked/unpinned)
+        run: zizmor --min-severity low --min-confidence low .github/workflows
+      - name: Lint (ruff)
+        run: ruff check motor tests
+      - name: 1 e 2. Suite (vinculo, leitor, motor, extrato publico)
+        run: python -m pytest tests -q -rs
+      - name: 3, 4 e 5. Montagem de prova com os dados versionados + recalculo + verificador
+        env:
+          PORTAO_ATAS_OFFLINE: "1"  # prova sem rede: reaproveita a ultima coleta de atas versionada
+        run: bash motor/portao.sh prova
+      - name: 6. Navegador headless (0 erro de JS, sem rolagem lateral a 390 px, < 2 MB, sem pedido externo)
+        run: |
+          python -m playwright install --with-deps chromium
+          python motor/prova_navegador.py --saida prova
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: prova-portao
+          path: prova/
+          retention-days: 7

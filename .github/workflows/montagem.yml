@@ -1,0 +1,99 @@
+# painel-gof-baaplog — MONTAGEM e PUBLICACAO diaria (PLANO v2.4: D8, D12, D15, D17, D18).
+# Dois horarios por dia fora da hora cheia (D18) + disparo manual + disparo por evento (repository_dispatch, opcional, D16/D18).
+# Sequencia: portoes (suite, montagem com atas do PNCP, recalculo independente, verificador sem dado pessoal, navegador)
+# -> grava a montagem em dados/painel/<data> e dados/painel/ultimo (historico, sem force push) -> publica no GitHub Pages.
+# Nada e publicado se um portao reprovar. Somente leitura nas fontes; segredo nenhum neste workflow (passo 5 traz os dois da D14).
+name: Montagem e publicacao
+
+on:
+  schedule:
+    - cron: '33 10 * * *'  # 07:33 BRT
+    - cron: '33 15 * * *'  # 12:33 BRT
+  workflow_dispatch:
+  repository_dispatch:
+    types: [csv-chegou]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: montagem
+  cancel-in-progress: false
+
+jobs:
+  montar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write  # grava dados/painel no main (historico das montagens)
+    outputs:
+      publicar: ${{ steps.portao.outputs.publicar }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          ref: main
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.14'
+      - name: Dependencias
+        run: pip install -r requirements.txt
+      - name: Portoes 1, 2 e 7 (suite, lint, zizmor)
+        env:
+          GH_TOKEN: ${{ github.token }}  # so para listar tags das actions (zizmor)
+        run: |
+          zizmor --min-severity low --min-confidence low .github/workflows
+          ruff check motor tests
+          python -m pytest tests -q
+      - name: Portoes 3, 4 e 5 (montagem com atas do PNCP, recalculo independente, verificador)
+        id: portao
+        run: |
+          set -euo pipefail
+          bash motor/portao.sh saida
+          echo "publicar=sim" >> "$GITHUB_OUTPUT"
+      - name: Portao 6 (navegador headless)
+        run: |
+          python -m playwright install --with-deps chromium
+          python motor/prova_navegador.py --saida saida
+      - name: Gravar a montagem no historico (dados/painel)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          hoje="$(TZ=America/Sao_Paulo date +%Y-%m-%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p "dados/painel/$hoje" dados/painel/ultimo
+          cp saida/dados.json saida/index.html "saida/atas_pncp_${hoje}.json" "dados/painel/$hoje/"
+          cp saida/dados.json saida/index.html dados/painel/ultimo/
+          (cd "dados/painel/$hoje" && sha256sum ./* > SHA256SUMS)
+          git add dados/painel
+          if git diff --cached --quiet; then echo "sem mudanca"; exit 0; fi
+          git commit --quiet -m "montagem: $hoje (run ${GITHUB_RUN_ID})"
+          git push --quiet "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
+      - name: Preparar o site
+        run: |
+          mkdir -p site
+          cp saida/index.html saida/dados.json site/
+          cp -r dados/painel site/historico
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: site/
+
+  publicar:
+    needs: montar
+    if: needs.montar.outputs.publicar == 'sim'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write  # publica o site no GitHub Pages
+      id-token: write  # OIDC exigido pelo deploy-pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+        with:
+          enablement: true
+      - id: deploy
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

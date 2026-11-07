@@ -1,0 +1,11 @@
+{
+ "lido_em": "2026-11-07",
+ "origem": "Planilha GCALC_BAAPLOG_-_VF, aba Painel, linha 5 (A5:E5), lida pelo conector do Google Drive em 07/11/2026",
+ "processos": 12,
+ "valor_estimado": "R$ 75.312.730,52",
+ "score_bsc": "66,9%",
+ "pct_no_prazo": "33,3%",
+ "capacidade_instalada": "R$ 19.117.236,67",
+ "classe": "REGULAR",
+ "regra_classe": "BSC v2: 70 ou mais BOM; 50 a 69 REGULAR; abaixo de 50 CRÍTICO (CLAUDE.md do projeto)"
+}

@@ -1,0 +1,49 @@
+{
+ "editado_em": "2026-11-07",
+ "editado_por": "sessão do Claude a pedido do usuário (LOG-141, D20)",
+ "fonte": "00_GOVERNANCA_E_INDICE/02_REGISTRO_ACHADOS_E_PENDENCIAS.md (OneDrive)",
+ "itens": [
+  {
+   "id": "P-030",
+   "grau": "ALTO",
+   "texto": "PE 108/2026 (1º D Sup) possivelmente relançado como PE 114/2026: decidir com a SALC se a linha passa ao PE 114",
+   "desde": "2026-11-05"
+  },
+  {
+   "id": "P-017",
+   "grau": "ALTO",
+   "texto": "Autorização do PE 1/2026 do 1º D Sup e demais sobreposições de objeto",
+   "desde": "2026-11-04"
+  },
+  {
+   "id": "P-019",
+   "grau": "ALTO",
+   "texto": "Pendências da retificação de 04/11: IRP que gerou o PE 76/2026, IRP 78/2026 do INT-90009 e motivo das suspensões",
+   "desde": "2026-11-04"
+  },
+  {
+   "id": "P-033",
+   "grau": "MÉDIO",
+   "texto": "Orientar as SALC a citar «PREGAO n/ano UASG xxxxxx» na descrição da NE de ata do GCALC (ECT, BaApLog e BMSA citam de 3% a 14%)",
+   "desde": "2026-11-06"
+  },
+  {
+   "id": "P-027",
+   "grau": "REGISTRO",
+   "texto": "Confirmar com a SEF/EME a edição vigente da Diretriz (metas PEE e AO 212O)",
+   "desde": "2026-11-04"
+  },
+  {
+   "id": "BL7",
+   "grau": "MÉDIO",
+   "texto": "Preencher o 5W2H e as ações mitigadoras do Painel da planilha",
+   "desde": "2026-08-18"
+  },
+  {
+   "id": "ACH ALTO",
+   "grau": "ALTO",
+   "texto": "Refutação independente dos 6 achados ALTO (ACH-002, 014, 015, 022, 023, 024)",
+   "desde": "2026-11-04"
+  }
+ ]
+}

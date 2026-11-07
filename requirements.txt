@@ -1,0 +1,6 @@
+# painel-gof-baaplog — dependencias do motor e do portao (CI). Instalar: pip install -r requirements.txt
+requests>=2.31.0      # PNCP e Compras.gov (fichas e atas); Portal da Transparencia (passo 5)
+pytest>=8.0           # suite (portoes 1 e 2)
+ruff>=0.16            # lint
+zizmor>=1.0           # auditoria dos workflows (portao 7, D12)
+playwright>=1.50      # navegador headless (portao 6)

@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+saida/
+prova/
+site/
+vigia.json
+vigia.txt
+.env
+*.csv

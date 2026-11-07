@@ -1,0 +1,14 @@
+# Lint do painel-gof-baaplog: mesmas regras do claude-projects (pyproject.toml da raiz), sem a herança por caminho.
+line-length = 120
+target-version = "py310"
+
+[lint]
+select = ["E", "F", "W", "I", "UP", "B", "A", "C4", "BLE001"]
+ignore = ["E501", "E402", "UP009", "UP031"]  # estilo da casa: cabecalho utf-8 e formatacao com %
+
+[lint.per-file-ignores]
+"tests/test_*.py" = ["BLE001"]
+
+[format]
+quote-style = "double"
+indent-style = "space"
