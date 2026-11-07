@@ -132,6 +132,10 @@ def _pega(sess, headers, ug, dia, pag):
         if r.status_code == 429:
             time.sleep(30 * (i + 1))
             continue
+        if r.status_code in (400, 500, 502, 503, 504) and i < 3:
+            # o Portal devolve 400/5xx esporadicos em pedidos validos (medido em 07/11/2026: ECT 29/10, 1 em ~2.700)
+            time.sleep(5 * (i + 1))
+            continue
         raise RuntimeError("HTTP %s em %s %s p%d" % (r.status_code, ug, dia, pag))
     raise RuntimeError("429 persistente em %s %s" % (ug, dia))
 

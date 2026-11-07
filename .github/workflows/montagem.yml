@@ -85,7 +85,8 @@ jobs:
           cp saida/dados.json saida/index.html "saida/atas_pncp_${hoje}.json" "dados/painel/$hoje/"
           cp saida/dados.json saida/index.html dados/painel/ultimo/
           (cd "dados/painel/$hoje" && sha256sum ./* > SHA256SUMS)
-          git add dados/painel dados/carteira_processos.json dados/kpis_painel.json dados/portal
+          git add dados/painel dados/carteira_processos.json dados/kpis_painel.json
+          if [ -d dados/portal ]; then git add dados/portal; fi
           if git diff --cached --quiet; then echo "sem mudanca"; exit 0; fi
           git commit --quiet -m "montagem: $hoje (run ${GITHUB_RUN_ID})"
           git push --quiet "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main

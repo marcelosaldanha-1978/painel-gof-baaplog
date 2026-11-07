@@ -20,6 +20,7 @@ import gcalc_transparencia as tr
 import gof_painel as gp
 
 ARQ = "extrato_portal.json"
+LIMITE_FALHAS = 0.02  # ate 2% dos pares (UG, dia) podem falhar; nesses pares fica o que o extrato anterior tinha
 
 
 def janela(ate, dias_uteis):
@@ -43,9 +44,17 @@ def main(argv=None):
     desde = dt.date.fromisoformat(o.desde) if o.desde else janela(ate, o.dias_uteis)
     fichas = tr.ficha_de_pncp(json.load(open(o.fichas, encoding="utf-8")))
     regs, falhas = tr.coletar(desde, ate)
-    if falhas:
-        print("PORTAL: %d falha(s) de coleta; abortado sem gravar (ex.: %s)" % (len(falhas), falhas[0]))
+    # segunda tentativa, so nos pares (UG, dia) que falharam
+    resta = []
+    for f in falhas:
+        r2, f2 = tr.coletar(dt.date.fromisoformat(f["dia"]), dt.date.fromisoformat(f["dia"]), {f["ug"]: tr.UGS[f["ug"]]})
+        regs += r2
+        resta += f2
+    pares = sum(1 for i in range((ate - desde).days + 1) if (desde + dt.timedelta(days=i)).weekday() < 5) * len(tr.UGS)
+    if pares and len(resta) > max(1, int(LIMITE_FALHAS * pares)):
+        print("PORTAL: %d de %d pares (UG, dia) falharam mesmo apos nova tentativa; abortado sem gravar (ex.: %s)" % (len(resta), pares, resta[0]))
         return 1
+    falhos = {(f["ug"], f["dia"]) for f in resta}
     zero = [r for r in regs if round(tr._num(r.get("valor")), 2) == 0.0]
     regs = [r for r in regs if round(tr._num(r.get("valor")), 2) != 0.0]
     novo = gp.gerar_extrato(regs, fichas, None, "Portal da Transparência, API despesas/documentos fase 1, coleta de %s a %s em %s"
@@ -54,18 +63,19 @@ def main(argv=None):
     s = Path(o.saida)
     s.mkdir(parents=True, exist_ok=True)
     antigo = json.load(open(s / ARQ, encoding="utf-8")) if (s / ARQ).exists() else {"ne": []}
-    fora = [x for x in antigo["ne"] if not (desde <= tr._data(x["data"]) <= ate)]
+    # fora da janela, ou num par (UG, dia) que falhou: fica o que o extrato anterior tinha
+    fora = [x for x in antigo["ne"] if not (desde <= tr._data(x["data"]) <= ate) or (x["ug"], tr._data(x["data"]).isoformat()) in falhos]
     novo["ne"] = sorted(fora + novo["ne"], key=lambda x: (tr._data(x["data"]) or dt.date.min, x["documento"]))
     datas = [tr._data(x["data"]) for x in novo["ne"] if tr._data(x["data"])]
     novo["data_execucao"] = max(datas).isoformat() if datas else None
     novo["meta"] = {"janela": [desde.isoformat(), ate.isoformat()], "ne_na_janela": len(regs), "ne_zero_retiradas": len(zero),
-                    "ne_fora_da_janela_mantidas": len(fora), "coletado_em": dt.datetime.now().isoformat(timespec="seconds")}
+                    "ne_fora_da_janela_mantidas": len(fora), "pares_falhos": sorted("%s %s" % k for k in falhos), "coletado_em": dt.datetime.now().isoformat(timespec="seconds")}
     json.dump(novo, open(s / ARQ, "w", encoding="utf-8"), ensure_ascii=False, indent=0)
     dia = s / ate.isoformat()
     dia.mkdir(exist_ok=True)
     json.dump(novo, open(dia / ARQ, "w", encoding="utf-8"), ensure_ascii=False, indent=0)
-    print("PORTAL: %d NE na janela %s..%s (%d a 0,00 retiradas), %d mantidas de antes; último dia de emissão %s"
-          % (len(regs), desde, ate, len(zero), len(fora), novo["data_execucao"]))
+    print("PORTAL: %d NE na janela %s..%s (%d a 0,00 retiradas), %d mantidas de antes, %d par(es) falho(s); último dia de emissão %s"
+          % (len(regs), desde, ate, len(zero), len(fora), len(falhos), novo["data_execucao"]))
     return 0
 
 

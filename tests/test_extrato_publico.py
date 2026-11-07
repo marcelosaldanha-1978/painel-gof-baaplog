@@ -163,3 +163,36 @@ def test_d17_portal_so_substitui_tg_parado_e_mais_atual(tmp_path, extrato):
     pv.write_text(json.dumps(velho), encoding="utf-8")
     fica = _montar(tmp_path, EXTRATO, "2026-11-12", pv)  # Portal mais velho que o TG parado -> fica o TG
     assert fica["meta"]["fonte_b1"] == "tg" and "nao e mais atual" in fica["meta"]["fonte_b1_motivo"]
+
+
+# ----------------------------------------------------------------- gof_portal: nova tentativa e tolerancia a falhas pontuais
+def test_portal_tolera_falha_pontual_e_mantem_o_anterior(tmp_path, monkeypatch):
+    import gcalc_transparencia as tr
+    import gof_portal as gpo
+
+    def ne(doc, ug, dia, valor):
+        return {"documento": doc, "valor": valor, "data": dia, "_ug": ug, "_nome": tr.UGS[ug], "modalidade": "12",
+                "observacao": "", "codigoFavorecido": "", "favorecido": ""}
+
+    chamadas = []
+
+    def falso(inicio, fim, ugs=tr.UGS):
+        chamadas.append((inicio, fim, tuple(ugs)))
+        if len(ugs) == 1:  # nova tentativa do par que falhou: falha de novo
+            return [], [{"ug": "160321", "dia": "2026-11-03", "erro": "HTTP 400"}]
+        return ([ne("2026NE000001", "160238", "03/11/2026", "100,00"), ne("2026NE000002", "160238", "04/11/2026", "0,00")],
+                [{"ug": "160321", "dia": "2026-11-03", "erro": "HTTP 400"}])
+
+    monkeypatch.setattr(tr, "coletar", falso)
+    (tmp_path / "extrato_portal.json").write_text(json.dumps({"ne": [
+        {"documento": "2026NE009999", "ug": "160321", "data": "03/11/2026", "valor": 5.0},   # par falho: fica
+        {"documento": "2026NE008888", "ug": "160238", "data": "03/11/2026", "valor": 7.0},   # par coletado: sai (anulada)
+        {"documento": "2026NE007777", "ug": "160238", "data": "02/10/2026", "valor": 9.0}]}), encoding="utf-8")  # fora: fica
+    rc = gpo.main(["--fichas", str(FICHAS), "--saida", str(tmp_path), "--desde", "2026-11-02", "--ate", "2026-11-06"])
+    assert rc == 0 and len(chamadas) == 2
+    d = json.load(open(tmp_path / "extrato_portal.json", encoding="utf-8"))
+    docs = {x["documento"] for x in d["ne"]}
+    assert docs == {"2026NE000001", "2026NE009999", "2026NE007777"}  # 0,00 retirada; anulada sai; falho e fora ficam
+    assert d["meta"]["ne_zero_retiradas"] == 1 and d["meta"]["pares_falhos"] == ["160321 2026-11-03"]
+    assert d["data_execucao"] == "2026-11-03"
+    assert "favorecido" not in json.dumps(d) and "observacao" not in json.dumps(d)
