@@ -1,6 +1,6 @@
 {
  "meta": {
-  "versao_motor": "0.2",
+  "versao_motor": "0.3",
   "regra_vinculo": "1.2",
   "hoje": "2026-11-07",
   "fase": "A",
@@ -10,7 +10,7 @@
     "arquivo": "ultimo.json",
     "sha256": "b3f5fadbfd3489ddcd1ca14fdf40c900753299feda4b7b80ec1678262d023429",
     "data_dado": "2026-11-06",
-    "observacao": "extrato sem pessoa; vínculo v1.2"
+    "nota": "extrato sem pessoa; vínculo v1.2"
    },
    {
     "nome": "carteira",
@@ -36,7 +36,12 @@
     "sha256": "3611b30c82031b87d4b50a23854a19b2b9e0884aecdb251accf94eb75fc101c0",
     "data_dado": "2026-11-07"
    }
-  ]
+  ],
+  "fonte_b1": "tg",
+  "idade_b1_dias_uteis": 0,
+  "b1_fresco": true,
+  "dias_uteis_fresco": 2,
+  "dias_pendencias_amarelo": 14
  },
  "b1": {
   "fonte": "Tesouro Gerencial, conta 522920101 (Movim. Líquido > 0), NE emitidas em 2026, UG 160xxx e 167xxx",
@@ -1739,56 +1744,55 @@
     }
    ]
   },
-  "pendencias": [
-   {
-    "id": "P-030",
-    "grau": "ALTO",
-    "texto": "PE 108/2026 (1º D Sup) possivelmente relançado como PE 114/2026: decidir com a SALC se a linha passa ao PE 114",
-    "desde": "2026-11-05"
-   },
-   {
-    "id": "P-017",
-    "grau": "ALTO",
-    "texto": "Autorização do PE 1/2026 do 1º D Sup e demais sobreposições de objeto",
-    "desde": "2026-11-04"
-   },
-   {
-    "id": "P-019",
-    "grau": "ALTO",
-    "texto": "Pendências da retificação de 04/11: IRP que gerou o PE 76/2026, IRP 78/2026 do INT-90009 e motivo das suspensões",
-    "desde": "2026-11-04"
-   },
-   {
-    "id": "P-033",
-    "grau": "MÉDIO",
-    "texto": "Orientar as SALC a citar «PREGAO n/ano UASG xxxxxx» na descrição da NE de ata do GCALC (ECT, BaApLog e BMSA citam de 3% a 14%)",
-    "desde": "2026-11-06"
-   },
-   {
-    "id": "P-027",
-    "grau": "REGISTRO",
-    "texto": "Confirmar com a SEF/EME a edição vigente da Diretriz (metas PEE e AO 212O)",
-    "desde": "2026-11-04"
-   },
-   {
-    "id": "P-029",
-    "grau": "MÉDIO",
-    "texto": "Regra de IA da SEF (Prescrições, item 6) para plataformas não homologadas",
-    "desde": "2026-11-04"
-   },
-   {
-    "id": "BL7",
-    "grau": "MÉDIO",
-    "texto": "Preencher o 5W2H e as ações mitigadoras do Painel da planilha",
-    "desde": "2026-08-18"
-   },
-   {
-    "id": "ACH ALTO",
-    "grau": "ALTO",
-    "texto": "Refutação independente dos 6 achados ALTO (ACH-002, 014, 015, 022, 023, 024)",
-    "desde": "2026-11-04"
-   }
-  ],
+  "pendencias": {
+   "editado_em": "2026-11-07",
+   "editado_por": "sessão do Claude a pedido do usuário (LOG-141, D20)",
+   "itens": [
+    {
+     "id": "P-030",
+     "grau": "ALTO",
+     "texto": "PE 108/2026 (1º D Sup) possivelmente relançado como PE 114/2026: decidir com a SALC se a linha passa ao PE 114",
+     "desde": "2026-11-05"
+    },
+    {
+     "id": "P-017",
+     "grau": "ALTO",
+     "texto": "Autorização do PE 1/2026 do 1º D Sup e demais sobreposições de objeto",
+     "desde": "2026-11-04"
+    },
+    {
+     "id": "P-019",
+     "grau": "ALTO",
+     "texto": "Pendências da retificação de 04/11: IRP que gerou o PE 76/2026, IRP 78/2026 do INT-90009 e motivo das suspensões",
+     "desde": "2026-11-04"
+    },
+    {
+     "id": "P-033",
+     "grau": "MÉDIO",
+     "texto": "Orientar as SALC a citar «PREGAO n/ano UASG xxxxxx» na descrição da NE de ata do GCALC (ECT, BaApLog e BMSA citam de 3% a 14%)",
+     "desde": "2026-11-06"
+    },
+    {
+     "id": "P-027",
+     "grau": "REGISTRO",
+     "texto": "Confirmar com a SEF/EME a edição vigente da Diretriz (metas PEE e AO 212O)",
+     "desde": "2026-11-04"
+    },
+    {
+     "id": "BL7",
+     "grau": "MÉDIO",
+     "texto": "Preencher o 5W2H e as ações mitigadoras do Painel da planilha",
+     "desde": "2026-08-18"
+    },
+    {
+     "id": "ACH ALTO",
+     "grau": "ALTO",
+     "texto": "Refutação independente dos 6 achados ALTO (ACH-002, 014, 015, 022, 023, 024)",
+     "desde": "2026-11-04"
+    }
+   ],
+   "dias": 0
+  },
   "data_dado_atas": "2026-11-07"
  }
 }
