@@ -25,8 +25,16 @@ def main(argv=None):
             ctx = nav.new_context(viewport={"width": largura, "height": 844})
             pg = ctx.new_page()
             erros, externos = [], []
-            pg.on("pageerror", lambda e: erros.append(str(e)))
-            pg.on("request", lambda r: externos.append(r.url) if not r.url.startswith("file:") else None)
+
+            def _erro(e, _lista=erros):
+                _lista.append(str(e))
+
+            def _pedido(r, _lista=externos):
+                if not r.url.startswith("file:"):
+                    _lista.append(r.url)
+
+            pg.on("pageerror", _erro)
+            pg.on("request", _pedido)
             pg.goto(pagina.as_uri())
             pg.wait_for_timeout(300)
             if erros:
