@@ -171,7 +171,7 @@ def test_portal_tolera_falha_pontual_e_mantem_o_anterior(tmp_path, monkeypatch):
     import gof_portal as gpo
 
     def ne(doc, ug, dia, valor):
-        return {"documento": doc, "valor": valor, "data": dia, "_ug": ug, "_nome": tr.UGS[ug], "modalidade": "12",
+        return {"documento": doc, "valor": valor, "data": dia, "_ug": ug, "_nome": tr.UGS[ug], "modalidade": "90 - Aplicações Diretas",
                 "observacao": "", "codigoFavorecido": "", "favorecido": ""}
 
     chamadas = []
@@ -195,4 +195,6 @@ def test_portal_tolera_falha_pontual_e_mantem_o_anterior(tmp_path, monkeypatch):
     assert docs == {"2026NE000001", "2026NE009999", "2026NE007777"}  # 0,00 retirada; anulada sai; falho e fora ficam
     assert d["meta"]["ne_zero_retiradas"] == 1 and d["meta"]["pares_falhos"] == ["160321 2026-11-03"]
     assert d["data_execucao"] == "2026-11-03"
+    novas = [x for x in d["ne"] if x["documento"] == "2026NE000001"]
+    assert novas[0]["modalidade"] == ""  # modalidade de aplicacao do Portal nao entra como modalidade de licitacao
     assert "favorecido" not in json.dumps(d) and "observacao" not in json.dumps(d)

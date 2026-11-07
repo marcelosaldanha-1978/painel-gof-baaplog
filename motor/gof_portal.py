@@ -55,6 +55,12 @@ def main(argv=None):
         print("PORTAL: %d de %d pares (UG, dia) falharam mesmo apos nova tentativa; abortado sem gravar (ex.: %s)" % (len(resta), pares, resta[0]))
         return 1
     falhos = {(f["ug"], f["dia"]) for f in resta}
+    # no Portal, "modalidade" e a MODALIDADE DE APLICACAO (ex.: "90 - Aplicacoes Diretas"), nao a de licitacao: se fosse
+    # passada ao vinculo, toda NE que cita pregao e e de fornecedor de ata viraria ALERTA (medido em 07/11/2026: 72 falsos).
+    # O Portal nao traz a modalidade de licitacao neste endpoint; fica vazia e o vinculo usa texto + favorecido (regra v1.2).
+    for r in regs:
+        r["modalidade_aplicacao"] = r.get("modalidade")
+        r["modalidade"] = ""
     zero = [r for r in regs if round(tr._num(r.get("valor")), 2) == 0.0]
     regs = [r for r in regs if round(tr._num(r.get("valor")), 2) != 0.0]
     novo = gp.gerar_extrato(regs, fichas, None, "Portal da Transparência, API despesas/documentos fase 1, coleta de %s a %s em %s"
