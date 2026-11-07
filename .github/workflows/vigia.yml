@@ -8,6 +8,11 @@ on:
     - cron: '41 11 * * 1,4'  # segunda e quinta 08:41 BRT
     - cron: '41 11 1 10 *'   # 1 de outubro: lembrete do TG
   workflow_dispatch:
+    inputs:
+      simular_hoje:
+        description: 'Data simulada (AAAA-MM-DD) para provar o vigia com falha; vazio = hoje'
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -33,10 +38,14 @@ jobs:
           python-version: '3.14'
       - name: Avaliar
         id: vigia
+        env:
+          SIMULAR_HOJE: ${{ inputs.simular_hoje }}
         run: |
           set +e
-          cd motor && python gof_vigia.py --dados ../dados/painel/ultimo/dados.json --outubro --json ../vigia.json | tee ../vigia.txt
-          echo "rc=$?" >> "$GITHUB_OUTPUT"
+          extra=""
+          if [ -n "${SIMULAR_HOJE:-}" ]; then extra="--hoje ${SIMULAR_HOJE}"; echo "SIMULACAO com a data ${SIMULAR_HOJE}" > vigia.txt; fi
+          cd motor && python gof_vigia.py --dados ../dados/painel/ultimo/dados.json --outubro --json ../vigia.json $extra | tee -a ../vigia.txt
+          echo "rc=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
       - name: Abrir ou atualizar a issue VIGIA
         if: steps.vigia.outputs.rc != '0'
         env:
