@@ -11,6 +11,7 @@ Painel de **Gestão Orçamentária e Financeira da BaApLog**: execução orçame
 | Montagem e publicação | `montagem.yml` | todo dia às 07:33 e 12:33 (Brasília), ou por disparo |
 | Fichas PNCP (pregões, atas, fornecedores) | `fichas-pncp.yml` | segunda 07:17 |
 | Vigia (montagem parada, dado parado, lembrete do TG em outubro) | `vigia.yml` | segunda e quinta 08:41 |
+| Confronto planilha × PNCP/Compras.gov (só leitura) | `conferencia.yml` | segunda 08:03 |
 | Portão (CI) | `ci.yml` | a cada push |
 
 A montagem só publica se passar nos **portões**: suíte de testes, lint, auditoria dos workflows (zizmor), recálculo independente de todos os números (tolerância R$ 0,01), verificador de saída (nenhum dado pessoal, JSON embutido = `dados.json`, hash do rodapé, sem pedido externo, < 2 MB) e navegador headless (0 erro de JS, sem rolagem lateral a 390 px).
@@ -19,14 +20,20 @@ A montagem só publica se passar nos **portões**: suíte de testes, lint, audit
 
 - `execucao/` — **extrato sem pessoa** da execução (TG, conta 522920101, UG 160xxx e 167xxx): NE, UG, data, valor, modalidade e o nível do vínculo com os pregões. O CSV do Tesouro Gerencial, que tem favorecido, nunca entra neste repositório.
 - `pncp/` — fichas dos 12 processos da carteira (PNCP e Compras.gov), semanais.
-- `carteira_processos.json`, `kpis_painel.json` — carteira e KPI do Painel da planilha GCALC (cópia manual até o passo 5 do plano: leitura pela conta de serviço só de leitura).
+- `carteira_processos.json`, `kpis_painel.json` — carteira e KPI do Painel da planilha GCALC, relidos a cada montagem pela conta de serviço só de leitura (`gof_planilha.py`).
+- `portal/` — extrato sem pessoa do Portal da Transparência (janela de 10 dias úteis por dia; carga desde 01/01), reserva do B1.
+- `conferencia/` — confronto semanal planilha × portais (`ultimo.json` entra no B4); a gravação do que o portal prova é feita fora daqui, pela tarefa semanal do Claude.
 - `pendencias_coordenador.json` — pendências do coordenador, com a data da última edição visível no painel.
 - `painel/<data>/` — cada montagem (dados.json, index.html, atas do PNCP, SHA256SUMS); `painel/ultimo/` é a vigente.
+
+## Para leitura por máquina
+
+A página monta os números por JavaScript; quem lê sem executar script (agentes, busca, WebFetch) deve usar `https://marcelosaldanha-1978.github.io/painel-gof-baaplog/dados.json`, o mesmo JSON embutido na página (hash no rodapé).
 
 ## Regras que o código cumpre
 
 - **Vínculo NE → pregão (regra v1.2):** CONFIRMADO, PROVÁVEL, AMBÍGUO (fora das somas), CITADO SEM ATA e ALERTA; nunca somados entre si.
-- **Fonte do B1:** Tesouro Gerencial; o Portal da Transparência entra como reserva declarada quando o TG parar mais de 2 dias úteis e estiver mais atual (passo 5).
+- **Fonte do B1:** Tesouro Gerencial; o Portal da Transparência entra como reserva declarada quando o TG parar mais de 2 dias úteis e o Portal estiver mais atual. No Portal, `modalidade` é a de aplicação, não a de licitação.
 - **Idade do dado em dias úteis** (seg a sex, sem feriados), na faixa de cada bloco; a faixa fica vermelha com o B1 parado.
 - **Sem dado pessoal por construção;** o verificador barra CPF, favorecido e texto de NE.
 
