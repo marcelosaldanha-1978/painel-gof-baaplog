@@ -2,7 +2,7 @@
  "meta": {
   "versao_motor": "0.3",
   "regra_vinculo": "1.2",
-  "hoje": "2026-11-07",
+  "hoje": "2026-11-09",
   "fase": "A",
   "fontes": [
    {
@@ -15,34 +15,34 @@
    {
     "nome": "carteira",
     "arquivo": "carteira_processos.json",
-    "sha256": "72952c2d06f1c3173d3ef8fa464149f62642ecd289407e9cc6768486ce134a31",
-    "data_dado": "2026-11-07"
+    "sha256": "d573c1aa10e50cde65caefc0eaea4273e388d31c8e0fbd47100834d4c485e0bf",
+    "data_dado": "2026-11-09"
    },
    {
     "nome": "kpis_painel",
     "arquivo": "kpis_painel.json",
-    "sha256": "2a26da3706ffc0f146f3af86225a39615a31b0db6b1f107b58fd81943b77763f",
-    "data_dado": "2026-11-07"
+    "sha256": "7798bc5e26ce1a2372fbf8c83326d0121fa23ea0e4e9288805be83848f39fd8a",
+    "data_dado": "2026-11-09"
    },
    {
     "nome": "atas",
-    "arquivo": "atas_pncp_2026-11-07.json",
-    "sha256": "d15bae56bc89e1c7235eadf352e63eda9478399b63ad1ae740ed0c10db8c2534",
-    "data_dado": "2026-11-07"
+    "arquivo": "atas_pncp_2026-11-09.json",
+    "sha256": "80a9edb788d4de879a9d4023e4fe4016e9d84c3a908d0349d330b3f587760d06",
+    "data_dado": "2026-11-09"
    },
    {
     "nome": "fichas_pncp",
     "arquivo": "ultimo.json",
-    "sha256": "3611b30c82031b87d4b50a23854a19b2b9e0884aecdb251accf94eb75fc101c0",
-    "data_dado": "2026-11-07"
+    "sha256": "6cf81b74e9af7376f0a402581d6f17430f6e85a16622bed4cb76063526cf7736",
+    "data_dado": "2026-11-09"
    }
   ],
   "fonte_b1": "tg",
-  "idade_b1_dias_uteis": 0,
+  "idade_b1_dias_uteis": 1,
   "b1_fresco": true,
   "dias_uteis_fresco": 2,
   "dias_pendencias_amarelo": 14,
-  "fonte_b1_motivo": "TG fresco (0 dias uteis)",
+  "fonte_b1_motivo": "TG fresco (1 dias uteis)",
   "data_portal": "2026-11-04",
   "data_tg": "2026-11-06"
  },
@@ -431,8 +431,8 @@
    "nao_publicados": 2
   },
   "kpis_painel": {
-   "lido_em": "2026-11-07",
-   "origem": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-07 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Painel, linha 5 (A5:E5)",
+   "lido_em": "2026-11-09",
+   "origem": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-09 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Painel, linha 5 (A5:E5)",
    "processos": "12",
    "valor_estimado": "R$ 75.312.730,52",
    "score_bsc": "66,9%",
@@ -452,7 +452,7 @@
     "processo": "PE 90315/2026",
     "ata": "00014/2026",
     "vigencia_fim": "2027-05-17",
-    "dias": 191
+    "dias": 189
    }
   },
   "processos": [
@@ -1794,7 +1794,7 @@
      "desde": "2026-11-04"
     }
    ],
-   "dias": 0
+   "dias": 2
   },
   "conferencia": {
    "data": "2026-11-07",
@@ -1816,6 +1816,6 @@
    ],
    "fonte": "confronto semanal planilha x PNCP/Compras.gov no runner (D19 parte 1); a gravacao do provado e sessao do Claude"
   },
-  "data_dado_atas": "2026-11-07"
+  "data_dado_atas": "2026-11-09"
  }
 }
