@@ -56,6 +56,55 @@ def exportar(itens_csv, extrato, saida, data_tg):
     return len(emp), len(alvos)
 
 
+LIMITE_POR_VALOR = 1.00  # preço unitário até R$ 1,00: a «quantidade» registrada é um teto em reais (ex.: peças por tabela)
+
+LEGENDA_FORA = {
+    "CONTRATO_ATIVO": "NE em compra que tem contrato ativo da UASG no Contratos.gov.br (execução de contrato, não de ata)",
+    "MESMA_COMPRA_ITEM_FORA": "a compra tem ata vigente colhida para a UASG, mas este item ou fornecedor não está nela",
+    "COMPRA_PROPRIA_SEM_ATA_VIGENTE": "compra da própria UASG sem ata vigente (ata vencida, compra sem SRP ou contrato não lido)",
+    "COMPRA_DE_OMDS_SEM_ATA_VIGENTE": "compra de outra OMDS da BaApLog sem ata vigente para a UASG",
+    "COMPRA_DE_TERCEIRO_SEM_ATA_VIGENTE": "compra de órgão de fora sem ata vigente para a UASG (ata vencida ou carona)",
+}
+
+
+def natureza(x):
+    """POR_VALOR quando o preço unitário é até R$ 1,00 (o registrado é teto financeiro, não quantidade de bens)."""
+    return "POR_VALOR" if 0 < (x.get("valor_unitario") or 0) <= LIMITE_POR_VALOR else "POR_QUANTIDADE"
+
+
+def classificar_fora(fora, cap):
+    """Classifica o empenhado em itens que a coleta não trouxe, só com o que já está no arquivo (sem nova consulta)."""
+    uasg_omds = {r.get("uasg"): o for o, r in (cap.get("resumo") or {}).items() if isinstance(r, dict)}
+    for x in cap["itens"]:
+        uasg_omds.setdefault(x["uasg"], x["omds"])
+    compras_colhidas = {(x["uasg"], x["gerenciadora"], x["compra"]) for x in cap["itens"]}
+    contratos = set()
+    for uasg, lista in (cap.get("contratos") or {}).items():
+        for c in lista or []:
+            contratos.add((uasg, str(c.get("unidade_compra") or ""), str(c.get("licitacao") or "")))
+    por_classe, por_omds = {}, {}
+    for (uasg, ger, compra, _item, _cnpj), v in fora.items():
+        if (uasg, ger, compra) in contratos:
+            cl = "CONTRATO_ATIVO"
+        elif (uasg, ger, compra) in compras_colhidas:
+            cl = "MESMA_COMPRA_ITEM_FORA"
+        elif ger == uasg:
+            cl = "COMPRA_PROPRIA_SEM_ATA_VIGENTE"
+        elif ger in uasg_omds:
+            cl = "COMPRA_DE_OMDS_SEM_ATA_VIGENTE"
+        else:
+            cl = "COMPRA_DE_TERCEIRO_SEM_ATA_VIGENTE"
+        c = por_classe.setdefault(cl, {"itens": 0, "valor": 0.0})
+        c["itens"] += 1
+        c["valor"] += v
+        o = por_omds.setdefault(uasg_omds.get(uasg, uasg), {})
+        o[cl] = o.get(cl, 0.0) + v
+    for c in por_classe.values():
+        c["valor"] = round(c["valor"], 2)
+    por_omds = {o: {k: round(v, 2) for k, v in d.items()} for o, d in por_omds.items()}
+    return {"por_classe": por_classe, "por_omds": por_omds}
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--capacidade", required=True)
@@ -81,6 +130,7 @@ def main(argv=None):
         x["registrado_valor"] = reg
         x["empenhado_tg"] = e
         x["saldo_proprio"] = round(max(0.0, reg - e), 2)
+        x["natureza_registro"] = natureza(x)
         if e > reg + 0.01:
             excesso.append({"chave": list(k), "registrado": reg, "empenhado": e})
     # empenhos em itens de ata que a coleta não trouxe (ata vencida, item fora do universo, UASG fora da lista da ata)
@@ -94,15 +144,28 @@ def main(argv=None):
         r["saldo_proprio"] += x["saldo_proprio"]
         r["saldo_api"] += x["saldo_valor"]
         r["saldo_por_tipo"][x["tipo_unidade"]] += x["saldo_proprio"]
+        r.setdefault("saldo_por_natureza", collections.Counter())[x["natureza_registro"]] += x["saldo_proprio"]
         if (x["vigencia_fim"] or "9") <= cap["hoje"][:4] + "-12-31":
             r["vence_ate_31dez"] += x["saldo_proprio"]
     for r in resumo.values():
         for k in ("registrado", "empenhado_tg", "saldo_proprio", "saldo_api", "vence_ate_31dez"):
             r[k] = round(r[k], 2)
         r["saldo_por_tipo"] = {k: round(v, 2) for k, v in r["saldo_por_tipo"].items()}
-    cap["saldo"] = {"versao": "0.1", "regra": __doc__.split("Uso:")[0].strip(), "resumo": resumo,
+        r["saldo_por_natureza"] = {k: round(v, 2) for k, v in r["saldo_por_natureza"].items()}
+    for omds, r in resumo.items():
+        seus = sorted((x for x in cap["itens"] if x["omds"] == omds and x["saldo_proprio"] > 0),
+                      key=lambda x: -x["saldo_proprio"])[:5]
+        r["maiores_itens"] = [{"ata": x.get("ata"), "gerenciadora": x["gerenciadora"], "compra": x["compra"],
+                               "item": x["item"], "descricao": (x.get("descricao") or "")[:80],
+                               "natureza": x["natureza_registro"], "saldo_proprio": x["saldo_proprio"]} for x in seus]
+        r["concentracao_5_maiores"] = round(sum(x["saldo_proprio"] for x in seus), 2)
+    fora_classes = classificar_fora(fora, cap)
+    cap["saldo"] = {"versao": "0.2", "regra": __doc__.split("Uso:")[0].strip(), "resumo": resumo,
                     "itens_tg_sem_chave": sem_chave, "empenho_acima_do_registrado": excesso,
-                    "empenhado_fora_da_coleta": {"itens": len(fora), "valor": round(sum(fora.values()), 2)}}
+                    "empenhado_fora_da_coleta": {"itens": len(fora), "valor": round(sum(fora.values()), 2),
+                                                 "por_classe": fora_classes["por_classe"],
+                                                 "por_omds": fora_classes["por_omds"],
+                                                 "legenda": LEGENDA_FORA}}
     with open(a.saida, "w", encoding="utf-8") as f:
         json.dump(cap, f, ensure_ascii=False, indent=1)
     print(json.dumps(cap["saldo"]["resumo"], ensure_ascii=False, indent=1))
