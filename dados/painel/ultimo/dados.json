@@ -879,6 +879,115 @@
      "liquidado": 0.0
     }
    ]
+  },
+  "rpnp": {
+   "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-RPNP por NE 2026 (v1.0, 10nov2026)», execução de 10/11/2026, 12h33",
+   "posicao_siafi": "10/11/2026 08:10",
+   "regra": "Ano de origem = ano no número da NE. RPNP de 2025 a liquidar em 31/12 é reinscrito automaticamente; RPNP de 2024 bloqueado se desbloqueia até 23/12; RPNP até 2023 não liquidado até 30/12 é cancelado automaticamente (Portaria 399-SEF, 6.b)",
+   "por_omds": {
+    "1º D Sup": {
+     "a_liquidar_2025": 401252.05,
+     "ne_2025": 5,
+     "liq_a_pagar_2025": 96096.0,
+     "pendente_2024": 0.0,
+     "bloqueado_ate_2023": 0.0,
+     "a_liquidar_ate_2023": 0.0
+    },
+    "BCMS": {
+     "a_liquidar_2025": 52381.05,
+     "ne_2025": 5,
+     "liq_a_pagar_2025": 61210.17,
+     "pendente_2024": 0.0,
+     "bloqueado_ate_2023": 0.0,
+     "a_liquidar_ate_2023": 0.0
+    },
+    "BMSA": {
+     "a_liquidar_2025": 109316.35,
+     "ne_2025": 5,
+     "liq_a_pagar_2025": 131907.89,
+     "pendente_2024": 0.0,
+     "bloqueado_ate_2023": 0.0,
+     "a_liquidar_ate_2023": 0.0
+    },
+    "Cmdo BaApLog": {
+     "a_liquidar_2025": 176494.67,
+     "ne_2025": 3,
+     "liq_a_pagar_2025": 0.0,
+     "pendente_2024": 0.0,
+     "bloqueado_ate_2023": 0.0,
+     "a_liquidar_ate_2023": 0.0
+    },
+    "DC Mun": {
+     "a_liquidar_2025": 215126.87,
+     "ne_2025": 6,
+     "liq_a_pagar_2025": 151365.64,
+     "pendente_2024": 0.0,
+     "bloqueado_ate_2023": 16500.0,
+     "a_liquidar_ate_2023": 0.0
+    },
+    "ECT": {
+     "a_liquidar_2025": 117058.33,
+     "ne_2025": 5,
+     "liq_a_pagar_2025": 0.0,
+     "pendente_2024": 0.0,
+     "bloqueado_ate_2023": 0.0,
+     "a_liquidar_ate_2023": 0.0
+    }
+   },
+   "ate_2023": [
+    {
+     "ne": "160246000012023NE000242",
+     "omds": "DC Mun",
+     "ano": "2023",
+     "a_liquidar": 0.0,
+     "bloqueado": 16500.0,
+     "liq_a_pagar": 0.0
+    }
+   ]
+  },
+  "credito_por_ugr": {
+   "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Credito por NC» com UG responsável, fonte e PTRES, execução de 10/11/2026, 08h17",
+   "total": 2402283.4,
+   "por_ugr": {
+    "Centro de Obtenções do Exército (gestor)": {
+     "ug": [
+      "160504",
+      "167504"
+     ],
+     "em_tela": 1660327.85
+    },
+    "Diretoria de Gestão Orçamentária (gestor)": {
+     "ug": [
+      "160073"
+     ],
+     "em_tela": 353069.25
+    },
+    "Departamento-Geral do Pessoal (gestor)": {
+     "ug": [
+      "160505",
+      "167505"
+     ],
+     "em_tela": 199551.18
+    },
+    "Departamento de Engenharia e Construção (gestor)": {
+     "ug": [
+      "160502",
+      "167502"
+     ],
+     "em_tela": 149123.69
+    },
+    "Comando de Operações Terrestres (gestor)": {
+     "ug": [
+      "160539"
+     ],
+     "em_tela": 27223.82
+    },
+    "Demais (inclui as próprias UG)": {
+     "ug": [],
+     "em_tela": 12987.61
+    }
+   },
+   "prazo_escrito": "Depois da Portaria, só o Comando de Operações Terrestres escreveu em NC prazo de empenho posterior a 25/11 (30/11, 6 NCs de 22/10). Para as demais vale 25/11 até a UGR prorrogar"
   }
  }
 }
