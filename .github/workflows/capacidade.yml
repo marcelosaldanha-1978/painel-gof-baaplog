@@ -37,7 +37,7 @@ jobs:
           mkdir -p saida
           hoje="$(TZ=America/Sao_Paulo date +%Y-%m-%d)"
           python motor/gof_capacidade.py --extrato dados/execucao/ultimo.json --alvos dados/capacidade/insumo_tg.json \
-            --saida saida/coleta.json --hoje "$hoje" --paralelo 8 --cache saida/cache
+            --saida saida/coleta.json --hoje "$hoje" --paralelo 3 --cache saida/cache
           python motor/gof_capacidade_saldo.py --capacidade saida/coleta.json --empenhado dados/capacidade/insumo_tg.json \
             --saida saida/capacidade.json
       - name: Gravar em dados/capacidade

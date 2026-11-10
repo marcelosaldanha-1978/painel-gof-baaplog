@@ -43,7 +43,7 @@ OMDS = {"160238": "Cmdo BaApLog", "160246": "DC Mun", "160304": "BMSA", "160307"
 CACHE = None  # pasta de cache (opcional): cada URL respondida uma vez por coleta
 
 
-def http(url, tentativas=5):
+def http(url, tentativas=8):
     if CACHE:
         arq = os.path.join(CACHE, hashlib.sha256(url.encode()).hexdigest() + ".json")
         if os.path.exists(arq):
@@ -60,7 +60,11 @@ def http(url, tentativas=5):
         except Exception as e:  # noqa: BLE001 (rede pública instável; repete com espera)
             if i == tentativas - 1:
                 raise RuntimeError("falha em %s: %s" % (url, e)) from e
-            time.sleep(2 * (i + 1))
+            espera = 2 * (i + 1)
+            if getattr(e, "code", None) == 429:  # limite de taxa da API: respeita Retry-After ou espera crescente
+                ra = (getattr(e, "headers", None) or {}).get("Retry-After")
+                espera = int(ra) if ra and str(ra).isdigit() else 15 * (i + 1)
+            time.sleep(espera)
 
 
 def paginado(base, params):
@@ -85,6 +89,15 @@ def num(v):
     return -float(s) if neg else float(s)
 
 
+def atas_vigentes_ou_none(uasg, hoje):
+    """Como atas_vigentes, mas devolve None se a API falhar (gerenciadora fica como não lida)."""
+    try:
+        return atas_vigentes(uasg, hoje)
+    except RuntimeError as e:
+        print("gerenciadora nao lida", uasg, str(e)[-120:], flush=True)
+        return None
+
+
 def atas_vigentes(uasg, hoje):
     """Atas com vigência final de hoje a hoje + 2 anos (duas janelas de 365 dias, limite da API)."""
     out = []
@@ -98,7 +111,12 @@ def atas_vigentes(uasg, hoje):
 
 
 def itens_da_ata(ctrl):
-    d = http(ARP + "/2.1_consultarARPItem_Id?" + urllib.parse.urlencode({"numeroControlePncpAta": ctrl}))
+    """None quando a API não responde: a ata fica marcada «não lida», a coleta segue."""
+    try:
+        d = http(ARP + "/2.1_consultarARPItem_Id?" + urllib.parse.urlencode({"numeroControlePncpAta": ctrl}))
+    except RuntimeError as e:
+        print("ata nao lida", ctrl, str(e)[-120:], flush=True)
+        return None
     return [i for i in (d.get("resultado") or []) if not i.get("itemExcluido")]
 
 
@@ -142,14 +160,25 @@ def compras_do_extrato(caminho):
     return comp, d.get("data_execucao")
 
 
+def contratos_ou_none(ug, ano):
+    try:
+        return contratos(ug, ano)
+    except RuntimeError as e:
+        print("contratos nao lidos", ug, str(e)[-120:], flush=True)
+        return None
+
+
 def contratos(ug, ano):
     out = []
     for c in http(CTR + "/contrato/ug/%s" % ug):
         if c.get("receita_despesa") != "Despesa" or c.get("situacao") != "Ativo":
             continue
-        emp = http(c["links"]["empenhos"]) if c.get("links", {}).get("empenhos") else []
-        emp_ano = [e for e in emp if (e.get("numero") or "").startswith(str(ano)) and e.get("unidade_gestora") == ug]
-        empenhado = round(sum(num(e.get("empenhado")) for e in emp_ano), 2)
+        try:
+            emp = http(c["links"]["empenhos"]) if c.get("links", {}).get("empenhos") else []
+        except RuntimeError:
+            emp = None  # empenhos do contrato não lidos: valor fica nulo, não zero
+        emp_ano = [e for e in (emp or []) if (e.get("numero") or "").startswith(str(ano)) and e.get("unidade_gestora") == ug]
+        empenhado = round(sum(num(e.get("empenhado")) for e in emp_ano), 2) if emp is not None else None
         forn = (c.get("fornecedor") or {})
         tipo_forn = "PJ" if len(re.sub(r"\D", "", forn.get("cnpj_cpf_idgener", ""))) == 14 else "PF"
         out.append({
@@ -170,7 +199,7 @@ def main(argv=None):
     ap.add_argument("--extrato", required=True)
     ap.add_argument("--saida", required=True)
     ap.add_argument("--hoje", default=dt.date.today().isoformat())
-    ap.add_argument("--paralelo", type=int, default=6)
+    ap.add_argument("--paralelo", type=int, default=3)
     ap.add_argument("--itens-tg", help="CSV sem pessoa do relatório de itens de NE do TG")
     ap.add_argument("--alvos", help="JSON [[gerenciadora, numero, ano, item, cnpj], ...] (alternativa ao --itens-tg, para o runner)")
     ap.add_argument("--cache", default=None)
@@ -192,7 +221,10 @@ def main(argv=None):
 
     # 1. atas vigentes das gerenciadoras; ficam as das 6 OMDS e as das compras usadas
     with cf.ThreadPoolExecutor(a.paralelo) as ex:
-        res = dict(zip(gerenciadoras, ex.map(lambda u: atas_vigentes(u, hoje), gerenciadoras), strict=True))
+        res = dict(zip(gerenciadoras, ex.map(lambda u: atas_vigentes_ou_none(u, hoje), gerenciadoras), strict=True))
+    nao_lidas = sorted(u for u, v in res.items() if v is None)
+    log["gerenciadoras_nao_lidas"] = nao_lidas
+    res = {u: v for u, v in res.items() if v is not None}
     print("gerenciadoras", len(gerenciadoras), dt.datetime.now().strftime("%H:%M:%S"), flush=True)
     atas = []
     for u, lst in res.items():
@@ -205,6 +237,10 @@ def main(argv=None):
     # 2. itens de cada ata
     with cf.ThreadPoolExecutor(a.paralelo) as ex:
         itens = dict(zip([x["numeroControlePncpAta"] for x in atas], ex.map(lambda x: itens_da_ata(x["numeroControlePncpAta"]), atas), strict=True))
+
+    log["atas_nao_lidas"] = sorted(k for k, v in itens.items() if v is None)
+    itens = {k: v for k, v in itens.items() if v is not None}
+    atas = [x for x in atas if x["numeroControlePncpAta"] in itens]
 
     # 3. unidades de cada item: saldo empenhável por UASG
     tarefas = []
@@ -265,7 +301,8 @@ def main(argv=None):
 
     # 4. contratos ativos
     with cf.ThreadPoolExecutor(a.paralelo) as ex:
-        ctr = dict(zip(OMDS, ex.map(lambda ug: contratos(ug, hoje.year), OMDS), strict=True))
+        ctr = dict(zip(OMDS, ex.map(lambda ug: contratos_ou_none(ug, hoje.year), OMDS), strict=True))
+    log["contratos_nao_lidos"] = sorted(u for u, v in ctr.items() if v is None)
 
     resumo = {}
     for cod, nome in OMDS.items():
@@ -273,7 +310,7 @@ def main(argv=None):
         por_tipo = {}
         for x in ls:
             por_tipo[x["tipo_unidade"]] = round(por_tipo.get(x["tipo_unidade"], 0) + x["saldo_valor"], 2)
-        cs = ctr[cod]
+        cs = ctr[cod] if ctr[cod] is not None else []
         resumo[nome] = {
             "uasg": cod,
             "atas_saldo_valor": round(sum(x["saldo_valor"] for x in ls), 2),
@@ -281,9 +318,11 @@ def main(argv=None):
             "atas_com_saldo": len({x["controle_pncp"] for x in ls if x["saldo_valor"] > 0}),
             "itens_com_saldo": sum(1 for x in ls if x["saldo_valor"] > 0),
             "atas_vencendo_ate_31dez": round(sum(x["saldo_valor"] for x in ls if (x["vigencia_fim"] or "9") <= "%d-12-31" % hoje.year), 2),
+            "contratos_lidos": ctr[cod] is not None,
             "contratos_ativos": len(cs),
             "contratos_valor_global": round(sum(c["valor_global"] for c in cs), 2),
-            "contratos_empenhado_ano": round(sum(c["empenhado_ano"] for c in cs), 2),
+            "contratos_empenhado_ano": round(sum(c["empenhado_ano"] or 0 for c in cs), 2),
+            "contratos_empenhos_nao_lidos": sum(1 for c in cs if c["empenhado_ano"] is None),
         }
     saida = {"versao": "0.1", "data_coleta": dt.datetime.now().isoformat(timespec="seconds"), "hoje": hoje.isoformat(),
              "extrato_tg": data_extrato, "fontes": [ARP, CTR, "extrato TG (chave SIASG)"], "coleta": log,
