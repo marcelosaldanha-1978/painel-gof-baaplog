@@ -1,28 +1,29 @@
 {
  "meta": {
-  "versao_motor": "0.3",
-  "regra_vinculo": "1.2",
+  "versao_motor": "0.4",
+  "regra_vinculo": "2.0",
+  "base_b1": "liquido",
   "hoje": "2026-11-09",
   "fase": "A",
   "fontes": [
    {
     "nome": "execucao_tg",
     "arquivo": "ultimo.json",
-    "sha256": "b3f5fadbfd3489ddcd1ca14fdf40c900753299feda4b7b80ec1678262d023429",
-    "data_dado": "2026-11-06",
-    "nota": "extrato sem pessoa; vínculo v1.2"
+    "sha256": "b198c700b6890a37748335c65d3685d5108930c6b6c628f250d0d4bf5059fd77",
+    "data_dado": "2026-11-09",
+    "nota": "extrato sem pessoa; vínculo v2.0"
    },
    {
     "nome": "carteira",
     "arquivo": "carteira_processos.json",
-    "sha256": "d573c1aa10e50cde65caefc0eaea4273e388d31c8e0fbd47100834d4c485e0bf",
-    "data_dado": "2026-11-09"
+    "sha256": "f9eca1be1a248b9d2228e0e6ade11bed76bf93e9437389b827bacdcf5f647668",
+    "data_dado": "2026-11-10"
    },
    {
     "nome": "kpis_painel",
     "arquivo": "kpis_painel.json",
-    "sha256": "7798bc5e26ce1a2372fbf8c83326d0121fa23ea0e4e9288805be83848f39fd8a",
-    "data_dado": "2026-11-09"
+    "sha256": "3b1122bc80cd111a341740f56b9b3f7187a4db3fda9118d7d190665e4f3d6cd4",
+    "data_dado": "2026-11-10"
    },
    {
     "nome": "atas",
@@ -38,179 +39,236 @@
    }
   ],
   "fonte_b1": "tg",
-  "idade_b1_dias_uteis": 1,
+  "idade_b1_dias_uteis": 0,
   "b1_fresco": true,
   "dias_uteis_fresco": 2,
   "dias_pendencias_amarelo": 14,
-  "fonte_b1_motivo": "TG fresco (1 dias uteis)",
+  "fonte_b1_motivo": "TG fresco (0 dias uteis)",
   "data_portal": "2026-11-04",
-  "data_tg": "2026-11-06"
+  "data_tg": "2026-11-09"
  },
  "b1": {
-  "fonte": "Tesouro Gerencial, conta 522920101 (Movim. Líquido > 0), NE emitidas em 2026, UG 160xxx e 167xxx",
-  "data_dado": "2026-11-06",
+  "fonte": "Tesouro Gerencial, empenhado LÍQUIDO (contas 6229201xx = item 23 «despesas empenhadas»: emissão + reforço − anulação), NE emitidas em 2026, UG 160xxx e 167xxx",
+  "base": "liquido",
+  "rotulo_total": "Empenhado líquido nas 6 OMDS",
+  "data_dado": "2026-11-09",
   "omds": [
    {
     "omds": "BaApLog",
     "rotulo": "BaApLog",
     "ug160": "160238",
     "ug167": "167238",
-    "ne160": 444,
-    "valor160": 3658479.74,
-    "ne167": 129,
-    "valor167": 690583.92,
+    "ne160": 352,
+    "valor160": 3973410.32,
+    "ne167": 109,
+    "valor167": 515217.45,
     "por_mes": [
-     12902.76,
-     441739.76,
-     343451.53,
-     545060.88,
-     270138.22,
-     471267.99,
-     507966.31,
-     324800.91,
-     540277.62,
-     717131.64,
-     174326.04,
+     3596.23,
+     562618.53,
+     199869.27,
+     1214142.17,
+     422521.33,
+     351737.28,
+     334204.96,
+     294107.27,
+     308296.78,
+     591143.3,
+     206390.65,
      0.0
     ],
-    "total": 4349063.66,
-    "ne": 573
+    "ne_anuladas": 115,
+    "emitido": 4381128.27,
+    "total": 4488627.77,
+    "ne": 461
    },
    {
     "omds": "BCMS",
     "rotulo": "BCMS",
     "ug160": "160329",
     "ug167": "167329",
-    "ne160": 348,
-    "valor160": 11686884.19,
-    "ne167": 119,
-    "valor167": 2540795.85,
+    "ne160": 299,
+    "valor160": 9298230.65,
+    "ne167": 105,
+    "valor167": 2472233.94,
     "por_mes": [
-     3400.1,
-     771959.77,
-     407514.38,
-     2394677.32,
-     342537.63,
-     936541.47,
-     1591816.37,
-     3146849.68,
-     2148881.37,
-     2058212.71,
-     425289.24,
+     7599.98,
+     713795.47,
+     320004.59,
+     2359641.61,
+     303509.34,
+     583173.93,
+     1486661.81,
+     1593874.85,
+     2014239.86,
+     1957639.51,
+     430323.64,
      0.0
     ],
-    "total": 14227680.04,
-    "ne": 467
+    "ne_anuladas": 65,
+    "emitido": 14232714.44,
+    "total": 11770464.59,
+    "ne": 404
    },
    {
     "omds": "BMSA",
     "rotulo": "BMSA",
     "ug160": "160304",
     "ug167": "167304",
-    "ne160": 487,
-    "valor160": 4211728.5,
-    "ne167": 124,
-    "valor167": 844473.82,
+    "ne160": 458,
+    "valor160": 4526431.53,
+    "ne167": 106,
+    "valor167": 655891.55,
     "por_mes": [
      0.0,
-     564022.99,
-     316464.39,
+     1042094.72,
+     260575.2,
      190171.42,
-     365658.9,
-     379170.91,
-     865585.6,
-     908113.96,
-     779857.85,
+     343908.01,
+     312268.19,
+     844973.08,
+     783963.61,
+     716911.65,
      675157.02,
-     11999.28,
+     12300.18,
      0.0
     ],
-    "total": 5056202.32,
-    "ne": 611
+    "ne_anuladas": 48,
+    "emitido": 5056503.22,
+    "total": 5182323.08,
+    "ne": 564
    },
    {
     "omds": "ECT",
     "rotulo": "ECT",
     "ug160": "160321",
     "ug167": "167321",
-    "ne160": 275,
-    "valor160": 9281859.99,
-    "ne167": 21,
-    "valor167": 30976.04,
+    "ne160": 248,
+    "valor160": 6014182.87,
+    "ne167": 19,
+    "valor167": 28248.63,
     "por_mes": [
-     286390.38,
-     51190.31,
-     3260287.7,
-     317590.43,
-     3205849.51,
-     205606.53,
-     527450.28,
-     65554.68,
-     884880.85,
-     469276.83,
-     38758.53,
+     227889.26,
+     88185.59,
+     414230.02,
+     201371.93,
+     3230786.87,
+     142580.17,
+     496337.5,
+     62376.69,
+     655204.72,
+     458836.91,
+     64631.84,
      0.0
     ],
-    "total": 9312836.03,
-    "ne": 296
+    "ne_anuladas": 36,
+    "emitido": 9338709.34,
+    "total": 6042431.5,
+    "ne": 267
    },
    {
     "omds": "DCMun",
     "rotulo": "DCMun",
     "ug160": "160246",
     "ug167": "167246",
-    "ne160": 395,
-    "valor160": 4490821.27,
-    "ne167": 142,
-    "valor167": 377074.79,
+    "ne160": 317,
+    "valor160": 3581838.91,
+    "ne167": 121,
+    "valor167": 303377.99,
     "por_mes": [
-     16790.77,
-     167237.56,
-     1062266.45,
-     300158.21,
-     436482.73,
-     409485.55,
-     266302.92,
-     611058.86,
-     739899.09,
-     816145.87,
+     13659.76,
+     155615.83,
+     652857.78,
+     370685.82,
+     342786.22,
+     376272.63,
+     265653.44,
+     507312.82,
+     736450.0,
+     421854.55,
      42068.05,
      0.0
     ],
-    "total": 4867896.06,
-    "ne": 537
+    "ne_anuladas": 99,
+    "emitido": 4867896.06,
+    "total": 3885216.9,
+    "ne": 438
    },
    {
     "omds": "1oDSup",
     "rotulo": "1º D Sup",
     "ug160": "160307",
     "ug167": "167307",
-    "ne160": 511,
-    "valor160": 24099439.64,
-    "ne167": 37,
-    "valor167": 2077280.92,
+    "ne160": 410,
+    "valor160": 16553895.85,
+    "ne167": 36,
+    "valor167": 1977276.17,
     "por_mes": [
-     513431.15,
-     2923723.81,
-     3923751.57,
-     1490625.4,
-     2606386.66,
-     2157963.3,
-     1977861.01,
-     3528420.49,
-     2684430.53,
-     4192591.49,
+     124418.15,
+     1428907.96,
+     2850794.81,
+     704770.52,
+     2070900.64,
+     1951602.69,
+     1515643.02,
+     1662382.44,
+     2069254.47,
+     3974962.17,
      177535.15,
      0.0
     ],
-    "total": 26176720.56,
-    "ne": 548
+    "ne_anuladas": 102,
+    "emitido": 26176720.56,
+    "total": 18531172.02,
+    "ne": 446
    }
   ],
-  "total": 63990398.67,
-  "ne": 3032,
+  "total": 49900235.86,
+  "ne": 2580,
   "marco": "O marco de empenho de 100% (OUT) da Tabela 2 venceu em 31/10/2026. O percentual sobre o crédito recebido só entra depois da P-034 (conferência do crédito por UG).",
-  "lastro": "exato (TG); P-034 em aberto pode mudar o filtro «> 0»"
+  "lastro": "exato (TG, conferido ao centavo com o item 23)",
+  "apoio": {
+   "emissao_bruta": 64053671.89,
+   "ne_emitidas": 3045,
+   "ne_anuladas": 465,
+   "nota": "Líquido = emissão + reforço − anulação. A emissão bruta não soma os reforços nem desconta as anulações (inclusive de NE anuladas e reemitidas). O ritmo mensal usa o mês de emissão da NE."
+  },
+  "vinculo_gcalc": {
+   "regra": "chave SIASG da NE (v2.0): UASG + modalidade 05 + número/ano do pregão da carteira",
+   "pregoes": [
+    {
+     "pregao": "PE 90009/2025",
+     "ne": 15,
+     "valor": 200612.0
+    },
+    {
+     "pregao": "PE 90008/2025",
+     "ne": 32,
+     "valor": 122029.5
+    },
+    {
+     "pregao": "PE 90023/2025",
+     "ne": 58,
+     "valor": 81915.44
+    },
+    {
+     "pregao": "PE 90315/2026",
+     "ne": 39,
+     "valor": 63905.07
+    },
+    {
+     "pregao": "PE 90012/2026",
+     "ne": 2,
+     "valor": 12296.08
+    },
+    {
+     "pregao": "PE 90013/2025",
+     "ne": 3,
+     "valor": 11494.0
+    }
+   ],
+   "ne": 149,
+   "valor": 492252.09
+  }
  },
  "b3": {
   "fonte": "Planilha GCALC, aba Controle Processos; KPI do Painel transportado (não recalculado)",
@@ -431,8 +489,8 @@
    "nao_publicados": 2
   },
   "kpis_painel": {
-   "lido_em": "2026-11-09",
-   "origem": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-09 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Painel, linha 5 (A5:E5)",
+   "lido_em": "2026-11-10",
+   "origem": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-10 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Painel, linha 5 (A5:E5)",
    "processos": "12",
    "valor_estimado": "R$ 75.312.730,52",
    "score_bsc": "66,9%",
@@ -503,1249 +561,42 @@
    }
   ],
   "ne_verificar": {
-   "regra": "vínculo NE -> pregão v1.2",
+   "regra": "vínculo NE -> pregão v2.0",
    "contagem": {
     "ALERTA": {
      "BaApLog": 0,
-     "BCMS": 1,
+     "BCMS": 0,
      "BMSA": 0,
      "ECT": 0,
      "DCMun": 0,
      "1oDSup": 0
     },
     "AMBIGUO": {
-     "BaApLog": 8,
-     "BCMS": 11,
-     "BMSA": 4,
-     "ECT": 1,
-     "DCMun": 10,
+     "BaApLog": 0,
+     "BCMS": 0,
+     "BMSA": 0,
+     "ECT": 0,
+     "DCMun": 0,
      "1oDSup": 0
     },
     "CITADO_SEM_ATA": {
-     "BaApLog": 1,
-     "BCMS": 7,
-     "BMSA": 7,
+     "BaApLog": 0,
+     "BCMS": 0,
+     "BMSA": 0,
      "ECT": 0,
-     "DCMun": 46,
-     "1oDSup": 22
+     "DCMun": 0,
+     "1oDSup": 0
+    },
+    "SEM_CHAVE_CITA": {
+     "BaApLog": 0,
+     "BCMS": 0,
+     "BMSA": 0,
+     "ECT": 0,
+     "DCMun": 0,
+     "1oDSup": 0
     }
    },
-   "lista": [
-    {
-     "documento": "160329000012026NE000211",
-     "omds": "BCMS",
-     "valor": 20155.0,
-     "data": "24/08/2026",
-     "nivel": "ALERTA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000228",
-     "omds": "DCMun",
-     "valor": 31056.06,
-     "data": "13/08/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160329000012026NE000166",
-     "omds": "BCMS",
-     "valor": 30000.0,
-     "data": "01/07/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160329000012026NE000333",
-     "omds": "BCMS",
-     "valor": 29106.75,
-     "data": "27/10/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000219",
-     "omds": "DCMun",
-     "valor": 26448.85,
-     "data": "07/08/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160321000012026NE000255",
-     "omds": "ECT",
-     "valor": 16003.34,
-     "data": "19/10/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000376",
-     "omds": "DCMun",
-     "valor": 14683.46,
-     "data": "22/10/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167238000012026NE000114",
-     "omds": "BaApLog",
-     "valor": 8001.31,
-     "data": "08/10/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000221",
-     "omds": "DCMun",
-     "valor": 7893.6,
-     "data": "10/08/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160238000012026NE000313",
-     "omds": "BaApLog",
-     "valor": 5320.56,
-     "data": "05/08/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90012/2026",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160329000012026NE000253",
-     "omds": "BCMS",
-     "valor": 4700.15,
-     "data": "09/09/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90012/2026",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000289",
-     "omds": "DCMun",
-     "valor": 4278.97,
-     "data": "31/08/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90012/2026",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160329000012026NE000340",
-     "omds": "BCMS",
-     "valor": 4060.0,
-     "data": "05/11/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000328",
-     "omds": "DCMun",
-     "valor": 4053.99,
-     "data": "25/09/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000322",
-     "omds": "DCMun",
-     "valor": 3999.75,
-     "data": "24/09/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160238000012026NE000370",
-     "omds": "BaApLog",
-     "valor": 2175.26,
-     "data": "25/09/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90012/2026",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000329",
-     "omds": "DCMun",
-     "valor": 1512.15,
-     "data": "25/09/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160329000012026NE000260",
-     "omds": "BCMS",
-     "valor": 1500.4,
-     "data": "16/09/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90012/2026",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000275",
-     "omds": "DCMun",
-     "valor": 1028.0,
-     "data": "28/08/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160329000012026NE000227",
-     "omds": "BCMS",
-     "valor": 826.0,
-     "data": "26/08/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160329000012026NE000272",
-     "omds": "BCMS",
-     "valor": 826.0,
-     "data": "23/09/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160329000012026NE000304",
-     "omds": "BCMS",
-     "valor": 786.5,
-     "data": "07/10/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90012/2026",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160329000012026NE000297",
-     "omds": "BCMS",
-     "valor": 729.0,
-     "data": "06/10/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160304000012026NE000202",
-     "omds": "BMSA",
-     "valor": 559.97,
-     "data": "10/06/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167304000012026NE000091",
-     "omds": "BMSA",
-     "valor": 559.97,
-     "data": "04/09/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160329000012026NE000228",
-     "omds": "BCMS",
-     "valor": 540.0,
-     "data": "26/08/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167238000012026NE000082",
-     "omds": "BaApLog",
-     "valor": 508.2,
-     "data": "17/07/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167238000012026NE000083",
-     "omds": "BaApLog",
-     "valor": 480.0,
-     "data": "17/07/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90012/2026",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167238000012026NE000050",
-     "omds": "BaApLog",
-     "valor": 395.4,
-     "data": "02/07/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160329000012026NE000167",
-     "omds": "BCMS",
-     "valor": 302.9,
-     "data": "02/07/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160304000012026NE000300",
-     "omds": "BMSA",
-     "valor": 236.65,
-     "data": "22/07/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160304000012026NE000265",
-     "omds": "BMSA",
-     "valor": 200.0,
-     "data": "06/07/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167238000012026NE000064",
-     "omds": "BaApLog",
-     "valor": 192.29,
-     "data": "16/07/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000264",
-     "omds": "DCMun",
-     "valor": 86.5,
-     "data": "27/08/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167238000012026NE000067",
-     "omds": "BaApLog",
-     "valor": 48.0,
-     "data": "16/07/2026",
-     "nivel": "AMBIGUO",
-     "pregoes": [
-      "PE 90023/2025",
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167329000012026NE000020",
-     "omds": "BCMS",
-     "valor": 399999.87,
-     "data": "23/04/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160329000012026NE000332",
-     "omds": "BCMS",
-     "valor": 360000.0,
-     "data": "27/10/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160329000012026NE000156",
-     "omds": "BCMS",
-     "valor": 212999.22,
-     "data": "22/06/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167329000012026NE000088",
-     "omds": "BCMS",
-     "valor": 124999.2,
-     "data": "29/07/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167304000012026NE000077",
-     "omds": "BMSA",
-     "valor": 119999.88,
-     "data": "05/08/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000358",
-     "omds": "1oDSup",
-     "valor": 113256.0,
-     "data": "26/08/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000378",
-     "omds": "1oDSup",
-     "valor": 101490.0,
-     "data": "03/09/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000379",
-     "omds": "1oDSup",
-     "valor": 90330.0,
-     "data": "03/09/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "167304000012026NE000082",
-     "omds": "BMSA",
-     "valor": 62314.11,
-     "data": "20/08/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000056",
-     "omds": "1oDSup",
-     "valor": 59854.4,
-     "data": "26/02/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000394",
-     "omds": "1oDSup",
-     "valor": 53150.0,
-     "data": "08/09/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "167307000012026NE000010",
-     "omds": "1oDSup",
-     "valor": 31710.0,
-     "data": "29/04/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000395",
-     "omds": "1oDSup",
-     "valor": 22969.2,
-     "data": "09/09/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000273",
-     "omds": "1oDSup",
-     "valor": 17160.0,
-     "data": "08/07/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160329000012026NE000149",
-     "omds": "BCMS",
-     "valor": 16466.49,
-     "data": "03/06/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000081",
-     "omds": "1oDSup",
-     "valor": 13656.0,
-     "data": "09/03/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160304000012026NE000469",
-     "omds": "BMSA",
-     "valor": 12994.0,
-     "data": "23/10/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 74/2026"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000427",
-     "omds": "1oDSup",
-     "valor": 10003.2,
-     "data": "25/09/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000059",
-     "omds": "1oDSup",
-     "valor": 8790.0,
-     "data": "26/02/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000082",
-     "omds": "DCMun",
-     "valor": 8530.0,
-     "data": "17/07/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000479",
-     "omds": "1oDSup",
-     "valor": 7474.0,
-     "data": "26/10/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90003/2026"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000076",
-     "omds": "DCMun",
-     "valor": 6200.0,
-     "data": "03/07/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000097",
-     "omds": "DCMun",
-     "valor": 5677.73,
-     "data": "03/08/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000093",
-     "omds": "DCMun",
-     "valor": 5450.0,
-     "data": "22/07/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000108",
-     "omds": "DCMun",
-     "valor": 5427.0,
-     "data": "31/08/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160238000012026NE000354",
-     "omds": "BaApLog",
-     "valor": 5099.0,
-     "data": "18/09/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90003/2026"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000095",
-     "omds": "DCMun",
-     "valor": 5037.3,
-     "data": "24/07/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000083",
-     "omds": "DCMun",
-     "valor": 4650.0,
-     "data": "17/07/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000107",
-     "omds": "DCMun",
-     "valor": 4310.0,
-     "data": "31/08/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000377",
-     "omds": "DCMun",
-     "valor": 2584.0,
-     "data": "23/10/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90003/2026"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000080",
-     "omds": "DCMun",
-     "valor": 2251.93,
-     "data": "09/04/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000123",
-     "omds": "DCMun",
-     "valor": 2214.66,
-     "data": "12/05/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000195",
-     "omds": "DCMun",
-     "valor": 2076.2,
-     "data": "03/07/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000129",
-     "omds": "DCMun",
-     "valor": 2075.6,
-     "data": "19/05/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000090",
-     "omds": "DCMun",
-     "valor": 1998.99,
-     "data": "22/07/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000375",
-     "omds": "DCMun",
-     "valor": 1960.0,
-     "data": "22/10/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90023/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000087",
-     "omds": "DCMun",
-     "valor": 1899.0,
-     "data": "21/07/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000094",
-     "omds": "DCMun",
-     "valor": 1899.0,
-     "data": "24/07/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160304000012026NE000471",
-     "omds": "BMSA",
-     "valor": 1860.0,
-     "data": "23/10/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 74/2026"
-     ]
-    },
-    {
-     "documento": "160304000012026NE000467",
-     "omds": "BMSA",
-     "valor": 1768.4,
-     "data": "23/10/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 74/2026"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000054",
-     "omds": "DCMun",
-     "valor": 1731.84,
-     "data": "16/06/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000181",
-     "omds": "DCMun",
-     "valor": 1600.0,
-     "data": "19/06/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90003/2026"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000105",
-     "omds": "DCMun",
-     "valor": 1560.0,
-     "data": "31/08/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000096",
-     "omds": "DCMun",
-     "valor": 1419.46,
-     "data": "24/07/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000323",
-     "omds": "DCMun",
-     "valor": 1380.0,
-     "data": "24/09/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160304000012026NE000468",
-     "omds": "BMSA",
-     "valor": 1270.5,
-     "data": "23/10/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 74/2026"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000128",
-     "omds": "DCMun",
-     "valor": 1179.01,
-     "data": "19/05/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000078",
-     "omds": "DCMun",
-     "valor": 1125.0,
-     "data": "09/04/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000076",
-     "omds": "DCMun",
-     "valor": 1064.98,
-     "data": "08/04/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000066",
-     "omds": "1oDSup",
-     "valor": 945.0,
-     "data": "02/03/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000106",
-     "omds": "DCMun",
-     "valor": 910.94,
-     "data": "31/08/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000142",
-     "omds": "DCMun",
-     "valor": 910.94,
-     "data": "20/10/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000130",
-     "omds": "DCMun",
-     "valor": 867.86,
-     "data": "19/05/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000085",
-     "omds": "DCMun",
-     "valor": 806.0,
-     "data": "21/07/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000132",
-     "omds": "DCMun",
-     "valor": 793.5,
-     "data": "19/05/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000350",
-     "omds": "DCMun",
-     "valor": 776.39,
-     "data": "16/10/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000131",
-     "omds": "DCMun",
-     "valor": 775.12,
-     "data": "19/05/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000429",
-     "omds": "1oDSup",
-     "valor": 732.73,
-     "data": "29/09/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000079",
-     "omds": "DCMun",
-     "valor": 661.0,
-     "data": "09/04/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000306",
-     "omds": "DCMun",
-     "valor": 574.16,
-     "data": "15/09/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000133",
-     "omds": "DCMun",
-     "valor": 530.0,
-     "data": "19/05/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000109",
-     "omds": "DCMun",
-     "valor": 488.96,
-     "data": "31/08/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000141",
-     "omds": "DCMun",
-     "valor": 488.96,
-     "data": "20/10/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000086",
-     "omds": "DCMun",
-     "valor": 475.0,
-     "data": "21/07/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000091",
-     "omds": "DCMun",
-     "valor": 475.0,
-     "data": "22/07/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000307",
-     "omds": "DCMun",
-     "valor": 463.75,
-     "data": "15/09/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000232",
-     "omds": "DCMun",
-     "valor": 460.0,
-     "data": "14/08/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000235",
-     "omds": "DCMun",
-     "valor": 460.0,
-     "data": "14/08/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160304000012026NE000466",
-     "omds": "BMSA",
-     "valor": 450.0,
-     "data": "23/10/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 74/2026"
-     ]
-    },
-    {
-     "documento": "167329000012026NE000049",
-     "omds": "BCMS",
-     "valor": 439.5,
-     "data": "08/06/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90013/2025"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000100",
-     "omds": "1oDSup",
-     "valor": 438.15,
-     "data": "18/03/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90023/2025"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000070",
-     "omds": "1oDSup",
-     "valor": 436.0,
-     "data": "05/03/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000274",
-     "omds": "DCMun",
-     "valor": 430.0,
-     "data": "28/08/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90315/2026"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000246",
-     "omds": "1oDSup",
-     "valor": 381.56,
-     "data": "23/06/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90003/2026"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000279",
-     "omds": "1oDSup",
-     "valor": 381.56,
-     "data": "09/07/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90003/2026"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000099",
-     "omds": "1oDSup",
-     "valor": 342.0,
-     "data": "18/03/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90023/2025"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000144",
-     "omds": "1oDSup",
-     "valor": 342.0,
-     "data": "08/04/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90013/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000229",
-     "omds": "DCMun",
-     "valor": 320.0,
-     "data": "13/08/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90023/2025"
-     ]
-    },
-    {
-     "documento": "167246000012026NE000084",
-     "omds": "DCMun",
-     "valor": 315.0,
-     "data": "21/07/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000083",
-     "omds": "1oDSup",
-     "valor": 312.48,
-     "data": "09/03/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "167329000012026NE000012",
-     "omds": "BCMS",
-     "valor": 153.0,
-     "data": "31/03/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160307000012026NE000071",
-     "omds": "1oDSup",
-     "valor": 139.79,
-     "data": "05/03/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90009/2025"
-     ]
-    },
-    {
-     "documento": "160246000012026NE000084",
-     "omds": "DCMun",
-     "valor": 97.4,
-     "data": "22/04/2026",
-     "nivel": "CITADO_SEM_ATA",
-     "pregoes": [
-      "PE 90008/2025"
-     ]
-    }
-   ]
+   "lista": []
   },
   "pendencias": {
    "editado_em": "2026-11-07",
