@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-recalculo_independente.py (v1, 07nov2026) — portão 3 do PLANO v2.4 (D12 revista).
+recalculo_independente.py (v2, 09nov2026; v1 de 07nov2026) — portão 3 do PLANO v2.4 (D12 revista).
 
 Recalcula, SEM importar o motor, os números que o `dados.json` publica, a partir das mesmas fontes brutas
 (extrato sem pessoa, carteira em JSON e atas), e compara com tolerância de R$ 0,01. Se um número não bater,
@@ -8,6 +8,8 @@ sai com código 1 e a publicação não acontece (CI do `painel-gof-baaplog`).
 
 O que se recalcula:
   B1  total e nº de NE das 6 OMDS; por OMDS, UG 160 e 167; soma dos meses = total da OMDS.
+      v2 (LOG-181): extrato versao 2 = base LIQUIDA; NE com valor 0,00 (anulada por inteiro) fora da contagem; emissao
+      bruta de apoio; total liquido = total_item23 declarado no extrato; vinculo pela chave SIASG por pregao.
   B3  nº de processos, estimado e homologado somados da carteira.
   B4  contagem de NE a verificar por nível; atas a vencer (<= limite) contra o JSON de atas.
 Uso: python recalculo_independente.py --dados saida/dados.json --extrato dados/execucao/ultimo.json \
@@ -66,13 +68,31 @@ def main(argv=None):
             falhas.append("%s: recalculado %s, publicado %s" % (nome, esperado, obtido))
 
     # ---- B1 a partir do extrato
+    liquido = ext.get("versao") == 2 and ext.get("base") == "liquido_6229201"
+    if liquido:
+        base_esperada = "liquido"
+    elif D["meta"].get("fonte_b1") == "portal":
+        base_esperada = "portal"
+    else:
+        base_esperada = "emissao"
+    chk("B1 base", base_esperada, D["b1"].get("base", "emissao"), numerico=False)
     por = defaultdict(lambda: {"160": 0.0, "167": 0.0, "n160": 0, "n167": 0, "meses": [0.0] * 12})
-    docs = set()
+    docs, n_contadas, emitido, anuladas = set(), 0, 0.0, 0
+    siasg = defaultdict(lambda: [0, 0.0])
     for x in ext["ne"]:
         if x["documento"] in docs:
             falhas.append("NE repetida no extrato: " + x["documento"])
         docs.add(x["documento"])
         omds = UGS[x["ug"]]
+        if liquido:
+            emitido += float(x["valor_emitido"])
+            if x.get("nivel") == "SIASG" and float(x["valor"]) != 0.0:
+                siasg[x["pregao"]][0] += 1
+                siasg[x["pregao"]][1] += float(x["valor"])
+            if float(x["valor"]) == 0.0:
+                anuladas += 1
+                continue
+        n_contadas += 1
         lado = "160" if x["ug"].startswith("160") else "167"
         por[omds][lado] += float(x["valor"])
         por[omds]["n" + lado] += 1
@@ -81,7 +101,18 @@ def main(argv=None):
             por[omds]["meses"][d.month - 1] += float(x["valor"])
     total = round(sum(v["160"] + v["167"] for v in por.values()), 2)
     chk("B1 total", total, D["b1"]["total"])
-    chk("B1 ne", len(docs), D["b1"]["ne"])
+    chk("B1 ne", n_contadas, D["b1"]["ne"])
+    if liquido:
+        chk("B1 liquido = item 23 declarado", round(float(ext["total_item23"]), 2), total)
+        chk("B1 emissao bruta", round(emitido, 2), D["b1"]["apoio"]["emissao_bruta"])
+        chk("B1 NE anuladas", anuladas, D["b1"]["apoio"]["ne_anuladas"])
+        chk("B1 NE emitidas", len(docs), D["b1"]["apoio"]["ne_emitidas"])
+        pub = {x["pregao"]: x for x in D["b1"]["vinculo_gcalc"]["pregoes"]}
+        chk("B1 vinculo pregoes", sorted(siasg), sorted(pub), numerico=False)
+        for p_, (n_, v_) in siasg.items():
+            if p_ in pub:
+                chk("B1 vinculo %s ne" % p_, n_, pub[p_]["ne"])
+                chk("B1 vinculo %s valor" % p_, round(v_, 2), pub[p_]["valor"])
     chk("B1 data_dado", ext["data_execucao"], D["b1"]["data_dado"], numerico=False)
     for linha in D["b1"]["omds"]:
         v = por[linha["omds"]]
@@ -98,9 +129,10 @@ def main(argv=None):
     chk("B3 homologado", round(sum(_num_br(p.get("homologado")) for p in procs), 2), r["homologado"])
     chk("B3 atrasados", sum(1 for p in procs if str(p.get("status_prazo", "")).strip() == "Atrasado"), r["atrasados"])
     # ---- B4: NE a verificar e atas a vencer
-    niveis = Counter(x["nivel"] for x in ext["ne"] if x.get("nivel") in ("ALERTA", "AMBIGUO", "CITADO_SEM_ATA"))
+    A_VERIFICAR = ("ALERTA", "AMBIGUO", "CITADO_SEM_ATA", "SEM_CHAVE_CITA")
+    niveis = Counter(x["nivel"] for x in ext["ne"] if x.get("nivel") in A_VERIFICAR)
     pub = D["b4"]["ne_verificar"]["contagem"]
-    for n in ("ALERTA", "AMBIGUO", "CITADO_SEM_ATA"):
+    for n in A_VERIFICAR:
         chk("B4 %s" % n, niveis.get(n, 0), sum(pub[n].values()))
     chk("B4 lista a verificar", sum(niveis.values()), len(D["b4"]["ne_verificar"]["lista"]))
     lim = D["b4"]["atas"]["limite_dias"]
@@ -115,7 +147,7 @@ def main(argv=None):
             print("  - " + f)
         return 1
     print("RECALCULO: confere ao centavo (B1 R$ %.2f, %d NE; B3 %d processos; B4 %d NE a verificar, %d atas a vencer)"
-          % (total, len(docs), len(procs), sum(niveis.values()), len(venc)))
+          % (total, n_contadas, len(procs), sum(niveis.values()), len(venc)))
     return 0
 
 

@@ -18,6 +18,12 @@ v0.2: roda na nuvem (GitHub Actions, workflow gof-painel.yml) a partir do EXTRAT
 do TG estiver (hoje, a pasta do projeto; no alvo, a ponte da subscricao) por `gerar_extrato()`. O CSV com pessoa nunca
 vai ao repositorio (D6).
 
+v0.4 (09nov2026, LOG-181; P-063 e P-064): o B1 soma o EMPENHADO LIQUIDO (contas 6229201xx = item 23 do TG), lido do extrato
+versao 2 (`gof_extrato_tg.py`); a emissao bruta (522920101) fica como apoio, com rotulo proprio, e as NE anuladas por
+inteiro saem da contagem. Vinculo NE -> pregao pela chave SIASG (regra 2.0, `vinculo_siasg.py`); a regra 1.2 (texto +
+favorecido) so vale para o extrato do Portal (reserva) e como conferencia. Extrato versao 1 e CSV do R1 continuam lidos,
+com a base declarada («emissao bruta») no rotulo do B1.
+
 v0.3 (PLANO v2.4, LOG-141): repositorio proprio `painel-gof-baaplog` (D8). Faixa com a fonte do B1 e a idade em DIAS UTEIS
 (D17 revista: ate 2 dias uteis = fresco); `fonte_b1` fica em meta (so "tg" ate o Portal entrar no runner, passo 5).
 Pendencias do coordenador com a data da ultima edicao (D20): o JSON e {"editado_em": "AAAA-MM-DD", "itens": [...]};
@@ -42,15 +48,16 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import gcalc_transparencia as tr  # noqa: E402
+from vinculo_siasg import VERSAO_REGRA as VERSAO_VINCULO_SIASG  # noqa: E402
 
-VERSAO_MOTOR = "0.3"
+VERSAO_MOTOR = "0.4"
 DIAS_UTEIS_FRESCO = 2  # D17 revista: ate 2 dias uteis o dado e fresco
 DIAS_PENDENCIAS_AMARELO = 14  # D20
 OMDS = ["BaApLog", "BCMS", "BMSA", "ECT", "DCMun", "1oDSup"]
 ROTULO_OMDS = {"1oDSup": "1º D Sup"}
 MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"]
 DIAS_ATA_A_VENCER = 90
-NIVEIS_A_VERIFICAR = ("ALERTA", "AMBIGUO", "CITADO_SEM_ATA")
+NIVEIS_A_VERIFICAR = ("ALERTA", "AMBIGUO", "CITADO_SEM_ATA", "SEM_CHAVE_CITA")
 RE_LINK = re.compile(r"editais/(\d{14})/(\d{4})/0*(\d+)")
 
 
@@ -91,10 +98,22 @@ def ler_pendencias(obj):
 
 
 # ------------------------------------------------------------------ B1 execucao
-def bloco_b1(regs, data_dado):
-    """Empenhado por OMDS (UG 160 e 167 separadas) e por mes de emissao. regs = saida de tr.ler_csv_tg."""
+BASES_B1 = {
+    "liquido": ("Tesouro Gerencial, empenhado LÍQUIDO (contas 6229201xx = item 23 «despesas empenhadas»: emissão + reforço "
+                "− anulação), NE emitidas em 2026, UG 160xxx e 167xxx", "Empenhado líquido nas 6 OMDS"),
+    "emissao": ("Tesouro Gerencial, conta 522920101 (EMISSÃO BRUTA, sem reforço nem anulação), NE emitidas em 2026, "
+                "UG 160xxx e 167xxx", "Emissão bruta nas 6 OMDS (não é o empenhado líquido)"),
+    "portal": ("Portal da Transparência (RESERVA): valor da NE no Portal, que mistura emissão e valor atualizado; "
+               "não comparável ao líquido do TG", "Valor das NE no Portal (reserva; base mista)"),
+}
+
+
+def bloco_b1(regs, data_dado, base="emissao", vinculos=None):
+    """Empenhado por OMDS (UG 160 e 167 separadas) e por mes de emissao. regs = saida de tr.ler_csv_tg ou de ler_extrato.
+    base: "liquido" (extrato v2), "emissao" (CSV do R1 ou extrato v1) ou "portal". Na base liquida, NE com valor 0,00
+    (anulada por inteiro) nao entra na contagem de NE; o valor emitido vai ao apoio."""
     por = {o: {"omds": o, "rotulo": ROTULO_OMDS.get(o, o), "ug160": None, "ug167": None, "ne160": 0, "valor160": 0.0,
-               "ne167": 0, "valor167": 0.0, "por_mes": [0.0] * 12} for o in OMDS}
+               "ne167": 0, "valor167": 0.0, "por_mes": [0.0] * 12, "ne_anuladas": 0, "emitido": 0.0} for o in OMDS}
     docs = set()
     for r in regs:
         if r["documento"] in docs:
@@ -105,6 +124,11 @@ def bloco_b1(regs, data_dado):
         v = tr._num(r["valor"])
         lado = "160" if ug.startswith("160") else "167"
         o["ug" + lado] = ug
+        if r.get("_emitido") is not None:
+            o["emitido"] += r["_emitido"]
+        if base == "liquido" and v == 0.0:
+            o["ne_anuladas"] += 1
+            continue
         o["ne" + lado] += 1
         o["valor" + lado] += v
         d = tr._data(r.get("data"))
@@ -117,13 +141,33 @@ def bloco_b1(regs, data_dado):
         x["total"] = round(x["valor160"] + x["valor167"], 2)
         x["ne"] = x["ne160"] + x["ne167"]
         x["por_mes"] = [round(v, 2) for v in x["por_mes"]]
+        x["emitido"] = round(x["emitido"], 2) if base == "liquido" else None
         linhas.append(x)
-    return {"fonte": "Tesouro Gerencial, conta 522920101 (Movim. Líquido > 0), NE emitidas em 2026, UG 160xxx e 167xxx",
-            "data_dado": data_dado, "omds": linhas, "total": round(sum(x["total"] for x in linhas), 2),
-            "ne": sum(x["ne"] for x in linhas),
-            "marco": "O marco de empenho de 100% (OUT) da Tabela 2 venceu em 31/10/2026. O percentual sobre o crédito "
-                     "recebido só entra depois da P-034 (conferência do crédito por UG).",
-            "lastro": "exato (TG); P-034 em aberto pode mudar o filtro «> 0»"}
+    fonte, rotulo = BASES_B1[base]
+    out = {"fonte": fonte, "base": base, "rotulo_total": rotulo,
+           "data_dado": data_dado, "omds": linhas, "total": round(sum(x["total"] for x in linhas), 2),
+           "ne": sum(x["ne"] for x in linhas),
+           "marco": "O marco de empenho de 100% (OUT) da Tabela 2 venceu em 31/10/2026. O percentual sobre o crédito "
+                    "recebido só entra depois da P-034 (conferência do crédito por UG).",
+           "lastro": "exato (TG, conferido ao centavo com o item 23)" if base == "liquido" else
+                     ("exato (TG), mas é emissão bruta" if base == "emissao" else "reserva com lacunas")}
+    if base == "liquido":
+        out["apoio"] = {"emissao_bruta": round(sum(x["emitido"] for x in linhas), 2),
+                        "ne_emitidas": len(docs), "ne_anuladas": sum(x["ne_anuladas"] for x in linhas),
+                        "nota": "Líquido = emissão + reforço − anulação. A emissão bruta não soma os reforços nem desconta "
+                                "as anulações (inclusive de NE anuladas e reemitidas). O ritmo mensal usa o mês de emissão da NE."}
+    if vinculos is not None:
+        g = {}
+        for v in vinculos:
+            if v.get("nivel") == "SIASG" and tr._num(v["valor"]) != 0.0:
+                x = g.setdefault(v["pregao"], {"pregao": v["pregao"], "ne": 0, "valor": 0.0})
+                x["ne"] += 1
+                x["valor"] += tr._num(v["valor"])
+        lista = sorted(({**x, "valor": round(x["valor"], 2)} for x in g.values()), key=lambda x: -x["valor"])
+        out["vinculo_gcalc"] = {"regra": "chave SIASG da NE (v%s): UASG + modalidade 05 + número/ano do pregão da carteira"
+                                % VERSAO_VINCULO_SIASG, "pregoes": lista, "ne": sum(x["ne"] for x in lista),
+                                "valor": round(sum(x["valor"] for x in lista), 2)}
+    return out
 
 
 # ------------------------------------------------------------------ B3 carteira
@@ -201,7 +245,7 @@ def resumo_conferencia(obj):
             "fonte": "confronto semanal planilha x PNCP/Compras.gov no runner (D19 parte 1); a gravacao do provado e sessao do Claude"}
 
 
-def bloco_b4(atas, processos, vinculos, pendencias, hoje, conferencia=None):
+def bloco_b4(atas, processos, vinculos, pendencias, hoje, conferencia=None, regra=None):
     vig = [a for a in atas if not a["cancelada"] and a["vigencia_fim"]]
     for a in vig:
         a["dias"] = (dt.date.fromisoformat(a["vigencia_fim"]) - hoje).days
@@ -219,7 +263,7 @@ def bloco_b4(atas, processos, vinculos, pendencias, hoje, conferencia=None):
                      "a_vencer": vencer, "limite_dias": DIAS_ATA_A_VENCER,
                      "proxima": {k: proxima[k] for k in ("processo", "ata", "vigencia_fim", "dias")} if proxima else None},
             "processos": atencao,
-            "ne_verificar": {"regra": "vínculo NE -> pregão v%s" % tr.VERSAO_REGRA, "contagem": contagem,
+            "ne_verificar": {"regra": "vínculo NE -> pregão v%s" % (regra or tr.VERSAO_REGRA), "contagem": contagem,
                              "lista": [{"documento": v["documento"], "omds": v["ug"], "valor": round(tr._num(v["valor"]), 2),
                                         "data": v["data"], "nivel": v["nivel"],
                                         "pregoes": v.get("candidatos") or ([v["pregao"]] if v["pregao"] else [])}
@@ -250,32 +294,39 @@ def gerar_extrato(regs, fichas, data_execucao, origem):
 
 
 def ler_extrato(extrato):
-    """Extrato -> (regs no formato do leitor do TG, vinculos no formato de tr.vincular)."""
+    """Extrato -> (regs no formato do leitor do TG, vinculos). Versao 2: valor = LIQUIDO e valor_emitido no _emitido."""
     regs, vinculos = [], []
     for x in extrato["ne"]:
         nome = tr.UGS[x["ug"]]
         regs.append({"documento": x["documento"], "valor": _br(x["valor"]), "data": x["data"], "_ug": x["ug"], "_nome": nome,
-                     "modalidade": x.get("modalidade", "")})
+                     "modalidade": x.get("modalidade", ""), "_emitido": x.get("valor_emitido")})
         if x.get("nivel"):
             vinculos.append({"nivel": x["nivel"], "pregao": x.get("pregao"), "candidatos": x.get("candidatos") or [],
                              "documento": x["documento"], "data": x["data"], "ug": nome, "valor": _br(x["valor"])})
     return regs, vinculos
 
 
+def base_do_extrato(extrato):
+    return "liquido" if extrato.get("versao") == 2 and extrato.get("base") == "liquido_6229201" else "emissao"
+
+
 # ------------------------------------------------------------------ montagem e HTML
-def montar(regs, data_execucao, processos, kpis, atas, fichas, pendencias, hoje, fontes, vinculos=None, conferencia=None):
+def montar(regs, data_execucao, processos, kpis, atas, fichas, pendencias, hoje, fontes, vinculos=None, conferencia=None,
+           base="emissao", regra=None):
     if vinculos is None:
         vinculos = tr.vincular(regs, fichas)
     pend = ler_pendencias(pendencias)
     if pend["editado_em"]:
         pend["dias"] = (hoje - dt.date.fromisoformat(pend["editado_em"])).days
     idade_b1 = dias_uteis(dt.date.fromisoformat(data_execucao), hoje)
-    dados = {"meta": {"versao_motor": VERSAO_MOTOR, "regra_vinculo": tr.VERSAO_REGRA, "hoje": hoje.isoformat(),
+    regra = regra or tr.VERSAO_REGRA
+    dados = {"meta": {"versao_motor": VERSAO_MOTOR, "regra_vinculo": regra, "base_b1": base, "hoje": hoje.isoformat(),
                       "fase": "A", "fontes": fontes, "fonte_b1": "tg", "idade_b1_dias_uteis": idade_b1,
                       "b1_fresco": idade_b1 <= DIAS_UTEIS_FRESCO, "dias_uteis_fresco": DIAS_UTEIS_FRESCO,
                       "dias_pendencias_amarelo": DIAS_PENDENCIAS_AMARELO},
-             "b1": bloco_b1(regs, data_execucao), "b3": bloco_b3(processos, kpis),
-             "b4": bloco_b4(atas, processos, vinculos, pend, hoje, conferencia)}
+             "b1": bloco_b1(regs, data_execucao, base, vinculos if regra == VERSAO_VINCULO_SIASG else None),
+             "b3": bloco_b3(processos, kpis),
+             "b4": bloco_b4(atas, processos, vinculos, pend, hoje, conferencia, regra)}
     dados["b4"]["data_dado_atas"] = next((f["data_dado"] for f in fontes if f["nome"] == "atas"), None)
     return dados
 
@@ -325,7 +376,7 @@ def main(argv=None):
     conj = json.load(open(o.fichas, encoding="utf-8"))
     fichas = tr.ficha_de_pncp(conj)
     data_fichas = str(conj.get("coletado_em") or "2026-11-03")[:10]
-    fonte_b1, motivo_b1, data_portal = "tg", None, None
+    fonte_b1, motivo_b1, data_portal, base, regra = "tg", None, None, "emissao", None
     if o.execucao:
         if not o.data_execucao:
             raise SystemExit("--data-execucao e obrigatoria com --execucao")
@@ -345,6 +396,7 @@ def main(argv=None):
         ext = json.load(open(o.extrato, encoding="utf-8"))
         regs, vinculos = ler_extrato(ext)
         data_exec = ext["data_execucao"]
+        base, regra = base_do_extrato(ext), ext.get("regra_vinculo")
         f_exec = [{"nome": "execucao_tg", "arquivo": Path(o.extrato).name, "sha256": sha256(o.extrato), "data_dado": data_exec,
                    "nota": "extrato sem pessoa; vínculo v%s" % ext.get("regra_vinculo")}]
     # D17 revista: o Portal so substitui o TG parado ha mais de DIAS_UTEIS_FRESCO dias uteis E mais atual que ele
@@ -354,7 +406,7 @@ def main(argv=None):
         idade_tg = dias_uteis(dt.date.fromisoformat(data_exec), hoje)
         if idade_tg > DIAS_UTEIS_FRESCO and data_portal and data_portal > data_exec:
             regs, vinculos = ler_extrato(ext_p)
-            fonte_b1, data_exec = "portal", data_portal
+            fonte_b1, data_exec, base, regra = "portal", data_portal, "portal", ext_p.get("regra_vinculo")
             motivo_b1 = "TG parado ha %d dias uteis e Portal mais atual (%s > %s)" % (idade_tg, data_portal, ext["data_execucao"])
             f_exec = [{"nome": "execucao_portal", "arquivo": Path(o.extrato_portal).name, "sha256": sha256(o.extrato_portal),
                        "data_dado": data_exec, "nota": "RESERVA (D17): Portal da Transparencia, lacunas e atraso de ~7 dias; extrato sem pessoa"}]
@@ -378,7 +430,8 @@ def main(argv=None):
                  {"nome": "atas", "arquivo": pa.name, "sha256": sha256(pa), "data_dado": atas_j.get("coletado_em")},
                  {"nome": "fichas_pncp", "arquivo": Path(o.fichas).name, "sha256": sha256(o.fichas), "data_dado": data_fichas}])
     conf = json.load(open(o.conferencia, encoding="utf-8")) if o.conferencia and Path(o.conferencia).exists() else None
-    dados = montar(regs, data_exec, processos, kpis, atas_j["atas"], fichas, pend, hoje, fontes, vinculos=vinculos, conferencia=conf)
+    dados = montar(regs, data_exec, processos, kpis, atas_j["atas"], fichas, pend, hoje, fontes, vinculos=vinculos, conferencia=conf,
+                   base=base, regra=regra)
     dados["meta"].update({"fonte_b1": fonte_b1, "fonte_b1_motivo": motivo_b1, "data_portal": data_portal,
                           "data_tg": data_exec if (o.execucao or fonte_b1 == "tg") else ext["data_execucao"]})
     s = Path(o.saida)

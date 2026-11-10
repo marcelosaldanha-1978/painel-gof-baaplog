@@ -103,8 +103,9 @@ function meses(o){var w=12,s='<svg class="mes" viewBox="0 0 '+(12*w)+' 46" prese
  o.por_mes.forEach(function(v,i){var h=max?Math.max(v>0?1:0,40*v/max):0;s+='<rect x="'+(i*w+1)+'" y="'+(42-h)+'" width="'+(w-2)+'" height="'+h+'" fill="var(--accent)"><title>'+["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"][i]+": "+R.format(v)+'</title></rect>';});
  return s+'<line x1="0" y1="42.5" x2="'+(12*w)+'" y2="42.5" stroke="var(--line)"/></svg>';}
 var h='<h2 id="t1">Quanto cada OMDS empenhou em 2026</h2><p class="sub">'+esc(b1.fonte)+'. Lastro: '+esc(b1.lastro)+'.</p>'+
- '<div class="heroi"><div><div class="rot">Empenhado nas 6 OMDS</div><div class="num">'+mi(b1.total)+'</div></div>'+
- '<div><div class="rot">Notas de empenho</div><div class="num">'+N.format(b1.ne)+'</div></div></div>'+
+ '<div class="heroi"><div><div class="rot">'+esc(b1.rotulo_total||"Empenhado nas 6 OMDS")+'</div><div class="num">'+mi(b1.total)+'</div></div>'+
+ '<div><div class="rot">'+(b1.base==="liquido"?"NE com empenho líquido":"Notas de empenho")+'</div><div class="num">'+N.format(b1.ne)+'</div></div></div>'+
+ (b1.apoio?'<p class="sub"><strong>Apoio:</strong> emissão bruta (conta 522920101) '+R.format(b1.apoio.emissao_bruta)+' em '+N.format(b1.apoio.ne_emitidas)+' NE; '+N.format(b1.apoio.ne_anuladas)+' NE anuladas por inteiro. '+esc(b1.apoio.nota)+'</p>':'')+
  '<p class="sub"><strong>Marco da Diretriz:</strong> '+esc(b1.marco)+'</p><div class="grade">';
 b1.omds.slice().sort(function(a,b){return b.total-a.total;}).forEach(function(o){
  var p160=o.total?100*o.valor160/o.total:0;
@@ -116,6 +117,9 @@ b1.omds.slice().sort(function(a,b){return b.total-a.total;}).forEach(function(o)
 h+='</div><details><summary>Tabela (mesmos números)</summary><table class="cards"><thead><tr><th>OMDS</th><th class="n">UG 160</th><th class="n">UG 167</th><th class="n">Total</th><th class="n">NE</th></tr></thead><tbody>';
 b1.omds.forEach(function(o){h+='<tr><td data-r="OMDS">'+esc(o.rotulo)+'</td><td class="n" data-r="UG 160">'+R.format(o.valor160)+'</td><td class="n" data-r="UG 167">'+R.format(o.valor167)+'</td><td class="n" data-r="Total">'+R.format(o.total)+'</td><td class="n" data-r="NE">'+o.ne+'</td></tr>';});
 h+='<tr><th>Total</th><th></th><th></th><th class="n">'+R.format(b1.total)+'</th><th class="n">'+b1.ne+'</th></tr></tbody></table></details>';
+if(b1.vinculo_gcalc){var vg=b1.vinculo_gcalc;h+='<details><summary>Empenhado ligado aos pregões da carteira: '+R.format(vg.valor)+' em '+N.format(vg.ne)+' NE</summary><p class="sub">Regra: '+esc(vg.regra)+'. Valor líquido.</p><table class="cards"><thead><tr><th>Pregão</th><th class="n">NE</th><th class="n">Empenhado líquido</th></tr></thead><tbody>';
+ vg.pregoes.forEach(function(x){h+='<tr><td data-r="Pregão" class="mono">'+esc(x.pregao)+'</td><td class="n" data-r="NE">'+x.ne+'</td><td class="n" data-r="Empenhado líquido">'+R.format(x.valor)+'</td></tr>';});
+ h+='</tbody></table></details>';}
 document.getElementById("b1").innerHTML=h;
 // B3
 var b3=D.b3,r=b3.resumo,k=b3.kpis_painel||{};
@@ -145,8 +149,8 @@ else{h+='<p class="vazio">Nenhuma das '+a.n_vigentes+' atas vigentes vence em at
 h+='<h3>Processos atrasados ou suspensos</h3><table class="cards"><thead><tr><th>Processo</th><th>Objeto</th><th>Situação</th><th>Próxima ação</th></tr></thead><tbody>';
 b4.processos.forEach(function(p){h+='<tr><td data-r="Processo" class="mono">'+esc(p.processo)+'</td><td data-r="Objeto">'+esc(p.objeto)+'</td><td data-r="Situação"><span class="chip '+(p.situacao_pncp==="Suspenso"?"warn":"crit")+'">'+esc(p.status_prazo)+' · '+esc(p.situacao_pncp)+'</span></td><td data-r="Próxima ação">'+esc(p.proxima_acao)+'</td></tr>';});
 h+='</tbody></table>';
-var nv=b4.ne_verificar,rot={ALERTA:"Alerta",AMBIGUO:"Ambíguo",CITADO_SEM_ATA:"Citado sem ata"},cls={ALERTA:"crit",AMBIGUO:"warn",CITADO_SEM_ATA:"info"};
-h+='<h3>NE a verificar ('+esc(nv.regra)+')</h3><p class="sub">Alerta: cita pregão e UASG, favorecido fora das atas. Ambíguo: fornecedor com ata em mais de um pregão, não atribuído. Citado sem ata: número citado, favorecido fora das atas (colisão de número ou compra fora de ata). Nenhum entra em soma.</p>'+
+var nv=b4.ne_verificar,rot={ALERTA:"Alerta",AMBIGUO:"Ambíguo",CITADO_SEM_ATA:"Citado sem ata",SEM_CHAVE_CITA:"Sem chave SIASG, cita pregão"},cls={ALERTA:"crit",AMBIGUO:"warn",CITADO_SEM_ATA:"info",SEM_CHAVE_CITA:"warn"};
+h+='<h3>NE a verificar ('+esc(nv.regra)+')</h3><p class="sub">Alerta: cita pregão e UASG, favorecido fora das atas. Ambíguo: fornecedor com ata em mais de um pregão, não atribuído. Citado sem ata: número citado, favorecido fora das atas (colisão de número ou compra fora de ata). Sem chave SIASG, cita pregão (regra 2.0): NE sem a chave da compra no SIASG cujo texto cita um pregão da carteira. Na regra 2.0 o vínculo vem da chave SIASG da NE, e só o último nível se aplica. Nenhum entra em soma.</p>'+
  '<table class="cards"><thead><tr><th>Nível</th>'+["BaApLog","BCMS","BMSA","ECT","DCMun","1oDSup"].map(function(o){return '<th class="n">'+(o==="1oDSup"?"1º D Sup":o)+'</th>';}).join("")+'</tr></thead><tbody>';
 Object.keys(nv.contagem).forEach(function(n){h+='<tr><td data-r="Nível"><span class="chip '+cls[n]+'">'+rot[n]+'</span></td>'+["BaApLog","BCMS","BMSA","ECT","DCMun","1oDSup"].map(function(o){return '<td class="n" data-r="'+(o==="1oDSup"?"1º D Sup":o)+'">'+nv.contagem[n][o]+'</td>';}).join("")+'</tr>';});
 h+='</tbody></table><details><summary>Lista das '+nv.lista.length+' NE</summary><table class="cards"><thead><tr><th>NE</th><th>OMDS</th><th>Emissão</th><th class="n">Valor</th><th>Nível</th><th>Pregão(ões)</th></tr></thead><tbody>';
