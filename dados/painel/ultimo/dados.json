@@ -3,7 +3,7 @@
   "versao_motor": "0.4",
   "regra_vinculo": "2.0",
   "base_b1": "liquido",
-  "hoje": "2026-11-09",
+  "hoje": "2026-11-10",
   "fase": "A",
   "fontes": [
    {
@@ -27,9 +27,9 @@
    },
    {
     "nome": "atas",
-    "arquivo": "atas_pncp_2026-11-09.json",
-    "sha256": "80a9edb788d4de879a9d4023e4fe4016e9d84c3a908d0349d330b3f587760d06",
-    "data_dado": "2026-11-09"
+    "arquivo": "atas_pncp_2026-11-10.json",
+    "sha256": "70e774b0e1ecd60a7c235d84c4722302554dc2253d3ba1c5efd957759d6f03a8",
+    "data_dado": "2026-11-10"
    },
    {
     "nome": "fichas_pncp",
@@ -39,11 +39,11 @@
    }
   ],
   "fonte_b1": "tg",
-  "idade_b1_dias_uteis": 0,
+  "idade_b1_dias_uteis": 1,
   "b1_fresco": true,
   "dias_uteis_fresco": 2,
   "dias_pendencias_amarelo": 14,
-  "fonte_b1_motivo": "TG fresco (0 dias uteis)",
+  "fonte_b1_motivo": "TG fresco (1 dias uteis)",
   "data_portal": "2026-11-04",
   "data_tg": "2026-11-09"
  },
@@ -510,7 +510,7 @@
     "processo": "PE 90315/2026",
     "ata": "00014/2026",
     "vigencia_fim": "2027-05-17",
-    "dias": 189
+    "dias": 188
    }
   },
   "processos": [
@@ -645,7 +645,7 @@
      "desde": "2026-11-04"
     }
    ],
-   "dias": 2
+   "dias": 3
   },
   "conferencia": {
    "data": "2026-11-09",
@@ -667,6 +667,218 @@
    ],
    "fonte": "confronto semanal planilha x PNCP/Compras.gov no runner (D19 parte 1); a gravacao do provado e sessao do Claude"
   },
-  "data_dado_atas": "2026-11-09"
+  "data_dado_atas": "2026-11-10"
+ },
+ "encerramento": {
+  "norma": "Portaria SEF/C Ex nº 399, de 24/09/2026 (EB90-D-08.001)",
+  "marcos": [
+   {
+    "data": "2026-11-25",
+    "evento": "ev. 6 e 7",
+    "texto": "Data-limite para a UGE emitir NE (a UGR pode prorrogar, em caráter excepcional) e nomear em BI quem indica RPNP",
+    "vencido": false,
+    "dias_uteis": 10,
+    "dias_corridos": 15
+   },
+   {
+    "data": "2026-11-26",
+    "evento": "ev. 8",
+    "texto": "A UGR recolhe todo o crédito que restar em tela",
+    "vencido": false,
+    "dias_uteis": 11,
+    "dias_corridos": 16
+   },
+   {
+    "data": "2026-12-03",
+    "evento": "ev. 10",
+    "texto": "Data-limite de NE dos créditos remanejados",
+    "vencido": false,
+    "dias_uteis": 16,
+    "dias_corridos": 23
+   },
+   {
+    "data": "2026-12-04",
+    "evento": "ev. 11",
+    "texto": "Última NC do EME ou da UGR",
+    "vencido": false,
+    "dias_uteis": 17,
+    "dias_corridos": 24
+   },
+   {
+    "data": "2026-12-15",
+    "evento": "ev. 16",
+    "texto": "Fase interna das demandas do PCA 2027 concluída",
+    "vencido": false,
+    "dias_uteis": 24,
+    "dias_corridos": 35
+   },
+   {
+    "data": "2026-12-23",
+    "evento": "ev. 19 e 20",
+    "texto": "Fim da indicação no SIAFI das NE a inscrever em RPNP (início em 01/12) e desbloqueio de RPNP de 2024",
+    "vencido": false,
+    "dias_uteis": 30,
+    "dias_corridos": 43
+   },
+   {
+    "data": "2026-12-30",
+    "evento": "ev. 26, 28 e 32",
+    "texto": "Liquidar RPNP inscrito até 2023; ordens bancárias até 14h; anular NE não indicadas",
+    "vencido": false,
+    "dias_uteis": 34,
+    "dias_corridos": 50
+   }
+  ],
+  "feriados_considerados": [
+   "2026-11-20",
+   "2026-12-25"
+  ],
+  "dias_uteis_ate_limite_ne": 10,
+  "ne60": {
+   "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Saldo a liquidar por NE 2026 (v1.0, 09nov2026)», execução de 10/11/2026, 14h44, sem filtro de exibição",
+   "posicao_siafi": "10/11/2026 08:10",
+   "hoje": "2026-11-10",
+   "regra": "NE de 2026 com saldo a liquidar ou em liquidação (contas 622920101 e 622920102) maior que zero e emitida há mais de 60 dias (antes de 11/09/2026); «sem nenhuma liquidação» = nada nas contas 622920103 e 622920104. A data é a da emissão da NE; reforço posterior não muda a data",
+   "total": {
+    "a_liquidar": 19757928.8,
+    "ne_com_saldo": 799,
+    "mais60_valor": 9393378.13,
+    "mais60_ne": 371,
+    "mais60_sem_nenhuma_liq_valor": 6904879.95,
+    "mais60_sem_nenhuma_liq_ne": 223
+   },
+   "por_omds": {
+    "Cmdo BaApLog": {
+     "a_liquidar": 1980221.42,
+     "ne_com_saldo": 150,
+     "mais60_valor": 1198018.99,
+     "mais60_ne": 70,
+     "mais60_sem_nenhuma_liq_valor": 317366.05,
+     "mais60_sem_nenhuma_liq_ne": 43
+    },
+    "DC Mun": {
+     "a_liquidar": 1400578.4,
+     "ne_com_saldo": 135,
+     "mais60_valor": 658022.33,
+     "mais60_ne": 66,
+     "mais60_sem_nenhuma_liq_valor": 392644.21,
+     "mais60_sem_nenhuma_liq_ne": 47
+    },
+    "BMSA": {
+     "a_liquidar": 1954525.13,
+     "ne_com_saldo": 176,
+     "mais60_valor": 1317223.26,
+     "mais60_ne": 87,
+     "mais60_sem_nenhuma_liq_valor": 1113043.9,
+     "mais60_sem_nenhuma_liq_ne": 54
+    },
+    "1º D Sup": {
+     "a_liquidar": 7503748.66,
+     "ne_com_saldo": 132,
+     "mais60_valor": 2914905.26,
+     "mais60_ne": 59,
+     "mais60_sem_nenhuma_liq_valor": 2278359.68,
+     "mais60_sem_nenhuma_liq_ne": 30
+    },
+    "ECT": {
+     "a_liquidar": 991362.2,
+     "ne_com_saldo": 80,
+     "mais60_valor": 302317.97,
+     "mais60_ne": 26,
+     "mais60_sem_nenhuma_liq_valor": 251394.32,
+     "mais60_sem_nenhuma_liq_ne": 16
+    },
+    "BCMS": {
+     "a_liquidar": 5927492.99,
+     "ne_com_saldo": 126,
+     "mais60_valor": 3002890.32,
+     "mais60_ne": 63,
+     "mais60_sem_nenhuma_liq_valor": 2552071.79,
+     "mais60_sem_nenhuma_liq_ne": 33
+    }
+   },
+   "maiores": [
+    {
+     "ne": "167329000012026NE000089",
+     "omds": "BCMS",
+     "emissao": "2026-08-06",
+     "dias": 96,
+     "a_liquidar": 1176235.0,
+     "liquidado": 0.0
+    },
+    {
+     "ne": "160329000012026NE000172",
+     "omds": "BCMS",
+     "emissao": "2026-07-16",
+     "dias": 117,
+     "a_liquidar": 1149999.74,
+     "liquidado": 0.0
+    },
+    {
+     "ne": "160307000012026NE000085",
+     "omds": "1º D Sup",
+     "emissao": "2026-03-10",
+     "dias": 245,
+     "a_liquidar": 1051650.0,
+     "liquidado": 0.0
+    },
+    {
+     "ne": "160238000012026NE000107",
+     "omds": "Cmdo BaApLog",
+     "emissao": "2026-04-10",
+     "dias": 214,
+     "a_liquidar": 504841.66,
+     "liquidado": 420157.52
+    },
+    {
+     "ne": "160307000012026NE000045",
+     "omds": "1º D Sup",
+     "emissao": "2026-02-26",
+     "dias": 257,
+     "a_liquidar": 351114.0,
+     "liquidado": 0.0
+    },
+    {
+     "ne": "160304000012026NE000287",
+     "omds": "BMSA",
+     "emissao": "2026-07-16",
+     "dias": 117,
+     "a_liquidar": 312962.0,
+     "liquidado": 0.0
+    },
+    {
+     "ne": "160238000012026NE000012",
+     "omds": "Cmdo BaApLog",
+     "emissao": "2026-02-11",
+     "dias": 272,
+     "a_liquidar": 208361.74,
+     "liquidado": 126637.27
+    },
+    {
+     "ne": "160307000012026NE000392",
+     "omds": "1º D Sup",
+     "emissao": "2026-09-04",
+     "dias": 67,
+     "a_liquidar": 184500.0,
+     "liquidado": 0.0
+    },
+    {
+     "ne": "167329000012026NE000020",
+     "omds": "BCMS",
+     "emissao": "2026-04-23",
+     "dias": 201,
+     "a_liquidar": 143431.95,
+     "liquidado": 256567.92
+    },
+    {
+     "ne": "160304000012026NE000288",
+     "omds": "BMSA",
+     "emissao": "2026-07-16",
+     "dias": 117,
+     "a_liquidar": 142314.0,
+     "liquidado": 0.0
+    }
+   ]
+  }
  }
 }
