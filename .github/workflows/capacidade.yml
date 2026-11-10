@@ -1,0 +1,59 @@
+# painel-gof-baaplog — capacidade imediata de empenho das 6 OMDS (bloco B8, PLANO v2.5) por fontes oficiais, sem depender
+# das SALC: atas e saldo por item (API de Dados Abertos do Compras.gov.br, módulo ARP) e contratos ativos (API pública do
+# Contratos.gov.br). O saldo é calculado por nós com o empenhado do TG (dados/capacidade/insumo_tg.json, sem pessoa).
+# Somente leitura nas APIs públicas; sem segredo. A API de unidades por item é lenta (2 a 40 s por consulta): o job
+# tem até 5h30. Grava em dados/capacidade/<data>/ e dados/capacidade/ultimo.json (histórico, sem force push).
+name: Capacidade de empenho (semanal)
+
+on:
+  schedule:
+    - cron: '17 5 * * 1'  # segunda 02:17 BRT, antes das montagens
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: capacidade
+  cancel-in-progress: false
+
+jobs:
+  capacidade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    permissions:
+      contents: write  # grava dados/capacidade no main
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          ref: main
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.14'
+      - name: Coleta ARP e contratos (somente leitura)
+        run: |
+          set -euo pipefail
+          mkdir -p saida
+          hoje="$(TZ=America/Sao_Paulo date +%Y-%m-%d)"
+          python motor/gof_capacidade.py --extrato dados/execucao/ultimo.json --alvos dados/capacidade/insumo_tg.json \
+            --saida saida/coleta.json --hoje "$hoje" --paralelo 8 --cache saida/cache
+          python motor/gof_capacidade_saldo.py --capacidade saida/coleta.json --empenhado dados/capacidade/insumo_tg.json \
+            --saida saida/capacidade.json
+      - name: Gravar em dados/capacidade
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          dia="$(TZ=America/Sao_Paulo date +%Y-%m-%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p "dados/capacidade/$dia"
+          cp saida/capacidade.json "dados/capacidade/$dia/capacidade.json"
+          cp saida/capacidade.json dados/capacidade/ultimo.json
+          (cd "dados/capacidade/$dia" && sha256sum capacidade.json > SHA256SUMS)
+          git add dados/capacidade
+          if git diff --cached --quiet; then echo "sem mudanca"; exit 0; fi
+          git commit --quiet -m "capacidade: $dia (run ${GITHUB_RUN_ID})"
+          git pull --quiet --rebase origin main
+          git push --quiet "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main

@@ -4,6 +4,7 @@ Estado persistente do painel (histórico por data, nunca force push). Gravado pe
 
 - `execucao/<data>/extrato.json` + `ultimo.json` — extrato sem pessoa (ver `execucao/LEIAME.md`).
 - `pncp/<data>/pncp_12_processos.json` + `ultimo.json` — fichas PNCP.
+- `capacidade/<data>/capacidade.json` + `ultimo.json` — capacidade imediata de empenho (B8): atas com saldo por item e UASG (API ARP do Compras.gov.br), contratos ativos (Contratos.gov.br) e saldo próprio = registrado − empenhado no TG. `capacidade/insumo_tg.json` = empenhado do TG por UASG, ata, item e CNPJ e os itens de outros órgãos a consultar (agregado sem pessoa; atualizado por sessão até a ponte do passo 7).
 - `painel/<data>/` + `ultimo/` — montagens.
 - `carteira_processos.json`, `kpis_painel.json` — planilha GCALC (`lido_em` = data da leitura).
 - `pendencias_coordenador.json` — `{"editado_em", "editado_por", "fonte", "itens": [...]}`.
