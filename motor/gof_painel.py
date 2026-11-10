@@ -124,11 +124,13 @@ def bloco_encerramento(hoje, leitura=None):
                        "dias_uteis": dias_uteis_com_feriados(hoje, d), "dias_corridos": (d - hoje).days})
     enc = {"norma": "Portaria SEF/C Ex nº 399, de 24/09/2026 (EB90-D-08.001)", "marcos": marcos,
            "feriados_considerados": sorted(f.isoformat() for f in FERIADOS_2026),
-           "dias_uteis_ate_limite_ne": marcos[0]["dias_uteis"], "ne60": None}
+           "dias_uteis_ate_limite_ne": marcos[0]["dias_uteis"], "ne60": None, "rpnp": None, "credito_por_ugr": None}
     if leitura:
         enc["ne60"] = {"fonte": leitura.get("fonte"), "posicao_siafi": leitura.get("posicao_siafi"), "hoje": leitura.get("hoje"),
                        "regra": leitura.get("regra"), "total": leitura.get("total"), "por_omds": leitura.get("por_omds"),
                        "maiores": (leitura.get("ne") or [])[:10]}
+        enc["rpnp"] = leitura.get("rpnp")
+        enc["credito_por_ugr"] = leitura.get("credito_por_ugr")
     return enc
 
 

@@ -115,6 +115,13 @@ var T=n.total;h+='<tr><td data-r="OMDS"><b>Total</b></td><td data-r="A liquidar"
 h+='<table class="cards"><thead><tr><th>NE</th><th>OMDS</th><th>Emissão</th><th>Dias</th><th>A liquidar</th></tr></thead><tbody>';
 (n.maiores||[]).forEach(function(x){h+='<tr><td data-r="NE" class="mono">'+esc(x.ne)+'</td><td data-r="OMDS">'+esc(x.omds)+'</td><td data-r="Emissão">'+esc(x.emissao)+'</td><td data-r="Dias">'+x.dias+'</td><td data-r="A liquidar">'+rs(x.a_liquidar)+'</td></tr>';});
 h+='</tbody></table>';}
+var c=E.credito_por_ugr;if(c&&c.por_ugr){h+='<h3>Crédito em tela por UGR (recolhimento em 26/11)</h3><p>'+esc(c.prazo_escrito||"")+'.</p><table class="cards"><thead><tr><th>UGR</th><th>UG</th><th>Em tela</th></tr></thead><tbody>';
+Object.keys(c.por_ugr).forEach(function(k){var r=c.por_ugr[k];h+='<tr><td data-r="UGR">'+esc(k)+'</td><td data-r="UG" class="mono">'+esc((r.ug||[]).join(" e "))+'</td><td data-r="Em tela">'+rs(r.em_tela)+'</td></tr>';});
+h+='<tr><td data-r="UGR"><b>Total</b></td><td data-r="UG"></td><td data-r="Em tela"><b>'+rs(c.total)+'</b></td></tr></tbody></table>';}
+var p=E.rpnp;if(p&&p.por_omds){h+='<h3>RPNP por ano de origem</h3><p>'+esc(p.regra||"")+'. Posição do SIAFI: '+esc(p.posicao_siafi||"")+'.</p><table class="cards"><thead><tr><th>OMDS</th><th>2025 a liquidar</th><th>NE</th><th>2025 liquidado a pagar</th><th>2024 pendente</th><th>Até 2023 bloqueado</th></tr></thead><tbody>';
+Object.keys(p.por_omds).sort(function(a,b){return p.por_omds[b].a_liquidar_2025-p.por_omds[a].a_liquidar_2025;}).forEach(function(o){var r=p.por_omds[o];
+h+='<tr><td data-r="OMDS">'+esc(o)+'</td><td data-r="2025 a liquidar">'+rs(r.a_liquidar_2025)+'</td><td data-r="NE">'+r.ne_2025+'</td><td data-r="2025 liquidado a pagar">'+rs(r.liq_a_pagar_2025)+'</td><td data-r="2024 pendente">'+rs(r.pendente_2024)+'</td><td data-r="Até 2023 bloqueado">'+rs(r.bloqueado_ate_2023)+'</td></tr>';});
+h+='</tbody></table>';(p.ate_2023||[]).forEach(function(x){h+='<p><span class="chip crit">Cancelamento automático em 30/12 se não for liquidada</span> <span class="mono">'+esc(x.ne)+'</span> · '+esc(x.omds)+' · bloqueado '+rs(x.bloqueado)+'</p>';});}
 el.innerHTML=h;})();
 // B1
 var b1=D.b1,max=0;b1.omds.forEach(function(o){o.por_mes.forEach(function(v){if(v>max)max=v;});});
