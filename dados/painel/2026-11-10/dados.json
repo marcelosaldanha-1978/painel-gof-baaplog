@@ -738,14 +738,16 @@
    "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Saldo a liquidar por NE 2026 (v1.0, 09nov2026)», execução de 10/11/2026, 14h44, sem filtro de exibição",
    "posicao_siafi": "10/11/2026 08:10",
    "hoje": "2026-11-10",
-   "regra": "NE de 2026 com saldo a liquidar ou em liquidação (contas 622920101 e 622920102) maior que zero e emitida há mais de 60 dias (antes de 11/09/2026); «sem nenhuma liquidação» = nada nas contas 622920103 e 622920104. A data é a da emissão da NE; reforço posterior não muda a data",
+   "regra": "NE de 2026 com saldo a liquidar ou em liquidação (contas 622920101 e 622920102) maior que zero e emitida há mais de 60 dias (antes de 11/09/2026); «sem nenhuma liquidação» = nada nas contas 622920103 e 622920104. A data é a da emissão da NE; reforço posterior não muda a data. O corte de 90 dias (emitidas antes de 12/08/2026) é o do SAG («NE sem liquidação por mais de 90 dias», Caderno 5.2 da SEF); o de 60 dias é o da Diretriz de Encerramento",
    "total": {
     "a_liquidar": 19757928.8,
     "ne_com_saldo": 799,
     "mais60_valor": 9393378.13,
     "mais60_ne": 371,
     "mais60_sem_nenhuma_liq_valor": 6904879.95,
-    "mais60_sem_nenhuma_liq_ne": 223
+    "mais60_sem_nenhuma_liq_ne": 223,
+    "mais90_valor": 7392490.56,
+    "mais90_ne": 249
    },
    "por_omds": {
     "Cmdo BaApLog": {
@@ -754,7 +756,9 @@
      "mais60_valor": 1198018.99,
      "mais60_ne": 70,
      "mais60_sem_nenhuma_liq_valor": 317366.05,
-     "mais60_sem_nenhuma_liq_ne": 43
+     "mais60_sem_nenhuma_liq_ne": 43,
+     "mais90_valor": 1080020.39,
+     "mais90_ne": 64
     },
     "DC Mun": {
      "a_liquidar": 1400578.4,
@@ -762,7 +766,9 @@
      "mais60_valor": 658022.33,
      "mais60_ne": 66,
      "mais60_sem_nenhuma_liq_valor": 392644.21,
-     "mais60_sem_nenhuma_liq_ne": 47
+     "mais60_sem_nenhuma_liq_ne": 47,
+     "mais90_valor": 341361.35,
+     "mais90_ne": 30
     },
     "BMSA": {
      "a_liquidar": 1954525.13,
@@ -770,7 +776,9 @@
      "mais60_valor": 1317223.26,
      "mais60_ne": 87,
      "mais60_sem_nenhuma_liq_valor": 1113043.9,
-     "mais60_sem_nenhuma_liq_ne": 54
+     "mais60_sem_nenhuma_liq_ne": 54,
+     "mais90_valor": 858286.89,
+     "mais90_ne": 63
     },
     "1º D Sup": {
      "a_liquidar": 7503748.66,
@@ -778,7 +786,9 @@
      "mais60_valor": 2914905.26,
      "mais60_ne": 59,
      "mais60_sem_nenhuma_liq_valor": 2278359.68,
-     "mais60_sem_nenhuma_liq_ne": 30
+     "mais60_sem_nenhuma_liq_ne": 30,
+     "mais90_valor": 2146864.06,
+     "mais90_ne": 37
     },
     "ECT": {
      "a_liquidar": 991362.2,
@@ -786,7 +796,9 @@
      "mais60_valor": 302317.97,
      "mais60_ne": 26,
      "mais60_sem_nenhuma_liq_valor": 251394.32,
-     "mais60_sem_nenhuma_liq_ne": 16
+     "mais60_sem_nenhuma_liq_ne": 16,
+     "mais90_valor": 125476.98,
+     "mais90_ne": 17
     },
     "BCMS": {
      "a_liquidar": 5927492.99,
@@ -794,7 +806,9 @@
      "mais60_valor": 3002890.32,
      "mais60_ne": 63,
      "mais60_sem_nenhuma_liq_valor": 2552071.79,
-     "mais60_sem_nenhuma_liq_ne": 33
+     "mais60_sem_nenhuma_liq_ne": 33,
+     "mais90_valor": 2840480.89,
+     "mais90_ne": 38
     }
    },
    "maiores": [
@@ -988,6 +1002,70 @@
     }
    },
    "prazo_escrito": "Depois da Portaria, só o Comando de Operações Terrestres escreveu em NC prazo de empenho posterior a 25/11 (30/11, 6 NCs de 22/10). Para as demais vale 25/11 até a UGR prorrogar"
+  },
+  "vedadas": {
+   "fonte": "TG, relatórios próprios «Saldo a liquidar por NE 2026» (execução 10/11 14h44) e «Itens de NE 2026» (execução 10/11 09h42)",
+   "regra": "Caderno 4.3 da SEF e Portaria 399-SEF (6.d.3): diárias, ajuda de custo e suprimento de fundos não podem ser inscritos em RPNP; o saldo a liquidar tem de ser liquidado ou anulado até o fechamento. O CSV de itens traz a ND com 6 dígitos, sem subitem: 339093 e suprimento de fundos são candidatas a confirmar; diárias (339014, 339015) são certas",
+   "por_omds": {
+    "ECT": {
+     "diarias_valor": 271399.32,
+     "diarias_ne": 6,
+     "a_confirmar_valor": 169247.92,
+     "a_confirmar_ne": 5
+    },
+    "Cmdo BaApLog": {
+     "diarias_valor": 91094.62,
+     "diarias_ne": 4,
+     "a_confirmar_valor": 0.0,
+     "a_confirmar_ne": 0
+    },
+    "DC Mun": {
+     "diarias_valor": 18100.5,
+     "diarias_ne": 6,
+     "a_confirmar_valor": 0.0,
+     "a_confirmar_ne": 0
+    },
+    "BCMS": {
+     "diarias_valor": 12752.5,
+     "diarias_ne": 4,
+     "a_confirmar_valor": 0.0,
+     "a_confirmar_ne": 0
+    },
+    "1º D Sup": {
+     "diarias_valor": 2185.0,
+     "diarias_ne": 1,
+     "a_confirmar_valor": 300.0,
+     "a_confirmar_ne": 1
+    }
+   },
+   "total": {
+    "diarias_valor": 395531.94,
+    "diarias_ne": 21,
+    "a_confirmar_valor": 169547.92,
+    "a_confirmar_ne": 6
+   },
+   "irrisorios": {
+    "ate_1": {
+     "ne": 1,
+     "valor": 0.4
+    },
+    "ate_10": {
+     "ne": 5,
+     "valor": 15.39
+    },
+    "ate_100": {
+     "ne": 27,
+     "valor": 1427.08
+    },
+    "por_omds_ate_10": {
+     "Cmdo BaApLog": 0,
+     "DC Mun": 1,
+     "BMSA": 0,
+     "1º D Sup": 2,
+     "BCMS": 1,
+     "ECT": 1
+    }
+   }
   }
  }
 }
