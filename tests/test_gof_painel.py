@@ -164,3 +164,16 @@ def test_extrato_sem_pessoa_reproduz_o_b1_e_o_vinculo():
 def test_formato_br_ida_e_volta():
     for v in (0.0, 0.01, 1234.56, 1000000.01, 63990398.67):
         assert tr._num(gp._br(v)) == v
+
+
+def test_encerramento_conta_dias_uteis_sem_feriado_de_20nov():
+    import datetime as dt
+
+    from motor import gof_painel as g
+    e = g.bloco_encerramento(dt.date(2026, 11, 10))
+    assert e["marcos"][0]["data"] == "2026-11-25"
+    assert e["dias_uteis_ate_limite_ne"] == 10  # 11 a 25/11, sem sábados, domingos e 20/11
+    assert e["ne60"] is None
+    depois = g.bloco_encerramento(dt.date(2026, 11, 26), {"total": {"mais60_valor": 1.0}, "por_omds": {}, "ne": [{"ne": "x"}] * 12})
+    assert depois["marcos"][0]["vencido"] is True and depois["marcos"][1]["vencido"] is False
+    assert len(depois["ne60"]["maiores"]) == 10

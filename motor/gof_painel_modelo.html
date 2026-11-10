@@ -65,6 +65,7 @@ footer code{font-family:var(--mono);word-break:break-all}
 <p>Painel das 6 OMDS com o módulo GCALC · fase A (sem percentual sobre o crédito)</p></header>
 <div class="faixa" id="faixa" role="status"></div>
 <main>
+<section id="enc" aria-labelledby="tenc"></section>
 <section id="b1" aria-labelledby="t1"></section>
 <section id="b3" aria-labelledby="t3"></section>
 <section id="b4" aria-labelledby="t4"></section>
@@ -97,6 +98,24 @@ if(vig)faixa.className="faixa vermelha";
 faixa.innerHTML=vig+'<span class="chip info">Fonte do B1: '+esc(fonte)+'</span>'+frescor(D.b1.data_dado,"Execução")+frescor(D.b3.data_dado,"Carteira")+
  frescor(D.b4.data_dado_atas,"Atas (PNCP)")+'<span class="chip info">'+dias+' dias até 31/12</span>'+
  '<span class="chip warn">Percentual sobre o crédito: aguardando P-034</span>';
+// ENCERRAMENTO (Portaria 399-SEF): contagem até a data-limite de NE e NE a liquidar há mais de 60 dias
+(function(){var E=D.encerramento,el=document.getElementById("enc");if(!E){el.style.display="none";return;}
+function dbr(iso){return iso.slice(8,10)+"/"+iso.slice(5,7);}
+function rs(v){return "R$ "+Number(v||0).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});}
+var m0=E.marcos[0],h='<h2 id="tenc">Encerramento do exercício</h2><p>'+esc(E.norma)+'</p>';
+h+='<p><span class="chip '+(m0.vencido?"crit":(m0.dias_uteis<=5?"crit":"warn"))+'">'+(m0.vencido?"Data-limite de NE vencida em "+dbr(m0.data):m0.dias_uteis+" dias úteis até "+dbr(m0.data)+" (última NE)")+'</span></p>';
+h+='<table class="cards"><thead><tr><th>Data</th><th>Evento</th><th>O que vence</th><th>Dias úteis</th></tr></thead><tbody>';
+E.marcos.forEach(function(m){h+='<tr><td data-r="Data" class="mono">'+dbr(m.data)+'</td><td data-r="Evento">'+esc(m.evento)+'</td><td data-r="O que vence">'+esc(m.texto)+'</td><td data-r="Dias úteis">'+(m.vencido?"vencido":m.dias_uteis)+'</td></tr>';});
+h+='</tbody></table>';
+var n=E.ne60;if(n&&n.total){h+='<h3>NE de 2026 a liquidar há mais de 60 dias</h3><p>'+esc(n.regra||"")+'. Posição do SIAFI: '+esc(n.posicao_siafi||"")+'.</p>';
+h+='<table class="cards"><thead><tr><th>OMDS</th><th>A liquidar</th><th>Há mais de 60 dias</th><th>NE</th><th>Sem nenhuma liquidação</th><th>NE</th></tr></thead><tbody>';
+Object.keys(n.por_omds).sort(function(a,b){return (n.por_omds[b].mais60_valor||0)-(n.por_omds[a].mais60_valor||0);}).forEach(function(o){var r=n.por_omds[o];
+h+='<tr><td data-r="OMDS">'+esc(o)+'</td><td data-r="A liquidar">'+rs(r.a_liquidar)+'</td><td data-r="Há mais de 60 dias">'+rs(r.mais60_valor)+'</td><td data-r="NE">'+(r.mais60_ne||0)+'</td><td data-r="Sem nenhuma liquidação">'+rs(r.mais60_sem_nenhuma_liq_valor)+'</td><td data-r="NE">'+(r.mais60_sem_nenhuma_liq_ne||0)+'</td></tr>';});
+var T=n.total;h+='<tr><td data-r="OMDS"><b>Total</b></td><td data-r="A liquidar"><b>'+rs(T.a_liquidar)+'</b></td><td data-r="Há mais de 60 dias"><b>'+rs(T.mais60_valor)+'</b></td><td data-r="NE">'+(T.mais60_ne||0)+'</td><td data-r="Sem nenhuma liquidação"><b>'+rs(T.mais60_sem_nenhuma_liq_valor)+'</b></td><td data-r="NE">'+(T.mais60_sem_nenhuma_liq_ne||0)+'</td></tr></tbody></table>';
+h+='<table class="cards"><thead><tr><th>NE</th><th>OMDS</th><th>Emissão</th><th>Dias</th><th>A liquidar</th></tr></thead><tbody>';
+(n.maiores||[]).forEach(function(x){h+='<tr><td data-r="NE" class="mono">'+esc(x.ne)+'</td><td data-r="OMDS">'+esc(x.omds)+'</td><td data-r="Emissão">'+esc(x.emissao)+'</td><td data-r="Dias">'+x.dias+'</td><td data-r="A liquidar">'+rs(x.a_liquidar)+'</td></tr>';});
+h+='</tbody></table>';}
+el.innerHTML=h;})();
 // B1
 var b1=D.b1,max=0;b1.omds.forEach(function(o){o.por_mes.forEach(function(v){if(v>max)max=v;});});
 function meses(o){var w=12,s='<svg class="mes" viewBox="0 0 '+(12*w)+' 46" preserveAspectRatio="none" role="img" aria-label="Empenhado por mês">';

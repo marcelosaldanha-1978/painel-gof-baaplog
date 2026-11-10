@@ -90,6 +90,48 @@ def dias_uteis(desde, ate):
     return n
 
 
+# Calendário para o Encerramento do Exercício de 2026 (Portaria SEF/C Ex nº 399, de 24/09/2026), só o que toca a UGE.
+FERIADOS_2026 = {dt.date(2026, 11, 20), dt.date(2026, 12, 25)}
+MARCOS_ENCERRAMENTO = [
+    ("2026-11-25", "ev. 6 e 7", "Data-limite para a UGE emitir NE (a UGR pode prorrogar, em caráter excepcional) e nomear em BI quem indica RPNP"),
+    ("2026-11-26", "ev. 8", "A UGR recolhe todo o crédito que restar em tela"),
+    ("2026-12-03", "ev. 10", "Data-limite de NE dos créditos remanejados"),
+    ("2026-12-04", "ev. 11", "Última NC do EME ou da UGR"),
+    ("2026-12-15", "ev. 16", "Fase interna das demandas do PCA 2027 concluída"),
+    ("2026-12-23", "ev. 19 e 20", "Fim da indicação no SIAFI das NE a inscrever em RPNP (início em 01/12) e desbloqueio de RPNP de 2024"),
+    ("2026-12-30", "ev. 26, 28 e 32", "Liquidar RPNP inscrito até 2023; ordens bancárias até 14h; anular NE não indicadas"),
+]
+
+
+def dias_uteis_com_feriados(desde, ate, feriados=FERIADOS_2026):
+    """Dias úteis depois de `desde` até `ate` (inclusive), sem sábado, domingo e os feriados nacionais listados."""
+    if ate <= desde:
+        return 0
+    n, d = 0, desde
+    while d < ate:
+        d += dt.timedelta(days=1)
+        if d.weekday() < 5 and d not in feriados:
+            n += 1
+    return n
+
+
+def bloco_encerramento(hoje, leitura=None):
+    """Marcos da Portaria 399-SEF com a contagem de dias úteis e, se houver, a leitura de NE a liquidar há mais de 60 dias."""
+    marcos = []
+    for data, ev, texto in MARCOS_ENCERRAMENTO:
+        d = dt.date.fromisoformat(data)
+        marcos.append({"data": data, "evento": ev, "texto": texto, "vencido": d < hoje,
+                       "dias_uteis": dias_uteis_com_feriados(hoje, d), "dias_corridos": (d - hoje).days})
+    enc = {"norma": "Portaria SEF/C Ex nº 399, de 24/09/2026 (EB90-D-08.001)", "marcos": marcos,
+           "feriados_considerados": sorted(f.isoformat() for f in FERIADOS_2026),
+           "dias_uteis_ate_limite_ne": marcos[0]["dias_uteis"], "ne60": None}
+    if leitura:
+        enc["ne60"] = {"fonte": leitura.get("fonte"), "posicao_siafi": leitura.get("posicao_siafi"), "hoje": leitura.get("hoje"),
+                       "regra": leitura.get("regra"), "total": leitura.get("total"), "por_omds": leitura.get("por_omds"),
+                       "maiores": (leitura.get("ne") or [])[:10]}
+    return enc
+
+
 def ler_pendencias(obj):
     """D20: {"editado_em", "editado_por", "itens"} ou lista nua (legado) -> dict normalizado com a data visivel."""
     if isinstance(obj, list):
@@ -369,6 +411,8 @@ def main(argv=None):
     ap.add_argument("--pendencias")
     ap.add_argument("--conferencia", default=None, help="dados/conferencia/ultimo.json do confronto semanal (D19 parte 1)")
     ap.add_argument("--extrato-portal", default=None, help="extrato SEM PESSOA do Portal (gof_portal.py); reserva do B1 pela D17")
+    ap.add_argument("--encerramento", default="dados/encerramento/ultimo.json",
+                    help="leitura SEM PESSOA de NE a liquidar há mais de 60 dias (TG); ausente = só o calendário")
     ap.add_argument("--saida")
     ap.add_argument("--hoje", default=dt.date.today().isoformat())
     o = ap.parse_args(argv)
@@ -434,6 +478,8 @@ def main(argv=None):
                    base=base, regra=regra)
     dados["meta"].update({"fonte_b1": fonte_b1, "fonte_b1_motivo": motivo_b1, "data_portal": data_portal,
                           "data_tg": data_exec if (o.execucao or fonte_b1 == "tg") else ext["data_execucao"]})
+    leitura = json.load(open(o.encerramento, encoding="utf-8")) if o.encerramento and Path(o.encerramento).exists() else None
+    dados["encerramento"] = bloco_encerramento(hoje, leitura)
     s = Path(o.saida)
     s.mkdir(parents=True, exist_ok=True)
     (s / "dados.json").write_text(json.dumps(dados, ensure_ascii=False, indent=1), encoding="utf-8")
