@@ -45,6 +45,7 @@ th{font-weight:600;background:#F1F3EC}
 td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .mono{font-family:var(--mono);font-size:12px}
 td.mono{white-space:nowrap}
+#cap td,#disp td{overflow-wrap:anywhere}
 .vazio{color:var(--muted);font-style:italic}
 details summary{cursor:pointer;color:var(--info);margin:8px 0}
 footer{max-width:1180px;margin:0 auto;padding:0 16px 24px;color:var(--muted);font-size:12px;overflow-wrap:anywhere}
@@ -66,6 +67,8 @@ footer code{font-family:var(--mono);word-break:break-all}
 <div class="faixa" id="faixa" role="status"></div>
 <main>
 <section id="enc" aria-labelledby="tenc"></section>
+<section id="cap" aria-labelledby="tcap"></section>
+<section id="disp" aria-labelledby="tdisp"></section>
 <section id="b1" aria-labelledby="t1"></section>
 <section id="b3" aria-labelledby="t3"></section>
 <section id="b4" aria-labelledby="t4"></section>
@@ -126,6 +129,36 @@ var p=E.rpnp;if(p&&p.por_omds){h+='<h3>RPNP por ano de origem</h3><p>'+esc(p.reg
 Object.keys(p.por_omds).sort(function(a,b){return p.por_omds[b].a_liquidar_2025-p.por_omds[a].a_liquidar_2025;}).forEach(function(o){var r=p.por_omds[o];
 h+='<tr><td data-r="OMDS">'+esc(o)+'</td><td data-r="2025 a liquidar">'+rs(r.a_liquidar_2025)+'</td><td data-r="NE">'+r.ne_2025+'</td><td data-r="2025 liquidado a pagar">'+rs(r.liq_a_pagar_2025)+'</td><td data-r="2024 pendente">'+rs(r.pendente_2024)+'</td><td data-r="Até 2023 bloqueado">'+rs(r.bloqueado_ate_2023)+'</td></tr>';});
 h+='</tbody></table>';(p.ate_2023||[]).forEach(function(x){h+='<p><span class="chip crit">Cancelamento automático em 30/12 se não for liquidada</span> <span class="mono">'+esc(x.ne)+'</span> · '+esc(x.omds)+' · bloqueado '+rs(x.bloqueado)+'</p>';});}
+el.innerHTML=h;})();
+// CAPACIDADE EM ATAS (teto) e LIMITE DE DISPENSA POR SUBITEM (indício): publicação decidida em 11/11/2026
+(function(){var C=D.capacidade,el=document.getElementById("cap");if(!C){el.style.display="none";return;}
+function rs(v){return "R$ "+Number(v||0).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});}
+var T=C.total,h='<h2 id="tcap">Capacidade de empenho em atas (teto)</h2><p class="sub">Coleta de '+dbr(C.data_coleta)+' (Compras.gov.br, dados abertos) com o empenhado do TG de '+dbr(C.extrato_tg)+'. Regra: '+esc(C.regra)+'.</p>';
+h+='<p><span class="chip warn">É teto, não crédito</span> <span class="chip info">Valores em R$</span></p>';
+h+='<div class="heroi"><div><div class="rot">Saldo de ata nas 6 OMDS</div><div class="num">'+mi(T.saldo)+'</div></div><div><div class="rot">Registrado por quantidade</div><div class="num">'+mi(T.por_quantidade)+'</div></div><div><div class="rot">Registrado por valor</div><div class="num">'+mi(T.por_valor)+'</div></div></div>';
+h+='<table class="cards"><thead><tr><th>OMDS</th><th>Registrado (R$)</th><th>Empenhado no TG (R$)</th><th>Saldo (R$)</th><th>Por quantidade (R$)</th><th>Por valor (R$)</th><th>Vence até 31/12 (R$)</th></tr></thead><tbody>';
+function lin(n,r,b){var B=b?"<b>":"",F=b?"</b>":"";return '<tr><td data-r="OMDS">'+B+esc(n)+F+'</td><td data-r="Registrado (R$)">'+rs(r.registrado)+'</td><td data-r="Empenhado no TG (R$)">'+rs(r.empenhado_tg)+'</td><td data-r="Saldo (R$)">'+B+rs(r.saldo)+F+'</td><td data-r="Por quantidade (R$)">'+rs(r.por_quantidade)+'</td><td data-r="Por valor (R$)">'+rs(r.por_valor)+'</td><td data-r="Vence até 31/12 (R$)">'+rs(r.vence_ate_31dez)+'</td></tr>';}
+Object.keys(C.por_omds).sort(function(a,b){return C.por_omds[b].saldo-C.por_omds[a].saldo;}).forEach(function(o){h+=lin(o,C.por_omds[o]);});
+h+=lin("Total (160XXX + 167XXX)",T,true)+'</tbody></table>';
+h+='<h3>Três maiores saldos de item por OMDS</h3><table class="cards"><thead><tr><th>OMDS</th><th>Ata</th><th>Compra</th><th>UASG gerenciadora</th><th>Item</th><th>Registro</th><th>Saldo (R$)</th></tr></thead><tbody>';
+Object.keys(C.por_omds).forEach(function(o){(C.por_omds[o].maiores||[]).forEach(function(m){h+='<tr><td data-r="OMDS">'+esc(o)+'</td><td data-r="Ata" class="mono">'+esc(m.ata)+'</td><td data-r="Compra" class="mono">'+esc(m.compra)+'</td><td data-r="UASG gerenciadora" class="mono">'+esc(m.gerenciadora)+'</td><td data-r="Item">'+esc(m.descricao)+'</td><td data-r="Registro">'+(m.natureza==="POR_VALOR"?"por valor":"por quantidade")+'</td><td data-r="Saldo (R$)">'+rs(m.saldo)+'</td></tr>';});});
+h+='</tbody></table>';
+var F=C.fora_da_coleta;if(F&&F.valor){var NC={COMPRA_DE_TERCEIRO_SEM_ATA_VIGENTE:"compra de outro órgão sem ata vigente",COMPRA_PROPRIA_SEM_ATA_VIGENTE:"compra própria sem ata vigente",CONTRATO_ATIVO:"contrato ativo",MESMA_COMPRA_ITEM_FORA:"mesma compra, item fora da coleta",COMPRA_DE_OMDS_SEM_ATA_VIGENTE:"compra de outra OMDS sem ata vigente"};
+h+='<p class="sub"><strong>Empenhado em 2026 fora desta coleta:</strong> '+rs(F.valor)+' em '+N.format(F.itens||0)+' itens ('+Object.keys(F.por_classe).sort(function(a,b){return F.por_classe[b]-F.por_classe[a];}).map(function(k){return esc(NC[k]||k)+" "+rs(F.por_classe[k]);}).join("; ")+').</p>';}
+h+='<p class="sub"><strong>Limites da leitura:</strong> '+(C.limites||[]).filter(Boolean).map(esc).join("; ")+'. Itens de ata não lidos na coleta: '+(C.itens_nao_lidos||0)+'.</p>';
+el.innerHTML=h;})();
+(function(){var P=D.dispensa,el=document.getElementById("disp");if(!P){el.style.display="none";return;}
+function rs(v){return "R$ "+Number(v||0).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});}
+function pc(v){return Number(v||0).toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})+"%";}
+var h='<h2 id="tdisp">Limite de dispensa por subitem (indício)</h2><p class="sub">'+esc(P.norma)+'. Teto do inciso II: '+rs(P.teto.II)+'; do inciso I: '+rs(P.teto.I)+'. '+esc(P.regra)+'. Posição do SIAFI: '+esc(P.posicao_siafi||"")+'.</p>';
+h+='<p><span class="chip '+(P.subitens_acima_do_teto?"crit":"ok")+'">'+P.subitens_acima_do_teto+' subitem(ns) acima do teto</span> <span class="chip warn">Indício, não prova de fracionamento</span></p>';
+var A=[];Object.keys(P.por_omds).forEach(function(o){(P.por_omds[o].acima_70pct||[]).forEach(function(a){A.push([o,a]);});});A.sort(function(x,y){return y[1].pct_teto-x[1].pct_teto;});
+if(A.length){h+='<h3>Subitens com 70% ou mais do teto</h3><table class="cards"><thead><tr><th>OMDS</th><th>UG</th><th>Inciso</th><th>Subitem</th><th>Empenhado em dispensa (R$)</th><th>% do teto</th></tr></thead><tbody>';
+A.forEach(function(x){var a=x[1];h+='<tr><td data-r="OMDS">'+esc(x[0])+'</td><td data-r="UG" class="mono">'+esc(a.ug)+'</td><td data-r="Inciso">'+esc(a.inciso)+'</td><td data-r="Subitem"><span class="mono">'+esc(a.subitem)+'</span> '+esc(a.nome)+'</td><td data-r="Empenhado em dispensa (R$)">'+rs(a.valor)+'</td><td data-r="% do teto"><span class="chip '+(a.pct_teto>100?"crit":"warn")+'">'+pc(a.pct_teto)+'</span></td></tr>';});h+='</tbody></table>';}
+h+='<h3>Dispensa por OMDS em 2026</h3><table class="cards"><thead><tr><th>OMDS</th><th>NE de dispensa (qtd)</th><th>Inciso II (R$)</th><th>Inciso I (R$)</th><th>Fora da comparação (R$)</th><th>Maior subitem</th><th>% do teto</th></tr></thead><tbody>';
+Object.keys(P.por_omds).sort(function(a,b){return P.por_omds[b].inciso_II-P.por_omds[a].inciso_II;}).forEach(function(o){var r=P.por_omds[o],m=(r.maiores||[])[0];
+h+='<tr><td data-r="OMDS">'+esc(o)+'</td><td data-r="NE de dispensa (qtd)">'+r.ne_dispensa+'</td><td data-r="Inciso II (R$)">'+rs(r.inciso_II)+'</td><td data-r="Inciso I (R$)">'+rs(r.inciso_I)+'</td><td data-r="Fora da comparação (R$)">'+rs(r.fora_da_comparacao)+'</td><td data-r="Maior subitem">'+(m?esc(m.nome)+' ('+esc(m.ug)+')':"—")+'</td><td data-r="% do teto">'+(m?pc(m.pct_teto):"—")+'</td></tr>';});
+h+='</tbody></table><p class="sub"><strong>Limites da leitura:</strong> '+(P.limites||[]).map(esc).join("; ")+'.</p><p class="sub">Fonte: '+esc(P.fonte)+'.</p>';
 el.innerHTML=h;})();
 // B1
 var b1=D.b1,max=0;b1.omds.forEach(function(o){o.por_mes.forEach(function(v){if(v>max)max=v;});});

@@ -177,3 +177,51 @@ def test_encerramento_conta_dias_uteis_sem_feriado_de_20nov():
     depois = g.bloco_encerramento(dt.date(2026, 11, 26), {"total": {"mais60_valor": 1.0}, "por_omds": {}, "ne": [{"ne": "x"}] * 12})
     assert depois["marcos"][0]["vencido"] is True and depois["marcos"][1]["vencido"] is False
     assert len(depois["ne60"]["maiores"]) == 10
+
+
+def test_capacidade_soma_as_omds_e_separa_registro_por_valor():
+    from motor import gof_painel as g
+    cap = {"data_coleta": "2026-11-10T17:05:12", "extrato_tg": "2026-11-09", "limite": "carona sem NE não aparece",
+           "itens_nao_lidos": [1, 2],
+           "saldo": {"versao": "0.2", "resumo": {
+               "A": {"registrado": 100.0, "empenhado_tg": 40.0, "saldo_proprio": 60.0, "vence_ate_31dez": 5.0,
+                     "saldo_por_natureza": {"POR_QUANTIDADE": 50.0, "POR_VALOR": 10.0},
+                     "maiores_itens": [{"ata": "1/2026", "compra": "9/2025", "gerenciadora": "160307", "descricao": "X" * 200,
+                                        "natureza": "POR_VALOR", "saldo_proprio": 10.0}] * 5},
+               "B": {"registrado": 30.0, "empenhado_tg": 0.0, "saldo_proprio": 30.0, "saldo_por_natureza": {"POR_QUANTIDADE": 30.0}}},
+               "empenhado_fora_da_coleta": {"valor": 7.5, "itens": 3, "por_classe": {"CONTRATO_ATIVO": {"itens": 3, "valor": 7.5}}}}}
+    c = g.bloco_capacidade(cap)
+    assert c["total"] == {"registrado": 130.0, "empenhado_tg": 40.0, "saldo": 90.0, "por_quantidade": 80.0, "por_valor": 10.0,
+                          "vence_ate_31dez": 5.0}
+    assert len(c["por_omds"]["A"]["maiores"]) == 3 and len(c["por_omds"]["A"]["maiores"][0]["descricao"]) == 70
+    assert c["fora_da_coleta"] == {"valor": 7.5, "itens": 3, "por_classe": {"CONTRATO_ATIVO": 7.5}} and c["itens_nao_lidos"] == 2
+    assert g.bloco_capacidade(None) is None and g.bloco_capacidade({"saldo": {}}) is None
+
+
+def test_capacidade_real_fecha_com_o_saldo_publicado():
+    import json
+
+    from motor import gof_painel as g
+    c = g.bloco_capacidade(json.load(open("dados/capacidade/ultimo.json", encoding="utf-8")))
+    t = c["total"]
+    assert set(c["por_omds"]) == {"Cmdo BaApLog", "DC Mun", "BMSA", "1º D Sup", "ECT", "BCMS"}
+    assert round(t["por_quantidade"] + t["por_valor"], 2) == t["saldo"]
+    assert round(t["registrado"] - t["empenhado_tg"], 2) == t["saldo"]
+
+
+def test_dispensa_reconta_acima_do_teto_e_nao_traz_pessoa():
+    import json
+
+    from motor import gof_painel as g
+    d = g.bloco_dispensa({"teto": {"I": 130984.2, "II": 65492.11}, "subitens_acima_do_teto": 99, "por_omds": {
+        "A": {"acima_70pct": [{"pct_teto": 152.7}, {"pct_teto": 92.8}]}, "B": {"acima_70pct": [{"pct_teto": 100.0}]}}})
+    assert d["subitens_acima_do_teto"] == 1
+    assert g.bloco_dispensa(None) is None
+    real = json.load(open("dados/dispensa/ultimo.json", encoding="utf-8"))
+    r = g.bloco_dispensa(real)
+    assert r["subitens_acima_do_teto"] == real["subitens_acima_do_teto"] == 3
+    for om in real["por_omds"].values():
+        for a in om["acima_70pct"] + om["maiores"]:
+            assert set(a) == {"ug", "inciso", "subitem", "nome", "valor", "pct_teto"}
+            assert round(100 * a["valor"] / real["teto"][a["inciso"]], 1) == a["pct_teto"]
+

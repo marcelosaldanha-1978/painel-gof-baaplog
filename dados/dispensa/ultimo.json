@@ -1,0 +1,358 @@
+{
+ "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Dispensas por subitem (v1.0, 10nov2026)» (cópia, com o ano de 2026, da «Consulta S2 - Dispensas de Licitação» do 1º CGCFEx), execução de 10/11/2026, 21h52; valor = empenhado líquido de cada NE (TG); inciso de cada compra pelos dados abertos do Compras.gov.br",
+ "csv_sha256": "765d67a859f7b27d93b4ead9df1a92f6c838db31de7b3476d1349e1193bef525",
+ "derivado_sha256": "a88b0729cfdd814598a119eadf327b60f30d1e0b103df50570ef7b3e0ebaff96",
+ "posicao_siafi": "10/11/2026 00:10 (movimento até 09/11/2026)",
+ "norma": "Lei nº 14.133/2021, art. 75, I e II; valores de 2026 pelo Decreto nº 12.807/2025",
+ "teto": {
+  "I": 130984.2,
+  "II": 65492.11
+ },
+ "regra": "Empenhado líquido em dispensa por valor (art. 75, I ou II), somado por UG e por subitem da natureza de despesa detalhada, em 2026, comparado com o teto do inciso. As UG 160xxx e 167xxx de cada OMDS não são somadas entre si",
+ "limites": [
+  "É indício, não prova de fracionamento: subitem da natureza de despesa não é «ramo de atividade» nem «objeto de mesma natureza»",
+  "Manutenção de veículos tem regra própria (art. 75, § 7º)",
+  "NE de dispensa cuja compra não está entre as dispensas por valor de 2026 coletadas (outro fundamento, outro ano ou outra UASG) fica fora da comparação e aparece em «fora da comparação»",
+  "Medido uma vez, sem conferência independente do cruzamento; quem conclui é o ordenador de despesas, objeto a objeto"
+ ],
+ "por_omds": {
+  "Cmdo BaApLog": {
+   "ne_dispensa": 35,
+   "inciso_II": 107414.83,
+   "inciso_I": 0,
+   "fora_da_comparacao": 316961.37,
+   "acima_70pct": [],
+   "maiores": [
+    {
+     "ug": "160238",
+     "inciso": "II",
+     "subitem": "33903017",
+     "nome": "MATERIAL DE TIC - MATERIAL DE CONSUMO",
+     "valor": 29315.9,
+     "pct_teto": 44.8
+    },
+    {
+     "ug": "167238",
+     "inciso": "II",
+     "subitem": "33903941",
+     "nome": "FORNECIMENTO DE ALIMENTACAO",
+     "valor": 25314.26,
+     "pct_teto": 38.7
+    },
+    {
+     "ug": "160238",
+     "inciso": "II",
+     "subitem": "33903941",
+     "nome": "FORNECIMENTO DE ALIMENTACAO",
+     "valor": 16871.25,
+     "pct_teto": 25.8
+    },
+    {
+     "ug": "160238",
+     "inciso": "II",
+     "subitem": "33903958",
+     "nome": "SERVICOS DE TELECOMUNICACOES",
+     "valor": 10067.78,
+     "pct_teto": 15.4
+    },
+    {
+     "ug": "160238",
+     "inciso": "II",
+     "subitem": "33903026",
+     "nome": "MATERIAL ELETRICO E ELETRONICO",
+     "valor": 7984.0,
+     "pct_teto": 12.2
+    }
+   ]
+  },
+  "DC Mun": {
+   "ne_dispensa": 54,
+   "inciso_II": 115382.54,
+   "inciso_I": 0,
+   "fora_da_comparacao": 241743.39,
+   "acima_70pct": [],
+   "maiores": [
+    {
+     "ug": "160246",
+     "inciso": "II",
+     "subitem": "33903039",
+     "nome": "MATERIAL P/ MANUTENCAO DE VEICULOS",
+     "valor": 23982.51,
+     "pct_teto": 36.6
+    },
+    {
+     "ug": "160246",
+     "inciso": "II",
+     "subitem": "33903042",
+     "nome": "FERRAMENTAS",
+     "valor": 15180.0,
+     "pct_teto": 23.2
+    },
+    {
+     "ug": "160246",
+     "inciso": "II",
+     "subitem": "33903028",
+     "nome": "MATERIAL DE PROTECAO E SEGURANCA",
+     "valor": 14270.07,
+     "pct_teto": 21.8
+    },
+    {
+     "ug": "160246",
+     "inciso": "II",
+     "subitem": "33903023",
+     "nome": "UNIFORMES, TECIDOS E AVIAMENTOS",
+     "valor": 14100.5,
+     "pct_teto": 21.5
+    },
+    {
+     "ug": "160246",
+     "inciso": "II",
+     "subitem": "33903026",
+     "nome": "MATERIAL ELETRICO E ELETRONICO",
+     "valor": 11745.18,
+     "pct_teto": 17.9
+    }
+   ]
+  },
+  "BMSA": {
+   "ne_dispensa": 94,
+   "inciso_II": 349945.82,
+   "inciso_I": 9000.0,
+   "fora_da_comparacao": 380554.54,
+   "acima_70pct": [
+    {
+     "ug": "160304",
+     "inciso": "II",
+     "subitem": "33903037",
+     "nome": "SOBRESSALENTES DE ARMAMENTO",
+     "valor": 99983.32,
+     "pct_teto": 152.7
+    }
+   ],
+   "maiores": [
+    {
+     "ug": "160304",
+     "inciso": "II",
+     "subitem": "33903037",
+     "nome": "SOBRESSALENTES DE ARMAMENTO",
+     "valor": 99983.32,
+     "pct_teto": 152.7
+    },
+    {
+     "ug": "160304",
+     "inciso": "II",
+     "subitem": "33903025",
+     "nome": "MATERIAL P/ MANUTENCAO DE BENS MOVEIS",
+     "valor": 39921.0,
+     "pct_teto": 61.0
+    },
+    {
+     "ug": "160304",
+     "inciso": "II",
+     "subitem": "33903916",
+     "nome": "MANUTENCAO E CONSERV. DE BENS IMOVEIS",
+     "valor": 33561.81,
+     "pct_teto": 51.2
+    },
+    {
+     "ug": "160304",
+     "inciso": "II",
+     "subitem": "33903917",
+     "nome": "MANUT. E CONSERV. DE MAQUINAS E EQUIPAMENTOS",
+     "valor": 31592.73,
+     "pct_teto": 48.2
+    },
+    {
+     "ug": "160304",
+     "inciso": "II",
+     "subitem": "33903007",
+     "nome": "GENEROS DE ALIMENTACAO",
+     "valor": 22366.1,
+     "pct_teto": 34.2
+    }
+   ]
+  },
+  "1º D Sup": {
+   "ne_dispensa": 61,
+   "inciso_II": 418086.81,
+   "inciso_I": 0,
+   "fora_da_comparacao": 241805.77,
+   "acima_70pct": [
+    {
+     "ug": "160307",
+     "inciso": "II",
+     "subitem": "33903905",
+     "nome": "SERVICOS TECNICOS PROFISSIONAIS",
+     "valor": 75307.5,
+     "pct_teto": 115.0
+    },
+    {
+     "ug": "160307",
+     "inciso": "II",
+     "subitem": "44905208",
+     "nome": "APAR.EQUIP.UTENS.MED.,ODONT,LABOR.HOSPIT.",
+     "valor": 60749.8,
+     "pct_teto": 92.8
+    },
+    {
+     "ug": "160307",
+     "inciso": "II",
+     "subitem": "44905242",
+     "nome": "MOBILIARIO EM GERAL",
+     "valor": 53633.6,
+     "pct_teto": 81.9
+    }
+   ],
+   "maiores": [
+    {
+     "ug": "160307",
+     "inciso": "II",
+     "subitem": "33903905",
+     "nome": "SERVICOS TECNICOS PROFISSIONAIS",
+     "valor": 75307.5,
+     "pct_teto": 115.0
+    },
+    {
+     "ug": "160307",
+     "inciso": "II",
+     "subitem": "44905208",
+     "nome": "APAR.EQUIP.UTENS.MED.,ODONT,LABOR.HOSPIT.",
+     "valor": 60749.8,
+     "pct_teto": 92.8
+    },
+    {
+     "ug": "160307",
+     "inciso": "II",
+     "subitem": "44905242",
+     "nome": "MOBILIARIO EM GERAL",
+     "valor": 53633.6,
+     "pct_teto": 81.9
+    },
+    {
+     "ug": "160307",
+     "inciso": "II",
+     "subitem": "44905228",
+     "nome": "MAQUINAS E EQUIPAMENTOS DE NATUREZA INDUSTRIAL",
+     "valor": 34246.86,
+     "pct_teto": 52.3
+    },
+    {
+     "ug": "160307",
+     "inciso": "II",
+     "subitem": "33903916",
+     "nome": "MANUTENCAO E CONSERV. DE BENS IMOVEIS",
+     "valor": 33250.0,
+     "pct_teto": 50.8
+    }
+   ]
+  },
+  "ECT": {
+   "ne_dispensa": 21,
+   "inciso_II": 51974.63,
+   "inciso_I": 0,
+   "fora_da_comparacao": 0,
+   "acima_70pct": [],
+   "maiores": [
+    {
+     "ug": "160321",
+     "inciso": "II",
+     "subitem": "33903978",
+     "nome": "LIMPEZA E CONSERVACAO",
+     "valor": 12920.0,
+     "pct_teto": 19.7
+    },
+    {
+     "ug": "160321",
+     "inciso": "II",
+     "subitem": "44905212",
+     "nome": "APARELHOS E UTENSILIOS DOMESTICOS",
+     "valor": 11107.56,
+     "pct_teto": 17.0
+    },
+    {
+     "ug": "160321",
+     "inciso": "II",
+     "subitem": "33903965",
+     "nome": "SERVICOS DE APOIO AO ENSINO",
+     "valor": 9871.98,
+     "pct_teto": 15.1
+    },
+    {
+     "ug": "160321",
+     "inciso": "II",
+     "subitem": "44905228",
+     "nome": "MAQUINAS E EQUIPAMENTOS DE NATUREZA INDUSTRIAL",
+     "valor": 6958.86,
+     "pct_teto": 10.6
+    },
+    {
+     "ug": "167321",
+     "inciso": "II",
+     "subitem": "33903009",
+     "nome": "MATERIAL FARMACOLOGICO",
+     "valor": 5474.58,
+     "pct_teto": 8.4
+    }
+   ]
+  },
+  "BCMS": {
+   "ne_dispensa": 60,
+   "inciso_II": 187632.76,
+   "inciso_I": 0,
+   "fora_da_comparacao": 198133.95,
+   "acima_70pct": [
+    {
+     "ug": "160329",
+     "inciso": "II",
+     "subitem": "33903039",
+     "nome": "MATERIAL P/ MANUTENCAO DE VEICULOS",
+     "valor": 87583.75,
+     "pct_teto": 133.7
+    }
+   ],
+   "maiores": [
+    {
+     "ug": "160329",
+     "inciso": "II",
+     "subitem": "33903039",
+     "nome": "MATERIAL P/ MANUTENCAO DE VEICULOS",
+     "valor": 87583.75,
+     "pct_teto": 133.7
+    },
+    {
+     "ug": "167329",
+     "inciso": "II",
+     "subitem": "44905242",
+     "nome": "MOBILIARIO EM GERAL",
+     "valor": 29944.65,
+     "pct_teto": 45.7
+    },
+    {
+     "ug": "167329",
+     "inciso": "II",
+     "subitem": "44905208",
+     "nome": "APAR.EQUIP.UTENS.MED.,ODONT,LABOR.HOSPIT.",
+     "valor": 28547.75,
+     "pct_teto": 43.6
+    },
+    {
+     "ug": "160329",
+     "inciso": "II",
+     "subitem": "33904006",
+     "nome": "LOCACAO DE SOFTWARES",
+     "valor": 17685.54,
+     "pct_teto": 27.0
+    },
+    {
+     "ug": "160329",
+     "inciso": "II",
+     "subitem": "33903001",
+     "nome": "COMBUSTIVEIS E LUBRIFICANTES AUTOMOTIVOS",
+     "valor": 16502.76,
+     "pct_teto": 25.2
+    }
+   ]
+  }
+ },
+ "subitens_acima_do_teto": 3
+}

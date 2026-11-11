@@ -27,7 +27,16 @@ A montagem só publica se passar nos **portões**: suíte de testes, lint, audit
 - `pendencias_coordenador.json` — pendências do coordenador, com a data da última edição visível no painel.
 - `capacidade/` — capacidade imediata de empenho das 6 UASG por fontes oficiais (Compras.gov.br, módulo ARP, e Contratos.gov.br), sem listas das SALC. O saldo de ata é calculado aqui: registrado × preço − empenhado no TG (`insumo_tg.json`, sem pessoa). Desde a v0.2 separa o item registrado **por valor** (preço unitário até R$ 1,00) do registrado por quantidade, lista os 5 maiores itens por OMDS e classifica o empenhado fora da coleta em 5 classes. **Ainda não entra no painel.**
 - `encerramento/` — leituras do fim do exercício tiradas do TG por relatórios próprios, **sem pessoa** (`ultimo.json`): NE de 2026 a liquidar há mais de 60 dias (Diretriz de Encerramento) e há mais de 90 dias (SAG), RPNP por ano de origem e bloqueio, crédito em tela por UGR, saldo a liquidar que não pode ir para RPNP (diárias; outras a confirmar pelo subitem) e saldos irrisórios. Atualização **manual**, a cada exportação do TG, até a ponte do passo 7 do plano: a data da posição aparece no bloco.
+- `dispensa/` — leitura **sem pessoa** do empenhado em dispensa por valor (Lei nº 14.133/2021, art. 75, I e II), por UG e subitem da natureza de despesa, contra o teto do ano (`ultimo.json`; origem e limites em `dispensa/LEIAME.md`). Atualização manual a cada exportação do TG.
 - `painel/<data>/` — cada montagem (dados.json, index.html, atas do PNCP, SHA256SUMS); `painel/ultimo/` é a vigente.
+
+## Blocos «Capacidade de empenho em atas (teto)» e «Limite de dispensa por subitem (indício)»
+
+Publicados em 11/11/2026 por decisão do coordenador (`motor/gof_painel.py`: `bloco_capacidade` e `bloco_dispensa`; argumentos `--capacidade` e `--dispensa`, com os caminhos de `dados/` por padrão; sem o arquivo, o bloco não aparece).
+
+- **Capacidade em atas:** saldo de ata por OMDS a partir de `dados/capacidade/ultimo.json` (registrado, empenhado no TG, saldo, registrado por quantidade e por valor, o que vence até 31/12), os três maiores saldos de item por OMDS e o empenhado do ano fora da coleta, por classe. O total é somado no motor a partir das OMDS. **É teto, não crédito**: saldo de ata não é recurso nem processo pronto; item registrado «por valor» infla o saldo e vai em coluna própria.
+- **Limite de dispensa por subitem:** empenhado em dispensa do art. 75, I ou II, por UG e subitem, comparado com o teto do inciso; lista os subitens com 70% ou mais do teto. **É indício, não prova de fracionamento**: subitem não é ramo de atividade; manutenção de veículos tem regra própria (art. 75, § 7º); medido uma vez, sem conferência independente. O motor reconta os subitens acima do teto em vez de confiar no arquivo.
+- Nenhum dos dois blocos traz favorecido, CPF, CNPJ ou texto de NE; o verificador de saída e a prova de navegador (390 e 1280 px) cobrem os dois.
 
 ## Bloco «Encerramento do exercício»
 

@@ -135,6 +135,47 @@ def bloco_encerramento(hoje, leitura=None):
     return enc
 
 
+def bloco_capacidade(cap):
+    """Capacidade em atas (teto): saldo de ata por OMDS do dados/capacidade/ultimo.json (gof_capacidade_saldo.py v0.2).
+
+    Só resumo: sem item além dos 3 maiores por OMDS, sem fornecedor. O total é somado aqui a partir das OMDS."""
+    if not cap or not (cap.get("saldo") or {}).get("resumo"):
+        return None
+    sal, por, tot = cap["saldo"], {}, {"registrado": 0.0, "empenhado_tg": 0.0, "saldo": 0.0, "por_quantidade": 0.0, "por_valor": 0.0,
+                                      "vence_ate_31dez": 0.0}
+    for omds, r in sal["resumo"].items():
+        nat = r.get("saldo_por_natureza") or {}
+        linha = {"registrado": round(r.get("registrado", 0.0), 2), "empenhado_tg": round(r.get("empenhado_tg", 0.0), 2),
+                 "saldo": round(r.get("saldo_proprio", 0.0), 2), "por_quantidade": round(nat.get("POR_QUANTIDADE", 0.0), 2),
+                 "por_valor": round(nat.get("POR_VALOR", 0.0), 2), "vence_ate_31dez": round(r.get("vence_ate_31dez", 0.0), 2),
+                 "maiores": [{"ata": m.get("ata"), "compra": m.get("compra"), "gerenciadora": m.get("gerenciadora"),
+                              "descricao": (m.get("descricao") or "").strip()[:70], "natureza": m.get("natureza"),
+                              "saldo": round(m.get("saldo_proprio", 0.0), 2)} for m in (r.get("maiores_itens") or [])[:3]]}
+        por[omds] = linha
+        for k in tot:
+            tot[k] = round(tot[k] + linha[k], 2)
+    fora = sal.get("empenhado_fora_da_coleta") or {}
+    return {"data_coleta": str(cap.get("data_coleta") or "")[:10], "extrato_tg": cap.get("extrato_tg"), "versao_saldo": sal.get("versao"),
+            "regra": "saldo = quantidade registrada para a UASG (API do Compras.gov.br) × valor unitário − empenhado líquido "
+                     "pela UASG naquele item (TG); as UG 160xxx e 167xxx contam juntas",
+            "limites": ["É teto, não crédito: ter saldo de ata não é ter recurso nem processo pronto para empenhar",
+                        "Item registrado «por valor» (preço unitário de R$ 1,00) infla o saldo e vai em coluna própria",
+                        cap.get("limite") or ""],
+            "total": tot, "por_omds": por,
+            "fora_da_coleta": {"valor": round(fora.get("valor", 0.0), 2), "itens": fora.get("itens"),
+                               "por_classe": {k: round(v.get("valor", 0.0), 2) for k, v in (fora.get("por_classe") or {}).items()}},
+            "itens_nao_lidos": len(cap.get("itens_nao_lidos") or [])}
+
+
+def bloco_dispensa(leitura):
+    """Indício de limite de dispensa por subitem (dados/dispensa/ultimo.json). Recalcula a contagem acima do teto."""
+    if not leitura or not leitura.get("por_omds"):
+        return None
+    d = {k: leitura.get(k) for k in ("fonte", "posicao_siafi", "norma", "teto", "regra", "limites", "por_omds")}
+    d["subitens_acima_do_teto"] = sum(1 for r in d["por_omds"].values() for a in r.get("acima_70pct") or [] if a.get("pct_teto", 0) > 100)
+    return d
+
+
 def ler_pendencias(obj):
     """D20: {"editado_em", "editado_por", "itens"} ou lista nua (legado) -> dict normalizado com a data visivel."""
     if isinstance(obj, list):
@@ -416,6 +457,10 @@ def main(argv=None):
     ap.add_argument("--extrato-portal", default=None, help="extrato SEM PESSOA do Portal (gof_portal.py); reserva do B1 pela D17")
     ap.add_argument("--encerramento", default="dados/encerramento/ultimo.json",
                     help="leitura SEM PESSOA de NE a liquidar há mais de 60 dias (TG); ausente = só o calendário")
+    ap.add_argument("--capacidade", default="dados/capacidade/ultimo.json",
+                    help="coleta de capacidade com o saldo de ata calculado (gof_capacidade_saldo.py); ausente = sem o bloco")
+    ap.add_argument("--dispensa", default="dados/dispensa/ultimo.json",
+                    help="leitura SEM PESSOA do empenhado em dispensa por subitem (TG); ausente = sem o bloco")
     ap.add_argument("--saida")
     ap.add_argument("--hoje", default=dt.date.today().isoformat())
     o = ap.parse_args(argv)
@@ -483,6 +528,10 @@ def main(argv=None):
                           "data_tg": data_exec if (o.execucao or fonte_b1 == "tg") else ext["data_execucao"]})
     leitura = json.load(open(o.encerramento, encoding="utf-8")) if o.encerramento and Path(o.encerramento).exists() else None
     dados["encerramento"] = bloco_encerramento(hoje, leitura)
+    cap = json.load(open(o.capacidade, encoding="utf-8")) if o.capacidade and Path(o.capacidade).exists() else None
+    dados["capacidade"] = bloco_capacidade(cap)
+    disp = json.load(open(o.dispensa, encoding="utf-8")) if o.dispensa and Path(o.dispensa).exists() else None
+    dados["dispensa"] = bloco_dispensa(disp)
     s = Path(o.saida)
     s.mkdir(parents=True, exist_ok=True)
     (s / "dados.json").write_text(json.dumps(dados, ensure_ascii=False, indent=1), encoding="utf-8")
