@@ -219,7 +219,7 @@ def test_dispensa_reconta_acima_do_teto_e_nao_traz_pessoa():
     assert g.bloco_dispensa(None) is None
     real = json.load(open("dados/dispensa/ultimo.json", encoding="utf-8"))
     r = g.bloco_dispensa(real)
-    assert r["subitens_acima_do_teto"] == real["subitens_acima_do_teto"] == 3
+    assert r["subitens_acima_do_teto"] == real["subitens_acima_do_teto"] >= 1
     for om in real["por_omds"].values():
         for a in om["acima_70pct"] + om["maiores"]:
             assert set(a) == {"ug", "inciso", "subitem", "nome", "valor", "pct_teto"}

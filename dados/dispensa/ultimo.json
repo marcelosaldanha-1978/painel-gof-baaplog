@@ -1,28 +1,45 @@
 {
- "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Dispensas por subitem (v1.0, 10nov2026)» (cópia, com o ano de 2026, da «Consulta S2 - Dispensas de Licitação» do 1º CGCFEx), execução de 10/11/2026, 21h52; valor = empenhado líquido de cada NE (TG); inciso de cada compra pelos dados abertos do Compras.gov.br",
- "csv_sha256": "765d67a859f7b27d93b4ead9df1a92f6c838db31de7b3476d1349e1193bef525",
- "derivado_sha256": "a88b0729cfdd814598a119eadf327b60f30d1e0b103df50570ef7b3e0ebaff96",
- "posicao_siafi": "10/11/2026 00:10 (movimento até 09/11/2026)",
+ "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Dispensa por NE e subitem com valor (v1.0, 11nov2026)», execução de 11/11/2026, 10h45: item 29 (despesas empenhadas, controle empenho), saldo, modalidade 06 (dispensa), por NE, natureza, subitem e amparo legal; filtro, valor e inciso saem do próprio TG",
+ "csv_sha256": "8eb8532f28d4819c09f52540116de335d43cf1e3d57619ef6c2f16c83f116fa5",
+ "posicao_siafi": "11/11/2026 00:14 (movimento até 10/11/2026)",
  "norma": "Lei nº 14.133/2021, art. 75, I e II; valores de 2026 pelo Decreto nº 12.807/2025",
  "teto": {
   "I": 130984.2,
   "II": 65492.11
  },
- "regra": "Empenhado líquido em dispensa por valor (art. 75, I ou II), somado por UG e por subitem da natureza de despesa detalhada, em 2026, comparado com o teto do inciso. As UG 160xxx e 167xxx de cada OMDS não são somadas entre si",
+ "regra": "Empenhado (saldo do item 29) em NE de dispensa cujo amparo legal é o art. 75, I ou II, da Lei nº 14.133/2021, somado por UG e por subitem da natureza de despesa, em 2026, comparado com o teto do inciso. As UG 160xxx e 167xxx de cada OMDS não são somadas entre si",
  "limites": [
   "É indício, não prova de fracionamento: subitem da natureza de despesa não é «ramo de atividade» nem «objeto de mesma natureza»",
   "Manutenção de veículos tem regra própria (art. 75, § 7º)",
-  "NE de dispensa cuja compra não está entre as dispensas por valor de 2026 coletadas (outro fundamento, outro ano ou outra UASG) fica fora da comparação e aparece em «fora da comparação»",
-  "Medido uma vez, sem conferência independente do cruzamento; quem conclui é o ordenador de despesas, objeto a objeto"
+  "Energia elétrica aparece com amparo no art. 75, I, em duas UG (160238 e 160304): é o amparo registrado na NE no SIAFI; conferir o registro do amparo antes de qualquer conclusão",
+  "Dispensa com outro amparo (demais incisos do art. 75 e outras leis) fica fora da comparação e aparece em «fora da comparação»",
+  "Quem conclui é o ordenador de despesas, objeto a objeto"
  ],
  "por_omds": {
   "Cmdo BaApLog": {
-   "ne_dispensa": 35,
+   "ne_dispensa": 21,
    "inciso_II": 107414.83,
-   "inciso_I": 0,
-   "fora_da_comparacao": 316961.37,
-   "acima_70pct": [],
+   "inciso_I": 172003.4,
+   "fora_da_comparacao": 144957.97,
+   "acima_70pct": [
+    {
+     "ug": "160238",
+     "inciso": "I",
+     "subitem": "33903943",
+     "nome": "SERVICOS DE ENERGIA ELETRICA",
+     "valor": 172003.4,
+     "pct_teto": 131.3
+    }
+   ],
    "maiores": [
+    {
+     "ug": "160238",
+     "inciso": "I",
+     "subitem": "33903943",
+     "nome": "SERVICOS DE ENERGIA ELETRICA",
+     "valor": 172003.4,
+     "pct_teto": 131.3
+    },
     {
      "ug": "160238",
      "inciso": "II",
@@ -54,24 +71,24 @@
      "nome": "SERVICOS DE TELECOMUNICACOES",
      "valor": 10067.78,
      "pct_teto": 15.4
-    },
-    {
-     "ug": "160238",
-     "inciso": "II",
-     "subitem": "33903026",
-     "nome": "MATERIAL ELETRICO E ELETRONICO",
-     "valor": 7984.0,
-     "pct_teto": 12.2
     }
    ]
   },
   "DC Mun": {
-   "ne_dispensa": 54,
-   "inciso_II": 115382.54,
+   "ne_dispensa": 51,
+   "inciso_II": 142720.85,
    "inciso_I": 0,
-   "fora_da_comparacao": 241743.39,
+   "fora_da_comparacao": 225207.39,
    "acima_70pct": [],
    "maiores": [
+    {
+     "ug": "160246",
+     "inciso": "II",
+     "subitem": "33903917",
+     "nome": "MANUT. E CONSERV. DE MAQUINAS E EQUIPAMENTOS",
+     "valor": 26379.0,
+     "pct_teto": 40.3
+    },
     {
      "ug": "160246",
      "inciso": "II",
@@ -85,8 +102,8 @@
      "inciso": "II",
      "subitem": "33903042",
      "nome": "FERRAMENTAS",
-     "valor": 15180.0,
-     "pct_teto": 23.2
+     "valor": 15424.95,
+     "pct_teto": 23.6
     },
     {
      "ug": "160246",
@@ -103,23 +120,23 @@
      "nome": "UNIFORMES, TECIDOS E AVIAMENTOS",
      "valor": 14100.5,
      "pct_teto": 21.5
-    },
-    {
-     "ug": "160246",
-     "inciso": "II",
-     "subitem": "33903026",
-     "nome": "MATERIAL ELETRICO E ELETRONICO",
-     "valor": 11745.18,
-     "pct_teto": 17.9
     }
    ]
   },
   "BMSA": {
-   "ne_dispensa": 94,
-   "inciso_II": 349945.82,
-   "inciso_I": 9000.0,
-   "fora_da_comparacao": 380554.54,
+   "ne_dispensa": 90,
+   "inciso_II": 354743.2,
+   "inciso_I": 204541.36,
+   "fora_da_comparacao": 180215.8,
    "acima_70pct": [
+    {
+     "ug": "160304",
+     "inciso": "I",
+     "subitem": "33903943",
+     "nome": "SERVICOS DE ENERGIA ELETRICA",
+     "valor": 204541.36,
+     "pct_teto": 156.2
+    },
     {
      "ug": "160304",
      "inciso": "II",
@@ -130,6 +147,14 @@
     }
    ],
    "maiores": [
+    {
+     "ug": "160304",
+     "inciso": "I",
+     "subitem": "33903943",
+     "nome": "SERVICOS DE ENERGIA ELETRICA",
+     "valor": 204541.36,
+     "pct_teto": 156.2
+    },
     {
      "ug": "160304",
      "inciso": "II",
@@ -161,22 +186,14 @@
      "nome": "MANUT. E CONSERV. DE MAQUINAS E EQUIPAMENTOS",
      "valor": 31592.73,
      "pct_teto": 48.2
-    },
-    {
-     "ug": "160304",
-     "inciso": "II",
-     "subitem": "33903007",
-     "nome": "GENEROS DE ALIMENTACAO",
-     "valor": 22366.1,
-     "pct_teto": 34.2
     }
    ]
   },
   "1º D Sup": {
-   "ne_dispensa": 61,
-   "inciso_II": 418086.81,
+   "ne_dispensa": 54,
+   "inciso_II": 474044.53,
    "inciso_I": 0,
-   "fora_da_comparacao": 241805.77,
+   "fora_da_comparacao": 185848.05,
    "acima_70pct": [
     {
      "ug": "160307",
@@ -191,8 +208,16 @@
      "inciso": "II",
      "subitem": "44905208",
      "nome": "APAR.EQUIP.UTENS.MED.,ODONT,LABOR.HOSPIT.",
-     "valor": 60749.8,
-     "pct_teto": 92.8
+     "valor": 63267.73,
+     "pct_teto": 96.6
+    },
+    {
+     "ug": "160307",
+     "inciso": "II",
+     "subitem": "44905234",
+     "nome": "MAQUINAS, UTENSILIOS E EQUIPAMENTOS  DIVERSOS",
+     "valor": 61742.97,
+     "pct_teto": 94.3
     },
     {
      "ug": "160307",
@@ -217,8 +242,16 @@
      "inciso": "II",
      "subitem": "44905208",
      "nome": "APAR.EQUIP.UTENS.MED.,ODONT,LABOR.HOSPIT.",
-     "valor": 60749.8,
-     "pct_teto": 92.8
+     "valor": 63267.73,
+     "pct_teto": 96.6
+    },
+    {
+     "ug": "160307",
+     "inciso": "II",
+     "subitem": "44905234",
+     "nome": "MAQUINAS, UTENSILIOS E EQUIPAMENTOS  DIVERSOS",
+     "valor": 61742.97,
+     "pct_teto": 94.3
     },
     {
      "ug": "160307",
@@ -235,39 +268,48 @@
      "nome": "MAQUINAS E EQUIPAMENTOS DE NATUREZA INDUSTRIAL",
      "valor": 34246.86,
      "pct_teto": 52.3
-    },
-    {
-     "ug": "160307",
-     "inciso": "II",
-     "subitem": "33903916",
-     "nome": "MANUTENCAO E CONSERV. DE BENS IMOVEIS",
-     "valor": 33250.0,
-     "pct_teto": 50.8
     }
    ]
   },
   "ECT": {
-   "ne_dispensa": 21,
-   "inciso_II": 51974.63,
+   "ne_dispensa": 17,
+   "inciso_II": 90734.63,
    "inciso_I": 0,
    "fora_da_comparacao": 0,
-   "acima_70pct": [],
+   "acima_70pct": [
+    {
+     "ug": "160321",
+     "inciso": "II",
+     "subitem": "33903978",
+     "nome": "LIMPEZA E CONSERVACAO",
+     "valor": 51680.0,
+     "pct_teto": 78.9
+    }
+   ],
    "maiores": [
     {
      "ug": "160321",
      "inciso": "II",
      "subitem": "33903978",
      "nome": "LIMPEZA E CONSERVACAO",
-     "valor": 12920.0,
-     "pct_teto": 19.7
+     "valor": 51680.0,
+     "pct_teto": 78.9
     },
     {
      "ug": "160321",
      "inciso": "II",
      "subitem": "44905212",
      "nome": "APARELHOS E UTENSILIOS DOMESTICOS",
-     "valor": 11107.56,
-     "pct_teto": 17.0
+     "valor": 11712.19,
+     "pct_teto": 17.9
+    },
+    {
+     "ug": "160321",
+     "inciso": "II",
+     "subitem": "44905228",
+     "nome": "MAQUINAS E EQUIPAMENTOS DE NATUREZA INDUSTRIAL",
+     "valor": 9948.85,
+     "pct_teto": 15.2
     },
     {
      "ug": "160321",
@@ -276,14 +318,6 @@
      "nome": "SERVICOS DE APOIO AO ENSINO",
      "valor": 9871.98,
      "pct_teto": 15.1
-    },
-    {
-     "ug": "160321",
-     "inciso": "II",
-     "subitem": "44905228",
-     "nome": "MAQUINAS E EQUIPAMENTOS DE NATUREZA INDUSTRIAL",
-     "valor": 6958.86,
-     "pct_teto": 10.6
     },
     {
      "ug": "167321",
@@ -296,10 +330,10 @@
    ]
   },
   "BCMS": {
-   "ne_dispensa": 60,
-   "inciso_II": 187632.76,
+   "ne_dispensa": 55,
+   "inciso_II": 202090.76,
    "inciso_I": 0,
-   "fora_da_comparacao": 198133.95,
+   "fora_da_comparacao": 183675.95,
    "acima_70pct": [
     {
      "ug": "160329",
@@ -340,8 +374,8 @@
      "inciso": "II",
      "subitem": "33904006",
      "nome": "LOCACAO DE SOFTWARES",
-     "valor": 17685.54,
-     "pct_teto": 27.0
+     "valor": 26685.54,
+     "pct_teto": 40.7
     },
     {
      "ug": "160329",
@@ -354,5 +388,5 @@
    ]
   }
  },
- "subitens_acima_do_teto": 3
+ "subitens_acima_do_teto": 5
 }
