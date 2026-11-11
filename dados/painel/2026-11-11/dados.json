@@ -1067,5 +1067,598 @@
     }
    }
   }
+ },
+ "capacidade": {
+  "data_coleta": "2026-11-10",
+  "extrato_tg": "2026-11-09",
+  "versao_saldo": "0.2",
+  "regra": "saldo = quantidade registrada para a UASG (API do Compras.gov.br) × valor unitário − empenhado líquido pela UASG naquele item (TG); as UG 160xxx e 167xxx contam juntas",
+  "limites": [
+   "É teto, não crédito: ter saldo de ata não é ter recurso nem processo pronto para empenhar",
+   "Item registrado «por valor» (preço unitário de R$ 1,00) infla o saldo e vai em coluna própria",
+   "carona aprovada em ata de outro órgão sem nenhuma NE não aparece (API pública não consulta por UASG aderente)"
+  ],
+  "total": {
+   "registrado": 103824871.53,
+   "empenhado_tg": 15960219.26,
+   "saldo": 87864652.27,
+   "por_quantidade": 50449263.82,
+   "por_valor": 37415388.45,
+   "vence_ate_31dez": 4706184.1
+  },
+  "por_omds": {
+   "1º D Sup": {
+    "registrado": 14353128.82,
+    "empenhado_tg": 5915436.95,
+    "saldo": 8437691.87,
+    "por_quantidade": 7945941.06,
+    "por_valor": 491750.81,
+    "vence_ate_31dez": 715772.89,
+    "maiores": [
+     {
+      "ata": "01203/2026",
+      "compra": "90012/2025",
+      "gerenciadora": "160307",
+      "descricao": "EMPILHADEIRA ELÉTRICA, TIPO FUNCIONAMENTO ELÉTRICA, CAPACIDADE 1.500 K",
+      "natureza": "POR_QUANTIDADE",
+      "saldo": 606800.0
+     },
+     {
+      "ata": "30001/2025",
+      "compra": "90030/2024",
+      "gerenciadora": "160292",
+      "descricao": "CADEIRA COM BRAÇO, TIPO ASSENTO/ ENCOSTO GIRATÓRIA, MATERIAL ASSENTO/E",
+      "natureza": "POR_QUANTIDADE",
+      "saldo": 376237.49
+     },
+     {
+      "ata": "00116/2026",
+      "compra": "90001/2026",
+      "gerenciadora": "160307",
+      "descricao": "BENZILPENICILINA, APRESENTAÇÃO BENZATINA, DOSAGEM 1.200.000UI, USO INJ",
+      "natureza": "POR_QUANTIDADE",
+      "saldo": 354900.0
+     }
+    ]
+   },
+   "Cmdo BaApLog": {
+    "registrado": 46504244.69,
+    "empenhado_tg": 498117.17,
+    "saldo": 46006127.52,
+    "por_quantidade": 14947076.19,
+    "por_valor": 31059051.33,
+    "vence_ate_31dez": 2943371.91,
+    "maiores": [
+     {
+      "ata": "00002/2025",
+      "compra": "90010/2024",
+      "gerenciadora": "160263",
+      "descricao": "Serviço de locação de ônibus (intramunicipal), por quilômetro, executi",
+      "natureza": "POR_QUANTIDADE",
+      "saldo": 10520000.0
+     },
+     {
+      "ata": "00001/2025",
+      "compra": "90001/2024",
+      "gerenciadora": "160264",
+      "descricao": "PEÇA MECÂNICA/ELÉTRICA - VEÍCULO AUTOMOTIVO, TIPO FILTRO COMBUSTÍVEL, ",
+      "natureza": "POR_VALOR",
+      "saldo": 10377197.4
+     },
+     {
+      "ata": "00001/2025",
+      "compra": "90001/2024",
+      "gerenciadora": "160264",
+      "descricao": "PEÇA MECÂNICA/ELÉTRICA - VEÍCULO AUTOMOTIVO, TIPO FILTRO COMBUSTÍVEL, ",
+      "natureza": "POR_VALOR",
+      "saldo": 3190077.98
+     }
+    ]
+   },
+   "BMSA": {
+    "registrado": 6366861.96,
+    "empenhado_tg": 2147790.07,
+    "saldo": 4219071.89,
+    "por_quantidade": 3755192.54,
+    "por_valor": 463879.35,
+    "vence_ate_31dez": 552293.79,
+    "maiores": [
+     {
+      "ata": "00021/2026",
+      "compra": "90006/2025",
+      "gerenciadora": "160304",
+      "descricao": "AGENTE FOSFATIZANTE, COMPOSIÇÃO FOSFATO DE MANGANÊS, DENSIDADE DENSIDA",
+      "natureza": "POR_QUANTIDADE",
+      "saldo": 299998.0
+     },
+     {
+      "ata": "00084/2025",
+      "compra": "90008/2025",
+      "gerenciadora": "160450",
+      "descricao": "ACESSÓRIOS / EQUIPAMENTOS OFICINA MANUTENÇÃO, TIPO CARRO ESTEIRA, MATE",
+      "natureza": "POR_VALOR",
+      "saldo": 203936.1
+     },
+     {
+      "ata": "01212/2026",
+      "compra": "90013/2025",
+      "gerenciadora": "160307",
+      "descricao": "CONTROLE DE MOSCAS  Instalação de 15 armadilhas luminosas com placas a",
+      "natureza": "POR_QUANTIDADE",
+      "saldo": 132000.0
+     }
+    ]
+   },
+   "BCMS": {
+    "registrado": 30404560.76,
+    "empenhado_tg": 3814597.53,
+    "saldo": 26589963.23,
+    "por_quantidade": 21207796.65,
+    "por_valor": 5382166.58,
+    "vence_ate_31dez": 402464.69,
+    "maiores": [
+     {
+      "ata": "00002/2025",
+      "compra": "90010/2024",
+      "gerenciadora": "160263",
+      "descricao": "Serviço de locação de ônibus (intramunicipal), por quilômetro, executi",
+      "natureza": "POR_QUANTIDADE",
+      "saldo": 17884000.0
+     },
+     {
+      "ata": "00050/2026",
+      "compra": "90007/2026",
+      "gerenciadora": "160329",
+      "descricao": "ACESSÓRIO CARRO BLINDADO, TIPO CENTRAL ELETRÔNICA ABS E CÂMBIO, CARACT",
+      "natureza": "POR_VALOR",
+      "saldo": 3775235.27
+     },
+     {
+      "ata": "00005/2026",
+      "compra": "90001/2026",
+      "gerenciadora": "160274",
+      "descricao": "ÓLEO LUBRIFICANTE., APRESENTAÇÃO LÍQUIDO VISCOSO, ORIGEM MINERAL, VISC",
+      "natureza": "POR_QUANTIDADE",
+      "saldo": 566825.0
+     }
+    ]
+   },
+   "DC Mun": {
+    "registrado": 2705464.46,
+    "empenhado_tg": 482862.23,
+    "saldo": 2222602.23,
+    "por_quantidade": 2205422.63,
+    "por_valor": 17179.6,
+    "vence_ate_31dez": 76017.5,
+    "maiores": [
+     {
+      "ata": "90007/2024",
+      "compra": "90007/2024",
+      "gerenciadora": "160246",
+      "descricao": "Manutenção de Forro.",
+      "natureza": "POR_QUANTIDADE",
+      "saldo": 268000.0
+     },
+     {
+      "ata": "00001/2026",
+      "compra": "90015/2025",
+      "gerenciadora": "160246",
+      "descricao": "Monitoramento ambiental de água e solo em área do DC Mun.",
+      "natureza": "POR_QUANTIDADE",
+      "saldo": 216000.0
+     },
+     {
+      "ata": "90007/2024",
+      "compra": "90007/2024",
+      "gerenciadora": "160246",
+      "descricao": "Manutenção dos Portões de Acesso das U E.",
+      "natureza": "POR_QUANTIDADE",
+      "saldo": 183520.6
+     }
+    ]
+   },
+   "ECT": {
+    "registrado": 3490610.84,
+    "empenhado_tg": 3101415.31,
+    "saldo": 389195.53,
+    "por_quantidade": 387834.75,
+    "por_valor": 1360.78,
+    "vence_ate_31dez": 16263.32,
+    "maiores": [
+     {
+      "ata": "00086/2026",
+      "compra": "90005/2026",
+      "gerenciadora": "160298",
+      "descricao": "BOTIJÃO PARA GÁS, USO DOMÉSTICO, CAPACIDADE CERCA DE 45 KG, ACESSÓRIOS",
+      "natureza": "POR_QUANTIDADE",
+      "saldo": 46670.0
+     },
+     {
+      "ata": "00007/2026",
+      "compra": "90001/2026",
+      "gerenciadora": "160255",
+      "descricao": "PANO LIMPEZA, MATERIAL 100% EM FIBRA DE VISCOSE, LÁTEX SINTÉTICO, COMP",
+      "natureza": "POR_QUANTIDADE",
+      "saldo": 46665.5
+     },
+     {
+      "ata": "00013/2026",
+      "compra": "90315/2026",
+      "gerenciadora": "160238",
+      "descricao": "PANÓPLIA, MATERIAL MADEIRA, LARGURA 180 MM, ALTURA 270 MM, CARACTERÍST",
+      "natureza": "POR_QUANTIDADE",
+      "saldo": 46000.0
+     }
+    ]
+   }
+  },
+  "fora_da_coleta": {
+   "valor": 21698896.6,
+   "itens": 2238,
+   "por_classe": {
+    "COMPRA_DE_TERCEIRO_SEM_ATA_VIGENTE": 10335008.57,
+    "COMPRA_PROPRIA_SEM_ATA_VIGENTE": 5085426.31,
+    "CONTRATO_ATIVO": 4403101.59,
+    "MESMA_COMPRA_ITEM_FORA": 1404531.66,
+    "COMPRA_DE_OMDS_SEM_ATA_VIGENTE": 470828.47
+   }
+  },
+  "itens_nao_lidos": 15
+ },
+ "dispensa": {
+  "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Dispensas por subitem (v1.0, 10nov2026)» (cópia, com o ano de 2026, da «Consulta S2 - Dispensas de Licitação» do 1º CGCFEx), execução de 10/11/2026, 21h52; valor = empenhado líquido de cada NE (TG); inciso de cada compra pelos dados abertos do Compras.gov.br",
+  "posicao_siafi": "10/11/2026 00:10 (movimento até 09/11/2026)",
+  "norma": "Lei nº 14.133/2021, art. 75, I e II; valores de 2026 pelo Decreto nº 12.807/2025",
+  "teto": {
+   "I": 130984.2,
+   "II": 65492.11
+  },
+  "regra": "Empenhado líquido em dispensa por valor (art. 75, I ou II), somado por UG e por subitem da natureza de despesa detalhada, em 2026, comparado com o teto do inciso. As UG 160xxx e 167xxx de cada OMDS não são somadas entre si",
+  "limites": [
+   "É indício, não prova de fracionamento: subitem da natureza de despesa não é «ramo de atividade» nem «objeto de mesma natureza»",
+   "Manutenção de veículos tem regra própria (art. 75, § 7º)",
+   "NE de dispensa cuja compra não está entre as dispensas por valor de 2026 coletadas (outro fundamento, outro ano ou outra UASG) fica fora da comparação e aparece em «fora da comparação»",
+   "Medido uma vez, sem conferência independente do cruzamento; quem conclui é o ordenador de despesas, objeto a objeto"
+  ],
+  "por_omds": {
+   "Cmdo BaApLog": {
+    "ne_dispensa": 35,
+    "inciso_II": 107414.83,
+    "inciso_I": 0,
+    "fora_da_comparacao": 316961.37,
+    "acima_70pct": [],
+    "maiores": [
+     {
+      "ug": "160238",
+      "inciso": "II",
+      "subitem": "33903017",
+      "nome": "MATERIAL DE TIC - MATERIAL DE CONSUMO",
+      "valor": 29315.9,
+      "pct_teto": 44.8
+     },
+     {
+      "ug": "167238",
+      "inciso": "II",
+      "subitem": "33903941",
+      "nome": "FORNECIMENTO DE ALIMENTACAO",
+      "valor": 25314.26,
+      "pct_teto": 38.7
+     },
+     {
+      "ug": "160238",
+      "inciso": "II",
+      "subitem": "33903941",
+      "nome": "FORNECIMENTO DE ALIMENTACAO",
+      "valor": 16871.25,
+      "pct_teto": 25.8
+     },
+     {
+      "ug": "160238",
+      "inciso": "II",
+      "subitem": "33903958",
+      "nome": "SERVICOS DE TELECOMUNICACOES",
+      "valor": 10067.78,
+      "pct_teto": 15.4
+     },
+     {
+      "ug": "160238",
+      "inciso": "II",
+      "subitem": "33903026",
+      "nome": "MATERIAL ELETRICO E ELETRONICO",
+      "valor": 7984.0,
+      "pct_teto": 12.2
+     }
+    ]
+   },
+   "DC Mun": {
+    "ne_dispensa": 54,
+    "inciso_II": 115382.54,
+    "inciso_I": 0,
+    "fora_da_comparacao": 241743.39,
+    "acima_70pct": [],
+    "maiores": [
+     {
+      "ug": "160246",
+      "inciso": "II",
+      "subitem": "33903039",
+      "nome": "MATERIAL P/ MANUTENCAO DE VEICULOS",
+      "valor": 23982.51,
+      "pct_teto": 36.6
+     },
+     {
+      "ug": "160246",
+      "inciso": "II",
+      "subitem": "33903042",
+      "nome": "FERRAMENTAS",
+      "valor": 15180.0,
+      "pct_teto": 23.2
+     },
+     {
+      "ug": "160246",
+      "inciso": "II",
+      "subitem": "33903028",
+      "nome": "MATERIAL DE PROTECAO E SEGURANCA",
+      "valor": 14270.07,
+      "pct_teto": 21.8
+     },
+     {
+      "ug": "160246",
+      "inciso": "II",
+      "subitem": "33903023",
+      "nome": "UNIFORMES, TECIDOS E AVIAMENTOS",
+      "valor": 14100.5,
+      "pct_teto": 21.5
+     },
+     {
+      "ug": "160246",
+      "inciso": "II",
+      "subitem": "33903026",
+      "nome": "MATERIAL ELETRICO E ELETRONICO",
+      "valor": 11745.18,
+      "pct_teto": 17.9
+     }
+    ]
+   },
+   "BMSA": {
+    "ne_dispensa": 94,
+    "inciso_II": 349945.82,
+    "inciso_I": 9000.0,
+    "fora_da_comparacao": 380554.54,
+    "acima_70pct": [
+     {
+      "ug": "160304",
+      "inciso": "II",
+      "subitem": "33903037",
+      "nome": "SOBRESSALENTES DE ARMAMENTO",
+      "valor": 99983.32,
+      "pct_teto": 152.7
+     }
+    ],
+    "maiores": [
+     {
+      "ug": "160304",
+      "inciso": "II",
+      "subitem": "33903037",
+      "nome": "SOBRESSALENTES DE ARMAMENTO",
+      "valor": 99983.32,
+      "pct_teto": 152.7
+     },
+     {
+      "ug": "160304",
+      "inciso": "II",
+      "subitem": "33903025",
+      "nome": "MATERIAL P/ MANUTENCAO DE BENS MOVEIS",
+      "valor": 39921.0,
+      "pct_teto": 61.0
+     },
+     {
+      "ug": "160304",
+      "inciso": "II",
+      "subitem": "33903916",
+      "nome": "MANUTENCAO E CONSERV. DE BENS IMOVEIS",
+      "valor": 33561.81,
+      "pct_teto": 51.2
+     },
+     {
+      "ug": "160304",
+      "inciso": "II",
+      "subitem": "33903917",
+      "nome": "MANUT. E CONSERV. DE MAQUINAS E EQUIPAMENTOS",
+      "valor": 31592.73,
+      "pct_teto": 48.2
+     },
+     {
+      "ug": "160304",
+      "inciso": "II",
+      "subitem": "33903007",
+      "nome": "GENEROS DE ALIMENTACAO",
+      "valor": 22366.1,
+      "pct_teto": 34.2
+     }
+    ]
+   },
+   "1º D Sup": {
+    "ne_dispensa": 61,
+    "inciso_II": 418086.81,
+    "inciso_I": 0,
+    "fora_da_comparacao": 241805.77,
+    "acima_70pct": [
+     {
+      "ug": "160307",
+      "inciso": "II",
+      "subitem": "33903905",
+      "nome": "SERVICOS TECNICOS PROFISSIONAIS",
+      "valor": 75307.5,
+      "pct_teto": 115.0
+     },
+     {
+      "ug": "160307",
+      "inciso": "II",
+      "subitem": "44905208",
+      "nome": "APAR.EQUIP.UTENS.MED.,ODONT,LABOR.HOSPIT.",
+      "valor": 60749.8,
+      "pct_teto": 92.8
+     },
+     {
+      "ug": "160307",
+      "inciso": "II",
+      "subitem": "44905242",
+      "nome": "MOBILIARIO EM GERAL",
+      "valor": 53633.6,
+      "pct_teto": 81.9
+     }
+    ],
+    "maiores": [
+     {
+      "ug": "160307",
+      "inciso": "II",
+      "subitem": "33903905",
+      "nome": "SERVICOS TECNICOS PROFISSIONAIS",
+      "valor": 75307.5,
+      "pct_teto": 115.0
+     },
+     {
+      "ug": "160307",
+      "inciso": "II",
+      "subitem": "44905208",
+      "nome": "APAR.EQUIP.UTENS.MED.,ODONT,LABOR.HOSPIT.",
+      "valor": 60749.8,
+      "pct_teto": 92.8
+     },
+     {
+      "ug": "160307",
+      "inciso": "II",
+      "subitem": "44905242",
+      "nome": "MOBILIARIO EM GERAL",
+      "valor": 53633.6,
+      "pct_teto": 81.9
+     },
+     {
+      "ug": "160307",
+      "inciso": "II",
+      "subitem": "44905228",
+      "nome": "MAQUINAS E EQUIPAMENTOS DE NATUREZA INDUSTRIAL",
+      "valor": 34246.86,
+      "pct_teto": 52.3
+     },
+     {
+      "ug": "160307",
+      "inciso": "II",
+      "subitem": "33903916",
+      "nome": "MANUTENCAO E CONSERV. DE BENS IMOVEIS",
+      "valor": 33250.0,
+      "pct_teto": 50.8
+     }
+    ]
+   },
+   "ECT": {
+    "ne_dispensa": 21,
+    "inciso_II": 51974.63,
+    "inciso_I": 0,
+    "fora_da_comparacao": 0,
+    "acima_70pct": [],
+    "maiores": [
+     {
+      "ug": "160321",
+      "inciso": "II",
+      "subitem": "33903978",
+      "nome": "LIMPEZA E CONSERVACAO",
+      "valor": 12920.0,
+      "pct_teto": 19.7
+     },
+     {
+      "ug": "160321",
+      "inciso": "II",
+      "subitem": "44905212",
+      "nome": "APARELHOS E UTENSILIOS DOMESTICOS",
+      "valor": 11107.56,
+      "pct_teto": 17.0
+     },
+     {
+      "ug": "160321",
+      "inciso": "II",
+      "subitem": "33903965",
+      "nome": "SERVICOS DE APOIO AO ENSINO",
+      "valor": 9871.98,
+      "pct_teto": 15.1
+     },
+     {
+      "ug": "160321",
+      "inciso": "II",
+      "subitem": "44905228",
+      "nome": "MAQUINAS E EQUIPAMENTOS DE NATUREZA INDUSTRIAL",
+      "valor": 6958.86,
+      "pct_teto": 10.6
+     },
+     {
+      "ug": "167321",
+      "inciso": "II",
+      "subitem": "33903009",
+      "nome": "MATERIAL FARMACOLOGICO",
+      "valor": 5474.58,
+      "pct_teto": 8.4
+     }
+    ]
+   },
+   "BCMS": {
+    "ne_dispensa": 60,
+    "inciso_II": 187632.76,
+    "inciso_I": 0,
+    "fora_da_comparacao": 198133.95,
+    "acima_70pct": [
+     {
+      "ug": "160329",
+      "inciso": "II",
+      "subitem": "33903039",
+      "nome": "MATERIAL P/ MANUTENCAO DE VEICULOS",
+      "valor": 87583.75,
+      "pct_teto": 133.7
+     }
+    ],
+    "maiores": [
+     {
+      "ug": "160329",
+      "inciso": "II",
+      "subitem": "33903039",
+      "nome": "MATERIAL P/ MANUTENCAO DE VEICULOS",
+      "valor": 87583.75,
+      "pct_teto": 133.7
+     },
+     {
+      "ug": "167329",
+      "inciso": "II",
+      "subitem": "44905242",
+      "nome": "MOBILIARIO EM GERAL",
+      "valor": 29944.65,
+      "pct_teto": 45.7
+     },
+     {
+      "ug": "167329",
+      "inciso": "II",
+      "subitem": "44905208",
+      "nome": "APAR.EQUIP.UTENS.MED.,ODONT,LABOR.HOSPIT.",
+      "valor": 28547.75,
+      "pct_teto": 43.6
+     },
+     {
+      "ug": "160329",
+      "inciso": "II",
+      "subitem": "33904006",
+      "nome": "LOCACAO DE SOFTWARES",
+      "valor": 17685.54,
+      "pct_teto": 27.0
+     },
+     {
+      "ug": "160329",
+      "inciso": "II",
+      "subitem": "33903001",
+      "nome": "COMBUSTIVEIS E LUBRIFICANTES AUTOMOTIVOS",
+      "valor": 16502.76,
+      "pct_teto": 25.2
+     }
+    ]
+   }
+  },
+  "subitens_acima_do_teto": 3
  }
 }
