@@ -3,7 +3,7 @@
   "versao_motor": "0.4",
   "regra_vinculo": "2.0",
   "base_b1": "liquido",
-  "hoje": "2026-11-10",
+  "hoje": "2026-11-11",
   "fase": "A",
   "fontes": [
    {
@@ -16,20 +16,20 @@
    {
     "nome": "carteira",
     "arquivo": "carteira_processos.json",
-    "sha256": "f9eca1be1a248b9d2228e0e6ade11bed76bf93e9437389b827bacdcf5f647668",
-    "data_dado": "2026-11-10"
+    "sha256": "248342f640804c0544d42e5567238946a9f7316d7ca9d36d9872567ef4f09441",
+    "data_dado": "2026-11-11"
    },
    {
     "nome": "kpis_painel",
     "arquivo": "kpis_painel.json",
-    "sha256": "3b1122bc80cd111a341740f56b9b3f7187a4db3fda9118d7d190665e4f3d6cd4",
-    "data_dado": "2026-11-10"
+    "sha256": "00e1075f8ed464eb22af8b23415ec089eb0bedd59c4c27352068887c87265689",
+    "data_dado": "2026-11-11"
    },
    {
     "nome": "atas",
-    "arquivo": "atas_pncp_2026-11-10.json",
-    "sha256": "70e774b0e1ecd60a7c235d84c4722302554dc2253d3ba1c5efd957759d6f03a8",
-    "data_dado": "2026-11-10"
+    "arquivo": "atas_pncp_2026-11-11.json",
+    "sha256": "fac404b160b40b64653928f59cd3a3f947c0f44cf58a3cd0ac0c41ec9ad83f9d",
+    "data_dado": "2026-11-11"
    },
    {
     "nome": "fichas_pncp",
@@ -39,11 +39,11 @@
    }
   ],
   "fonte_b1": "tg",
-  "idade_b1_dias_uteis": 1,
+  "idade_b1_dias_uteis": 2,
   "b1_fresco": true,
   "dias_uteis_fresco": 2,
   "dias_pendencias_amarelo": 14,
-  "fonte_b1_motivo": "TG fresco (1 dias uteis)",
+  "fonte_b1_motivo": "TG fresco (2 dias uteis)",
   "data_portal": "2026-11-09",
   "data_tg": "2026-11-09"
  },
@@ -489,8 +489,8 @@
    "nao_publicados": 2
   },
   "kpis_painel": {
-   "lido_em": "2026-11-10",
-   "origem": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-10 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Painel, linha 5 (A5:E5)",
+   "lido_em": "2026-11-11",
+   "origem": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-11 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Painel, linha 5 (A5:E5)",
    "processos": "12",
    "valor_estimado": "R$ 75.312.730,52",
    "score_bsc": "66,9%",
@@ -510,7 +510,7 @@
     "processo": "PE 90315/2026",
     "ata": "00014/2026",
     "vigencia_fim": "2027-05-17",
-    "dias": 188
+    "dias": 187
    }
   },
   "processos": [
@@ -645,7 +645,7 @@
      "desde": "2026-11-04"
     }
    ],
-   "dias": 3
+   "dias": 4
   },
   "conferencia": {
    "data": "2026-11-09",
@@ -667,7 +667,7 @@
    ],
    "fonte": "confronto semanal planilha x PNCP/Compras.gov no runner (D19 parte 1); a gravacao do provado e sessao do Claude"
   },
-  "data_dado_atas": "2026-11-10"
+  "data_dado_atas": "2026-11-11"
  },
  "encerramento": {
   "norma": "Portaria SEF/C Ex nº 399, de 24/09/2026 (EB90-D-08.001)",
@@ -677,66 +677,66 @@
     "evento": "ev. 6 e 7",
     "texto": "Data-limite para a UGE emitir NE (a UGR pode prorrogar, em caráter excepcional) e nomear em BI quem indica RPNP",
     "vencido": false,
-    "dias_uteis": 10,
-    "dias_corridos": 15
+    "dias_uteis": 9,
+    "dias_corridos": 14
    },
    {
     "data": "2026-11-26",
     "evento": "ev. 8",
     "texto": "A UGR recolhe todo o crédito que restar em tela",
     "vencido": false,
-    "dias_uteis": 11,
-    "dias_corridos": 16
+    "dias_uteis": 10,
+    "dias_corridos": 15
    },
    {
     "data": "2026-12-03",
     "evento": "ev. 10",
     "texto": "Data-limite de NE dos créditos remanejados",
     "vencido": false,
-    "dias_uteis": 16,
-    "dias_corridos": 23
+    "dias_uteis": 15,
+    "dias_corridos": 22
    },
    {
     "data": "2026-12-04",
     "evento": "ev. 11",
     "texto": "Última NC do EME ou da UGR",
     "vencido": false,
-    "dias_uteis": 17,
-    "dias_corridos": 24
+    "dias_uteis": 16,
+    "dias_corridos": 23
    },
    {
     "data": "2026-12-15",
     "evento": "ev. 16",
     "texto": "Fase interna das demandas do PCA 2027 concluída",
     "vencido": false,
-    "dias_uteis": 24,
-    "dias_corridos": 35
+    "dias_uteis": 23,
+    "dias_corridos": 34
    },
    {
     "data": "2026-12-23",
     "evento": "ev. 19 e 20",
     "texto": "Fim da indicação no SIAFI das NE a inscrever em RPNP (início em 01/12) e desbloqueio de RPNP de 2024",
     "vencido": false,
-    "dias_uteis": 30,
-    "dias_corridos": 43
+    "dias_uteis": 29,
+    "dias_corridos": 42
    },
    {
     "data": "2026-12-30",
     "evento": "ev. 26, 28 e 32",
     "texto": "Liquidar RPNP inscrito até 2023; ordens bancárias até 14h; anular NE não indicadas",
     "vencido": false,
-    "dias_uteis": 34,
-    "dias_corridos": 50
+    "dias_uteis": 33,
+    "dias_corridos": 49
    }
   ],
   "feriados_considerados": [
    "2026-11-20",
    "2026-12-25"
   ],
-  "dias_uteis_ate_limite_ne": 10,
+  "dias_uteis_ate_limite_ne": 9,
   "ne60": {
    "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Saldo a liquidar por NE 2026 (v1.0, 09nov2026)», execução de 10/11/2026, 14h44, sem filtro de exibição",
-   "posicao_siafi": "10/11/2026 08:10",
+   "posicao_siafi": "10/11/2026 00:10 (movimento até 09/11/2026)",
    "hoje": "2026-11-10",
    "regra": "NE de 2026 com saldo a liquidar ou em liquidação (contas 622920101 e 622920102) maior que zero e emitida há mais de 60 dias (antes de 11/09/2026); «sem nenhuma liquidação» = nada nas contas 622920103 e 622920104. A data é a da emissão da NE; reforço posterior não muda a data. O corte de 90 dias (emitidas antes de 12/08/2026) é o do SAG («NE sem liquidação por mais de 90 dias», Caderno 5.2 da SEF); o de 60 dias é o da Diretriz de Encerramento",
    "total": {
@@ -896,7 +896,7 @@
   },
   "rpnp": {
    "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-RPNP por NE 2026 (v1.0, 10nov2026)», execução de 10/11/2026, 12h33",
-   "posicao_siafi": "10/11/2026 08:10",
+   "posicao_siafi": "10/11/2026 00:10 (movimento até 09/11/2026)",
    "regra": "Ano de origem = ano no número da NE. RPNP de 2025 a liquidar em 31/12 é reinscrito automaticamente; RPNP de 2024 bloqueado se desbloqueia até 23/12; RPNP até 2023 não liquidado até 30/12 é cancelado automaticamente (Portaria 399-SEF, 6.b)",
    "por_omds": {
     "1º D Sup": {
