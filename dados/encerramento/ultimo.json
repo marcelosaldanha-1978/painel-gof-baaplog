@@ -1,7 +1,7 @@
 {
  "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Saldo a liquidar por NE 2026 (v1.0, 09nov2026)», execução de 10/11/2026, 14h44, sem filtro de exibição",
  "csv_sha256": "4bc7492f7fab7193d77147e6bc4772202ae0d7ad436fe4baf01ed7be5e0f5149",
- "posicao_siafi": "10/11/2026 08:10",
+ "posicao_siafi": "10/11/2026 00:10 (movimento até 09/11/2026)",
  "regra": "NE de 2026 com saldo a liquidar ou em liquidação (contas 622920101 e 622920102) maior que zero e emitida há mais de 60 dias (antes de 11/09/2026); «sem nenhuma liquidação» = nada nas contas 622920103 e 622920104. A data é a da emissão da NE; reforço posterior não muda a data. O corte de 90 dias (emitidas antes de 12/08/2026) é o do SAG («NE sem liquidação por mais de 90 dias», Caderno 5.2 da SEF); o de 60 dias é o da Diretriz de Encerramento",
  "hoje": "2026-11-10",
  "por_omds": {
@@ -3048,7 +3048,7 @@
  ],
  "rpnp": {
   "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-RPNP por NE 2026 (v1.0, 10nov2026)», execução de 10/11/2026, 12h33",
-  "posicao_siafi": "10/11/2026 08:10",
+  "posicao_siafi": "10/11/2026 00:10 (movimento até 09/11/2026)",
   "regra": "Ano de origem = ano no número da NE. RPNP de 2025 a liquidar em 31/12 é reinscrito automaticamente; RPNP de 2024 bloqueado se desbloqueia até 23/12; RPNP até 2023 não liquidado até 30/12 é cancelado automaticamente (Portaria 399-SEF, 6.b)",
   "por_omds": {
    "1º D Sup": {
