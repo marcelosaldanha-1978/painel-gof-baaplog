@@ -1,7 +1,7 @@
 {
  "versao": 2,
- "lido_em": "2026-11-11",
- "fonte": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-11 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Controle Processos, só colunas públicas (sem contatos nem observações)",
+ "lido_em": "2026-11-13",
+ "fonte": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-13 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Controle Processos, só colunas públicas (sem contatos nem observações)",
  "atualizar_quando": "todo dia, na montagem (passo 5 do PLANO v2.4)",
  "processos": [
   {
