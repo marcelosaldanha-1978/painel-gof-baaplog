@@ -1,7 +1,7 @@
 {
- "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Dispensa por NE e subitem com valor (v1.0, 11nov2026)», execução de 11/11/2026, 10h45: item 29 (despesas empenhadas, controle empenho), saldo, modalidade 06 (dispensa), por NE, natureza, subitem e amparo legal; filtro, valor e inciso saem do próprio TG",
- "csv_sha256": "8eb8532f28d4819c09f52540116de335d43cf1e3d57619ef6c2f16c83f116fa5",
- "posicao_siafi": "11/11/2026 00:14 (movimento até 10/11/2026)",
+ "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Dispensa por NE e subitem com valor (v1.0, 11nov2026)», execução de 12/11/2026, 08h55 (sem mudança de valor em relação à de 11/11): item 29 (despesas empenhadas, controle empenho), saldo, modalidade 06 (dispensa), por NE, natureza, subitem e amparo legal; filtro, valor e inciso saem do próprio TG",
+ "csv_sha256": "f3bed57e59644b7e1c3cea66b3bd93317f9ed8a7ab23cc0e5cdb316280419fa5",
+ "posicao_siafi": "12/11/2026 02:06 (movimento até 11/11/2026)",
  "norma": "Lei nº 14.133/2021, art. 75, I e II; valores de 2026 pelo Decreto nº 12.807/2025",
  "teto": {
   "I": 130984.2,

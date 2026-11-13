@@ -1,87 +1,87 @@
 {
- "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Saldo a liquidar por NE 2026 (v1.0, 09nov2026)», execução de 10/11/2026, 14h44, sem filtro de exibição",
- "csv_sha256": "4bc7492f7fab7193d77147e6bc4772202ae0d7ad436fe4baf01ed7be5e0f5149",
- "posicao_siafi": "10/11/2026 00:10 (movimento até 09/11/2026)",
- "regra": "NE de 2026 com saldo a liquidar ou em liquidação (contas 622920101 e 622920102) maior que zero e emitida há mais de 60 dias (antes de 11/09/2026); «sem nenhuma liquidação» = nada nas contas 622920103 e 622920104. A data é a da emissão da NE; reforço posterior não muda a data. O corte de 90 dias (emitidas antes de 12/08/2026) é o do SAG («NE sem liquidação por mais de 90 dias», Caderno 5.2 da SEF); o de 60 dias é o da Diretriz de Encerramento",
- "hoje": "2026-11-10",
+ "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Saldo a liquidar por NE 2026 (v1.0, 09nov2026)», execução de 12/11/2026, 08h36, sem filtro de exibição",
+ "csv_sha256": "aa24d4b5fc39d018a906b7fd2a84f70430f0288dcf8293efe36a51782ff7b52c",
+ "posicao_siafi": "12/11/2026 02:06 (movimento até 11/11/2026)",
+ "regra": "NE de 2026 com saldo a liquidar ou em liquidação (contas 622920101 e 622920102) maior que zero e emitida há mais de 60 dias (antes de 13/09/2026); «sem nenhuma liquidação» = nada nas contas 622920103 e 622920104. A data é a da emissão da NE; reforço posterior não muda a data. O corte de 90 dias (emitidas antes de 14/08/2026) é o do SAG («NE sem liquidação por mais de 90 dias», Caderno 5.2 da SEF); o de 60 dias é o da Diretriz de Encerramento",
+ "hoje": "2026-11-12",
  "por_omds": {
   "Cmdo BaApLog": {
-   "a_liquidar": 1980221.42,
-   "ne_com_saldo": 150,
-   "mais60_valor": 1198018.99,
-   "mais60_ne": 70,
-   "mais60_sem_nenhuma_liq_valor": 317366.05,
-   "mais60_sem_nenhuma_liq_ne": 43,
-   "mais90_valor": 1080020.39,
-   "mais90_ne": 64
+   "a_liquidar": 2120499.51,
+   "ne_com_saldo": 157,
+   "mais60_valor": 1162624.01,
+   "mais60_ne": 64,
+   "mais60_sem_nenhuma_liq_valor": 299784.3,
+   "mais60_sem_nenhuma_liq_ne": 40,
+   "mais90_valor": 1044625.41,
+   "mais90_ne": 58
   },
   "DC Mun": {
-   "a_liquidar": 1400578.4,
-   "ne_com_saldo": 135,
-   "mais60_valor": 658022.33,
-   "mais60_ne": 66,
-   "mais60_sem_nenhuma_liq_valor": 392644.21,
-   "mais60_sem_nenhuma_liq_ne": 47,
-   "mais90_valor": 341361.35,
-   "mais90_ne": 30
+   "a_liquidar": 1276806.21,
+   "ne_com_saldo": 132,
+   "mais60_valor": 595222.32,
+   "mais60_ne": 62,
+   "mais60_sem_nenhuma_liq_valor": 376886.21,
+   "mais60_sem_nenhuma_liq_ne": 43,
+   "mais90_valor": 326673.35,
+   "mais90_ne": 29
   },
   "BMSA": {
-   "a_liquidar": 1954525.13,
+   "a_liquidar": 1774247.38,
    "ne_com_saldo": 176,
-   "mais60_valor": 1317223.26,
-   "mais60_ne": 87,
-   "mais60_sem_nenhuma_liq_valor": 1113043.9,
-   "mais60_sem_nenhuma_liq_ne": 54,
-   "mais90_valor": 858286.89,
-   "mais90_ne": 63
+   "mais60_valor": 1135236.47,
+   "mais60_ne": 77,
+   "mais60_sem_nenhuma_liq_valor": 850249.85,
+   "mais60_sem_nenhuma_liq_ne": 43,
+   "mais90_valor": 685082.64,
+   "mais90_ne": 53
   },
   "1º D Sup": {
-   "a_liquidar": 7503748.66,
-   "ne_com_saldo": 132,
-   "mais60_valor": 2914905.26,
-   "mais60_ne": 59,
-   "mais60_sem_nenhuma_liq_valor": 2278359.68,
+   "a_liquidar": 7401057.71,
+   "ne_com_saldo": 128,
+   "mais60_valor": 2948991.11,
+   "mais60_ne": 58,
+   "mais60_sem_nenhuma_liq_valor": 2312452.13,
    "mais60_sem_nenhuma_liq_ne": 30,
-   "mais90_valor": 2146864.06,
-   "mais90_ne": 37
+   "mais90_valor": 2130429.91,
+   "mais90_ne": 36
   },
   "ECT": {
-   "a_liquidar": 991362.2,
-   "ne_com_saldo": 80,
-   "mais60_valor": 302317.97,
-   "mais60_ne": 26,
+   "a_liquidar": 925181.05,
+   "ne_com_saldo": 74,
+   "mais60_valor": 293291.06,
+   "mais60_ne": 25,
    "mais60_sem_nenhuma_liq_valor": 251394.32,
    "mais60_sem_nenhuma_liq_ne": 16,
-   "mais90_valor": 125476.98,
-   "mais90_ne": 17
+   "mais90_valor": 116450.07,
+   "mais90_ne": 16
   },
   "BCMS": {
-   "a_liquidar": 5927492.99,
-   "ne_com_saldo": 126,
-   "mais60_valor": 3002890.32,
-   "mais60_ne": 63,
+   "a_liquidar": 5907319.59,
+   "ne_com_saldo": 125,
+   "mais60_valor": 2999473.92,
+   "mais60_ne": 62,
    "mais60_sem_nenhuma_liq_valor": 2552071.79,
    "mais60_sem_nenhuma_liq_ne": 33,
-   "mais90_valor": 2840480.89,
-   "mais90_ne": 38
+   "mais90_valor": 2838455.86,
+   "mais90_ne": 43
   }
  },
  "total": {
-  "a_liquidar": 19757928.8,
-  "ne_com_saldo": 799,
-  "mais60_valor": 9393378.13,
-  "mais60_ne": 371,
-  "mais60_sem_nenhuma_liq_valor": 6904879.95,
-  "mais60_sem_nenhuma_liq_ne": 223,
-  "mais90_valor": 7392490.56,
-  "mais90_ne": 249
+  "a_liquidar": 19405111.45,
+  "ne_com_saldo": 792,
+  "mais60_valor": 9134838.89,
+  "mais60_ne": 348,
+  "mais60_sem_nenhuma_liq_valor": 6642838.6,
+  "mais60_sem_nenhuma_liq_ne": 205,
+  "mais90_valor": 7141717.24,
+  "mais90_ne": 235
  },
  "ne": [
   {
    "ne": "167329000012026NE000089",
    "omds": "BCMS",
    "emissao": "2026-08-06",
-   "dias": 96,
+   "dias": 98,
    "a_liquidar": 1176235.0,
    "liquidado": 0.0
   },
@@ -89,7 +89,7 @@
    "ne": "160329000012026NE000172",
    "omds": "BCMS",
    "emissao": "2026-07-16",
-   "dias": 117,
+   "dias": 119,
    "a_liquidar": 1149999.74,
    "liquidado": 0.0
   },
@@ -97,7 +97,7 @@
    "ne": "160307000012026NE000085",
    "omds": "1º D Sup",
    "emissao": "2026-03-10",
-   "dias": 245,
+   "dias": 247,
    "a_liquidar": 1051650.0,
    "liquidado": 0.0
   },
@@ -105,7 +105,7 @@
    "ne": "160238000012026NE000107",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-04-10",
-   "dias": 214,
+   "dias": 216,
    "a_liquidar": 504841.66,
    "liquidado": 420157.52
   },
@@ -113,7 +113,7 @@
    "ne": "160307000012026NE000045",
    "omds": "1º D Sup",
    "emissao": "2026-02-26",
-   "dias": 257,
+   "dias": 259,
    "a_liquidar": 351114.0,
    "liquidado": 0.0
   },
@@ -121,7 +121,7 @@
    "ne": "160304000012026NE000287",
    "omds": "BMSA",
    "emissao": "2026-07-16",
-   "dias": 117,
+   "dias": 119,
    "a_liquidar": 312962.0,
    "liquidado": 0.0
   },
@@ -129,15 +129,15 @@
    "ne": "160238000012026NE000012",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-02-11",
-   "dias": 272,
-   "a_liquidar": 208361.74,
-   "liquidado": 126637.27
+   "dias": 274,
+   "a_liquidar": 190890.05,
+   "liquidado": 144108.96
   },
   {
    "ne": "160307000012026NE000392",
    "omds": "1º D Sup",
    "emissao": "2026-09-04",
-   "dias": 67,
+   "dias": 69,
    "a_liquidar": 184500.0,
    "liquidado": 0.0
   },
@@ -145,23 +145,15 @@
    "ne": "167329000012026NE000020",
    "omds": "BCMS",
    "emissao": "2026-04-23",
-   "dias": 201,
+   "dias": 203,
    "a_liquidar": 143431.95,
    "liquidado": 256567.92
-  },
-  {
-   "ne": "160304000012026NE000288",
-   "omds": "BMSA",
-   "emissao": "2026-07-16",
-   "dias": 117,
-   "a_liquidar": 142314.0,
-   "liquidado": 0.0
   },
   {
    "ne": "160307000012026NE000255",
    "omds": "1º D Sup",
    "emissao": "2026-06-30",
-   "dias": 133,
+   "dias": 135,
    "a_liquidar": 136627.89,
    "liquidado": 67771.71
   },
@@ -169,7 +161,7 @@
    "ne": "160321000012026NE000210",
    "omds": "ECT",
    "emissao": "2026-09-08",
-   "dias": 63,
+   "dias": 65,
    "a_liquidar": 132800.1,
    "liquidado": 0.0
   },
@@ -177,7 +169,7 @@
    "ne": "160246000012026NE000196",
    "omds": "DC Mun",
    "emissao": "2026-07-06",
-   "dias": 127,
+   "dias": 129,
    "a_liquidar": 125379.21,
    "liquidado": 0.0
   },
@@ -185,7 +177,7 @@
    "ne": "160307000012026NE000315",
    "omds": "1º D Sup",
    "emissao": "2026-07-24",
-   "dias": 109,
+   "dias": 111,
    "a_liquidar": 113608.6,
    "liquidado": 36028.86
   },
@@ -193,7 +185,7 @@
    "ne": "160307000012026NE000358",
    "omds": "1º D Sup",
    "emissao": "2026-08-26",
-   "dias": 76,
+   "dias": 78,
    "a_liquidar": 113256.0,
    "liquidado": 0.0
   },
@@ -201,7 +193,7 @@
    "ne": "160307000012026NE000313",
    "omds": "1º D Sup",
    "emissao": "2026-07-24",
-   "dias": 109,
+   "dias": 111,
    "a_liquidar": 102840.0,
    "liquidado": 0.0
   },
@@ -209,7 +201,7 @@
    "ne": "160304000012026NE000369",
    "omds": "BMSA",
    "emissao": "2026-09-02",
-   "dias": 69,
+   "dias": 71,
    "a_liquidar": 102270.0,
    "liquidado": 0.0
   },
@@ -217,7 +209,7 @@
    "ne": "167304000012026NE000075",
    "omds": "BMSA",
    "emissao": "2026-07-28",
-   "dias": 105,
+   "dias": 107,
    "a_liquidar": 101250.0,
    "liquidado": 0.0
   },
@@ -225,7 +217,7 @@
    "ne": "160307000012026NE000180",
    "omds": "1º D Sup",
    "emissao": "2026-05-13",
-   "dias": 181,
+   "dias": 183,
    "a_liquidar": 101000.0,
    "liquidado": 0.0
   },
@@ -233,7 +225,7 @@
    "ne": "160238000012026NE000204",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-05-28",
-   "dias": 166,
+   "dias": 168,
    "a_liquidar": 100239.82,
    "liquidado": 0.0
   },
@@ -241,7 +233,7 @@
    "ne": "160307000012026NE000398",
    "omds": "1º D Sup",
    "emissao": "2026-09-10",
-   "dias": 61,
+   "dias": 63,
    "a_liquidar": 89500.0,
    "liquidado": 0.0
   },
@@ -249,7 +241,7 @@
    "ne": "160307000012026NE000382",
    "omds": "1º D Sup",
    "emissao": "2026-09-03",
-   "dias": 68,
+   "dias": 70,
    "a_liquidar": 89450.44,
    "liquidado": 0.0
   },
@@ -257,23 +249,15 @@
    "ne": "160238000012026NE000017",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-02-19",
-   "dias": 264,
+   "dias": 266,
    "a_liquidar": 81185.32,
    "liquidado": 96242.5
-  },
-  {
-   "ne": "160246000012026NE000303",
-   "omds": "DC Mun",
-   "emissao": "2026-09-08",
-   "dias": 63,
-   "a_liquidar": 77606.76,
-   "liquidado": 12893.24
   },
   {
    "ne": "160307000012026NE000341",
    "omds": "1º D Sup",
    "emissao": "2026-08-18",
-   "dias": 84,
+   "dias": 86,
    "a_liquidar": 75024.2,
    "liquidado": 167903.2
   },
@@ -281,7 +265,7 @@
    "ne": "167304000012026NE000096",
    "omds": "BMSA",
    "emissao": "2026-09-04",
-   "dias": 67,
+   "dias": 69,
    "a_liquidar": 75000.0,
    "liquidado": 0.0
   },
@@ -289,7 +273,7 @@
    "ne": "160321000012026NE000108",
    "omds": "ECT",
    "emissao": "2026-05-27",
-   "dias": 167,
+   "dias": 169,
    "a_liquidar": 68399.86,
    "liquidado": 0.0
   },
@@ -297,7 +281,7 @@
    "ne": "160329000012026NE000162",
    "omds": "BCMS",
    "emissao": "2026-06-29",
-   "dias": 134,
+   "dias": 136,
    "a_liquidar": 64000.0,
    "liquidado": 0.0
   },
@@ -305,15 +289,15 @@
    "ne": "160304000012026NE000364",
    "omds": "BMSA",
    "emissao": "2026-08-27",
-   "dias": 75,
-   "a_liquidar": 63755.2,
-   "liquidado": 0.0
+   "dias": 77,
+   "a_liquidar": 62410.2,
+   "liquidado": 1345.0
   },
   {
    "ne": "167304000012026NE000082",
    "omds": "BMSA",
    "emissao": "2026-08-20",
-   "dias": 82,
+   "dias": 84,
    "a_liquidar": 62314.11,
    "liquidado": 0.0
   },
@@ -321,7 +305,7 @@
    "ne": "167304000012026NE000073",
    "omds": "BMSA",
    "emissao": "2026-07-28",
-   "dias": 105,
+   "dias": 107,
    "a_liquidar": 58749.3,
    "liquidado": 0.0
   },
@@ -329,7 +313,7 @@
    "ne": "160307000012026NE000396",
    "omds": "1º D Sup",
    "emissao": "2026-09-10",
-   "dias": 61,
+   "dias": 63,
    "a_liquidar": 55993.32,
    "liquidado": 50140.0
   },
@@ -337,7 +321,7 @@
    "ne": "167329000012026NE000019",
    "omds": "BCMS",
    "emissao": "2026-04-23",
-   "dias": 201,
+   "dias": 203,
    "a_liquidar": 53284.04,
    "liquidado": 441545.28
   },
@@ -345,15 +329,31 @@
    "ne": "160307000012026NE000004",
    "omds": "1º D Sup",
    "emissao": "2026-01-19",
-   "dias": 295,
+   "dias": 297,
    "a_liquidar": 52906.65,
    "liquidado": 36466.59
+  },
+  {
+   "ne": "160246000012026NE000303",
+   "omds": "DC Mun",
+   "emissao": "2026-09-08",
+   "dias": 65,
+   "a_liquidar": 51373.71,
+   "liquidado": 39126.29
+  },
+  {
+   "ne": "160307000012026NE000401",
+   "omds": "1º D Sup",
+   "emissao": "2026-09-11",
+   "dias": 62,
+   "a_liquidar": 51000.0,
+   "liquidado": 0.0
   },
   {
    "ne": "167304000012026NE000074",
    "omds": "BMSA",
    "emissao": "2026-07-28",
-   "dias": 105,
+   "dias": 107,
    "a_liquidar": 50000.49,
    "liquidado": 0.0
   },
@@ -361,7 +361,7 @@
    "ne": "160329000012026NE000161",
    "omds": "BCMS",
    "emissao": "2026-06-29",
-   "dias": 134,
+   "dias": 136,
    "a_liquidar": 49937.65,
    "liquidado": 70062.35
   },
@@ -369,7 +369,7 @@
    "ne": "160246000012026NE000302",
    "omds": "DC Mun",
    "emissao": "2026-09-08",
-   "dias": 63,
+   "dias": 65,
    "a_liquidar": 47500.0,
    "liquidado": 0.0
   },
@@ -377,7 +377,7 @@
    "ne": "160238000012026NE000345",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-09-08",
-   "dias": 63,
+   "dias": 65,
    "a_liquidar": 42796.6,
    "liquidado": 0.0
   },
@@ -385,7 +385,7 @@
    "ne": "160304000012026NE000360",
    "omds": "BMSA",
    "emissao": "2026-08-26",
-   "dias": 76,
+   "dias": 78,
    "a_liquidar": 42026.75,
    "liquidado": 21223.3
   },
@@ -393,7 +393,7 @@
    "ne": "160238000012026NE000179",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-05-12",
-   "dias": 182,
+   "dias": 184,
    "a_liquidar": 40491.66,
    "liquidado": 104466.31
   },
@@ -401,7 +401,7 @@
    "ne": "160246000012026NE000249",
    "omds": "DC Mun",
    "emissao": "2026-08-20",
-   "dias": 82,
+   "dias": 84,
    "a_liquidar": 35326.08,
    "liquidado": 5002.62
   },
@@ -409,7 +409,7 @@
    "ne": "160246000012026NE000122",
    "omds": "DC Mun",
    "emissao": "2026-05-12",
-   "dias": 182,
+   "dias": 184,
    "a_liquidar": 34344.52,
    "liquidado": 0.0
   },
@@ -417,23 +417,15 @@
    "ne": "160307000012026NE000314",
    "omds": "1º D Sup",
    "emissao": "2026-07-24",
-   "dias": 109,
+   "dias": 111,
    "a_liquidar": 33349.6,
    "liquidado": 88635.3
-  },
-  {
-   "ne": "160304000012026NE000279",
-   "omds": "BMSA",
-   "emissao": "2026-07-09",
-   "dias": 124,
-   "a_liquidar": 32839.42,
-   "liquidado": 6192.02
   },
   {
    "ne": "160321000012026NE000096",
    "omds": "ECT",
    "emissao": "2026-05-13",
-   "dias": 181,
+   "dias": 183,
    "a_liquidar": 31818.0,
    "liquidado": 182410.0
   },
@@ -441,7 +433,7 @@
    "ne": "160329000012026NE000142",
    "omds": "BCMS",
    "emissao": "2026-06-03",
-   "dias": 160,
+   "dias": 162,
    "a_liquidar": 31097.77,
    "liquidado": 702.23
   },
@@ -449,23 +441,15 @@
    "ne": "160307000012026NE000319",
    "omds": "1º D Sup",
    "emissao": "2026-07-29",
-   "dias": 104,
+   "dias": 106,
    "a_liquidar": 30459.0,
    "liquidado": 9120.0
-  },
-  {
-   "ne": "160304000012026NE000361",
-   "omds": "BMSA",
-   "emissao": "2026-08-27",
-   "dias": 75,
-   "a_liquidar": 30226.0,
-   "liquidado": 0.0
   },
   {
    "ne": "160329000012026NE000166",
    "omds": "BCMS",
    "emissao": "2026-07-01",
-   "dias": 132,
+   "dias": 134,
    "a_liquidar": 30000.0,
    "liquidado": 0.0
   },
@@ -473,7 +457,7 @@
    "ne": "160329000012026NE000160",
    "omds": "BCMS",
    "emissao": "2026-06-29",
-   "dias": 134,
+   "dias": 136,
    "a_liquidar": 29025.63,
    "liquidado": 974.37
   },
@@ -481,15 +465,23 @@
    "ne": "160307000012026NE000343",
    "omds": "1º D Sup",
    "emissao": "2026-08-18",
-   "dias": 84,
+   "dias": 86,
    "a_liquidar": 29000.0,
    "liquidado": 0.0
+  },
+  {
+   "ne": "160304000012026NE000361",
+   "omds": "BMSA",
+   "emissao": "2026-08-27",
+   "dias": 77,
+   "a_liquidar": 28939.71,
+   "liquidado": 1286.29
   },
   {
    "ne": "160246000012026NE000110",
    "omds": "DC Mun",
    "emissao": "2026-05-11",
-   "dias": 183,
+   "dias": 185,
    "a_liquidar": 27700.0,
    "liquidado": 55400.0
   },
@@ -497,15 +489,23 @@
    "ne": "160307000012026NE000375",
    "omds": "1º D Sup",
    "emissao": "2026-09-02",
-   "dias": 69,
+   "dias": 71,
    "a_liquidar": 27066.88,
    "liquidado": 699.78
+  },
+  {
+   "ne": "160304000012026NE000279",
+   "omds": "BMSA",
+   "emissao": "2026-07-09",
+   "dias": 126,
+   "a_liquidar": 26506.88,
+   "liquidado": 12524.56
   },
   {
    "ne": "160238000012026NE000341",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-08-26",
-   "dias": 76,
+   "dias": 78,
    "a_liquidar": 25681.0,
    "liquidado": 0.0
   },
@@ -513,23 +513,15 @@
    "ne": "160307000012026NE000350",
    "omds": "1º D Sup",
    "emissao": "2026-08-20",
-   "dias": 82,
+   "dias": 84,
    "a_liquidar": 25600.0,
    "liquidado": 0.0
-  },
-  {
-   "ne": "160246000012026NE000250",
-   "omds": "DC Mun",
-   "emissao": "2026-08-20",
-   "dias": 82,
-   "a_liquidar": 25169.4,
-   "liquidado": 5872.86
   },
   {
    "ne": "160307000012026NE000321",
    "omds": "1º D Sup",
    "emissao": "2026-07-31",
-   "dias": 102,
+   "dias": 104,
    "a_liquidar": 24870.0,
    "liquidado": 0.0
   },
@@ -537,7 +529,7 @@
    "ne": "160329000012026NE000105",
    "omds": "BCMS",
    "emissao": "2026-05-13",
-   "dias": 181,
+   "dias": 183,
    "a_liquidar": 24637.7,
    "liquidado": 7674.45
   },
@@ -545,7 +537,7 @@
    "ne": "160304000012026NE000051",
    "omds": "BMSA",
    "emissao": "2026-03-09",
-   "dias": 246,
+   "dias": 248,
    "a_liquidar": 23564.0,
    "liquidado": 18913.0
   },
@@ -553,7 +545,7 @@
    "ne": "160238000012026NE000344",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-09-08",
-   "dias": 63,
+   "dias": 65,
    "a_liquidar": 21036.0,
    "liquidado": 0.0
   },
@@ -561,7 +553,7 @@
    "ne": "160246000012026NE000075",
    "omds": "DC Mun",
    "emissao": "2026-03-31",
-   "dias": 224,
+   "dias": 226,
    "a_liquidar": 20163.74,
    "liquidado": 12560.71
   },
@@ -569,7 +561,7 @@
    "ne": "160329000012026NE000212",
    "omds": "BCMS",
    "emissao": "2026-08-24",
-   "dias": 78,
+   "dias": 80,
    "a_liquidar": 19100.0,
    "liquidado": 3900.0
   },
@@ -577,7 +569,7 @@
    "ne": "160307000012026NE000326",
    "omds": "1º D Sup",
    "emissao": "2026-08-06",
-   "dias": 96,
+   "dias": 98,
    "a_liquidar": 18922.0,
    "liquidado": 32578.0
   },
@@ -585,7 +577,7 @@
    "ne": "160304000012026NE000053",
    "omds": "BMSA",
    "emissao": "2026-03-09",
-   "dias": 246,
+   "dias": 248,
    "a_liquidar": 18400.28,
    "liquidado": 58010.26
   },
@@ -593,7 +585,7 @@
    "ne": "160329000012026NE000210",
    "omds": "BCMS",
    "emissao": "2026-08-24",
-   "dias": 78,
+   "dias": 80,
    "a_liquidar": 17988.0,
    "liquidado": 0.0
   },
@@ -601,7 +593,7 @@
    "ne": "167238000012026NE000097",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-22",
-   "dias": 111,
+   "dias": 113,
    "a_liquidar": 17899.0,
    "liquidado": 0.0
   },
@@ -609,7 +601,7 @@
    "ne": "160329000012026NE000208",
    "omds": "BCMS",
    "emissao": "2026-08-21",
-   "dias": 81,
+   "dias": 83,
    "a_liquidar": 17685.54,
    "liquidado": 0.0
   },
@@ -617,31 +609,31 @@
    "ne": "160307000012026NE000370",
    "omds": "1º D Sup",
    "emissao": "2026-09-02",
-   "dias": 69,
+   "dias": 71,
    "a_liquidar": 17010.0,
-   "liquidado": 0.0
-  },
-  {
-   "ne": "160307000012026NE000307",
-   "omds": "1º D Sup",
-   "emissao": "2026-07-24",
-   "dias": 109,
-   "a_liquidar": 16907.55,
    "liquidado": 0.0
   },
   {
    "ne": "160246000012026NE000176",
    "omds": "DC Mun",
    "emissao": "2026-06-16",
-   "dias": 147,
+   "dias": 149,
    "a_liquidar": 16800.0,
    "liquidado": 0.0
+  },
+  {
+   "ne": "160246000012026NE000250",
+   "omds": "DC Mun",
+   "emissao": "2026-08-20",
+   "dias": 84,
+   "a_liquidar": 16779.6,
+   "liquidado": 14262.66
   },
   {
    "ne": "160329000012026NE000149",
    "omds": "BCMS",
    "emissao": "2026-06-03",
-   "dias": 160,
+   "dias": 162,
    "a_liquidar": 16466.49,
    "liquidado": 0.0
   },
@@ -649,7 +641,7 @@
    "ne": "160321000012026NE000209",
    "omds": "ECT",
    "emissao": "2026-09-08",
-   "dias": 63,
+   "dias": 65,
    "a_liquidar": 15999.87,
    "liquidado": 0.0
   },
@@ -657,7 +649,7 @@
    "ne": "160304000012026NE000370",
    "omds": "BMSA",
    "emissao": "2026-09-02",
-   "dias": 69,
+   "dias": 71,
    "a_liquidar": 15947.02,
    "liquidado": 0.0
   },
@@ -665,7 +657,7 @@
    "ne": "160329000012026NE000211",
    "omds": "BCMS",
    "emissao": "2026-08-24",
-   "dias": 78,
+   "dias": 80,
    "a_liquidar": 15155.0,
    "liquidado": 5000.0
   },
@@ -673,31 +665,15 @@
    "ne": "160246000012026NE000140",
    "omds": "DC Mun",
    "emissao": "2026-05-26",
-   "dias": 168,
+   "dias": 170,
    "a_liquidar": 14964.55,
    "liquidado": 10235.45
-  },
-  {
-   "ne": "160246000012026NE000253",
-   "omds": "DC Mun",
-   "emissao": "2026-08-20",
-   "dias": 82,
-   "a_liquidar": 14779.9,
-   "liquidado": 14970.3
-  },
-  {
-   "ne": "160304000012026NE000100",
-   "omds": "BMSA",
-   "emissao": "2026-04-14",
-   "dias": 210,
-   "a_liquidar": 14700.73,
-   "liquidado": 17166.02
   },
   {
    "ne": "160307000012026NE000344",
    "omds": "1º D Sup",
    "emissao": "2026-08-18",
-   "dias": 84,
+   "dias": 86,
    "a_liquidar": 14500.0,
    "liquidado": 0.0
   },
@@ -705,23 +681,15 @@
    "ne": "160321000012026NE000191",
    "omds": "ECT",
    "emissao": "2026-08-31",
-   "dias": 71,
+   "dias": 73,
    "a_liquidar": 14282.0,
-   "liquidado": 0.0
-  },
-  {
-   "ne": "160238000012026NE000280",
-   "omds": "Cmdo BaApLog",
-   "emissao": "2026-07-15",
-   "dias": 118,
-   "a_liquidar": 13983.0,
    "liquidado": 0.0
   },
   {
    "ne": "167307000012026NE000027",
    "omds": "1º D Sup",
    "emissao": "2026-07-24",
-   "dias": 109,
+   "dias": 111,
    "a_liquidar": 13913.57,
    "liquidado": 85606.43
   },
@@ -729,23 +697,15 @@
    "ne": "160329000012026NE000217",
    "omds": "BCMS",
    "emissao": "2026-08-26",
-   "dias": 76,
+   "dias": 78,
    "a_liquidar": 13860.0,
-   "liquidado": 0.0
-  },
-  {
-   "ne": "167246000012026NE000088",
-   "omds": "DC Mun",
-   "emissao": "2026-07-21",
-   "dias": 112,
-   "a_liquidar": 13608.0,
    "liquidado": 0.0
   },
   {
    "ne": "167307000012026NE000017",
    "omds": "1º D Sup",
    "emissao": "2026-05-20",
-   "dias": 174,
+   "dias": 176,
    "a_liquidar": 13534.89,
    "liquidado": 183265.11
   },
@@ -753,23 +713,39 @@
    "ne": "160238000012026NE000343",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-09-03",
-   "dias": 68,
+   "dias": 70,
    "a_liquidar": 13407.0,
    "liquidado": 0.0
+  },
+  {
+   "ne": "160304000012026NE000100",
+   "omds": "BMSA",
+   "emissao": "2026-04-14",
+   "dias": 212,
+   "a_liquidar": 13267.52,
+   "liquidado": 18599.23
   },
   {
    "ne": "160304000012026NE000358",
    "omds": "BMSA",
    "emissao": "2026-08-26",
-   "dias": 76,
+   "dias": 78,
    "a_liquidar": 13039.5,
    "liquidado": 0.0
+  },
+  {
+   "ne": "160246000012026NE000253",
+   "omds": "DC Mun",
+   "emissao": "2026-08-20",
+   "dias": 84,
+   "a_liquidar": 12922.6,
+   "liquidado": 16827.6
   },
   {
    "ne": "160246000012026NE000207",
    "omds": "DC Mun",
    "emissao": "2026-08-05",
-   "dias": 97,
+   "dias": 99,
    "a_liquidar": 12620.37,
    "liquidado": 0.0
   },
@@ -777,7 +753,7 @@
    "ne": "160307000012026NE000393",
    "omds": "1º D Sup",
    "emissao": "2026-09-08",
-   "dias": 63,
+   "dias": 65,
    "a_liquidar": 12157.9,
    "liquidado": 7007.1
   },
@@ -785,7 +761,7 @@
    "ne": "167246000012026NE000044",
    "omds": "DC Mun",
    "emissao": "2026-05-21",
-   "dias": 173,
+   "dias": 175,
    "a_liquidar": 12080.0,
    "liquidado": 0.0
   },
@@ -793,7 +769,7 @@
    "ne": "160329000012026NE000195",
    "omds": "BCMS",
    "emissao": "2026-08-17",
-   "dias": 85,
+   "dias": 87,
    "a_liquidar": 11591.95,
    "liquidado": 171.6
   },
@@ -801,7 +777,7 @@
    "ne": "160329000012026NE000209",
    "omds": "BCMS",
    "emissao": "2026-08-24",
-   "dias": 78,
+   "dias": 80,
    "a_liquidar": 11560.0,
    "liquidado": 12355.0
   },
@@ -809,7 +785,7 @@
    "ne": "160246000012026NE000106",
    "omds": "DC Mun",
    "emissao": "2026-04-29",
-   "dias": 195,
+   "dias": 197,
    "a_liquidar": 11455.03,
    "liquidado": 0.0
   },
@@ -817,7 +793,7 @@
    "ne": "160246000012026NE000107",
    "omds": "DC Mun",
    "emissao": "2026-04-28",
-   "dias": 196,
+   "dias": 198,
    "a_liquidar": 11130.76,
    "liquidado": 52931.24
   },
@@ -825,31 +801,15 @@
    "ne": "160307000012026NE000092",
    "omds": "1º D Sup",
    "emissao": "2026-03-10",
-   "dias": 245,
+   "dias": 247,
    "a_liquidar": 10839.85,
    "liquidado": 60396.24
-  },
-  {
-   "ne": "160304000012026NE000342",
-   "omds": "BMSA",
-   "emissao": "2026-08-19",
-   "dias": 83,
-   "a_liquidar": 10788.0,
-   "liquidado": 0.0
-  },
-  {
-   "ne": "160246000012026NE000252",
-   "omds": "DC Mun",
-   "emissao": "2026-08-20",
-   "dias": 82,
-   "a_liquidar": 10562.12,
-   "liquidado": 11730.12
   },
   {
    "ne": "160246000012026NE000296",
    "omds": "DC Mun",
    "emissao": "2026-09-01",
-   "dias": 70,
+   "dias": 72,
    "a_liquidar": 10454.5,
    "liquidado": 0.0
   },
@@ -857,7 +817,7 @@
    "ne": "167329000012026NE000088",
    "omds": "BCMS",
    "emissao": "2026-07-29",
-   "dias": 104,
+   "dias": 106,
    "a_liquidar": 10322.29,
    "liquidado": 114676.91
   },
@@ -865,7 +825,7 @@
    "ne": "160238000012026NE000152",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-04-30",
-   "dias": 194,
+   "dias": 196,
    "a_liquidar": 10067.78,
    "liquidado": 0.0
   },
@@ -873,7 +833,7 @@
    "ne": "160246000012026NE000251",
    "omds": "DC Mun",
    "emissao": "2026-08-20",
-   "dias": 82,
+   "dias": 84,
    "a_liquidar": 10005.4,
    "liquidado": 68085.66
   },
@@ -881,7 +841,7 @@
    "ne": "160238000012026NE000203",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-05-27",
-   "dias": 167,
+   "dias": 169,
    "a_liquidar": 10000.0,
    "liquidado": 0.0
   },
@@ -889,7 +849,7 @@
    "ne": "167329000012026NE000102",
    "omds": "BCMS",
    "emissao": "2026-08-21",
-   "dias": 81,
+   "dias": 83,
    "a_liquidar": 9999.96,
    "liquidado": 0.0
   },
@@ -897,7 +857,7 @@
    "ne": "160307000012026NE000355",
    "omds": "1º D Sup",
    "emissao": "2026-08-20",
-   "dias": 82,
+   "dias": 84,
    "a_liquidar": 9999.5,
    "liquidado": 0.0
   },
@@ -905,7 +865,7 @@
    "ne": "160246000012026NE000111",
    "omds": "DC Mun",
    "emissao": "2026-05-11",
-   "dias": 183,
+   "dias": 185,
    "a_liquidar": 9843.0,
    "liquidado": 0.0
   },
@@ -913,7 +873,7 @@
    "ne": "160307000012026NE000311",
    "omds": "1º D Sup",
    "emissao": "2026-07-24",
-   "dias": 109,
+   "dias": 111,
    "a_liquidar": 9587.0,
    "liquidado": 0.0
   },
@@ -921,7 +881,7 @@
    "ne": "160246000012026NE000248",
    "omds": "DC Mun",
    "emissao": "2026-08-20",
-   "dias": 82,
+   "dias": 84,
    "a_liquidar": 9452.23,
    "liquidado": 19646.84
   },
@@ -929,7 +889,7 @@
    "ne": "160238000012026NE000023",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-02-25",
-   "dias": 258,
+   "dias": 260,
    "a_liquidar": 9290.0,
    "liquidado": 100.0
   },
@@ -937,31 +897,15 @@
    "ne": "160238000012026NE000122",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-04-10",
-   "dias": 214,
+   "dias": 216,
    "a_liquidar": 9266.42,
    "liquidado": 35253.3
-  },
-  {
-   "ne": "160304000012026NE000099",
-   "omds": "BMSA",
-   "emissao": "2026-04-14",
-   "dias": 210,
-   "a_liquidar": 9106.53,
-   "liquidado": 5090.47
-  },
-  {
-   "ne": "160321000012026NE000067",
-   "omds": "ECT",
-   "emissao": "2026-04-16",
-   "dias": 208,
-   "a_liquidar": 9026.91,
-   "liquidado": 9026.91
   },
   {
    "ne": "160307000012026NE000316",
    "omds": "1º D Sup",
    "emissao": "2026-07-28",
-   "dias": 105,
+   "dias": 107,
    "a_liquidar": 8537.5,
    "liquidado": 0.0
   },
@@ -969,7 +913,7 @@
    "ne": "160304000012026NE000341",
    "omds": "BMSA",
    "emissao": "2026-08-19",
-   "dias": 83,
+   "dias": 85,
    "a_liquidar": 8252.0,
    "liquidado": 138.0
   },
@@ -977,7 +921,7 @@
    "ne": "160246000012026NE000285",
    "omds": "DC Mun",
    "emissao": "2026-08-31",
-   "dias": 71,
+   "dias": 73,
    "a_liquidar": 8173.6,
    "liquidado": 0.0
   },
@@ -985,7 +929,7 @@
    "ne": "160307000012026NE000223",
    "omds": "1º D Sup",
    "emissao": "2026-06-08",
-   "dias": 155,
+   "dias": 157,
    "a_liquidar": 8170.36,
    "liquidado": 172628.14
   },
@@ -993,7 +937,7 @@
    "ne": "160246000012026NE000247",
    "omds": "DC Mun",
    "emissao": "2026-08-20",
-   "dias": 82,
+   "dias": 84,
    "a_liquidar": 8151.0,
    "liquidado": 0.0
   },
@@ -1001,7 +945,7 @@
    "ne": "160304000012026NE000161",
    "omds": "BMSA",
    "emissao": "2026-05-26",
-   "dias": 168,
+   "dias": 170,
    "a_liquidar": 7983.17,
    "liquidado": 6016.83
   },
@@ -1009,7 +953,7 @@
    "ne": "160304000012026NE000353",
    "omds": "BMSA",
    "emissao": "2026-08-20",
-   "dias": 82,
+   "dias": 84,
    "a_liquidar": 7891.68,
    "liquidado": 0.0
   },
@@ -1017,7 +961,7 @@
    "ne": "160246000012026NE000255",
    "omds": "DC Mun",
    "emissao": "2026-08-27",
-   "dias": 75,
+   "dias": 77,
    "a_liquidar": 7839.6,
    "liquidado": 0.0
   },
@@ -1025,7 +969,7 @@
    "ne": "160238000012026NE000340",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-08-26",
-   "dias": 76,
+   "dias": 78,
    "a_liquidar": 7587.0,
    "liquidado": 0.0
   },
@@ -1033,7 +977,7 @@
    "ne": "160304000012026NE000112",
    "omds": "BMSA",
    "emissao": "2026-05-04",
-   "dias": 190,
+   "dias": 192,
    "a_liquidar": 7569.85,
    "liquidado": 0.0
   },
@@ -1041,15 +985,23 @@
    "ne": "160238000012026NE000333",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-08-19",
-   "dias": 83,
+   "dias": 85,
    "a_liquidar": 7491.0,
    "liquidado": 3783.0
+  },
+  {
+   "ne": "160304000012026NE000342",
+   "omds": "BMSA",
+   "emissao": "2026-08-19",
+   "dias": 85,
+   "a_liquidar": 7350.0,
+   "liquidado": 3438.0
   },
   {
    "ne": "160329000012026NE000207",
    "omds": "BCMS",
    "emissao": "2026-08-19",
-   "dias": 83,
+   "dias": 85,
    "a_liquidar": 7291.0,
    "liquidado": 0.0
   },
@@ -1057,7 +1009,7 @@
    "ne": "160329000012026NE000201",
    "omds": "BCMS",
    "emissao": "2026-08-17",
-   "dias": 85,
+   "dias": 87,
    "a_liquidar": 7206.94,
    "liquidado": 6921.11
   },
@@ -1065,7 +1017,7 @@
    "ne": "167329000012026NE000051",
    "omds": "BCMS",
    "emissao": "2026-06-19",
-   "dias": 144,
+   "dias": 146,
    "a_liquidar": 7191.0,
    "liquidado": 0.0
   },
@@ -1073,7 +1025,7 @@
    "ne": "160307000012026NE000142",
    "omds": "1º D Sup",
    "emissao": "2026-04-02",
-   "dias": 222,
+   "dias": 224,
    "a_liquidar": 7107.0,
    "liquidado": 0.0
   },
@@ -1081,23 +1033,15 @@
    "ne": "160307000012026NE000333",
    "omds": "1º D Sup",
    "emissao": "2026-08-14",
-   "dias": 88,
+   "dias": 90,
    "a_liquidar": 7000.0,
-   "liquidado": 0.0
-  },
-  {
-   "ne": "160238000012026NE000289",
-   "omds": "Cmdo BaApLog",
-   "emissao": "2026-07-22",
-   "dias": 111,
-   "a_liquidar": 6830.0,
    "liquidado": 0.0
   },
   {
    "ne": "160329000012026NE000188",
    "omds": "BCMS",
    "emissao": "2026-08-11",
-   "dias": 91,
+   "dias": 93,
    "a_liquidar": 6800.28,
    "liquidado": 0.0
   },
@@ -1105,15 +1049,23 @@
    "ne": "160329000012026NE000251",
    "omds": "BCMS",
    "emissao": "2026-09-09",
-   "dias": 62,
+   "dias": 64,
    "a_liquidar": 6714.67,
+   "liquidado": 0.0
+  },
+  {
+   "ne": "160238000012026NE000280",
+   "omds": "Cmdo BaApLog",
+   "emissao": "2026-07-15",
+   "dias": 120,
+   "a_liquidar": 6547.0,
    "liquidado": 0.0
   },
   {
    "ne": "167238000012026NE000096",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-22",
-   "dias": 111,
+   "dias": 113,
    "a_liquidar": 6499.95,
    "liquidado": 0.0
   },
@@ -1121,7 +1073,7 @@
    "ne": "160304000012026NE000356",
    "omds": "BMSA",
    "emissao": "2026-08-26",
-   "dias": 76,
+   "dias": 78,
    "a_liquidar": 6364.7,
    "liquidado": 2337.8
   },
@@ -1129,7 +1081,7 @@
    "ne": "160238000012026NE000292",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-22",
-   "dias": 111,
+   "dias": 113,
    "a_liquidar": 6000.0,
    "liquidado": 0.0
   },
@@ -1137,7 +1089,7 @@
    "ne": "160304000012026NE000331",
    "omds": "BMSA",
    "emissao": "2026-08-18",
-   "dias": 84,
+   "dias": 86,
    "a_liquidar": 5998.0,
    "liquidado": 0.0
   },
@@ -1145,31 +1097,31 @@
    "ne": "160329000012026NE000200",
    "omds": "BCMS",
    "emissao": "2026-08-17",
-   "dias": 85,
+   "dias": 87,
    "a_liquidar": 5986.44,
    "liquidado": 14020.96
-  },
-  {
-   "ne": "160304000012026NE000344",
-   "omds": "BMSA",
-   "emissao": "2026-08-19",
-   "dias": 83,
-   "a_liquidar": 5963.15,
-   "liquidado": 2824.65
   },
   {
    "ne": "160307000012026NE000257",
    "omds": "1º D Sup",
    "emissao": "2026-07-01",
-   "dias": 132,
+   "dias": 134,
    "a_liquidar": 5904.25,
    "liquidado": 5904.25
+  },
+  {
+   "ne": "160304000012026NE000099",
+   "omds": "BMSA",
+   "emissao": "2026-04-14",
+   "dias": 212,
+   "a_liquidar": 5889.9,
+   "liquidado": 8307.1
   },
   {
    "ne": "160329000012026NE000010",
    "omds": "BCMS",
    "emissao": "2026-02-12",
-   "dias": 271,
+   "dias": 273,
    "a_liquidar": 5872.62,
    "liquidado": 23250.33
   },
@@ -1177,7 +1129,7 @@
    "ne": "160246000012026NE000266",
    "omds": "DC Mun",
    "emissao": "2026-08-27",
-   "dias": 75,
+   "dias": 77,
    "a_liquidar": 5732.0,
    "liquidado": 0.0
   },
@@ -1185,7 +1137,7 @@
    "ne": "160246000012026NE000288",
    "omds": "DC Mun",
    "emissao": "2026-08-31",
-   "dias": 71,
+   "dias": 73,
    "a_liquidar": 5716.0,
    "liquidado": 0.0
   },
@@ -1193,7 +1145,7 @@
    "ne": "160304000012026NE000164",
    "omds": "BMSA",
    "emissao": "2026-05-27",
-   "dias": 167,
+   "dias": 169,
    "a_liquidar": 5668.87,
    "liquidado": 45464.73
   },
@@ -1201,7 +1153,7 @@
    "ne": "160246000012026NE000088",
    "omds": "DC Mun",
    "emissao": "2026-04-27",
-   "dias": 197,
+   "dias": 199,
    "a_liquidar": 5512.0,
    "liquidado": 11024.0
   },
@@ -1209,7 +1161,7 @@
    "ne": "167246000012026NE000093",
    "omds": "DC Mun",
    "emissao": "2026-07-22",
-   "dias": 111,
+   "dias": 113,
    "a_liquidar": 5450.0,
    "liquidado": 0.0
   },
@@ -1217,7 +1169,7 @@
    "ne": "167246000012026NE000108",
    "omds": "DC Mun",
    "emissao": "2026-08-31",
-   "dias": 71,
+   "dias": 73,
    "a_liquidar": 5427.0,
    "liquidado": 0.0
   },
@@ -1225,7 +1177,7 @@
    "ne": "160246000012026NE000254",
    "omds": "DC Mun",
    "emissao": "2026-08-27",
-   "dias": 75,
+   "dias": 77,
    "a_liquidar": 5200.0,
    "liquidado": 0.0
   },
@@ -1233,7 +1185,7 @@
    "ne": "160304000012026NE000258",
    "omds": "BMSA",
    "emissao": "2026-07-02",
-   "dias": 131,
+   "dias": 133,
    "a_liquidar": 5080.12,
    "liquidado": 0.0
   },
@@ -1241,23 +1193,15 @@
    "ne": "160307000012026NE000067",
    "omds": "1º D Sup",
    "emissao": "2026-03-04",
-   "dias": 251,
+   "dias": 253,
    "a_liquidar": 5001.0,
    "liquidado": 29800.0
-  },
-  {
-   "ne": "167304000012026NE000057",
-   "omds": "BMSA",
-   "emissao": "2026-06-29",
-   "dias": 134,
-   "a_liquidar": 4999.85,
-   "liquidado": 0.0
   },
   {
    "ne": "160307000012026NE000363",
    "omds": "1º D Sup",
    "emissao": "2026-08-31",
-   "dias": 71,
+   "dias": 73,
    "a_liquidar": 4850.0,
    "liquidado": 0.0
   },
@@ -1265,7 +1209,7 @@
    "ne": "160329000012026NE000003",
    "omds": "BCMS",
    "emissao": "2026-01-26",
-   "dias": 288,
+   "dias": 290,
    "a_liquidar": 4799.88,
    "liquidado": 2100.11
   },
@@ -1273,7 +1217,7 @@
    "ne": "160304000012026NE000224",
    "omds": "BMSA",
    "emissao": "2026-06-25",
-   "dias": 138,
+   "dias": 140,
    "a_liquidar": 4782.95,
    "liquidado": 0.0
   },
@@ -1281,7 +1225,7 @@
    "ne": "160307000012026NE000219",
    "omds": "1º D Sup",
    "emissao": "2026-06-03",
-   "dias": 160,
+   "dias": 162,
    "a_liquidar": 4704.0,
    "liquidado": 15000.0
   },
@@ -1289,7 +1233,7 @@
    "ne": "167246000012026NE000083",
    "omds": "DC Mun",
    "emissao": "2026-07-17",
-   "dias": 116,
+   "dias": 118,
    "a_liquidar": 4650.0,
    "liquidado": 0.0
   },
@@ -1297,15 +1241,23 @@
    "ne": "160329000012026NE000110",
    "omds": "BCMS",
    "emissao": "2026-05-18",
-   "dias": 176,
+   "dias": 178,
    "a_liquidar": 4500.0,
    "liquidado": 4500.0
+  },
+  {
+   "ne": "160304000012026NE000344",
+   "omds": "BMSA",
+   "emissao": "2026-08-19",
+   "dias": 85,
+   "a_liquidar": 4393.9,
+   "liquidado": 4393.9
   },
   {
    "ne": "160329000012026NE000194",
    "omds": "BCMS",
    "emissao": "2026-08-17",
-   "dias": 85,
+   "dias": 87,
    "a_liquidar": 4072.3,
    "liquidado": 15251.7
   },
@@ -1313,7 +1265,7 @@
    "ne": "160307000012026NE000332",
    "omds": "1º D Sup",
    "emissao": "2026-08-14",
-   "dias": 88,
+   "dias": 90,
    "a_liquidar": 3990.0,
    "liquidado": 0.0
   },
@@ -1321,23 +1273,15 @@
    "ne": "160246000012026NE000234",
    "omds": "DC Mun",
    "emissao": "2026-08-14",
-   "dias": 88,
+   "dias": 90,
    "a_liquidar": 3900.0,
-   "liquidado": 0.0
-  },
-  {
-   "ne": "167304000012026NE000061",
-   "omds": "BMSA",
-   "emissao": "2026-07-10",
-   "dias": 123,
-   "a_liquidar": 3897.0,
    "liquidado": 0.0
   },
   {
    "ne": "160321000012026NE000207",
    "omds": "ECT",
    "emissao": "2026-09-03",
-   "dias": 68,
+   "dias": 70,
    "a_liquidar": 3875.0,
    "liquidado": 0.0
   },
@@ -1345,7 +1289,7 @@
    "ne": "160307000012026NE000267",
    "omds": "1º D Sup",
    "emissao": "2026-07-08",
-   "dias": 125,
+   "dias": 127,
    "a_liquidar": 3825.36,
    "liquidado": 2516.25
   },
@@ -1353,7 +1297,7 @@
    "ne": "160307000012026NE000037",
    "omds": "1º D Sup",
    "emissao": "2026-02-23",
-   "dias": 260,
+   "dias": 262,
    "a_liquidar": 3773.0,
    "liquidado": 0.0
   },
@@ -1361,7 +1305,7 @@
    "ne": "160307000012026NE000220",
    "omds": "1º D Sup",
    "emissao": "2026-06-03",
-   "dias": 160,
+   "dias": 162,
    "a_liquidar": 3740.0,
    "liquidado": 4421.94
   },
@@ -1369,7 +1313,7 @@
    "ne": "167238000012026NE000027",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-06-03",
-   "dias": 160,
+   "dias": 162,
    "a_liquidar": 3633.34,
    "liquidado": 0.0
   },
@@ -1377,7 +1321,7 @@
    "ne": "160329000012026NE000034",
    "omds": "BCMS",
    "emissao": "2026-03-06",
-   "dias": 249,
+   "dias": 251,
    "a_liquidar": 3615.0,
    "liquidado": 47790.0
   },
@@ -1385,7 +1329,7 @@
    "ne": "167329000012026NE000068",
    "omds": "BCMS",
    "emissao": "2026-07-07",
-   "dias": 126,
+   "dias": 128,
    "a_liquidar": 3601.9,
    "liquidado": 0.0
   },
@@ -1393,23 +1337,15 @@
    "ne": "160238000012026NE000039",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-03-18",
-   "dias": 237,
+   "dias": 239,
    "a_liquidar": 3430.15,
    "liquidado": 0.0
-  },
-  {
-   "ne": "160329000012026NE400018",
-   "omds": "BCMS",
-   "emissao": "2026-02-24",
-   "dias": 259,
-   "a_liquidar": 3416.4,
-   "liquidado": 25623.0
   },
   {
    "ne": "160329000012026NE000112",
    "omds": "BCMS",
    "emissao": "2026-05-18",
-   "dias": 176,
+   "dias": 178,
    "a_liquidar": 3388.77,
    "liquidado": 0.0
   },
@@ -1417,7 +1353,7 @@
    "ne": "160304000012026NE000207",
    "omds": "BMSA",
    "emissao": "2026-06-10",
-   "dias": 153,
+   "dias": 155,
    "a_liquidar": 3384.66,
    "liquidado": 0.0
   },
@@ -1425,7 +1361,7 @@
    "ne": "160307000012026NE000381",
    "omds": "1º D Sup",
    "emissao": "2026-09-03",
-   "dias": 68,
+   "dias": 70,
    "a_liquidar": 3369.19,
    "liquidado": 0.0
   },
@@ -1433,7 +1369,7 @@
    "ne": "167246000012026NE000043",
    "omds": "DC Mun",
    "emissao": "2026-05-11",
-   "dias": 183,
+   "dias": 185,
    "a_liquidar": 3292.0,
    "liquidado": 0.0
   },
@@ -1441,7 +1377,7 @@
    "ne": "160307000012026NE000026",
    "omds": "1º D Sup",
    "emissao": "2026-02-05",
-   "dias": 278,
+   "dias": 280,
    "a_liquidar": 3276.95,
    "liquidado": 1203.05
   },
@@ -1449,7 +1385,7 @@
    "ne": "160321000012026NE000057",
    "omds": "ECT",
    "emissao": "2026-04-08",
-   "dias": 216,
+   "dias": 218,
    "a_liquidar": 3250.0,
    "liquidado": 0.0
   },
@@ -1457,23 +1393,15 @@
    "ne": "160321000012026NE000208",
    "omds": "ECT",
    "emissao": "2026-09-08",
-   "dias": 63,
+   "dias": 65,
    "a_liquidar": 3195.0,
    "liquidado": 0.0
-  },
-  {
-   "ne": "160304000012026NE000098",
-   "omds": "BMSA",
-   "emissao": "2026-04-14",
-   "dias": 210,
-   "a_liquidar": 3186.02,
-   "liquidado": 2900.48
   },
   {
    "ne": "160238000012026NE000091",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-04-08",
-   "dias": 216,
+   "dias": 218,
    "a_liquidar": 3180.7,
    "liquidado": 1769.3
   },
@@ -1481,7 +1409,7 @@
    "ne": "160246000012026NE000299",
    "omds": "DC Mun",
    "emissao": "2026-09-01",
-   "dias": 70,
+   "dias": 72,
    "a_liquidar": 3128.2,
    "liquidado": 0.0
   },
@@ -1489,7 +1417,7 @@
    "ne": "160329000012026NE000198",
    "omds": "BCMS",
    "emissao": "2026-08-17",
-   "dias": 85,
+   "dias": 87,
    "a_liquidar": 3120.0,
    "liquidado": 0.0
   },
@@ -1497,23 +1425,15 @@
    "ne": "160246000012026NE000291",
    "omds": "DC Mun",
    "emissao": "2026-08-31",
-   "dias": 71,
+   "dias": 73,
    "a_liquidar": 3109.08,
-   "liquidado": 0.0
-  },
-  {
-   "ne": "160238000012026NE000266",
-   "omds": "Cmdo BaApLog",
-   "emissao": "2026-07-15",
-   "dias": 118,
-   "a_liquidar": 3000.0,
    "liquidado": 0.0
   },
   {
    "ne": "167246000012026NE000042",
    "omds": "DC Mun",
    "emissao": "2026-05-05",
-   "dias": 189,
+   "dias": 191,
    "a_liquidar": 3000.0,
    "liquidado": 0.0
   },
@@ -1521,7 +1441,7 @@
    "ne": "160304000012026NE000290",
    "omds": "BMSA",
    "emissao": "2026-07-17",
-   "dias": 116,
+   "dias": 118,
    "a_liquidar": 2931.0,
    "liquidado": 0.0
   },
@@ -1529,23 +1449,15 @@
    "ne": "160246000012026NE000271",
    "omds": "DC Mun",
    "emissao": "2026-08-28",
-   "dias": 74,
+   "dias": 76,
    "a_liquidar": 2850.0,
    "liquidado": 0.0
-  },
-  {
-   "ne": "160304000012026NE000097",
-   "omds": "BMSA",
-   "emissao": "2026-04-14",
-   "dias": 210,
-   "a_liquidar": 2712.0,
-   "liquidado": 8408.5
   },
   {
    "ne": "160329000012026NE000199",
    "omds": "BCMS",
    "emissao": "2026-08-17",
-   "dias": 85,
+   "dias": 87,
    "a_liquidar": 2699.75,
    "liquidado": 1509.25
   },
@@ -1553,7 +1465,7 @@
    "ne": "160304000012026NE000305",
    "omds": "BMSA",
    "emissao": "2026-07-31",
-   "dias": 102,
+   "dias": 104,
    "a_liquidar": 2695.3,
    "liquidado": 664.53
   },
@@ -1561,7 +1473,7 @@
    "ne": "160321000012026NE000201",
    "omds": "ECT",
    "emissao": "2026-09-02",
-   "dias": 69,
+   "dias": 71,
    "a_liquidar": 2586.3,
    "liquidado": 1141.8
   },
@@ -1569,7 +1481,7 @@
    "ne": "160304000012026NE000211",
    "omds": "BMSA",
    "emissao": "2026-06-10",
-   "dias": 153,
+   "dias": 155,
    "a_liquidar": 2520.0,
    "liquidado": 0.0
   },
@@ -1577,7 +1489,7 @@
    "ne": "160329000012026NE000256",
    "omds": "BCMS",
    "emissao": "2026-09-10",
-   "dias": 61,
+   "dias": 63,
    "a_liquidar": 2501.45,
    "liquidado": 0.0
   },
@@ -1585,7 +1497,7 @@
    "ne": "167238000012026NE000060",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-10",
-   "dias": 123,
+   "dias": 125,
    "a_liquidar": 2500.0,
    "liquidado": 0.0
   },
@@ -1593,7 +1505,7 @@
    "ne": "160329000012026NE000081",
    "omds": "BCMS",
    "emissao": "2026-04-28",
-   "dias": 196,
+   "dias": 198,
    "a_liquidar": 2497.5,
    "liquidado": 1008.99
   },
@@ -1601,7 +1513,7 @@
    "ne": "160238000012026NE000303",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-27",
-   "dias": 106,
+   "dias": 108,
    "a_liquidar": 2474.0,
    "liquidado": 8464.0
   },
@@ -1609,7 +1521,7 @@
    "ne": "160304000012026NE000264",
    "omds": "BMSA",
    "emissao": "2026-07-06",
-   "dias": 127,
+   "dias": 129,
    "a_liquidar": 2424.5,
    "liquidado": 0.0
   },
@@ -1617,7 +1529,7 @@
    "ne": "160307000012026NE000091",
    "omds": "1º D Sup",
    "emissao": "2026-03-10",
-   "dias": 245,
+   "dias": 247,
    "a_liquidar": 2400.0,
    "liquidado": 0.0
   },
@@ -1625,7 +1537,7 @@
    "ne": "160304000012026NE000363",
    "omds": "BMSA",
    "emissao": "2026-08-27",
-   "dias": 75,
+   "dias": 77,
    "a_liquidar": 2378.8,
    "liquidado": 45418.44
   },
@@ -1633,7 +1545,7 @@
    "ne": "160246000012026NE000278",
    "omds": "DC Mun",
    "emissao": "2026-08-31",
-   "dias": 71,
+   "dias": 73,
    "a_liquidar": 2356.0,
    "liquidado": 0.0
   },
@@ -1641,7 +1553,7 @@
    "ne": "167329000012026NE000072",
    "omds": "BCMS",
    "emissao": "2026-07-17",
-   "dias": 116,
+   "dias": 118,
    "a_liquidar": 2240.0,
    "liquidado": 0.0
   },
@@ -1649,7 +1561,7 @@
    "ne": "167329000012026NE000078",
    "omds": "BCMS",
    "emissao": "2026-07-22",
-   "dias": 111,
+   "dias": 113,
    "a_liquidar": 2240.0,
    "liquidado": 0.0
   },
@@ -1657,7 +1569,7 @@
    "ne": "160246000012026NE000265",
    "omds": "DC Mun",
    "emissao": "2026-08-27",
-   "dias": 75,
+   "dias": 77,
    "a_liquidar": 2171.2,
    "liquidado": 0.0
   },
@@ -1665,7 +1577,7 @@
    "ne": "160329000012026NE000130",
    "omds": "BCMS",
    "emissao": "2026-05-29",
-   "dias": 165,
+   "dias": 167,
    "a_liquidar": 2131.7,
    "liquidado": 0.0
   },
@@ -1673,7 +1585,7 @@
    "ne": "160238000012026NE000305",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-27",
-   "dias": 106,
+   "dias": 108,
    "a_liquidar": 2118.6,
    "liquidado": 4879.2
   },
@@ -1681,7 +1593,7 @@
    "ne": "160238000012026NE000147",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-04-29",
-   "dias": 195,
+   "dias": 197,
    "a_liquidar": 2118.5,
    "liquidado": 0.0
   },
@@ -1689,7 +1601,7 @@
    "ne": "160321000012026NE000187",
    "omds": "ECT",
    "emissao": "2026-08-19",
-   "dias": 83,
+   "dias": 85,
    "a_liquidar": 2102.76,
    "liquidado": 497.24
   },
@@ -1697,7 +1609,7 @@
    "ne": "167238000012026NE000054",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-08",
-   "dias": 125,
+   "dias": 127,
    "a_liquidar": 2100.0,
    "liquidado": 0.0
   },
@@ -1705,7 +1617,7 @@
    "ne": "160238000012026NE000170",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-05-07",
-   "dias": 187,
+   "dias": 189,
    "a_liquidar": 2097.9,
    "liquidado": 0.0
   },
@@ -1713,7 +1625,7 @@
    "ne": "160238000012026NE000225",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-06-01",
-   "dias": 162,
+   "dias": 164,
    "a_liquidar": 2093.0,
    "liquidado": 4649.0
   },
@@ -1721,7 +1633,7 @@
    "ne": "160304000012026NE000304",
    "omds": "BMSA",
    "emissao": "2026-07-31",
-   "dias": 102,
+   "dias": 104,
    "a_liquidar": 2069.78,
    "liquidado": 1837.9
   },
@@ -1729,15 +1641,23 @@
    "ne": "160329000012026NE000252",
    "omds": "BCMS",
    "emissao": "2026-09-09",
-   "dias": 62,
+   "dias": 64,
    "a_liquidar": 2040.0,
    "liquidado": 0.0
+  },
+  {
+   "ne": "160304000012026NE000097",
+   "omds": "BMSA",
+   "emissao": "2026-04-14",
+   "dias": 212,
+   "a_liquidar": 2034.0,
+   "liquidado": 9086.5
   },
   {
    "ne": "160307000012026NE000094",
    "omds": "1º D Sup",
    "emissao": "2026-03-12",
-   "dias": 243,
+   "dias": 245,
    "a_liquidar": 2019.4,
    "liquidado": 18240.0
   },
@@ -1745,7 +1665,7 @@
    "ne": "160246000012026NE000298",
    "omds": "DC Mun",
    "emissao": "2026-09-01",
-   "dias": 70,
+   "dias": 72,
    "a_liquidar": 2016.2,
    "liquidado": 0.0
   },
@@ -1753,7 +1673,7 @@
    "ne": "160307000012026NE000354",
    "omds": "1º D Sup",
    "emissao": "2026-08-20",
-   "dias": 82,
+   "dias": 84,
    "a_liquidar": 2007.0,
    "liquidado": 0.0
   },
@@ -1761,7 +1681,7 @@
    "ne": "167321000012026NE000012",
    "omds": "ECT",
    "emissao": "2026-07-20",
-   "dias": 113,
+   "dias": 115,
    "a_liquidar": 2000.0,
    "liquidado": 0.0
   },
@@ -1769,7 +1689,7 @@
    "ne": "167321000012026NE000013",
    "omds": "ECT",
    "emissao": "2026-07-20",
-   "dias": 113,
+   "dias": 115,
    "a_liquidar": 2000.0,
    "liquidado": 0.0
   },
@@ -1777,7 +1697,7 @@
    "ne": "160238000012026NE000236",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-06-16",
-   "dias": 147,
+   "dias": 149,
    "a_liquidar": 1980.0,
    "liquidado": 0.0
   },
@@ -1785,7 +1705,7 @@
    "ne": "160304000012026NE000157",
    "omds": "BMSA",
    "emissao": "2026-05-22",
-   "dias": 172,
+   "dias": 174,
    "a_liquidar": 1800.0,
    "liquidado": 7034.0
   },
@@ -1793,23 +1713,15 @@
    "ne": "160307000012026NE000139",
    "omds": "1º D Sup",
    "emissao": "2026-04-02",
-   "dias": 222,
+   "dias": 224,
    "a_liquidar": 1799.0,
    "liquidado": 13636.0
-  },
-  {
-   "ne": "167304000012026NE000065",
-   "omds": "BMSA",
-   "emissao": "2026-07-13",
-   "dias": 120,
-   "a_liquidar": 1799.0,
-   "liquidado": 0.0
   },
   {
    "ne": "167238000012026NE000079",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-17",
-   "dias": 116,
+   "dias": 118,
    "a_liquidar": 1767.0,
    "liquidado": 0.0
   },
@@ -1817,7 +1729,7 @@
    "ne": "160238000012026NE000212",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-06-01",
-   "dias": 162,
+   "dias": 164,
    "a_liquidar": 1756.4,
    "liquidado": 15134.3
   },
@@ -1825,7 +1737,7 @@
    "ne": "160304000012026NE000282",
    "omds": "BMSA",
    "emissao": "2026-07-13",
-   "dias": 120,
+   "dias": 122,
    "a_liquidar": 1750.0,
    "liquidado": 0.0
   },
@@ -1833,7 +1745,7 @@
    "ne": "160246000012026NE000287",
    "omds": "DC Mun",
    "emissao": "2026-08-31",
-   "dias": 71,
+   "dias": 73,
    "a_liquidar": 1733.0,
    "liquidado": 0.0
   },
@@ -1841,7 +1753,7 @@
    "ne": "160307000012026NE000342",
    "omds": "1º D Sup",
    "emissao": "2026-08-18",
-   "dias": 84,
+   "dias": 86,
    "a_liquidar": 1696.77,
    "liquidado": 25240.0
   },
@@ -1849,23 +1761,15 @@
    "ne": "160304000012026NE000044",
    "omds": "BMSA",
    "emissao": "2026-02-27",
-   "dias": 256,
+   "dias": 258,
    "a_liquidar": 1686.1,
    "liquidado": 489.0
-  },
-  {
-   "ne": "160246000012026NE000209",
-   "omds": "DC Mun",
-   "emissao": "2026-08-05",
-   "dias": 97,
-   "a_liquidar": 1680.0,
-   "liquidado": 0.0
   },
   {
    "ne": "160238000012026NE000144",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-04-27",
-   "dias": 197,
+   "dias": 199,
    "a_liquidar": 1646.0,
    "liquidado": 2696.0
   },
@@ -1873,7 +1777,7 @@
    "ne": "160246000012026NE000181",
    "omds": "DC Mun",
    "emissao": "2026-06-19",
-   "dias": 144,
+   "dias": 146,
    "a_liquidar": 1600.0,
    "liquidado": 0.0
   },
@@ -1881,23 +1785,15 @@
    "ne": "160329000012026NE000051",
    "omds": "BCMS",
    "emissao": "2026-03-12",
-   "dias": 243,
+   "dias": 245,
    "a_liquidar": 1591.6,
    "liquidado": 908.4
-  },
-  {
-   "ne": "167304000012026NE000062",
-   "omds": "BMSA",
-   "emissao": "2026-07-10",
-   "dias": 123,
-   "a_liquidar": 1590.0,
-   "liquidado": 0.0
   },
   {
    "ne": "160304000012026NE000295",
    "omds": "BMSA",
    "emissao": "2026-07-21",
-   "dias": 112,
+   "dias": 114,
    "a_liquidar": 1543.1,
    "liquidado": 28279.9
   },
@@ -1905,39 +1801,23 @@
    "ne": "160304000012026NE000315",
    "omds": "BMSA",
    "emissao": "2026-07-31",
-   "dias": 102,
+   "dias": 104,
    "a_liquidar": 1528.77,
    "liquidado": 1509.18
-  },
-  {
-   "ne": "160304000012026NE000306",
-   "omds": "BMSA",
-   "emissao": "2026-07-31",
-   "dias": 102,
-   "a_liquidar": 1520.0,
-   "liquidado": 0.0
   },
   {
    "ne": "160307000012026NE000292",
    "omds": "1º D Sup",
    "emissao": "2026-07-15",
-   "dias": 118,
+   "dias": 120,
    "a_liquidar": 1464.7,
    "liquidado": 0.0
-  },
-  {
-   "ne": "160304000012026NE000357",
-   "omds": "BMSA",
-   "emissao": "2026-08-26",
-   "dias": 76,
-   "a_liquidar": 1458.0,
-   "liquidado": 3369.3
   },
   {
    "ne": "160238000012026NE000106",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-04-10",
-   "dias": 214,
+   "dias": 216,
    "a_liquidar": 1417.0,
    "liquidado": 0.0
   },
@@ -1945,7 +1825,7 @@
    "ne": "167307000012026NE000021",
    "omds": "1º D Sup",
    "emissao": "2026-05-20",
-   "dias": 174,
+   "dias": 176,
    "a_liquidar": 1400.0,
    "liquidado": 16600.0
   },
@@ -1953,7 +1833,7 @@
    "ne": "167304000012026NE000066",
    "omds": "BMSA",
    "emissao": "2026-07-16",
-   "dias": 117,
+   "dias": 119,
    "a_liquidar": 1399.0,
    "liquidado": 0.0
   },
@@ -1961,7 +1841,7 @@
    "ne": "160238000012026NE000090",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-04-08",
-   "dias": 216,
+   "dias": 218,
    "a_liquidar": 1388.5,
    "liquidado": 0.0
   },
@@ -1969,7 +1849,7 @@
    "ne": "160321000012026NE000064",
    "omds": "ECT",
    "emissao": "2026-04-15",
-   "dias": 209,
+   "dias": 211,
    "a_liquidar": 1377.0,
    "liquidado": 14688.0
   },
@@ -1977,7 +1857,7 @@
    "ne": "160321000012026NE000153",
    "omds": "ECT",
    "emissao": "2026-07-09",
-   "dias": 124,
+   "dias": 126,
    "a_liquidar": 1376.82,
    "liquidado": 132847.5
   },
@@ -1985,7 +1865,7 @@
    "ne": "160329000012026NE000184",
    "omds": "BCMS",
    "emissao": "2026-07-29",
-   "dias": 104,
+   "dias": 106,
    "a_liquidar": 1369.0,
    "liquidado": 0.0
   },
@@ -1993,7 +1873,7 @@
    "ne": "160304000012026NE000150",
    "omds": "BMSA",
    "emissao": "2026-05-06",
-   "dias": 188,
+   "dias": 190,
    "a_liquidar": 1330.0,
    "liquidado": 665.0
   },
@@ -2001,7 +1881,7 @@
    "ne": "160329000012026NE000249",
    "omds": "BCMS",
    "emissao": "2026-08-31",
-   "dias": 71,
+   "dias": 73,
    "a_liquidar": 1327.56,
    "liquidado": 292.44
   },
@@ -2009,7 +1889,7 @@
    "ne": "160238000012026NE000117",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-04-10",
-   "dias": 214,
+   "dias": 216,
    "a_liquidar": 1325.48,
    "liquidado": 10045.62
   },
@@ -2017,7 +1897,7 @@
    "ne": "160304000012026NE000312",
    "omds": "BMSA",
    "emissao": "2026-07-31",
-   "dias": 102,
+   "dias": 104,
    "a_liquidar": 1320.0,
    "liquidado": 0.0
   },
@@ -2025,23 +1905,15 @@
    "ne": "160246000012026NE000283",
    "omds": "DC Mun",
    "emissao": "2026-08-31",
-   "dias": 71,
+   "dias": 73,
    "a_liquidar": 1309.68,
-   "liquidado": 0.0
-  },
-  {
-   "ne": "167304000012026NE000064",
-   "omds": "BMSA",
-   "emissao": "2026-07-13",
-   "dias": 120,
-   "a_liquidar": 1299.0,
    "liquidado": 0.0
   },
   {
    "ne": "160307000012026NE000374",
    "omds": "1º D Sup",
    "emissao": "2026-09-02",
-   "dias": 69,
+   "dias": 71,
    "a_liquidar": 1290.0,
    "liquidado": 0.0
   },
@@ -2049,7 +1921,7 @@
    "ne": "160238000012026NE000165",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-05-06",
-   "dias": 188,
+   "dias": 190,
    "a_liquidar": 1288.0,
    "liquidado": 0.0
   },
@@ -2057,7 +1929,7 @@
    "ne": "160246000012026NE000294",
    "omds": "DC Mun",
    "emissao": "2026-08-31",
-   "dias": 71,
+   "dias": 73,
    "a_liquidar": 1282.0,
    "liquidado": 0.0
   },
@@ -2065,7 +1937,7 @@
    "ne": "160329000012026NE000092",
    "omds": "BCMS",
    "emissao": "2026-05-05",
-   "dias": 189,
+   "dias": 191,
    "a_liquidar": 1266.0,
    "liquidado": 1548.0
   },
@@ -2073,7 +1945,7 @@
    "ne": "160321000012026NE000151",
    "omds": "ECT",
    "emissao": "2026-07-07",
-   "dias": 126,
+   "dias": 128,
    "a_liquidar": 1259.11,
    "liquidado": 0.0
   },
@@ -2081,7 +1953,7 @@
    "ne": "160304000012026NE000114",
    "omds": "BMSA",
    "emissao": "2026-05-04",
-   "dias": 190,
+   "dias": 192,
    "a_liquidar": 1215.2,
    "liquidado": 2327.6
   },
@@ -2089,7 +1961,7 @@
    "ne": "160246000012026NE000168",
    "omds": "DC Mun",
    "emissao": "2026-06-11",
-   "dias": 152,
+   "dias": 154,
    "a_liquidar": 1197.49,
    "liquidado": 0.0
   },
@@ -2097,7 +1969,7 @@
    "ne": "160307000012026NE000272",
    "omds": "1º D Sup",
    "emissao": "2026-07-08",
-   "dias": 125,
+   "dias": 127,
    "a_liquidar": 1190.0,
    "liquidado": 0.0
   },
@@ -2105,7 +1977,7 @@
    "ne": "160304000012026NE000283",
    "omds": "BMSA",
    "emissao": "2026-07-14",
-   "dias": 119,
+   "dias": 121,
    "a_liquidar": 1160.0,
    "liquidado": 0.0
   },
@@ -2113,7 +1985,7 @@
    "ne": "160321000012026NE000110",
    "omds": "ECT",
    "emissao": "2026-05-27",
-   "dias": 167,
+   "dias": 169,
    "a_liquidar": 1155.94,
    "liquidado": 4844.19
   },
@@ -2121,7 +1993,7 @@
    "ne": "160321000012026NE000174",
    "omds": "ECT",
    "emissao": "2026-07-17",
-   "dias": 116,
+   "dias": 118,
    "a_liquidar": 1125.0,
    "liquidado": 0.0
   },
@@ -2129,7 +2001,7 @@
    "ne": "167246000012026NE000041",
    "omds": "DC Mun",
    "emissao": "2026-05-05",
-   "dias": 189,
+   "dias": 191,
    "a_liquidar": 1125.0,
    "liquidado": 6875.0
   },
@@ -2137,7 +2009,7 @@
    "ne": "167329000012026NE000103",
    "omds": "BCMS",
    "emissao": "2026-08-31",
-   "dias": 71,
+   "dias": 73,
    "a_liquidar": 1117.5,
    "liquidado": 0.0
   },
@@ -2145,7 +2017,7 @@
    "ne": "160304000012026NE000079",
    "omds": "BMSA",
    "emissao": "2026-03-24",
-   "dias": 231,
+   "dias": 233,
    "a_liquidar": 1080.5,
    "liquidado": 0.0
   },
@@ -2153,7 +2025,7 @@
    "ne": "160304000012026NE000083",
    "omds": "BMSA",
    "emissao": "2026-03-25",
-   "dias": 230,
+   "dias": 232,
    "a_liquidar": 1065.82,
    "liquidado": 0.0
   },
@@ -2161,7 +2033,7 @@
    "ne": "167238000012026NE000045",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-02",
-   "dias": 131,
+   "dias": 133,
    "a_liquidar": 1060.0,
    "liquidado": 0.0
   },
@@ -2169,7 +2041,7 @@
    "ne": "160329000012026NE000007",
    "omds": "BCMS",
    "emissao": "2026-02-09",
-   "dias": 274,
+   "dias": 276,
    "a_liquidar": 1041.95,
    "liquidado": 473.5
   },
@@ -2177,7 +2049,7 @@
    "ne": "160304000012026NE000169",
    "omds": "BMSA",
    "emissao": "2026-05-28",
-   "dias": 166,
+   "dias": 168,
    "a_liquidar": 1040.0,
    "liquidado": 0.0
   },
@@ -2185,7 +2057,7 @@
    "ne": "167246000012026NE000111",
    "omds": "DC Mun",
    "emissao": "2026-09-04",
-   "dias": 67,
+   "dias": 69,
    "a_liquidar": 1035.0,
    "liquidado": 0.0
   },
@@ -2193,7 +2065,7 @@
    "ne": "167238000012026NE000026",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-06-03",
-   "dias": 160,
+   "dias": 162,
    "a_liquidar": 1022.74,
    "liquidado": 0.0
   },
@@ -2201,7 +2073,7 @@
    "ne": "160304000012026NE000346",
    "omds": "BMSA",
    "emissao": "2026-08-19",
-   "dias": 83,
+   "dias": 85,
    "a_liquidar": 1015.0,
    "liquidado": 17.3
   },
@@ -2209,7 +2081,7 @@
    "ne": "160238000012026NE000235",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-06-16",
-   "dias": 147,
+   "dias": 149,
    "a_liquidar": 1010.91,
    "liquidado": 2992.52
   },
@@ -2217,7 +2089,7 @@
    "ne": "160321000012026NE000186",
    "omds": "ECT",
    "emissao": "2026-08-19",
-   "dias": 83,
+   "dias": 85,
    "a_liquidar": 1000.0,
    "liquidado": 0.0
   },
@@ -2225,7 +2097,7 @@
    "ne": "160321000012026NE000190",
    "omds": "ECT",
    "emissao": "2026-08-27",
-   "dias": 75,
+   "dias": 77,
    "a_liquidar": 999.96,
    "liquidado": 0.0
   },
@@ -2233,7 +2105,7 @@
    "ne": "160304000012026NE000333",
    "omds": "BMSA",
    "emissao": "2026-08-18",
-   "dias": 84,
+   "dias": 86,
    "a_liquidar": 995.0,
    "liquidado": 0.0
   },
@@ -2241,7 +2113,7 @@
    "ne": "160246000012026NE000186",
    "omds": "DC Mun",
    "emissao": "2026-06-22",
-   "dias": 141,
+   "dias": 143,
    "a_liquidar": 975.5,
    "liquidado": 0.0
   },
@@ -2249,7 +2121,7 @@
    "ne": "160304000012026NE000253",
    "omds": "BMSA",
    "emissao": "2026-06-30",
-   "dias": 133,
+   "dias": 135,
    "a_liquidar": 965.0,
    "liquidado": 0.0
   },
@@ -2257,7 +2129,7 @@
    "ne": "160246000012026NE000290",
    "omds": "DC Mun",
    "emissao": "2026-08-31",
-   "dias": 71,
+   "dias": 73,
    "a_liquidar": 959.88,
    "liquidado": 0.0
   },
@@ -2265,7 +2137,7 @@
    "ne": "160329000012026NE000054",
    "omds": "BCMS",
    "emissao": "2026-03-23",
-   "dias": 232,
+   "dias": 234,
    "a_liquidar": 945.0,
    "liquidado": 0.0
   },
@@ -2273,31 +2145,31 @@
    "ne": "160238000012026NE000115",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-04-10",
-   "dias": 214,
+   "dias": 216,
    "a_liquidar": 927.0,
-   "liquidado": 0.0
-  },
-  {
-   "ne": "160304000012026NE000334",
-   "omds": "BMSA",
-   "emissao": "2026-08-18",
-   "dias": 84,
-   "a_liquidar": 920.0,
    "liquidado": 0.0
   },
   {
    "ne": "160246000012026NE000292",
    "omds": "DC Mun",
    "emissao": "2026-08-31",
-   "dias": 71,
+   "dias": 73,
    "a_liquidar": 914.95,
+   "liquidado": 0.0
+  },
+  {
+   "ne": "167304000012026NE000105",
+   "omds": "BMSA",
+   "emissao": "2026-09-11",
+   "dias": 62,
+   "a_liquidar": 900.0,
    "liquidado": 0.0
   },
   {
    "ne": "167238000012026NE000031",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-06-03",
-   "dias": 160,
+   "dias": 162,
    "a_liquidar": 857.49,
    "liquidado": 0.0
   },
@@ -2305,7 +2177,7 @@
    "ne": "160246000012026NE000185",
    "omds": "DC Mun",
    "emissao": "2026-06-22",
-   "dias": 141,
+   "dias": 143,
    "a_liquidar": 838.29,
    "liquidado": 1261.71
   },
@@ -2313,7 +2185,7 @@
    "ne": "167329000012026NE000091",
    "omds": "BCMS",
    "emissao": "2026-08-13",
-   "dias": 89,
+   "dias": 91,
    "a_liquidar": 837.0,
    "liquidado": 0.0
   },
@@ -2321,7 +2193,7 @@
    "ne": "160238000012026NE000304",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-27",
-   "dias": 106,
+   "dias": 108,
    "a_liquidar": 810.0,
    "liquidado": 9420.25
   },
@@ -2329,7 +2201,7 @@
    "ne": "160321000012026NE000018",
    "omds": "ECT",
    "emissao": "2026-02-06",
-   "dias": 277,
+   "dias": 279,
    "a_liquidar": 798.12,
    "liquidado": 435.41
   },
@@ -2337,7 +2209,7 @@
    "ne": "160238000012026NE000108",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-04-10",
-   "dias": 214,
+   "dias": 216,
    "a_liquidar": 792.0,
    "liquidado": 0.0
   },
@@ -2345,7 +2217,7 @@
    "ne": "160304000012026NE000183",
    "omds": "BMSA",
    "emissao": "2026-06-09",
-   "dias": 154,
+   "dias": 156,
    "a_liquidar": 764.0,
    "liquidado": 1528.0
   },
@@ -2353,7 +2225,7 @@
    "ne": "160304000012026NE000046",
    "omds": "BMSA",
    "emissao": "2026-02-27",
-   "dias": 256,
+   "dias": 258,
    "a_liquidar": 759.24,
    "liquidado": 759.24
   },
@@ -2361,15 +2233,23 @@
    "ne": "160304000012026NE000289",
    "omds": "BMSA",
    "emissao": "2026-07-16",
-   "dias": 117,
+   "dias": 119,
    "a_liquidar": 748.43,
    "liquidado": 1345.27
+  },
+  {
+   "ne": "167304000012026NE000106",
+   "omds": "BMSA",
+   "emissao": "2026-09-11",
+   "dias": 62,
+   "a_liquidar": 738.0,
+   "liquidado": 0.0
   },
   {
    "ne": "160238000012026NE000261",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-08",
-   "dias": 125,
+   "dias": 127,
    "a_liquidar": 696.91,
    "liquidado": 2322.98
   },
@@ -2377,7 +2257,7 @@
    "ne": "160304000012026NE000329",
    "omds": "BMSA",
    "emissao": "2026-08-17",
-   "dias": 85,
+   "dias": 87,
    "a_liquidar": 686.86,
    "liquidado": 91000.0
   },
@@ -2385,7 +2265,7 @@
    "ne": "167321000012026NE000011",
    "omds": "ECT",
    "emissao": "2026-07-20",
-   "dias": 113,
+   "dias": 115,
    "a_liquidar": 672.75,
    "liquidado": 0.0
   },
@@ -2393,7 +2273,7 @@
    "ne": "160246000012026NE000109",
    "omds": "DC Mun",
    "emissao": "2026-04-30",
-   "dias": 194,
+   "dias": 196,
    "a_liquidar": 670.39,
    "liquidado": 529.61
   },
@@ -2401,23 +2281,15 @@
    "ne": "160329000012026NE000097",
    "omds": "BCMS",
    "emissao": "2026-05-07",
-   "dias": 187,
+   "dias": 189,
    "a_liquidar": 663.0,
-   "liquidado": 0.0
-  },
-  {
-   "ne": "167304000012026NE000095",
-   "omds": "BMSA",
-   "emissao": "2026-09-04",
-   "dias": 67,
-   "a_liquidar": 642.92,
    "liquidado": 0.0
   },
   {
    "ne": "160329000012026NE000100",
    "omds": "BCMS",
    "emissao": "2026-05-13",
-   "dias": 181,
+   "dias": 183,
    "a_liquidar": 630.01,
    "liquidado": 0.0
   },
@@ -2425,23 +2297,15 @@
    "ne": "160246000012026NE000227",
    "omds": "DC Mun",
    "emissao": "2026-08-13",
-   "dias": 89,
+   "dias": 91,
    "a_liquidar": 600.0,
    "liquidado": 0.0
-  },
-  {
-   "ne": "160304000012026NE000185",
-   "omds": "BMSA",
-   "emissao": "2026-06-09",
-   "dias": 154,
-   "a_liquidar": 594.0,
-   "liquidado": 594.0
   },
   {
    "ne": "160246000012026NE000276",
    "omds": "DC Mun",
    "emissao": "2026-08-28",
-   "dias": 74,
+   "dias": 76,
    "a_liquidar": 592.8,
    "liquidado": 0.0
   },
@@ -2449,7 +2313,7 @@
    "ne": "160238000012026NE000208",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-06-01",
-   "dias": 162,
+   "dias": 164,
    "a_liquidar": 592.5,
    "liquidado": 5702.75
   },
@@ -2457,15 +2321,23 @@
    "ne": "160246000012026NE000211",
    "omds": "DC Mun",
    "emissao": "2026-08-06",
-   "dias": 96,
+   "dias": 98,
    "a_liquidar": 588.0,
    "liquidado": 0.0
+  },
+  {
+   "ne": "160304000012026NE000098",
+   "omds": "BMSA",
+   "emissao": "2026-04-14",
+   "dias": 212,
+   "a_liquidar": 575.0,
+   "liquidado": 5511.5
   },
   {
    "ne": "167238000012026NE000032",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-06-08",
-   "dias": 155,
+   "dias": 157,
    "a_liquidar": 562.44,
    "liquidado": 0.0
   },
@@ -2473,7 +2345,7 @@
    "ne": "160304000012026NE000326",
    "omds": "BMSA",
    "emissao": "2026-08-14",
-   "dias": 88,
+   "dias": 90,
    "a_liquidar": 550.0,
    "liquidado": 0.0
   },
@@ -2481,15 +2353,7 @@
    "ne": "160304000012026NE000252",
    "omds": "BMSA",
    "emissao": "2026-06-30",
-   "dias": 133,
-   "a_liquidar": 520.0,
-   "liquidado": 0.0
-  },
-  {
-   "ne": "167304000012026NE000003",
-   "omds": "BMSA",
-   "emissao": "2026-02-04",
-   "dias": 279,
+   "dias": 135,
    "a_liquidar": 520.0,
    "liquidado": 0.0
   },
@@ -2497,7 +2361,7 @@
    "ne": "160329000012026NE000055",
    "omds": "BCMS",
    "emissao": "2026-03-27",
-   "dias": 228,
+   "dias": 230,
    "a_liquidar": 516.0,
    "liquidado": 508.0
   },
@@ -2505,7 +2369,7 @@
    "ne": "160304000012026NE000134",
    "omds": "BMSA",
    "emissao": "2026-05-06",
-   "dias": 188,
+   "dias": 190,
    "a_liquidar": 508.5,
    "liquidado": 0.0
   },
@@ -2513,7 +2377,7 @@
    "ne": "160238000012026NE000020",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-02-23",
-   "dias": 260,
+   "dias": 262,
    "a_liquidar": 500.8,
    "liquidado": 689.05
   },
@@ -2521,7 +2385,7 @@
    "ne": "160307000012026NE000331",
    "omds": "1º D Sup",
    "emissao": "2026-08-13",
-   "dias": 89,
+   "dias": 91,
    "a_liquidar": 480.0,
    "liquidado": 0.0
   },
@@ -2529,7 +2393,7 @@
    "ne": "160246000012026NE000300",
    "omds": "DC Mun",
    "emissao": "2026-09-01",
-   "dias": 70,
+   "dias": 72,
    "a_liquidar": 475.0,
    "liquidado": 0.0
   },
@@ -2537,7 +2401,7 @@
    "ne": "160238000012026NE000247",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-06-26",
-   "dias": 137,
+   "dias": 139,
    "a_liquidar": 470.0,
    "liquidado": 0.0
   },
@@ -2545,7 +2409,7 @@
    "ne": "160329000012026NE000084",
    "omds": "BCMS",
    "emissao": "2026-04-29",
-   "dias": 195,
+   "dias": 197,
    "a_liquidar": 468.46,
    "liquidado": 5531.51
   },
@@ -2553,7 +2417,7 @@
    "ne": "160329000012026NE000013",
    "omds": "BCMS",
    "emissao": "2026-02-19",
-   "dias": 264,
+   "dias": 266,
    "a_liquidar": 465.98,
    "liquidado": 16384.4
   },
@@ -2561,7 +2425,7 @@
    "ne": "167238000012026NE000092",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-22",
-   "dias": 111,
+   "dias": 113,
    "a_liquidar": 460.0,
    "liquidado": 0.0
   },
@@ -2569,7 +2433,7 @@
    "ne": "160246000012026NE000263",
    "omds": "DC Mun",
    "emissao": "2026-08-27",
-   "dias": 75,
+   "dias": 77,
    "a_liquidar": 429.1,
    "liquidado": 0.0
   },
@@ -2577,23 +2441,15 @@
    "ne": "160238000012026NE000066",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-03-23",
-   "dias": 232,
+   "dias": 234,
    "a_liquidar": 406.25,
    "liquidado": 2033.75
-  },
-  {
-   "ne": "167304000012026NE000060",
-   "omds": "BMSA",
-   "emissao": "2026-07-10",
-   "dias": 123,
-   "a_liquidar": 400.0,
-   "liquidado": 0.0
   },
   {
    "ne": "160304000012026NE000307",
    "omds": "BMSA",
    "emissao": "2026-07-31",
-   "dias": 102,
+   "dias": 104,
    "a_liquidar": 390.0,
    "liquidado": 1188.06
   },
@@ -2601,7 +2457,7 @@
    "ne": "160238000012026NE000262",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-09",
-   "dias": 124,
+   "dias": 126,
    "a_liquidar": 385.0,
    "liquidado": 2310.0
   },
@@ -2609,7 +2465,7 @@
    "ne": "160321000012026NE000166",
    "omds": "ECT",
    "emissao": "2026-07-16",
-   "dias": 117,
+   "dias": 119,
    "a_liquidar": 382.92,
    "liquidado": 707.45
   },
@@ -2617,7 +2473,7 @@
    "ne": "160304000012026NE000195",
    "omds": "BMSA",
    "emissao": "2026-06-09",
-   "dias": 154,
+   "dias": 156,
    "a_liquidar": 366.0,
    "liquidado": 2750.5
   },
@@ -2625,7 +2481,7 @@
    "ne": "167238000012026NE000049",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-02",
-   "dias": 131,
+   "dias": 133,
    "a_liquidar": 360.0,
    "liquidado": 0.0
   },
@@ -2633,7 +2489,7 @@
    "ne": "160304000012026NE000314",
    "omds": "BMSA",
    "emissao": "2026-07-31",
-   "dias": 102,
+   "dias": 104,
    "a_liquidar": 333.16,
    "liquidado": 452.59
   },
@@ -2641,47 +2497,39 @@
    "ne": "167329000012026NE000036",
    "omds": "BCMS",
    "emissao": "2026-05-13",
-   "dias": 181,
+   "dias": 183,
    "a_liquidar": 327.8,
    "liquidado": 2652.2
+  },
+  {
+   "ne": "167304000012026NE000104",
+   "omds": "BMSA",
+   "emissao": "2026-09-11",
+   "dias": 62,
+   "a_liquidar": 324.6,
+   "liquidado": 0.0
   },
   {
    "ne": "167246000012026NE000071",
    "omds": "DC Mun",
    "emissao": "2026-07-02",
-   "dias": 131,
+   "dias": 133,
    "a_liquidar": 322.0,
-   "liquidado": 0.0
-  },
-  {
-   "ne": "160246000012026NE000229",
-   "omds": "DC Mun",
-   "emissao": "2026-08-13",
-   "dias": 89,
-   "a_liquidar": 320.0,
    "liquidado": 0.0
   },
   {
    "ne": "167238000012026NE000073",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-17",
-   "dias": 116,
+   "dias": 118,
    "a_liquidar": 318.8,
-   "liquidado": 0.0
-  },
-  {
-   "ne": "160238000012026NE000228",
-   "omds": "Cmdo BaApLog",
-   "emissao": "2026-06-03",
-   "dias": 160,
-   "a_liquidar": 315.75,
    "liquidado": 0.0
   },
   {
    "ne": "160307000012026NE000387",
    "omds": "1º D Sup",
    "emissao": "2026-09-03",
-   "dias": 68,
+   "dias": 70,
    "a_liquidar": 300.0,
    "liquidado": 71128.16
   },
@@ -2689,7 +2537,7 @@
    "ne": "160321000012026NE000042",
    "omds": "ECT",
    "emissao": "2026-03-19",
-   "dias": 236,
+   "dias": 238,
    "a_liquidar": 298.88,
    "liquidado": 653.54
   },
@@ -2697,23 +2545,15 @@
    "ne": "160304000012026NE000078",
    "omds": "BMSA",
    "emissao": "2026-03-24",
-   "dias": 231,
+   "dias": 233,
    "a_liquidar": 295.92,
-   "liquidado": 0.0
-  },
-  {
-   "ne": "160304000012026NE000330",
-   "omds": "BMSA",
-   "emissao": "2026-08-18",
-   "dias": 84,
-   "a_liquidar": 295.68,
    "liquidado": 0.0
   },
   {
    "ne": "167304000012026NE000038",
    "omds": "BMSA",
    "emissao": "2026-06-08",
-   "dias": 155,
+   "dias": 157,
    "a_liquidar": 286.0,
    "liquidado": 0.0
   },
@@ -2721,7 +2561,7 @@
    "ne": "167238000012026NE000044",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-02",
-   "dias": 131,
+   "dias": 133,
    "a_liquidar": 283.5,
    "liquidado": 0.0
   },
@@ -2729,7 +2569,7 @@
    "ne": "160321000012026NE000041",
    "omds": "ECT",
    "emissao": "2026-03-16",
-   "dias": 239,
+   "dias": 241,
    "a_liquidar": 274.37,
    "liquidado": 0.0
   },
@@ -2737,7 +2577,7 @@
    "ne": "167321000012026NE000015",
    "omds": "ECT",
    "emissao": "2026-07-27",
-   "dias": 106,
+   "dias": 108,
    "a_liquidar": 261.3,
    "liquidado": 0.0
   },
@@ -2745,7 +2585,7 @@
    "ne": "167329000012026NE000093",
    "omds": "BCMS",
    "emissao": "2026-08-13",
-   "dias": 89,
+   "dias": 91,
    "a_liquidar": 253.5,
    "liquidado": 0.0
   },
@@ -2753,7 +2593,7 @@
    "ne": "160304000012026NE000254",
    "omds": "BMSA",
    "emissao": "2026-06-30",
-   "dias": 133,
+   "dias": 135,
    "a_liquidar": 240.0,
    "liquidado": 0.0
   },
@@ -2761,7 +2601,7 @@
    "ne": "160246000012026NE000259",
    "omds": "DC Mun",
    "emissao": "2026-08-27",
-   "dias": 75,
+   "dias": 77,
    "a_liquidar": 233.3,
    "liquidado": 0.0
   },
@@ -2769,7 +2609,7 @@
    "ne": "160329000012026NE000187",
    "omds": "BCMS",
    "emissao": "2026-08-06",
-   "dias": 96,
+   "dias": 98,
    "a_liquidar": 232.78,
    "liquidado": 0.0
   },
@@ -2777,7 +2617,7 @@
    "ne": "160238000012026NE000180",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-05-12",
-   "dias": 182,
+   "dias": 184,
    "a_liquidar": 230.0,
    "liquidado": 0.0
   },
@@ -2785,7 +2625,7 @@
    "ne": "160329000012026NE000175",
    "omds": "BCMS",
    "emissao": "2026-07-22",
-   "dias": 111,
+   "dias": 113,
    "a_liquidar": 230.0,
    "liquidado": 0.0
   },
@@ -2793,7 +2633,7 @@
    "ne": "160238000012026NE000252",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-06-30",
-   "dias": 133,
+   "dias": 135,
    "a_liquidar": 225.0,
    "liquidado": 0.0
   },
@@ -2801,7 +2641,7 @@
    "ne": "167238000012026NE000084",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-17",
-   "dias": 116,
+   "dias": 118,
    "a_liquidar": 217.5,
    "liquidado": 0.0
   },
@@ -2809,7 +2649,7 @@
    "ne": "160307000012026NE000134",
    "omds": "1º D Sup",
    "emissao": "2026-04-01",
-   "dias": 223,
+   "dias": 225,
    "a_liquidar": 216.0,
    "liquidado": 143.7
   },
@@ -2817,15 +2657,23 @@
    "ne": "160238000012026NE000265",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-15",
-   "dias": 118,
+   "dias": 120,
    "a_liquidar": 212.5,
    "liquidado": 3707.5
+  },
+  {
+   "ne": "167304000012026NE000107",
+   "omds": "BMSA",
+   "emissao": "2026-09-11",
+   "dias": 62,
+   "a_liquidar": 210.0,
+   "liquidado": 0.0
   },
   {
    "ne": "167246000012026NE000027",
    "omds": "DC Mun",
    "emissao": "2026-03-30",
-   "dias": 225,
+   "dias": 227,
    "a_liquidar": 207.5,
    "liquidado": 2792.5
   },
@@ -2833,7 +2681,7 @@
    "ne": "160304000012026NE000284",
    "omds": "BMSA",
    "emissao": "2026-07-14",
-   "dias": 119,
+   "dias": 121,
    "a_liquidar": 199.73,
    "liquidado": 0.0
   },
@@ -2841,7 +2689,7 @@
    "ne": "160238000012026NE000224",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-06-01",
-   "dias": 162,
+   "dias": 164,
    "a_liquidar": 199.0,
    "liquidado": 0.0
   },
@@ -2849,7 +2697,7 @@
    "ne": "167238000012026NE000064",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-16",
-   "dias": 117,
+   "dias": 119,
    "a_liquidar": 192.29,
    "liquidado": 0.0
   },
@@ -2857,7 +2705,7 @@
    "ne": "167329000012026NE000096",
    "omds": "BCMS",
    "emissao": "2026-08-13",
-   "dias": 89,
+   "dias": 91,
    "a_liquidar": 192.0,
    "liquidado": 0.0
   },
@@ -2865,7 +2713,7 @@
    "ne": "160304000012026NE000236",
    "omds": "BMSA",
    "emissao": "2026-06-25",
-   "dias": 138,
+   "dias": 140,
    "a_liquidar": 183.3,
    "liquidado": 0.0
   },
@@ -2873,39 +2721,23 @@
    "ne": "167304000012026NE000036",
    "omds": "BMSA",
    "emissao": "2026-06-08",
-   "dias": 155,
+   "dias": 157,
    "a_liquidar": 168.3,
    "liquidado": 0.0
-  },
-  {
-   "ne": "160238000012026NE000198",
-   "omds": "Cmdo BaApLog",
-   "emissao": "2026-05-25",
-   "dias": 169,
-   "a_liquidar": 165.38,
-   "liquidado": 3134.83
   },
   {
    "ne": "167304000012026NE000090",
    "omds": "BMSA",
    "emissao": "2026-09-04",
-   "dias": 67,
+   "dias": 69,
    "a_liquidar": 158.0,
-   "liquidado": 0.0
-  },
-  {
-   "ne": "160246000012026NE000256",
-   "omds": "DC Mun",
-   "emissao": "2026-08-27",
-   "dias": 75,
-   "a_liquidar": 150.0,
    "liquidado": 0.0
   },
   {
    "ne": "160238000012026NE000307",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-07-27",
-   "dias": 106,
+   "dias": 108,
    "a_liquidar": 134.55,
    "liquidado": 2706.45
   },
@@ -2913,23 +2745,15 @@
    "ne": "160238000012026NE000244",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-06-24",
-   "dias": 139,
+   "dias": 141,
    "a_liquidar": 125.0,
    "liquidado": 0.0
-  },
-  {
-   "ne": "160238000012026NE000183",
-   "omds": "Cmdo BaApLog",
-   "emissao": "2026-05-15",
-   "dias": 179,
-   "a_liquidar": 120.94,
-   "liquidado": 2219.06
   },
   {
    "ne": "160307000012026NE000079",
    "omds": "1º D Sup",
    "emissao": "2026-03-06",
-   "dias": 249,
+   "dias": 251,
    "a_liquidar": 116.8,
    "liquidado": 0.0
   },
@@ -2937,7 +2761,7 @@
    "ne": "167246000012026NE000040",
    "omds": "DC Mun",
    "emissao": "2026-05-05",
-   "dias": 189,
+   "dias": 191,
    "a_liquidar": 82.5,
    "liquidado": 7917.5
   },
@@ -2945,7 +2769,7 @@
    "ne": "160307000012026NE000156",
    "omds": "1º D Sup",
    "emissao": "2026-04-29",
-   "dias": 195,
+   "dias": 197,
    "a_liquidar": 79.52,
    "liquidado": 303.98
   },
@@ -2953,7 +2777,7 @@
    "ne": "167246000012026NE000039",
    "omds": "DC Mun",
    "emissao": "2026-05-05",
-   "dias": 189,
+   "dias": 191,
    "a_liquidar": 77.5,
    "liquidado": 7922.5
   },
@@ -2961,23 +2785,15 @@
    "ne": "167329000012026NE000095",
    "omds": "BCMS",
    "emissao": "2026-08-13",
-   "dias": 89,
+   "dias": 91,
    "a_liquidar": 76.0,
    "liquidado": 0.0
-  },
-  {
-   "ne": "160238000012026NE000163",
-   "omds": "Cmdo BaApLog",
-   "emissao": "2026-05-06",
-   "dias": 188,
-   "a_liquidar": 55.22,
-   "liquidado": 3349.78
   },
   {
    "ne": "167304000012026NE000052",
    "omds": "BMSA",
    "emissao": "2026-06-26",
-   "dias": 137,
+   "dias": 139,
    "a_liquidar": 50.0,
    "liquidado": 6449.98
   },
@@ -2985,7 +2801,7 @@
    "ne": "160304000012026NE000262",
    "omds": "BMSA",
    "emissao": "2026-07-02",
-   "dias": 131,
+   "dias": 133,
    "a_liquidar": 45.0,
    "liquidado": 0.0
   },
@@ -2993,7 +2809,7 @@
    "ne": "160238000012026NE000223",
    "omds": "Cmdo BaApLog",
    "emissao": "2026-06-01",
-   "dias": 162,
+   "dias": 164,
    "a_liquidar": 40.0,
    "liquidado": 3560.0
   },
@@ -3001,7 +2817,7 @@
    "ne": "167304000012026NE000039",
    "omds": "BMSA",
    "emissao": "2026-06-08",
-   "dias": 155,
+   "dias": 157,
    "a_liquidar": 32.0,
    "liquidado": 0.0
   },
@@ -3009,23 +2825,15 @@
    "ne": "167329000012026NE000092",
    "omds": "BCMS",
    "emissao": "2026-08-13",
-   "dias": 89,
+   "dias": 91,
    "a_liquidar": 30.5,
    "liquidado": 0.0
-  },
-  {
-   "ne": "167307000012026NE000019",
-   "omds": "1º D Sup",
-   "emissao": "2026-05-20",
-   "dias": 174,
-   "a_liquidar": 6.6,
-   "liquidado": 20993.4
   },
   {
    "ne": "160246000012026NE000014",
    "omds": "DC Mun",
    "emissao": "2026-02-26",
-   "dias": 257,
+   "dias": 259,
    "a_liquidar": 4.0,
    "liquidado": 29779.79
   },
@@ -3033,7 +2841,7 @@
    "ne": "167329000012026NE000094",
    "omds": "BCMS",
    "emissao": "2026-08-13",
-   "dias": 89,
+   "dias": 91,
    "a_liquidar": 2.37,
    "liquidado": 21.37
   },
@@ -3041,20 +2849,28 @@
    "ne": "160307000012026NE000164",
    "omds": "1º D Sup",
    "emissao": "2026-04-29",
-   "dias": 195,
+   "dias": 197,
    "a_liquidar": 2.02,
    "liquidado": 10080.5
+  },
+  {
+   "ne": "160246000012026NE000252",
+   "omds": "DC Mun",
+   "emissao": "2026-08-20",
+   "dias": 84,
+   "a_liquidar": 0.26,
+   "liquidado": 22291.98
   }
  ],
  "rpnp": {
-  "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-RPNP por NE 2026 (v1.0, 10nov2026)», execução de 10/11/2026, 12h33",
-  "posicao_siafi": "10/11/2026 00:10 (movimento até 09/11/2026)",
+  "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-RPNP por NE 2026 (v1.1, 10nov2026)», execução de 12/11/2026, 21h32",
+  "posicao_siafi": "12/11/2026 02:06 (movimento até 11/11/2026)",
   "regra": "Ano de origem = ano no número da NE. RPNP de 2025 a liquidar em 31/12 é reinscrito automaticamente; RPNP de 2024 bloqueado se desbloqueia até 23/12; RPNP até 2023 não liquidado até 30/12 é cancelado automaticamente (Portaria 399-SEF, 6.b)",
   "por_omds": {
    "1º D Sup": {
-    "a_liquidar_2025": 401252.05,
-    "ne_2025": 5,
-    "liq_a_pagar_2025": 96096.0,
+    "a_liquidar_2025": 267145.69,
+    "ne_2025": 4,
+    "liq_a_pagar_2025": 230202.36,
     "pendente_2024": 0.0,
     "bloqueado_ate_2023": 0.0,
     "a_liquidar_ate_2023": 0.0
@@ -3062,23 +2878,23 @@
    "BCMS": {
     "a_liquidar_2025": 52381.05,
     "ne_2025": 5,
-    "liq_a_pagar_2025": 61210.17,
+    "liq_a_pagar_2025": 26000.0,
     "pendente_2024": 0.0,
     "bloqueado_ate_2023": 0.0,
     "a_liquidar_ate_2023": 0.0
    },
    "BMSA": {
-    "a_liquidar_2025": 109316.35,
+    "a_liquidar_2025": 109203.83,
     "ne_2025": 5,
-    "liq_a_pagar_2025": 131907.89,
+    "liq_a_pagar_2025": 10858.81,
     "pendente_2024": 0.0,
     "bloqueado_ate_2023": 0.0,
     "a_liquidar_ate_2023": 0.0
    },
    "Cmdo BaApLog": {
-    "a_liquidar_2025": 176494.67,
+    "a_liquidar_2025": 145612.38,
     "ne_2025": 3,
-    "liq_a_pagar_2025": 0.0,
+    "liq_a_pagar_2025": 30882.29,
     "pendente_2024": 0.0,
     "bloqueado_ate_2023": 0.0,
     "a_liquidar_ate_2023": 0.0
@@ -3086,7 +2902,7 @@
    "DC Mun": {
     "a_liquidar_2025": 215126.87,
     "ne_2025": 6,
-    "liq_a_pagar_2025": 151365.64,
+    "liq_a_pagar_2025": 151205.11,
     "pendente_2024": 0.0,
     "bloqueado_ate_2023": 16500.0,
     "a_liquidar_ate_2023": 0.0
@@ -3112,61 +2928,61 @@
   ]
  },
  "credito_por_ugr": {
-  "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Credito por NC» com UG responsável, fonte e PTRES, execução de 10/11/2026, 08h17",
-  "total": 2402283.4,
+  "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Credito por NC» com UG responsável, fonte e PTRES, execução de 12/11/2026, 08h32",
+  "total": 3115634.58,
   "por_ugr": {
    "Centro de Obtenções do Exército (gestor)": {
     "ug": [
      "160504",
      "167504"
     ],
-    "em_tela": 1660327.85
+    "em_tela": 2631334.74
    },
    "Diretoria de Gestão Orçamentária (gestor)": {
     "ug": [
      "160073"
     ],
-    "em_tela": 353069.25
+    "em_tela": 270901.06
    },
    "Departamento-Geral do Pessoal (gestor)": {
     "ug": [
      "160505",
      "167505"
     ],
-    "em_tela": 199551.18
+    "em_tela": 93296.87
    },
    "Departamento de Engenharia e Construção (gestor)": {
     "ug": [
      "160502",
      "167502"
     ],
-    "em_tela": 149123.69
+    "em_tela": 88273.69
    },
    "Comando de Operações Terrestres (gestor)": {
     "ug": [
      "160539"
     ],
-    "em_tela": 27223.82
+    "em_tela": 20647.92
    },
    "Demais (inclui as próprias UG)": {
     "ug": [],
-    "em_tela": 12987.61
+    "em_tela": 11180.3
    }
   },
-  "prazo_escrito": "Depois da Portaria, só o Comando de Operações Terrestres escreveu em NC prazo de empenho posterior a 25/11 (30/11, 6 NCs de 22/10). Para as demais vale 25/11 até a UGR prorrogar"
+  "prazo_escrito": "Depois da Portaria, só o Comando de Operações Terrestres escreveu em NC prazo de empenho posterior a 25/11 (30/11, 6 NCs de 22/10). Para as demais vale 25/11 até a UGR prorrogar (leitura de 10/11/2026, não refeita na posição de 11/11)"
  },
  "vedadas": {
-  "fonte": "TG, relatórios próprios «Saldo a liquidar por NE 2026» (execução 10/11 14h44) e «Itens de NE 2026» (execução 10/11 09h42)",
-  "regra": "Caderno 4.3 da SEF e Portaria 399-SEF (6.d.3): diárias, ajuda de custo e suprimento de fundos não podem ser inscritos em RPNP; o saldo a liquidar tem de ser liquidado ou anulado até o fechamento. O CSV de itens traz a ND com 6 dígitos, sem subitem: 339093 e suprimento de fundos são candidatas a confirmar; diárias (339014, 339015) são certas",
+  "fonte": "TG, relatórios próprios «Saldo a liquidar por NE 2026» (execução 12/11 08h36), «Itens de NE 2026» (execução 12/11 21h33) e «Empenho por NE com NC de origem» (execução 12/11 21h35)",
+  "regra": "Caderno 4.3 da SEF e Portaria 399-SEF (6.d.3): diárias, ajuda de custo e suprimento de fundos não podem ser inscritos em RPNP; o saldo a liquidar tem de ser liquidado ou anulado até o fechamento. O CSV de itens traz a ND com 6 dígitos, sem subitem: 339093 e suprimento de fundos são candidatas a confirmar; diárias (339014, 339015) são certas; em 12/11/2026 todas as NE a liquidar têm a natureza lida",
   "por_omds": {
    "ECT": {
     "diarias_valor": 271399.32,
     "diarias_ne": 6,
-    "a_confirmar_valor": 169247.92,
-    "a_confirmar_ne": 5
+    "a_confirmar_valor": 90000.4,
+    "a_confirmar_ne": 3
    },
    "Cmdo BaApLog": {
-    "diarias_valor": 91094.62,
+    "diarias_valor": 84207.12,
     "diarias_ne": 4,
     "a_confirmar_valor": 0.0,
     "a_confirmar_ne": 0
@@ -3191,29 +3007,29 @@
    }
   },
   "total": {
-   "diarias_valor": 395531.94,
+   "diarias_valor": 388644.44,
    "diarias_ne": 21,
-   "a_confirmar_valor": 169547.92,
-   "a_confirmar_ne": 6
+   "a_confirmar_valor": 90300.4,
+   "a_confirmar_ne": 4
   },
   "irrisorios": {
    "ate_1": {
-    "ne": 1,
-    "valor": 0.4
+    "ne": 3,
+    "valor": 0.91
    },
    "ate_10": {
-    "ne": 5,
-    "valor": 15.39
+    "ne": 6,
+    "valor": 9.3
    },
    "ate_100": {
-    "ne": 27,
-    "valor": 1427.08
+    "ne": 29,
+    "valor": 1402.77
    },
    "por_omds_ate_10": {
-    "Cmdo BaApLog": 0,
-    "DC Mun": 1,
+    "Cmdo BaApLog": 1,
+    "DC Mun": 2,
     "BMSA": 0,
-    "1º D Sup": 2,
+    "1º D Sup": 1,
     "BCMS": 1,
     "ECT": 1
    }
