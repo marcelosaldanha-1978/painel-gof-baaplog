@@ -198,3 +198,13 @@ def test_portal_tolera_falha_pontual_e_mantem_o_anterior(tmp_path, monkeypatch):
     novas = [x for x in d["ne"] if x["documento"] == "2026NE000001"]
     assert novas[0]["modalidade"] == ""  # modalidade de aplicacao do Portal nao entra como modalidade de licitacao
     assert "favorecido" not in json.dumps(d) and "observacao" not in json.dumps(d)
+
+
+def test_portal_mesclar_mantem_uma_linha_por_ne():
+    import gof_portal as gpo
+    antiga = {"documento": "160321000012026NE000015", "ug": "160321", "data": "19/02/2026", "valor": "130810,00"}
+    nova = dict(antiga, data="09/11/2026", valor="134772,50")
+    outra = {"documento": "160304000012026NE000004", "ug": "160304", "data": "06/02/2026", "valor": "2334,28"}
+    r = gpo.mesclar([antiga, outra], [nova])
+    assert len(r) == 2
+    assert next(x for x in r if x["documento"] == antiga["documento"])["data"] == "09/11/2026"

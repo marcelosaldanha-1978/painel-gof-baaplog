@@ -32,6 +32,18 @@ def janela(ate, dias_uteis):
     return d
 
 
+def mesclar(antigas, novas):
+    """Uma linha por NE. O Portal devolve a NE de novo, com data e valor atualizados, quando ela tem movimento posterior
+    (reforco, anulacao): a mesma NE chegava duas vezes, uma fora da janela (data antiga) e outra dentro (data nova), e o
+    motor recusava a montagem («NE repetida na entrada», 12/11/2026). Fica a linha mais recente; a coleta nova vence."""
+    por = {}
+    for x in list(antigas) + list(novas):
+        a = por.get(x["documento"])
+        if a is None or (tr._data(x["data"]) or dt.date.min) >= (tr._data(a["data"]) or dt.date.min):
+            por[x["documento"]] = x
+    return list(por.values())
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--fichas", required=True)
@@ -71,7 +83,7 @@ def main(argv=None):
     antigo = json.load(open(s / ARQ, encoding="utf-8")) if (s / ARQ).exists() else {"ne": []}
     # fora da janela, ou num par (UG, dia) que falhou: fica o que o extrato anterior tinha
     fora = [x for x in antigo["ne"] if not (desde <= tr._data(x["data"]) <= ate) or (x["ug"], tr._data(x["data"]).isoformat()) in falhos]
-    novo["ne"] = sorted(fora + novo["ne"], key=lambda x: (tr._data(x["data"]) or dt.date.min, x["documento"]))
+    novo["ne"] = sorted(mesclar(fora, novo["ne"]), key=lambda x: (tr._data(x["data"]) or dt.date.min, x["documento"]))
     datas = [tr._data(x["data"]) for x in novo["ne"] if tr._data(x["data"])]
     novo["data_execucao"] = max(datas).isoformat() if datas else None
     novo["meta"] = {"janela": [desde.isoformat(), ate.isoformat()], "ne_na_janela": len(regs), "ne_zero_retiradas": len(zero),
