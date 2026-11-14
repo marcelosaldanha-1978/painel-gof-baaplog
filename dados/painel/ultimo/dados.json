@@ -3,33 +3,33 @@
   "versao_motor": "0.4",
   "regra_vinculo": "1.2",
   "base_b1": "portal",
-  "hoje": "2026-11-13",
+  "hoje": "2026-11-14",
   "fase": "A",
   "fontes": [
    {
     "nome": "execucao_portal",
     "arquivo": "extrato_portal.json",
-    "sha256": "53d8914b2dc61d46803e34d3f6002130c8e149e1e714f2dc9cf0349fe69f02c6",
+    "sha256": "d15ed4d658e7cb9635a4535eda5e18bdca6c2bc577122075d3556d97af1df6f7",
     "data_dado": "2026-11-12",
     "nota": "RESERVA (D17): Portal da Transparencia, lacunas e atraso de ~7 dias; extrato sem pessoa"
    },
    {
     "nome": "carteira",
     "arquivo": "carteira_processos.json",
-    "sha256": "de20841a714dfc2f9daaf9370ff68ebdb6c1aa554d3cb8da6f9c31a223a5fdc8",
-    "data_dado": "2026-11-13"
+    "sha256": "eef2f56475a3670c44b66d57ff0e8076dd353a8d68126f6bc0fe749bffb6d8c2",
+    "data_dado": "2026-11-14"
    },
    {
     "nome": "kpis_painel",
     "arquivo": "kpis_painel.json",
-    "sha256": "a2e17142befe24d76b08dc3e5e1656945605831d5a6f409947c813d945a3c90f",
-    "data_dado": "2026-11-13"
+    "sha256": "0dccc50351629acab7b817052144218c98f017ac14ed8b0efd933e6c490d80ab",
+    "data_dado": "2026-11-14"
    },
    {
     "nome": "atas",
-    "arquivo": "atas_pncp_2026-11-13.json",
-    "sha256": "95a0d475f996fe85b3c874b39c80e3d3834f585a196d3b733b024c2f07840b10",
-    "data_dado": "2026-11-13"
+    "arquivo": "atas_pncp_2026-11-14.json",
+    "sha256": "1a92737aa713530ae7fc371c369934c51baaea54fb0353cd41e71f51cb4e1e17",
+    "data_dado": "2026-11-14"
    },
    {
     "nome": "fichas_pncp",
@@ -446,8 +446,8 @@
    "nao_publicados": 2
   },
   "kpis_painel": {
-   "lido_em": "2026-11-13",
-   "origem": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-13 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Painel, linha 5 (A5:E5)",
+   "lido_em": "2026-11-14",
+   "origem": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-14 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Painel, linha 5 (A5:E5)",
    "processos": "12",
    "valor_estimado": "R$ 75.312.730,52",
    "score_bsc": "66,9%",
@@ -467,7 +467,7 @@
     "processo": "PE 90315/2026",
     "ata": "00014/2026",
     "vigencia_fim": "2027-05-17",
-    "dias": 185
+    "dias": 184
    }
   },
   "processos": [
@@ -1716,7 +1716,7 @@
      "desde": "2026-11-04"
     }
    ],
-   "dias": 6
+   "dias": 7
   },
   "conferencia": {
    "data": "2026-11-09",
@@ -1738,7 +1738,7 @@
    ],
    "fonte": "confronto semanal planilha x PNCP/Compras.gov no runner (D19 parte 1); a gravacao do provado e sessao do Claude"
   },
-  "data_dado_atas": "2026-11-13"
+  "data_dado_atas": "2026-11-14"
  },
  "encerramento": {
   "norma": "Portaria SEF/C Ex nº 399, de 24/09/2026 (EB90-D-08.001)",
@@ -1749,7 +1749,7 @@
     "texto": "Data-limite para a UGE emitir NE (a UGR pode prorrogar, em caráter excepcional) e nomear em BI quem indica RPNP",
     "vencido": false,
     "dias_uteis": 7,
-    "dias_corridos": 12
+    "dias_corridos": 11
    },
    {
     "data": "2026-11-26",
@@ -1757,7 +1757,7 @@
     "texto": "A UGR recolhe todo o crédito que restar em tela",
     "vencido": false,
     "dias_uteis": 8,
-    "dias_corridos": 13
+    "dias_corridos": 12
    },
    {
     "data": "2026-12-03",
@@ -1765,7 +1765,7 @@
     "texto": "Data-limite de NE dos créditos remanejados",
     "vencido": false,
     "dias_uteis": 13,
-    "dias_corridos": 20
+    "dias_corridos": 19
    },
    {
     "data": "2026-12-04",
@@ -1773,7 +1773,7 @@
     "texto": "Última NC do EME ou da UGR",
     "vencido": false,
     "dias_uteis": 14,
-    "dias_corridos": 21
+    "dias_corridos": 20
    },
    {
     "data": "2026-12-15",
@@ -1781,7 +1781,7 @@
     "texto": "Fase interna das demandas do PCA 2027 concluída",
     "vencido": false,
     "dias_uteis": 21,
-    "dias_corridos": 32
+    "dias_corridos": 31
    },
    {
     "data": "2026-12-23",
@@ -1789,7 +1789,7 @@
     "texto": "Fim da indicação no SIAFI das NE a inscrever em RPNP (início em 01/12) e desbloqueio de RPNP de 2024",
     "vencido": false,
     "dias_uteis": 27,
-    "dias_corridos": 40
+    "dias_corridos": 39
    },
    {
     "data": "2026-12-30",
@@ -1797,7 +1797,7 @@
     "texto": "Liquidar RPNP inscrito até 2023; ordens bancárias até 14h; anular NE não indicadas",
     "vencido": false,
     "dias_uteis": 31,
-    "dias_corridos": 47
+    "dias_corridos": 46
    }
   ],
   "feriados_considerados": [
