@@ -9,7 +9,7 @@
    {
     "nome": "execucao_portal",
     "arquivo": "extrato_portal.json",
-    "sha256": "89155174abc7d06c79905a276527e0fdaa8928887797471c9b02341d411dfc6f",
+    "sha256": "d80064ea8f9463dfd261a8cc6f951ddf6c53a090cb45f310cf85934d53c11793",
     "data_dado": "2026-11-12",
     "nota": "RESERVA (D17): Portal da Transparencia, lacunas e atraso de ~7 dias; extrato sem pessoa"
    },
@@ -1719,7 +1719,7 @@
    "dias": 9
   },
   "conferencia": {
-   "data": "2026-11-09",
+   "data": "2026-11-16",
    "divergencias": 1,
    "eventos": 0,
    "gravaveis": 0,
