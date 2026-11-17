@@ -3,33 +3,33 @@
   "versao_motor": "0.4",
   "regra_vinculo": "1.2",
   "base_b1": "portal",
-  "hoje": "2026-11-16",
+  "hoje": "2026-11-17",
   "fase": "A",
   "fontes": [
    {
     "nome": "execucao_portal",
     "arquivo": "extrato_portal.json",
-    "sha256": "d80064ea8f9463dfd261a8cc6f951ddf6c53a090cb45f310cf85934d53c11793",
+    "sha256": "de2ed3d1d04eaab3113b5c50ba0560901b05f4c5177fb1682faeeb8d18032682",
     "data_dado": "2026-11-12",
     "nota": "RESERVA (D17): Portal da Transparencia, lacunas e atraso de ~7 dias; extrato sem pessoa"
    },
    {
     "nome": "carteira",
     "arquivo": "carteira_processos.json",
-    "sha256": "f6725fd655164fbe33d6ca412f73d1b441cdaf8564a973276f414c29cb6df4ba",
-    "data_dado": "2026-11-16"
+    "sha256": "281fdaed8197ad00e5d90b5bf56276346dac8af38ff883647803f618cabbfa70",
+    "data_dado": "2026-11-17"
    },
    {
     "nome": "kpis_painel",
     "arquivo": "kpis_painel.json",
-    "sha256": "b5c29952b6bb5769cbe60f127eb0781b27a59d68015f0cd6849fc9156406f262",
-    "data_dado": "2026-11-16"
+    "sha256": "c1ad742abd44609c5948f95a1c3e3c50f4ec1773ed4c06274effee259cdb202b",
+    "data_dado": "2026-11-17"
    },
    {
     "nome": "atas",
-    "arquivo": "atas_pncp_2026-11-16.json",
-    "sha256": "e97735a7662c5728dc7bf4bd5a8bdd111641be4d3752aa8118453d21b991f6cc",
-    "data_dado": "2026-11-16"
+    "arquivo": "atas_pncp_2026-11-17.json",
+    "sha256": "99edb66641e52c9e848c79446da9a4a91d962f62882a737dd3d0c45fed9cc590",
+    "data_dado": "2026-11-17"
    },
    {
     "nome": "fichas_pncp",
@@ -39,11 +39,11 @@
    }
   ],
   "fonte_b1": "portal",
-  "idade_b1_dias_uteis": 2,
-  "b1_fresco": true,
+  "idade_b1_dias_uteis": 3,
+  "b1_fresco": false,
   "dias_uteis_fresco": 2,
   "dias_pendencias_amarelo": 14,
-  "fonte_b1_motivo": "TG parado ha 5 dias uteis e Portal mais atual (2026-11-12 > 2026-11-09)",
+  "fonte_b1_motivo": "TG parado ha 6 dias uteis e Portal mais atual (2026-11-12 > 2026-11-09)",
   "data_portal": "2026-11-12",
   "data_tg": "2026-11-09"
  },
@@ -446,8 +446,8 @@
    "nao_publicados": 2
   },
   "kpis_painel": {
-   "lido_em": "2026-11-16",
-   "origem": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-16 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Painel, linha 5 (A5:E5)",
+   "lido_em": "2026-11-17",
+   "origem": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-17 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Painel, linha 5 (A5:E5)",
    "processos": "12",
    "valor_estimado": "R$ 75.312.730,52",
    "score_bsc": "66,9%",
@@ -467,7 +467,7 @@
     "processo": "PE 90315/2026",
     "ata": "00014/2026",
     "vigencia_fim": "2027-05-17",
-    "dias": 182
+    "dias": 181
    }
   },
   "processos": [
@@ -1716,7 +1716,7 @@
      "desde": "2026-11-04"
     }
    ],
-   "dias": 9
+   "dias": 10
   },
   "conferencia": {
    "data": "2026-11-16",
@@ -1738,7 +1738,7 @@
    ],
    "fonte": "confronto semanal planilha x PNCP/Compras.gov no runner (D19 parte 1); a gravacao do provado e sessao do Claude"
   },
-  "data_dado_atas": "2026-11-16"
+  "data_dado_atas": "2026-11-17"
  },
  "encerramento": {
   "norma": "Portaria SEF/C Ex nº 399, de 24/09/2026 (EB90-D-08.001)",
@@ -1748,63 +1748,63 @@
     "evento": "ev. 6 e 7",
     "texto": "Data-limite para a UGE emitir NE (a UGR pode prorrogar, em caráter excepcional) e nomear em BI quem indica RPNP",
     "vencido": false,
-    "dias_uteis": 6,
-    "dias_corridos": 9
+    "dias_uteis": 5,
+    "dias_corridos": 8
    },
    {
     "data": "2026-11-26",
     "evento": "ev. 8",
     "texto": "A UGR recolhe todo o crédito que restar em tela",
     "vencido": false,
-    "dias_uteis": 7,
-    "dias_corridos": 10
+    "dias_uteis": 6,
+    "dias_corridos": 9
    },
    {
     "data": "2026-12-03",
     "evento": "ev. 10",
     "texto": "Data-limite de NE dos créditos remanejados",
     "vencido": false,
-    "dias_uteis": 12,
-    "dias_corridos": 17
+    "dias_uteis": 11,
+    "dias_corridos": 16
    },
    {
     "data": "2026-12-04",
     "evento": "ev. 11",
     "texto": "Última NC do EME ou da UGR",
     "vencido": false,
-    "dias_uteis": 13,
-    "dias_corridos": 18
+    "dias_uteis": 12,
+    "dias_corridos": 17
    },
    {
     "data": "2026-12-15",
     "evento": "ev. 16",
     "texto": "Fase interna das demandas do PCA 2027 concluída",
     "vencido": false,
-    "dias_uteis": 20,
-    "dias_corridos": 29
+    "dias_uteis": 19,
+    "dias_corridos": 28
    },
    {
     "data": "2026-12-23",
     "evento": "ev. 19 e 20",
     "texto": "Fim da indicação no SIAFI das NE a inscrever em RPNP (início em 01/12) e desbloqueio de RPNP de 2024",
     "vencido": false,
-    "dias_uteis": 26,
-    "dias_corridos": 37
+    "dias_uteis": 25,
+    "dias_corridos": 36
    },
    {
     "data": "2026-12-30",
     "evento": "ev. 26, 28 e 32",
     "texto": "Liquidar RPNP inscrito até 2023; ordens bancárias até 14h; anular NE não indicadas",
     "vencido": false,
-    "dias_uteis": 30,
-    "dias_corridos": 44
+    "dias_uteis": 29,
+    "dias_corridos": 43
    }
   ],
   "feriados_considerados": [
    "2026-11-20",
    "2026-12-25"
   ],
-  "dias_uteis_ate_limite_ne": 6,
+  "dias_uteis_ate_limite_ne": 5,
   "ne60": {
    "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Saldo a liquidar por NE 2026 (v1.0, 09nov2026)», execução de 12/11/2026, 08h36, sem filtro de exibição",
    "posicao_siafi": "12/11/2026 02:06 (movimento até 11/11/2026)",
