@@ -9,8 +9,8 @@
    {
     "nome": "execucao_portal",
     "arquivo": "extrato_portal.json",
-    "sha256": "f3c075a102829d38ba4996208e8c942ccf694c07ea4d802e6c43a0b164494af8",
-    "data_dado": "2026-11-17",
+    "sha256": "53b96d3cd7d3bb3f38f83002ec04842c78374d01429ee7a84327af66806fe82f",
+    "data_dado": "2026-11-18",
     "nota": "RESERVA (D17): Portal da Transparencia, lacunas e atraso de ~7 dias; extrato sem pessoa"
    },
    {
@@ -39,29 +39,29 @@
    }
   ],
   "fonte_b1": "portal",
-  "idade_b1_dias_uteis": 2,
+  "idade_b1_dias_uteis": 1,
   "b1_fresco": true,
   "dias_uteis_fresco": 2,
   "dias_pendencias_amarelo": 14,
-  "fonte_b1_motivo": "TG parado ha 8 dias uteis e Portal mais atual (2026-11-17 > 2026-11-09)",
-  "data_portal": "2026-11-17",
+  "fonte_b1_motivo": "TG parado ha 8 dias uteis e Portal mais atual (2026-11-18 > 2026-11-09)",
+  "data_portal": "2026-11-18",
   "data_tg": "2026-11-09"
  },
  "b1": {
   "fonte": "Portal da Transparência (RESERVA): valor da NE no Portal, que mistura emissão e valor atualizado; não comparável ao líquido do TG",
   "base": "portal",
   "rotulo_total": "Valor das NE no Portal (reserva; base mista)",
-  "data_dado": "2026-11-17",
+  "data_dado": "2026-11-18",
   "omds": [
    {
     "omds": "BaApLog",
     "rotulo": "BaApLog",
     "ug160": "160238",
     "ug167": "167238",
-    "ne160": 443,
-    "valor160": 4556762.48,
-    "ne167": 130,
-    "valor167": 727506.92,
+    "ne160": 449,
+    "valor160": 4570155.04,
+    "ne167": 131,
+    "valor167": 767228.15,
     "por_mes": [
      3596.23,
      99089.64,
@@ -72,24 +72,24 @@
      430353.95,
      266453.31,
      343989.38,
-     1658583.16,
-     1330267.74,
+     1632902.16,
+     1409062.53,
      0.0
     ],
     "ne_anuladas": 0,
     "emitido": null,
-    "total": 5284269.4,
-    "ne": 573
+    "total": 5337383.19,
+    "ne": 580
    },
    {
     "omds": "BCMS",
     "rotulo": "BCMS",
     "ug160": "160329",
     "ug167": "167329",
-    "ne160": 310,
-    "valor160": 8220642.46,
-    "ne167": 117,
-    "valor167": 2533858.05,
+    "ne160": 311,
+    "valor160": 8260643.41,
+    "ne167": 118,
+    "valor167": 2536047.42,
     "por_mes": [
      699.99,
      664163.7,
@@ -101,23 +101,23 @@
      1734064.59,
      338329.29,
      2556716.14,
-     1472325.25,
+     1514515.57,
      0.0
     ],
     "ne_anuladas": 0,
     "emitido": null,
-    "total": 10754500.51,
-    "ne": 427
+    "total": 10796690.83,
+    "ne": 429
    },
    {
     "omds": "BMSA",
     "rotulo": "BMSA",
     "ug160": "160304",
     "ug167": "167304",
-    "ne160": 516,
-    "valor160": 4327440.21,
-    "ne167": 119,
-    "valor167": 810543.29,
+    "ne160": 521,
+    "valor160": 4363286.25,
+    "ne167": 121,
+    "valor167": 812897.29,
     "por_mes": [
      0.0,
      319466.6,
@@ -129,23 +129,23 @@
      1024475.26,
      823356.0,
      707552.8,
-     96387.43,
+     134587.47,
      0.0
     ],
     "ne_anuladas": 0,
     "emitido": null,
-    "total": 5137983.5,
-    "ne": 635
+    "total": 5176183.54,
+    "ne": 642
    },
    {
     "omds": "ECT",
     "rotulo": "ECT",
     "ug160": "160321",
     "ug167": "167321",
-    "ne160": 273,
-    "valor160": 9004241.3,
-    "ne167": 23,
-    "valor167": 30972.59,
+    "ne160": 275,
+    "valor160": 9606365.3,
+    "ne167": 24,
+    "valor167": 31888.51,
     "por_mes": [
      50580.38,
      39902.06,
@@ -157,13 +157,13 @@
      196715.11,
      507094.23,
      613092.16,
-     704819.7,
+     1307859.62,
      0.0
     ],
     "ne_anuladas": 0,
     "emitido": null,
-    "total": 9035213.89,
-    "ne": 296
+    "total": 9638253.81,
+    "ne": 299
    },
    {
     "omds": "DCMun",
@@ -182,10 +182,10 @@
      439862.64,
      499444.18,
      259949.35,
-     521286.77,
+     515570.77,
      481786.32,
      645245.71,
-     340897.62,
+     346613.62,
      0.0
     ],
     "ne_anuladas": 0,
@@ -198,8 +198,8 @@
     "rotulo": "1º D Sup",
     "ug160": "160307",
     "ug167": "167307",
-    "ne160": 481,
-    "valor160": 23254415.98,
+    "ne160": 487,
+    "valor160": 23663222.52,
     "ne167": 37,
     "valor167": 2077274.32,
     "por_mes": [
@@ -213,17 +213,17 @@
      4372634.79,
      2136016.47,
      3980696.97,
-     1018262.21,
+     1427068.75,
      0.0
     ],
     "ne_anuladas": 0,
     "emitido": null,
-    "total": 25331690.3,
-    "ne": 518
+    "total": 25740496.84,
+    "ne": 524
    }
   ],
-  "total": 59969100.23,
-  "ne": 2956,
+  "total": 61114450.84,
+  "ne": 2981,
   "marco": "O marco de empenho de 100% (OUT) da Tabela 2 venceu em 31/10/2026. O percentual sobre o crédito recebido só entra depois da P-034 (conferência do crédito por UG).",
   "lastro": "reserva com lacunas"
  },
