@@ -3,33 +3,33 @@
   "versao_motor": "0.4",
   "regra_vinculo": "1.2",
   "base_b1": "portal",
-  "hoje": "2026-11-18",
+  "hoje": "2026-11-19",
   "fase": "A",
   "fontes": [
    {
     "nome": "execucao_portal",
     "arquivo": "extrato_portal.json",
-    "sha256": "c4fb425c5fde18fab6ec8e6ba4219ffbd83100c76b871dd8f2c73c84547b3f71",
-    "data_dado": "2026-11-16",
+    "sha256": "f3c075a102829d38ba4996208e8c942ccf694c07ea4d802e6c43a0b164494af8",
+    "data_dado": "2026-11-17",
     "nota": "RESERVA (D17): Portal da Transparencia, lacunas e atraso de ~7 dias; extrato sem pessoa"
    },
    {
     "nome": "carteira",
     "arquivo": "carteira_processos.json",
-    "sha256": "e2aec31e8a25bda1e16f89db65314e71e75ef74b967d412d631eaafbd5e6900b",
-    "data_dado": "2026-11-18"
+    "sha256": "965f31cc3990d87fdb4674174735e8805bbc775c6d00d5c2a519e45883d4ffc8",
+    "data_dado": "2026-11-19"
    },
    {
     "nome": "kpis_painel",
     "arquivo": "kpis_painel.json",
-    "sha256": "bea396ae7054786314a6ad9261968b93e8329e7519ebc427de3adb2644a46cc7",
-    "data_dado": "2026-11-18"
+    "sha256": "51aa557a3a60d0c6e53f70a02d8a40ab60847b5dacbb419da9ef445a359300fa",
+    "data_dado": "2026-11-19"
    },
    {
     "nome": "atas",
-    "arquivo": "atas_pncp_2026-11-18.json",
-    "sha256": "3e43dbf20322e85867ca65461e25bf76c6cc8476cff791096016b683b5127988",
-    "data_dado": "2026-11-18"
+    "arquivo": "atas_pncp_2026-11-19.json",
+    "sha256": "e9818d981958dcb9bdcf2559cee6d3fbf9330add1df8df96d5f31af8ac6e4e78",
+    "data_dado": "2026-11-19"
    },
    {
     "nome": "fichas_pncp",
@@ -43,23 +43,23 @@
   "b1_fresco": true,
   "dias_uteis_fresco": 2,
   "dias_pendencias_amarelo": 14,
-  "fonte_b1_motivo": "TG parado ha 7 dias uteis e Portal mais atual (2026-11-16 > 2026-11-09)",
-  "data_portal": "2026-11-16",
+  "fonte_b1_motivo": "TG parado ha 8 dias uteis e Portal mais atual (2026-11-17 > 2026-11-09)",
+  "data_portal": "2026-11-17",
   "data_tg": "2026-11-09"
  },
  "b1": {
   "fonte": "Portal da Transparência (RESERVA): valor da NE no Portal, que mistura emissão e valor atualizado; não comparável ao líquido do TG",
   "base": "portal",
   "rotulo_total": "Valor das NE no Portal (reserva; base mista)",
-  "data_dado": "2026-11-16",
+  "data_dado": "2026-11-17",
   "omds": [
    {
     "omds": "BaApLog",
     "rotulo": "BaApLog",
     "ug160": "160238",
     "ug167": "167238",
-    "ne160": 439,
-    "valor160": 4533147.05,
+    "ne160": 443,
+    "valor160": 4556762.48,
     "ne167": 130,
     "valor167": 727506.92,
     "por_mes": [
@@ -67,27 +67,27 @@
      99089.64,
      237849.98,
      270569.78,
-     198379.8,
-     460135.66,
+     188379.8,
+     455136.43,
      430353.95,
      266453.31,
      343989.38,
      1658583.16,
-     1291653.08,
+     1330267.74,
      0.0
     ],
     "ne_anuladas": 0,
     "emitido": null,
-    "total": 5260653.97,
-    "ne": 569
+    "total": 5284269.4,
+    "ne": 573
    },
    {
     "omds": "BCMS",
     "rotulo": "BCMS",
     "ug160": "160329",
     "ug167": "167329",
-    "ne160": 307,
-    "valor160": 8059016.96,
+    "ne160": 310,
+    "valor160": 8220642.46,
     "ne167": 117,
     "valor167": 2533858.05,
     "por_mes": [
@@ -101,21 +101,21 @@
      1734064.59,
      338329.29,
      2556716.14,
-     1310699.75,
+     1472325.25,
      0.0
     ],
     "ne_anuladas": 0,
     "emitido": null,
-    "total": 10592875.01,
-    "ne": 424
+    "total": 10754500.51,
+    "ne": 427
    },
    {
     "omds": "BMSA",
     "rotulo": "BMSA",
     "ug160": "160304",
     "ug167": "167304",
-    "ne160": 513,
-    "valor160": 4290343.41,
+    "ne160": 516,
+    "valor160": 4327440.21,
     "ne167": 119,
     "valor167": 810543.29,
     "por_mes": [
@@ -129,23 +129,23 @@
      1024475.26,
      823356.0,
      707552.8,
-     59290.63,
+     96387.43,
      0.0
     ],
     "ne_anuladas": 0,
     "emitido": null,
-    "total": 5100886.7,
-    "ne": 632
+    "total": 5137983.5,
+    "ne": 635
    },
    {
     "omds": "ECT",
     "rotulo": "ECT",
     "ug160": "160321",
     "ug167": "167321",
-    "ne160": 274,
-    "valor160": 9604241.3,
-    "ne167": 20,
-    "valor167": 30422.04,
+    "ne160": 273,
+    "valor160": 9004241.3,
+    "ne167": 23,
+    "valor167": 30972.59,
     "por_mes": [
      50580.38,
      39902.06,
@@ -156,24 +156,24 @@
      490118.19,
      196715.11,
      507094.23,
-     615010.41,
-     1302350.9,
+     613092.16,
+     704819.7,
      0.0
     ],
     "ne_anuladas": 0,
     "emitido": null,
-    "total": 9634663.34,
-    "ne": 294
+    "total": 9035213.89,
+    "ne": 296
    },
    {
     "omds": "DCMun",
     "rotulo": "DCMun",
     "ug160": "160246",
     "ug167": "167246",
-    "ne160": 367,
-    "valor160": 4076435.16,
+    "ne160": 369,
+    "valor160": 4094016.8,
     "ne167": 138,
-    "valor167": 330874.41,
+    "valor167": 331425.83,
     "por_mes": [
      11790.77,
      165169.73,
@@ -184,22 +184,22 @@
      259949.35,
      521286.77,
      481786.32,
-     650759.91,
-     317250.36,
+     645245.71,
+     340897.62,
      0.0
     ],
     "ne_anuladas": 0,
     "emitido": null,
-    "total": 4407309.57,
-    "ne": 505
+    "total": 4425442.63,
+    "ne": 507
    },
    {
     "omds": "1oDSup",
     "rotulo": "1º D Sup",
     "ug160": "160307",
     "ug167": "167307",
-    "ne160": 479,
-    "valor160": 23096794.7,
+    "ne160": 481,
+    "valor160": 23254415.98,
     "ne167": 37,
     "valor167": 2077274.32,
     "por_mes": [
@@ -211,19 +211,19 @@
      2080611.28,
      2246793.95,
      4372634.79,
-     2160013.87,
+     2136016.47,
      3980696.97,
-     836643.53,
+     1018262.21,
      0.0
     ],
     "ne_anuladas": 0,
     "emitido": null,
-    "total": 25174069.02,
-    "ne": 516
+    "total": 25331690.3,
+    "ne": 518
    }
   ],
-  "total": 60170457.61,
-  "ne": 2940,
+  "total": 59969100.23,
+  "ne": 2956,
   "marco": "O marco de empenho de 100% (OUT) da Tabela 2 venceu em 31/10/2026. O percentual sobre o crédito recebido só entra depois da P-034 (conferência do crédito por UG).",
   "lastro": "reserva com lacunas"
  },
@@ -446,8 +446,8 @@
    "nao_publicados": 2
   },
   "kpis_painel": {
-   "lido_em": "2026-11-18",
-   "origem": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-18 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Painel, linha 5 (A5:E5)",
+   "lido_em": "2026-11-19",
+   "origem": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-19 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Painel, linha 5 (A5:E5)",
    "processos": "12",
    "valor_estimado": "R$ 75.312.730,52",
    "score_bsc": "66,9%",
@@ -467,7 +467,7 @@
     "processo": "PE 90315/2026",
     "ata": "00014/2026",
     "vigencia_fim": "2027-05-17",
-    "dias": 180
+    "dias": 179
    }
   },
   "processos": [
@@ -1716,7 +1716,7 @@
      "desde": "2026-11-04"
     }
    ],
-   "dias": 11
+   "dias": 12
   },
   "conferencia": {
    "data": "2026-11-16",
@@ -1738,7 +1738,7 @@
    ],
    "fonte": "confronto semanal planilha x PNCP/Compras.gov no runner (D19 parte 1); a gravacao do provado e sessao do Claude"
   },
-  "data_dado_atas": "2026-11-18"
+  "data_dado_atas": "2026-11-19"
  },
  "encerramento": {
   "norma": "Portaria SEF/C Ex nº 399, de 24/09/2026 (EB90-D-08.001)",
@@ -1748,63 +1748,63 @@
     "evento": "ev. 6 e 7",
     "texto": "Data-limite para a UGE emitir NE (a UGR pode prorrogar, em caráter excepcional) e nomear em BI quem indica RPNP",
     "vencido": false,
-    "dias_uteis": 4,
-    "dias_corridos": 7
+    "dias_uteis": 3,
+    "dias_corridos": 6
    },
    {
     "data": "2026-11-26",
     "evento": "ev. 8",
     "texto": "A UGR recolhe todo o crédito que restar em tela",
     "vencido": false,
-    "dias_uteis": 5,
-    "dias_corridos": 8
+    "dias_uteis": 4,
+    "dias_corridos": 7
    },
    {
     "data": "2026-12-03",
     "evento": "ev. 10",
     "texto": "Data-limite de NE dos créditos remanejados",
     "vencido": false,
-    "dias_uteis": 10,
-    "dias_corridos": 15
+    "dias_uteis": 9,
+    "dias_corridos": 14
    },
    {
     "data": "2026-12-04",
     "evento": "ev. 11",
     "texto": "Última NC do EME ou da UGR",
     "vencido": false,
-    "dias_uteis": 11,
-    "dias_corridos": 16
+    "dias_uteis": 10,
+    "dias_corridos": 15
    },
    {
     "data": "2026-12-15",
     "evento": "ev. 16",
     "texto": "Fase interna das demandas do PCA 2027 concluída",
     "vencido": false,
-    "dias_uteis": 18,
-    "dias_corridos": 27
+    "dias_uteis": 17,
+    "dias_corridos": 26
    },
    {
     "data": "2026-12-23",
     "evento": "ev. 19 e 20",
     "texto": "Fim da indicação no SIAFI das NE a inscrever em RPNP (início em 01/12) e desbloqueio de RPNP de 2024",
     "vencido": false,
-    "dias_uteis": 24,
-    "dias_corridos": 35
+    "dias_uteis": 23,
+    "dias_corridos": 34
    },
    {
     "data": "2026-12-30",
     "evento": "ev. 26, 28 e 32",
     "texto": "Liquidar RPNP inscrito até 2023; ordens bancárias até 14h; anular NE não indicadas",
     "vencido": false,
-    "dias_uteis": 28,
-    "dias_corridos": 42
+    "dias_uteis": 27,
+    "dias_corridos": 41
    }
   ],
   "feriados_considerados": [
    "2026-11-20",
    "2026-12-25"
   ],
-  "dias_uteis_ate_limite_ne": 4,
+  "dias_uteis_ate_limite_ne": 3,
   "ne60": {
    "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Saldo a liquidar por NE 2026 (v1.0, 09nov2026)», execução de 12/11/2026, 08h36, sem filtro de exibição",
    "posicao_siafi": "12/11/2026 02:06 (movimento até 11/11/2026)",

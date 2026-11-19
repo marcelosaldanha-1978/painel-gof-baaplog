@@ -1,7 +1,7 @@
 {
 "versao": 1,
-"data_execucao": "2026-11-16",
-"origem": "Portal da Transparência, API despesas/documentos fase 1, coleta de 2026-11-04 a 2026-11-18 em 2026-11-18",
+"data_execucao": "2026-11-17",
+"origem": "Portal da Transparência, API despesas/documentos fase 1, coleta de 2026-11-05 a 2026-11-19 em 2026-11-19",
 "regra_vinculo": "1.2",
 "campos": [
 "documento",
@@ -9537,18 +9537,6 @@
 ]
 },
 {
-"documento": "160238000012026NE000203",
-"ug": "160238",
-"data": "27/05/2026",
-"valor": 10000.0,
-"modalidade": "",
-"nivel": "PROVAVEL",
-"pregao": "PE 90315/2026",
-"candidatos": [
-"PE 90315/2026"
-]
-},
-{
 "documento": "160304000012026NE000164",
 "ug": "160304",
 "data": "27/05/2026",
@@ -12300,16 +12288,6 @@
 "ug": "160238",
 "data": "19/06/2026",
 "valor": 1399.92,
-"modalidade": "",
-"nivel": null,
-"pregao": null,
-"candidatos": []
-},
-{
-"documento": "160238000012026NE000240",
-"ug": "160238",
-"data": "19/06/2026",
-"valor": 4999.23,
 "modalidade": "",
 "nivel": null,
 "pregao": null,
@@ -21280,16 +21258,6 @@
 "candidatos": []
 },
 {
-"documento": "160307000012026NE000369",
-"ug": "160307",
-"data": "02/09/2026",
-"valor": 23997.4,
-"modalidade": "",
-"nivel": null,
-"pregao": null,
-"candidatos": []
-},
-{
 "documento": "160307000012026NE000370",
 "ug": "160307",
 "data": "02/09/2026",
@@ -26220,16 +26188,6 @@
 "candidatos": []
 },
 {
-"documento": "167321000012026NE000020",
-"ug": "167321",
-"data": "19/10/2026",
-"valor": 1918.25,
-"modalidade": "",
-"nivel": null,
-"pregao": null,
-"candidatos": []
-},
-{
 "documento": "167321000012026NE000021",
 "ug": "167321",
 "data": "19/10/2026",
@@ -26738,16 +26696,6 @@
 "ug": "160321",
 "data": "22/10/2026",
 "valor": 126.01,
-"modalidade": "",
-"nivel": null,
-"pregao": null,
-"candidatos": []
-},
-{
-"documento": "167246000012026NE000014",
-"ug": "167246",
-"data": "22/10/2026",
-"valor": 5514.2,
 "modalidade": "",
 "nivel": null,
 "pregao": null,
@@ -29520,18 +29468,6 @@
 "candidatos": []
 },
 {
-"documento": "160238000012026NE000467",
-"ug": "160238",
-"data": "11/11/2026",
-"valor": 20995.0,
-"modalidade": "",
-"nivel": "PROVAVEL",
-"pregao": "PE 90008/2025",
-"candidatos": [
-"PE 90008/2025"
-]
-},
-{
 "documento": "160238000012026NE000468",
 "ug": "160238",
 "data": "11/11/2026",
@@ -29722,16 +29658,6 @@
 "candidatos": []
 },
 {
-"documento": "160304000012026NE000500",
-"ug": "160304",
-"data": "12/11/2026",
-"valor": 4486.92,
-"modalidade": "",
-"nivel": null,
-"pregao": null,
-"candidatos": []
-},
-{
 "documento": "160329000012026NE000289",
 "ug": "160329",
 "data": "12/11/2026",
@@ -29862,16 +29788,6 @@
 "candidatos": []
 },
 {
-"documento": "160238000012026NE000280",
-"ug": "160238",
-"data": "13/11/2026",
-"valor": 2197.0,
-"modalidade": "",
-"nivel": null,
-"pregao": null,
-"candidatos": []
-},
-{
 "documento": "160238000012026NE000470",
 "ug": "160238",
 "data": "13/11/2026",
@@ -29968,16 +29884,6 @@
 "ug": "160304",
 "data": "13/11/2026",
 "valor": 2693.0,
-"modalidade": "",
-"nivel": null,
-"pregao": null,
-"candidatos": []
-},
-{
-"documento": "160321000012026NE000288",
-"ug": "160321",
-"data": "13/11/2026",
-"valor": 600000.0,
 "modalidade": "",
 "nivel": null,
 "pregao": null,
@@ -30148,6 +30054,16 @@
 "candidatos": []
 },
 {
+"documento": "160307000012026NE000369",
+"ug": "160307",
+"data": "16/11/2026",
+"valor": 32384.68,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
 "documento": "160307000012026NE000427",
 "ug": "160307",
 "data": "16/11/2026",
@@ -30210,6 +30126,16 @@
 "candidatos": []
 },
 {
+"documento": "160307000012026NE000521",
+"ug": "160307",
+"data": "16/11/2026",
+"valor": 109880.0,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
 "documento": "160321000012026NE000187",
 "ug": "160321",
 "data": "16/11/2026",
@@ -30228,17 +30154,253 @@
 "nivel": null,
 "pregao": null,
 "candidatos": []
+},
+{
+"documento": "160238000012026NE000203",
+"ug": "160238",
+"data": "17/11/2026",
+"valor": 2308.0,
+"modalidade": "",
+"nivel": "PROVAVEL",
+"pregao": "PE 90315/2026",
+"candidatos": [
+"PE 90315/2026"
+]
+},
+{
+"documento": "160238000012026NE000240",
+"ug": "160238",
+"data": "17/11/2026",
+"valor": 6499.23,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "160238000012026NE000280",
+"ug": "160238",
+"data": "17/11/2026",
+"valor": 29237.0,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "160238000012026NE000467",
+"ug": "160238",
+"data": "17/11/2026",
+"valor": 15996.0,
+"modalidade": "",
+"nivel": "PROVAVEL",
+"pregao": "PE 90008/2025",
+"candidatos": [
+"PE 90008/2025"
+]
+},
+{
+"documento": "160238000012026NE000477",
+"ug": "160238",
+"data": "17/11/2026",
+"valor": 1783.32,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "160238000012026NE000478",
+"ug": "160238",
+"data": "17/11/2026",
+"valor": 3096.2,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "160238000012026NE000479",
+"ug": "160238",
+"data": "17/11/2026",
+"valor": 1350.0,
+"modalidade": "",
+"nivel": "PROVAVEL",
+"pregao": "PE 90315/2026",
+"candidatos": [
+"PE 90315/2026"
+]
+},
+{
+"documento": "160238000012026NE000480",
+"ug": "160238",
+"data": "17/11/2026",
+"valor": 1536.91,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "160246000012026NE000405",
+"ug": "160246",
+"data": "17/11/2026",
+"valor": 16147.9,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "160246000012026NE000406",
+"ug": "160246",
+"data": "17/11/2026",
+"valor": 1433.74,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "160304000012026NE000500",
+"ug": "160304",
+"data": "17/11/2026",
+"valor": 3805.92,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "160304000012026NE000506",
+"ug": "160304",
+"data": "17/11/2026",
+"valor": 650.0,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "160304000012026NE000507",
+"ug": "160304",
+"data": "17/11/2026",
+"valor": 21676.56,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "160304000012026NE000508",
+"ug": "160304",
+"data": "17/11/2026",
+"valor": 15451.24,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "160307000012026NE000520",
+"ug": "160307",
+"data": "17/11/2026",
+"valor": 39354.0,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "160329000012026NE000363",
+"ug": "160329",
+"data": "17/11/2026",
+"valor": 50000.2,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "160329000012026NE000364",
+"ug": "160329",
+"data": "17/11/2026",
+"valor": 35000.16,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "160329000012026NE000365",
+"ug": "160329",
+"data": "17/11/2026",
+"valor": 76625.14,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "167246000012026NE000014",
+"ug": "167246",
+"data": "17/11/2026",
+"valor": 6065.62,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "167321000012026NE000020",
+"ug": "167321",
+"data": "17/11/2026",
+"valor": 1799.5,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "167321000012026NE000022",
+"ug": "167321",
+"data": "17/11/2026",
+"valor": 327.5,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "167321000012026NE000023",
+"ug": "167321",
+"data": "17/11/2026",
+"valor": 172.0,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
+},
+{
+"documento": "167321000012026NE000024",
+"ug": "167321",
+"data": "17/11/2026",
+"valor": 169.8,
+"modalidade": "",
+"nivel": null,
+"pregao": null,
+"candidatos": []
 }
 ],
 "meta": {
 "janela": [
-"2026-11-04",
-"2026-11-18"
+"2026-11-05",
+"2026-11-19"
 ],
-"ne_na_janela": 181,
+"ne_na_janela": 188,
 "ne_zero_retiradas": 56,
-"ne_fora_da_janela_mantidas": 2759,
+"ne_fora_da_janela_mantidas": 2773,
 "pares_falhos": [],
-"coletado_em": "2026-11-18T22:43:00"
+"coletado_em": "2026-11-19T19:10:36"
 }
 }
