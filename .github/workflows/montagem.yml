@@ -54,6 +54,12 @@ jobs:
         env:
           GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
         run: cd motor && python gof_planilha.py --saida ../dados || echo "::warning::planilha nao lida; segue com o JSON versionado"
+      - name: Ponte do TG (P-041) - B1 das assinaturas via Drive; falha mantem o extrato anterior
+        env:
+          GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
+        run: |
+          cd motor
+          python gof_ponte_tg.py --fichas ../dados/pncp/ultimo.json --saida ../dados/execucao || echo "::warning::ponte do TG sem extrato novo; segue com o vigente"
       - name: Portal da Transparencia como reserva do B1 (D17); falha mantem o extrato anterior
         env:
           PORTAL_TRANSPARENCIA_API_KEY: ${{ secrets.PORTAL_TRANSPARENCIA_API_KEY }}
@@ -85,7 +91,7 @@ jobs:
           cp saida/dados.json saida/index.html "saida/atas_pncp_${hoje}.json" "dados/painel/$hoje/"
           cp saida/dados.json saida/index.html dados/painel/ultimo/
           (cd "dados/painel/$hoje" && sha256sum ./* > SHA256SUMS)
-          git add dados/painel dados/carteira_processos.json dados/kpis_painel.json
+          git add dados/painel dados/carteira_processos.json dados/kpis_painel.json dados/execucao
           if [ -d dados/portal ]; then git add dados/portal; fi
           if git diff --cached --quiet; then echo "sem mudanca"; exit 0; fi
           git commit --quiet -m "montagem: $hoje (run ${GITHUB_RUN_ID})"
