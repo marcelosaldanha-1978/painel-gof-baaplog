@@ -3,47 +3,47 @@
   "versao_motor": "0.4",
   "regra_vinculo": "1.2",
   "base_b1": "portal",
-  "hoje": "2026-11-22",
+  "hoje": "2026-11-23",
   "fase": "A",
   "fontes": [
    {
     "nome": "execucao_portal",
     "arquivo": "extrato_portal.json",
-    "sha256": "cf50a8e8996057046f2cbfea35ae28307eea4f6826075198c127715cdc223733",
+    "sha256": "7733a49c129d1fd49b428a97e5fa58a05623baacd64462797455c011113c5bcc",
     "data_dado": "2026-11-18",
     "nota": "RESERVA (D17): Portal da Transparencia, lacunas e atraso de ~7 dias; extrato sem pessoa"
    },
    {
     "nome": "carteira",
     "arquivo": "carteira_processos.json",
-    "sha256": "469e2bd0764692270fb0263eeba2acf2faca77b50cfcd8f6833539213e100adc",
-    "data_dado": "2026-11-22"
+    "sha256": "83bf3b99921c57416659def05cc73450bdfadc090e5a37ff074d9f881749c0f2",
+    "data_dado": "2026-11-23"
    },
    {
     "nome": "kpis_painel",
     "arquivo": "kpis_painel.json",
-    "sha256": "c01ddd8df7cc7a12c3a60be0890632f616a6d252cd59095a514951752ef6757d",
-    "data_dado": "2026-11-22"
+    "sha256": "739054aec62535be0b11180d8d60407e104ac1d7b7f8c861d81e06fe556872c4",
+    "data_dado": "2026-11-23"
    },
    {
     "nome": "atas",
-    "arquivo": "atas_pncp_2026-11-22.json",
-    "sha256": "94e3caeef94496ba41398c368d77901b656eed94c0388ae61fd3e4aa504c911b",
-    "data_dado": "2026-11-22"
+    "arquivo": "atas_pncp_2026-11-23.json",
+    "sha256": "0ce7acfea31a42977a88b380b0bf7fb2ae353dfecd1b71d2b6f44d96344fe4bc",
+    "data_dado": "2026-11-23"
    },
    {
     "nome": "fichas_pncp",
     "arquivo": "ultimo.json",
-    "sha256": "d6b1ab178d162075731a3d4d1b6adab7e918836cf193c39d103c1836aa0c573e",
-    "data_dado": "2026-11-16"
+    "sha256": "59c5df37c96adb1ac32bd99949d3751d292ed490dd869c48383182aa3f4974ff",
+    "data_dado": "2026-11-23"
    }
   ],
   "fonte_b1": "portal",
-  "idade_b1_dias_uteis": 2,
-  "b1_fresco": true,
+  "idade_b1_dias_uteis": 3,
+  "b1_fresco": false,
   "dias_uteis_fresco": 2,
   "dias_pendencias_amarelo": 14,
-  "fonte_b1_motivo": "TG parado ha 9 dias uteis e Portal mais atual (2026-11-18 > 2026-11-09)",
+  "fonte_b1_motivo": "TG parado ha 10 dias uteis e Portal mais atual (2026-11-18 > 2026-11-09)",
   "data_portal": "2026-11-18",
   "data_tg": "2026-11-09"
  },
@@ -446,8 +446,8 @@
    "nao_publicados": 2
   },
   "kpis_painel": {
-   "lido_em": "2026-11-22",
-   "origem": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-22 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Painel, linha 5 (A5:E5)",
+   "lido_em": "2026-11-23",
+   "origem": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-23 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Painel, linha 5 (A5:E5)",
    "processos": "12",
    "valor_estimado": "R$ 75.312.730,52",
    "score_bsc": "66,9%",
@@ -467,7 +467,7 @@
     "processo": "PE 90315/2026",
     "ata": "00014/2026",
     "vigencia_fim": "2027-05-17",
-    "dias": 176
+    "dias": 175
    }
   },
   "processos": [
@@ -1716,7 +1716,7 @@
      "desde": "2026-11-04"
     }
    ],
-   "dias": 15
+   "dias": 16
   },
   "conferencia": {
    "data": "2026-11-16",
@@ -1738,7 +1738,7 @@
    ],
    "fonte": "confronto semanal planilha x PNCP/Compras.gov no runner (D19 parte 1); a gravacao do provado e sessao do Claude"
   },
-  "data_dado_atas": "2026-11-22"
+  "data_dado_atas": "2026-11-23"
  },
  "encerramento": {
   "norma": "Portaria SEF/C Ex nº 399, de 24/09/2026 (EB90-D-08.001)",
@@ -1748,63 +1748,63 @@
     "evento": "ev. 6 e 7",
     "texto": "Data-limite para a UGE emitir NE (a UGR pode prorrogar, em caráter excepcional) e nomear em BI quem indica RPNP",
     "vencido": false,
-    "dias_uteis": 3,
-    "dias_corridos": 3
+    "dias_uteis": 2,
+    "dias_corridos": 2
    },
    {
     "data": "2026-11-26",
     "evento": "ev. 8",
     "texto": "A UGR recolhe todo o crédito que restar em tela",
     "vencido": false,
-    "dias_uteis": 4,
-    "dias_corridos": 4
+    "dias_uteis": 3,
+    "dias_corridos": 3
    },
    {
     "data": "2026-12-03",
     "evento": "ev. 10",
     "texto": "Data-limite de NE dos créditos remanejados",
     "vencido": false,
-    "dias_uteis": 9,
-    "dias_corridos": 11
+    "dias_uteis": 8,
+    "dias_corridos": 10
    },
    {
     "data": "2026-12-04",
     "evento": "ev. 11",
     "texto": "Última NC do EME ou da UGR",
     "vencido": false,
-    "dias_uteis": 10,
-    "dias_corridos": 12
+    "dias_uteis": 9,
+    "dias_corridos": 11
    },
    {
     "data": "2026-12-15",
     "evento": "ev. 16",
     "texto": "Fase interna das demandas do PCA 2027 concluída",
     "vencido": false,
-    "dias_uteis": 17,
-    "dias_corridos": 23
+    "dias_uteis": 16,
+    "dias_corridos": 22
    },
    {
     "data": "2026-12-23",
     "evento": "ev. 19 e 20",
     "texto": "Fim da indicação no SIAFI das NE a inscrever em RPNP (início em 01/12) e desbloqueio de RPNP de 2024",
     "vencido": false,
-    "dias_uteis": 23,
-    "dias_corridos": 31
+    "dias_uteis": 22,
+    "dias_corridos": 30
    },
    {
     "data": "2026-12-30",
     "evento": "ev. 26, 28 e 32",
     "texto": "Liquidar RPNP inscrito até 2023; ordens bancárias até 14h; anular NE não indicadas",
     "vencido": false,
-    "dias_uteis": 27,
-    "dias_corridos": 38
+    "dias_uteis": 26,
+    "dias_corridos": 37
    }
   ],
   "feriados_considerados": [
    "2026-11-20",
    "2026-12-25"
   ],
-  "dias_uteis_ate_limite_ne": 3,
+  "dias_uteis_ate_limite_ne": 2,
   "ne60": {
    "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Saldo a liquidar por NE 2026 (v1.0, 09nov2026)», execução de 12/11/2026, 08h36, sem filtro de exibição",
    "posicao_siafi": "12/11/2026 02:06 (movimento até 11/11/2026)",
@@ -2140,7 +2140,7 @@
   }
  },
  "capacidade": {
-  "data_coleta": "2026-11-16",
+  "data_coleta": "2026-11-23",
   "extrato_tg": "2026-11-09",
   "versao_saldo": "0.2",
   "regra": "saldo = quantidade registrada para a UASG (API do Compras.gov.br) × valor unitário − empenhado líquido pela UASG naquele item (TG); as UG 160xxx e 167xxx contam juntas",
@@ -2150,21 +2150,21 @@
    "carona aprovada em ata de outro órgão sem nenhuma NE não aparece (API pública não consulta por UASG aderente)"
   ],
   "total": {
-   "registrado": 103042780.8,
-   "empenhado_tg": 14625320.24,
-   "saldo": 88417460.56,
-   "por_quantidade": 51012374.49,
-   "por_valor": 37405086.07,
-   "vence_ate_31dez": 4304457.23
+   "registrado": 103371373.43,
+   "empenhado_tg": 14611429.16,
+   "saldo": 88759944.27,
+   "por_quantidade": 51002616.5,
+   "por_valor": 37757327.77,
+   "vence_ate_31dez": 4290257.94
   },
   "por_omds": {
    "1º D Sup": {
-    "registrado": 12947696.62,
-    "empenhado_tg": 4669629.95,
-    "saldo": 8278066.67,
-    "por_quantidade": 7788345.86,
+    "registrado": 12952414.62,
+    "empenhado_tg": 4673192.95,
+    "saldo": 8279221.67,
+    "por_quantidade": 7789500.86,
     "por_valor": 489720.81,
-    "vence_ate_31dez": 556147.69,
+    "vence_ate_31dez": 556174.69,
     "maiores": [
      {
       "ata": "01203/2026",
@@ -2193,12 +2193,12 @@
     ]
    },
    "Cmdo BaApLog": {
-    "registrado": 46448523.19,
-    "empenhado_tg": 476479.57,
-    "saldo": 45972043.62,
-    "por_quantidade": 14916169.89,
-    "por_valor": 31055873.73,
-    "vence_ate_31dez": 2909288.01,
+    "registrado": 46425528.19,
+    "empenhado_tg": 464871.27,
+    "saldo": 45960656.92,
+    "por_quantidade": 14904833.19,
+    "por_valor": 31055823.73,
+    "vence_ate_31dez": 2897901.31,
     "maiores": [
      {
       "ata": "00002/2025",
@@ -2227,12 +2227,12 @@
     ]
    },
    "BMSA": {
-    "registrado": 6281836.16,
-    "empenhado_tg": 2120812.07,
-    "saldo": 4161024.09,
-    "por_quantidade": 3699652.74,
-    "por_valor": 461371.35,
-    "vence_ate_31dez": 494245.99,
+    "registrado": 6269010.99,
+    "empenhado_tg": 2112958.49,
+    "saldo": 4156052.5,
+    "por_quantidade": 3697944.45,
+    "por_valor": 458108.05,
+    "vence_ate_31dez": 489274.4,
     "maiores": [
      {
       "ata": "00021/2026",
@@ -2261,11 +2261,11 @@
     ]
    },
    "BCMS": {
-    "registrado": 30284441.26,
+    "registrado": 30639996.26,
     "empenhado_tg": 3785726.38,
-    "saldo": 26498714.88,
+    "saldo": 26854269.88,
     "por_quantidade": 21117285.3,
-    "por_valor": 5381429.58,
+    "por_valor": 5736984.58,
     "vence_ate_31dez": 311216.34,
     "maiores": [
      {
@@ -2295,12 +2295,12 @@
     ]
    },
    "DC Mun": {
-    "registrado": 3653122.03,
+    "registrado": 3655254.03,
     "empenhado_tg": 518442.94,
-    "saldo": 3134679.09,
-    "por_quantidade": 3118304.49,
+    "saldo": 3136811.09,
+    "por_quantidade": 3120436.49,
     "por_valor": 16374.6,
-    "vence_ate_31dez": 33559.2,
+    "vence_ate_31dez": 35691.2,
     "maiores": [
      {
       "ata": "90007/2024",
@@ -2329,8 +2329,8 @@
     ]
    },
    "ECT": {
-    "registrado": 3427161.54,
-    "empenhado_tg": 3054229.33,
+    "registrado": 3429169.34,
+    "empenhado_tg": 3056237.13,
     "saldo": 372932.21,
     "por_quantidade": 372616.21,
     "por_valor": 316.0,
@@ -2364,14 +2364,13 @@
    }
   },
   "fora_da_coleta": {
-   "valor": 23033795.62,
-   "itens": 2304,
+   "valor": 23047686.7,
+   "itens": 2302,
    "por_classe": {
-    "COMPRA_DE_TERCEIRO_SEM_ATA_VIGENTE": 9453297.57,
-    "COMPRA_PROPRIA_SEM_ATA_VIGENTE": 5085426.31,
-    "CONTRATO_ATIVO": 6304214.43,
-    "MESMA_COMPRA_ITEM_FORA": 1720028.84,
-    "COMPRA_DE_OMDS_SEM_ATA_VIGENTE": 470828.47
+    "COMPRA_DE_TERCEIRO_SEM_ATA_VIGENTE": 12769104.68,
+    "COMPRA_PROPRIA_SEM_ATA_VIGENTE": 5335851.55,
+    "MESMA_COMPRA_ITEM_FORA": 4459118.0,
+    "COMPRA_DE_OMDS_SEM_ATA_VIGENTE": 483612.47
    }
   },
   "itens_nao_lidos": 0
