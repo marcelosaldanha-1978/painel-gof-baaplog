@@ -1,0 +1,27 @@
+{
+ "data": "2026-11-23",
+ "stamp": "20261123_2227",
+ "linhas_lidas_pncp": 10,
+ "publicados": 10,
+ "gravaveis": 0,
+ "so_dono": 0,
+ "divergencias": 1,
+ "eventos": 1,
+ "atas_diferentes": 0,
+ "contratos_ligados": 0,
+ "pendencia": true,
+ "itens": [
+  {
+   "linha": 14,
+   "pregao": "PE 108/2026",
+   "tipo": "RELANCAMENTO?",
+   "detalhe": "mesmo processo na UASG 160307: PE 114/2026 (seq. 23583), situacao Divulgada no PNCP. Nao consta nas observacoes da linha"
+  },
+  {
+   "linha": 5,
+   "pregao": "PE 90023/2025",
+   "tipo": "evento",
+   "detalhe": "atualizacao: 2026-02-13T07:08:41 -> 2026-11-17T10:52:41"
+  }
+ ]
+}
