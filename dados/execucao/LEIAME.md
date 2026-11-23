@@ -7,6 +7,12 @@ independente (`total_item23`). O vínculo NE → pregão vem da **chave SIASG** 
 regra 2.0, `motor/vinculo_siasg.py`); o campo `chave` traz UASG-modalidade-número/ano da compra (dado público do SIASG).
 - 2026-11-09: 3.045 NE das 12 UG; líquido R$ 49.900.235,86; emitido R$ 64.053.671,89; 465 NE anuladas por inteiro;
   185 NE com chave de 6 pregões da carteira (R$ 492.252,09 líquidos). Origem: os dois CSV do TG de 09/11 (sha256 em `origem`).
+- 2026-11-19 (gerado em 23/11/2026): 3.199 NE das 12 UG; líquido R$ 53.589.415,51 (= item 23 ao centavo); emitido
+  R$ 68.840.026,00; 194 NE com chave da carteira (R$ 500.268,58). **Primeira geração a partir das ASSINATURAS** do TG
+  (e-mail do SERPRO de 20/11, 03h, dados até 19/11): «Emissão 5229 x execução 6229 por NE 2026 (v1.1)» agregada por NE
+  (a assinatura traz várias linhas por NE) e «NE Informação Complementar (v1.0)», convertidas por
+  `preparar_assinatura_para_extrato.py` (pasta do projeto, `02_EVIDENCIAS_E_REGISTROS/TG_ASSINATURA_2026-11-20`), sem
+  favorecido. Motivo: o B1 estava no Portal (reserva) desde 13/11 porque a ponte P-041 nunca foi construída.
 
 **Versão 1 (até 06/11/2026), mantida no histórico:** `valor` era a conta 522920101 (emissão bruta), não o empenhado.
 
