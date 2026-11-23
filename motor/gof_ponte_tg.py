@@ -46,7 +46,8 @@ def agregar_emissao(texto):
         if len(r) < 11 or not RE_NE.match(r[2].strip()):
             continue
         ne, ug = r[2].strip(), r[0].strip()
-        v = out.setdefault(ne, {"ug": ug, "dia": "", "e101": 0.0, "e102": 0.0, "e104": 0.0, "liq": 0.0})
+        v = out.setdefault(ne, {"ug": ug, "dia": "", "e101": 0.0, "e102": 0.0, "e104": 0.0, "liq": 0.0,
+                                "c101": 0.0, "c102": 0.0, "c103": 0.0, "c104": 0.0})
         if v["ug"] != ug:
             raise ValueError("NE com duas UG: %s" % ne)
         dia = r[3].strip()
@@ -58,12 +59,73 @@ def agregar_emissao(texto):
         v["e102"] += num(r[5])
         v["e104"] += num(r[6])
         v["liq"] += sum(num(x) for x in r[7:11])
+        for i, k in enumerate(("c101", "c102", "c103", "c104")):
+            v[k] += num(r[7 + i])
     for ne, v in out.items():
         if not v["dia"]:
             raise ValueError("NE sem dia de emissão: %s" % ne)
-        for k in ("e101", "e102", "e104", "liq"):
+        for k in ("e101", "e102", "e104", "liq", "c101", "c102", "c103", "c104"):
             v[k] = round(v[k], 2)
     return out
+
+
+OMDS_ROTULO = {"BaApLog": "Cmdo BaApLog", "BCMS": "BCMS", "BMSA": "BMSA", "ECT": "ECT", "DCMun": "DC Mun", "1oDSup": "1º D Sup"}
+
+
+def liquidacao(em, data_exec):
+    """Liquidação por OMDS (Portaria 399-SEF, item 6.d; evento 27: liquidar até 29/12) a partir das contas 6229201xx.
+    a liquidar = 622920101 (a liquidar) + 622920102 (em liquidação); liquidado = 622920103 + 622920104 (pago);
+    idade = dias corridos da emissão até a data dos dados. Sem pessoa: só totais por OMDS."""
+    ref = dt.date.fromisoformat(data_exec)
+    base = {"empenhado": 0.0, "liquidado": 0.0, "a_liquidar": 0.0, "ne_com_saldo": 0, "mais60_valor": 0.0, "mais60_ne": 0,
+            "mais90_valor": 0.0, "mais90_ne": 0, "mais60_sem_nenhuma_liq_valor": 0.0, "mais60_sem_nenhuma_liq_ne": 0}
+    por = {OMDS_ROTULO[o]: dict(base) for o in OMDS_ROTULO}
+    por_ug = {}
+    for v in em.values():
+        o = OMDS_ROTULO.get(tr.UGS.get(v["ug"], ""))
+        if not o:
+            continue
+        aliq, liqd = round(v["c101"] + v["c102"], 2), round(v["c103"] + v["c104"], 2)
+        dias = None
+        if aliq > 0.005:
+            d, m, a = v["dia"].split("/")
+            dias = (ref - dt.date(int(a), int(m), int(d))).days
+        for r in (por[o], por_ug.setdefault(o, {}).setdefault(v["ug"], dict(base))):  # OMDS e a UG (160xxx/167xxx)
+            r["empenhado"] += v["liq"]
+            r["liquidado"] += liqd
+            if dias is None:
+                continue
+            r["a_liquidar"] += aliq
+            r["ne_com_saldo"] += 1
+            if dias > 60:
+                r["mais60_valor"] += aliq
+                r["mais60_ne"] += 1
+                if liqd <= 0.005:
+                    r["mais60_sem_nenhuma_liq_valor"] += aliq
+                    r["mais60_sem_nenhuma_liq_ne"] += 1
+            if dias > 90:
+                r["mais90_valor"] += aliq
+                r["mais90_ne"] += 1
+
+    def fecha(r):
+        for k in r:
+            r[k] = round(r[k], 2) if isinstance(r[k], float) else r[k]
+        r["pct_liquidado"] = round(100 * r["liquidado"] / r["empenhado"], 2) if r["empenhado"] else 0.0
+
+    total = dict(base)
+    for o, r in por.items():
+        fecha(r)
+        for k in base:
+            total[k] += r[k]
+        r["por_ug"] = {}
+        for ug, ru in sorted(por_ug.get(o, {}).items()):
+            fecha(ru)
+            r["por_ug"][ug] = ru
+    total = {k: round(v, 2) if isinstance(v, float) else v for k, v in total.items()}
+    total["pct_liquidado"] = round(100 * total["liquidado"] / total["empenhado"], 2) if total["empenhado"] else 0.0
+    return {"data_dado": data_exec, "fonte": "TG, assinatura «Emissão 5229 x execução 6229 por NE 2026» (contas 6229201xx), pela ponte P-041",
+            "regra": "a liquidar = 622920101 + 622920102; liquidado = 622920103 + 622920104; idade em dias corridos desde a emissão",
+            "por_omds": por, "total": total}
 
 
 def ler_info(texto):
@@ -161,6 +223,7 @@ def main(argv=None):
         brutos = {k: _get("https://www.googleapis.com/drive/v3/files/%s?alt=media" % arquivos["%s_%s.tsv" % (entrega, k)], tok)
                   for k in ("emissao_sem_pessoa", "info_complementar")}
         liquido, chaves = montar_entradas(brutos["emissao_sem_pessoa"].decode("utf-8"), brutos["info_complementar"].decode("utf-8"))
+        liq_omds = liquidacao(agregar_emissao(brutos["emissao_sem_pessoa"].decode("utf-8")), data_exec)
         fichas = tr.ficha_de_pncp(json.load(open(o.fichas, encoding="utf-8")))
         origem = [{"arquivo": "%s_%s.tsv (assinatura do TG via ponte)" % (entrega, k), "sha256": hashlib.sha256(b).hexdigest()}
                   for k, b in brutos.items()]
@@ -174,6 +237,9 @@ def main(argv=None):
     (pasta / "extrato.json").write_text(corpo, encoding="utf-8")
     (pasta / "SHA256SUMS").write_text(hashlib.sha256(corpo.encode("utf-8")).hexdigest() + "  extrato.json\n", encoding="utf-8")
     vigente.write_text(corpo, encoding="utf-8")
+    pl = saida.parent / "liquidacao"
+    pl.mkdir(parents=True, exist_ok=True)
+    (pl / "ultimo.json").write_text(json.dumps(liq_omds, ensure_ascii=False, indent=1), encoding="utf-8")
     print("PONTE: extrato de %s (entrega %s): %d NE, líquido R$ %.2f = item 23" % (data_exec, entrega, len(extrato["ne"]), extrato["total_item23"]))
     return 0
 

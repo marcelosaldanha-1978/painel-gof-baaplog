@@ -1,0 +1,266 @@
+{
+ "data_dado": "2026-11-19",
+ "fonte": "TG, assinatura «Emissão 5229 x execução 6229 por NE 2026» (contas 6229201xx), pela ponte P-041",
+ "regra": "a liquidar = 622920101 + 622920102; liquidado = 622920103 + 622920104; idade em dias corridos desde a emissão",
+ "por_omds": {
+  "Cmdo BaApLog": {
+   "empenhado": 4927320.31,
+   "liquidado": 2748967.89,
+   "a_liquidar": 2178352.42,
+   "ne_com_saldo": 156,
+   "mais60_valor": 1196715.09,
+   "mais60_ne": 62,
+   "mais90_valor": 1060798.44,
+   "mais90_ne": 51,
+   "mais60_sem_nenhuma_liq_valor": 324503.23,
+   "mais60_sem_nenhuma_liq_ne": 35,
+   "pct_liquidado": 55.79,
+   "por_ug": {
+    "160238": {
+     "empenhado": 4285013.05,
+     "liquidado": 2348777.65,
+     "a_liquidar": 1936235.4,
+     "ne_com_saldo": 126,
+     "mais60_valor": 1147501.88,
+     "mais60_ne": 52,
+     "mais90_valor": 1025723.48,
+     "mais90_ne": 43,
+     "mais60_sem_nenhuma_liq_valor": 276021.27,
+     "mais60_sem_nenhuma_liq_ne": 26,
+     "pct_liquidado": 54.81
+    },
+    "167238": {
+     "empenhado": 642307.26,
+     "liquidado": 400190.24,
+     "a_liquidar": 242117.02,
+     "ne_com_saldo": 30,
+     "mais60_valor": 49213.21,
+     "mais60_ne": 10,
+     "mais90_valor": 35074.96,
+     "mais90_ne": 8,
+     "mais60_sem_nenhuma_liq_valor": 48481.96,
+     "mais60_sem_nenhuma_liq_ne": 9,
+     "pct_liquidado": 62.31
+    }
+   }
+  },
+  "BCMS": {
+   "empenhado": 12276983.41,
+   "liquidado": 6038786.53,
+   "a_liquidar": 6238196.88,
+   "ne_com_saldo": 132,
+   "mais60_valor": 2884176.78,
+   "mais60_ne": 60,
+   "mais90_valor": 2755702.25,
+   "mais90_ne": 45,
+   "mais60_sem_nenhuma_liq_valor": 2524321.72,
+   "mais60_sem_nenhuma_liq_ne": 31,
+   "pct_liquidado": 49.19,
+   "por_ug": {
+    "160329": {
+     "empenhado": 9804800.1,
+     "liquidado": 4983394.25,
+     "a_liquidar": 4821405.85,
+     "ne_com_saldo": 111,
+     "mais60_valor": 1502707.69,
+     "mais60_ne": 45,
+     "mais90_valor": 1385350.62,
+     "mais90_ne": 32,
+     "mais60_sem_nenhuma_liq_valor": 1322623.36,
+     "mais60_sem_nenhuma_liq_ne": 21,
+     "pct_liquidado": 50.83
+    },
+    "167329": {
+     "empenhado": 2472183.31,
+     "liquidado": 1055392.28,
+     "a_liquidar": 1416791.03,
+     "ne_com_saldo": 21,
+     "mais60_valor": 1381469.09,
+     "mais60_ne": 15,
+     "mais90_valor": 1370351.63,
+     "mais90_ne": 13,
+     "mais60_sem_nenhuma_liq_valor": 1201698.36,
+     "mais60_sem_nenhuma_liq_ne": 10,
+     "pct_liquidado": 42.69
+    }
+   }
+  },
+  "BMSA": {
+   "empenhado": 5274940.78,
+   "liquidado": 3416399.73,
+   "a_liquidar": 1858541.05,
+   "ne_com_saldo": 192,
+   "mais60_valor": 1133882.67,
+   "mais60_ne": 77,
+   "mais90_valor": 778111.89,
+   "mais90_ne": 61,
+   "mais60_sem_nenhuma_liq_valor": 855313.35,
+   "mais60_sem_nenhuma_liq_ne": 45,
+   "pct_liquidado": 64.77,
+   "por_ug": {
+    "160304": {
+     "empenhado": 4618153.06,
+     "liquidado": 3173472.21,
+     "a_liquidar": 1444680.85,
+     "ne_com_saldo": 159,
+     "mais60_valor": 782302.87,
+     "mais60_ne": 62,
+     "mais90_valor": 503862.69,
+     "mais90_ne": 52,
+     "mais60_sem_nenhuma_liq_valor": 503783.55,
+     "mais60_sem_nenhuma_liq_ne": 31,
+     "pct_liquidado": 68.72
+    },
+    "167304": {
+     "empenhado": 656787.72,
+     "liquidado": 242927.52,
+     "a_liquidar": 413860.2,
+     "ne_com_saldo": 33,
+     "mais60_valor": 351579.8,
+     "mais60_ne": 15,
+     "mais90_valor": 274249.2,
+     "mais90_ne": 9,
+     "mais60_sem_nenhuma_liq_valor": 351529.8,
+     "mais60_sem_nenhuma_liq_ne": 14,
+     "pct_liquidado": 36.99
+    }
+   }
+  },
+  "ECT": {
+   "empenhado": 6354279.24,
+   "liquidado": 4853027.93,
+   "a_liquidar": 1501251.31,
+   "ne_com_saldo": 75,
+   "mais60_valor": 269979.45,
+   "mais60_ne": 22,
+   "mais90_valor": 97830.2,
+   "mais90_ne": 15,
+   "mais60_sem_nenhuma_liq_valor": 165994.59,
+   "mais60_sem_nenhuma_liq_ne": 13,
+   "pct_liquidado": 76.37,
+   "por_ug": {
+    "160321": {
+     "empenhado": 6324198.47,
+     "liquidado": 4832437.15,
+     "a_liquidar": 1491761.32,
+     "ne_com_saldo": 64,
+     "mais60_valor": 265045.4,
+     "mais60_ne": 18,
+     "mais90_valor": 92896.15,
+     "mais90_ne": 11,
+     "mais60_sem_nenhuma_liq_valor": 161060.54,
+     "mais60_sem_nenhuma_liq_ne": 9,
+     "pct_liquidado": 76.41
+    },
+    "167321": {
+     "empenhado": 30080.77,
+     "liquidado": 20590.78,
+     "a_liquidar": 9489.99,
+     "ne_com_saldo": 11,
+     "mais60_valor": 4934.05,
+     "mais60_ne": 4,
+     "mais90_valor": 4934.05,
+     "mais90_ne": 4,
+     "mais60_sem_nenhuma_liq_valor": 4934.05,
+     "mais60_sem_nenhuma_liq_ne": 4,
+     "pct_liquidado": 68.45
+    }
+   }
+  },
+  "DC Mun": {
+   "empenhado": 3884504.1,
+   "liquidado": 2693990.1,
+   "a_liquidar": 1190514.0,
+   "ne_com_saldo": 127,
+   "mais60_valor": 550817.55,
+   "mais60_ne": 54,
+   "mais90_valor": 387905.45,
+   "mais90_ne": 32,
+   "mais60_sem_nenhuma_liq_valor": 307386.61,
+   "mais60_sem_nenhuma_liq_ne": 36,
+   "pct_liquidado": 69.35,
+   "por_ug": {
+    "160246": {
+     "empenhado": 3612871.71,
+     "liquidado": 2485810.18,
+     "a_liquidar": 1127061.53,
+     "ne_com_saldo": 103,
+     "mais60_valor": 517361.05,
+     "mais60_ne": 43,
+     "mais90_valor": 360910.95,
+     "mais90_ne": 23,
+     "mais60_sem_nenhuma_liq_valor": 275422.61,
+     "mais60_sem_nenhuma_liq_ne": 29,
+     "pct_liquidado": 68.8
+    },
+    "167246": {
+     "empenhado": 271632.39,
+     "liquidado": 208179.92,
+     "a_liquidar": 63452.47,
+     "ne_com_saldo": 24,
+     "mais60_valor": 33456.5,
+     "mais60_ne": 11,
+     "mais90_valor": 26994.5,
+     "mais90_ne": 9,
+     "mais60_sem_nenhuma_liq_valor": 31964.0,
+     "mais60_sem_nenhuma_liq_ne": 7,
+     "pct_liquidado": 76.64
+    }
+   }
+  },
+  "1º D Sup": {
+   "empenhado": 20871387.67,
+   "liquidado": 11501358.27,
+   "a_liquidar": 9370029.4,
+   "ne_com_saldo": 137,
+   "mais60_valor": 2961456.59,
+   "mais60_ne": 57,
+   "mais90_valor": 2211852.26,
+   "mais90_ne": 43,
+   "mais60_sem_nenhuma_liq_valor": 2426383.35,
+   "mais60_sem_nenhuma_liq_ne": 29,
+   "pct_liquidado": 55.11,
+   "por_ug": {
+    "160307": {
+     "empenhado": 18894118.1,
+     "liquidado": 9830159.89,
+     "a_liquidar": 9063958.21,
+     "ne_com_saldo": 133,
+     "mais60_valor": 2938102.13,
+     "mais60_ne": 54,
+     "mais90_valor": 2188497.8,
+     "mais90_ne": 40,
+     "mais60_sem_nenhuma_liq_valor": 2426383.35,
+     "mais60_sem_nenhuma_liq_ne": 29,
+     "pct_liquidado": 52.03
+    },
+    "167307": {
+     "empenhado": 1977269.57,
+     "liquidado": 1671198.38,
+     "a_liquidar": 306071.19,
+     "ne_com_saldo": 4,
+     "mais60_valor": 23354.46,
+     "mais60_ne": 3,
+     "mais90_valor": 23354.46,
+     "mais90_ne": 3,
+     "mais60_sem_nenhuma_liq_valor": 0.0,
+     "mais60_sem_nenhuma_liq_ne": 0,
+     "pct_liquidado": 84.52
+    }
+   }
+  }
+ },
+ "total": {
+  "empenhado": 53589415.51,
+  "liquidado": 31252530.45,
+  "a_liquidar": 22336885.06,
+  "ne_com_saldo": 819,
+  "mais60_valor": 8997028.13,
+  "mais60_ne": 332,
+  "mais90_valor": 7292200.49,
+  "mais90_ne": 247,
+  "mais60_sem_nenhuma_liq_valor": 6603902.85,
+  "mais60_sem_nenhuma_liq_ne": 189,
+  "pct_liquidado": 58.32
+ }
+}

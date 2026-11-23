@@ -1,0 +1,291 @@
+{
+ "data_dado": "2026-11-17",
+ "posicao_siafi": "TG executado em 18/11/2026 (SIAFI até 18/11; movimento até 17/11)",
+ "fonte": "TG, relatórios «Crédito por NC com UGR, fonte e PTRES» e régua por UG (12 UG), conferidos por auditoria independente (LOG-275 e LOG-277)",
+ "regra_vencido": "vencido = saldo da célula coberto por NC com prazo escrito anterior a 19/11 (ordem do SCmt Log: tirar da tela até 19/11); NC de «empenho imediato» conta como vencida (convenção, LOG-247). Piso e teto porque o TG não dá saldo por NC",
+ "atualizacao": "MANUAL: depende de nova execução no TG (o relatório de crédito ainda não tem assinatura)",
+ "por_omds": {
+  "Cmdo BaApLog": {
+   "provisao": 5057108.82,
+   "empenhado": 4875550.02,
+   "pct_empenhado": 96.41,
+   "liquidado": 2744632.09,
+   "pct_liquidado": 54.27,
+   "a_liquidar": 2130917.93,
+   "em_tela": 181558.8,
+   "vencido_piso": 26898.11,
+   "vencido_teto": 140272.79,
+   "celulas": 24,
+   "semaforo": "AMARELO",
+   "rpnp_a_liquidar": 145099.36,
+   "rpnp_bloqueado": 0.0,
+   "por_ug": {
+    "160238": {
+     "provisao": 4412483.72,
+     "empenhado": 4271620.49,
+     "liquidado": 2346208.85,
+     "a_liquidar": 1925411.64,
+     "em_tela": 140863.23,
+     "pct_empenhado": 96.81,
+     "rpnp_a_liquidar": 145099.36,
+     "rpnp_bloqueado": 0.0,
+     "vencido_piso": 25849.31,
+     "vencido_teto": 139223.99
+    },
+    "167238": {
+     "provisao": 644625.1,
+     "empenhado": 603929.53,
+     "liquidado": 398423.24,
+     "a_liquidar": 205506.29,
+     "em_tela": 40695.57,
+     "pct_empenhado": 93.69,
+     "rpnp_a_liquidar": 0.0,
+     "rpnp_bloqueado": 0.0,
+     "vencido_piso": 1048.8,
+     "vencido_teto": 1048.8
+    }
+   }
+  },
+  "BCMS": {
+   "provisao": 12374287.45,
+   "empenhado": 12237033.09,
+   "pct_empenhado": 98.89,
+   "liquidado": 5934450.08,
+   "pct_liquidado": 47.96,
+   "a_liquidar": 6302583.01,
+   "em_tela": 137254.36,
+   "vencido_piso": 131126.49,
+   "vencido_teto": 131126.49,
+   "celulas": 24,
+   "semaforo": "VERMELHO",
+   "rpnp_a_liquidar": 52381.05,
+   "rpnp_bloqueado": 0.0,
+   "por_ug": {
+    "160329": {
+     "provisao": 9899269.6,
+     "empenhado": 9764799.15,
+     "liquidado": 4915793.02,
+     "a_liquidar": 4849006.13,
+     "em_tela": 134470.45,
+     "pct_empenhado": 98.64,
+     "rpnp_a_liquidar": 52381.05,
+     "rpnp_bloqueado": 0.0,
+     "vencido_piso": 128342.58,
+     "vencido_teto": 128342.58
+    },
+    "167329": {
+     "provisao": 2475017.85,
+     "empenhado": 2472233.94,
+     "liquidado": 1018657.06,
+     "a_liquidar": 1453576.88,
+     "em_tela": 2783.91,
+     "pct_empenhado": 99.89,
+     "rpnp_a_liquidar": 0.0,
+     "rpnp_bloqueado": 0.0,
+     "vencido_piso": 2783.91,
+     "vencido_teto": 2783.91
+    }
+   }
+  },
+  "BMSA": {
+   "provisao": 5280139.47,
+   "empenhado": 5236740.74,
+   "pct_empenhado": 99.18,
+   "liquidado": 3416399.73,
+   "pct_liquidado": 64.7,
+   "a_liquidar": 1820341.01,
+   "em_tela": 43398.73,
+   "vencido_piso": 5790.14,
+   "vencido_teto": 5790.14,
+   "celulas": 14,
+   "semaforo": "VERDE",
+   "rpnp_a_liquidar": 109203.83,
+   "rpnp_bloqueado": 0.0,
+   "por_ug": {
+    "160304": {
+     "provisao": 4619003.49,
+     "empenhado": 4582307.02,
+     "liquidado": 3173472.21,
+     "a_liquidar": 1408834.81,
+     "em_tela": 36696.47,
+     "pct_empenhado": 99.21,
+     "rpnp_a_liquidar": 109203.83,
+     "rpnp_bloqueado": 0.0,
+     "vencido_piso": 105.34,
+     "vencido_teto": 105.34
+    },
+    "167304": {
+     "provisao": 661135.98,
+     "empenhado": 654433.72,
+     "liquidado": 242927.52,
+     "a_liquidar": 411506.2,
+     "em_tela": 6702.26,
+     "pct_empenhado": 98.99,
+     "rpnp_a_liquidar": 0.0,
+     "rpnp_bloqueado": 0.0,
+     "vencido_piso": 5684.8,
+     "vencido_teto": 5684.8
+    }
+   }
+  },
+  "ECT": {
+   "provisao": 6543688.16,
+   "empenhado": 5748199.4,
+   "pct_empenhado": 87.84,
+   "liquidado": 4832819.08,
+   "pct_liquidado": 73.85,
+   "a_liquidar": 915380.32,
+   "em_tela": 795488.76,
+   "vencido_piso": 790540.65,
+   "vencido_teto": 790540.65,
+   "celulas": 12,
+   "semaforo": "VERMELHO",
+   "rpnp_a_liquidar": 90371.19,
+   "rpnp_bloqueado": 0.0,
+   "por_ug": {
+    "160321": {
+     "provisao": 6513600.1,
+     "empenhado": 5719950.47,
+     "liquidado": 4812228.3,
+     "a_liquidar": 907722.17,
+     "em_tela": 793649.63,
+     "pct_empenhado": 87.82,
+     "rpnp_a_liquidar": 90371.19,
+     "rpnp_bloqueado": 0.0,
+     "vencido_piso": 788701.52,
+     "vencido_teto": 788701.52
+    },
+    "167321": {
+     "provisao": 30088.06,
+     "empenhado": 28248.93,
+     "liquidado": 20590.78,
+     "a_liquidar": 7658.15,
+     "em_tela": 1839.13,
+     "pct_empenhado": 93.89,
+     "rpnp_a_liquidar": 0.0,
+     "rpnp_bloqueado": 0.0,
+     "vencido_piso": 1839.13,
+     "vencido_teto": 1839.13
+    }
+   }
+  },
+  "DC Mun": {
+   "provisao": 3890534.7,
+   "empenhado": 3880720.4,
+   "pct_empenhado": 99.75,
+   "liquidado": 2627723.5,
+   "pct_liquidado": 67.54,
+   "a_liquidar": 1252996.9,
+   "em_tela": 9814.3,
+   "vencido_piso": 238.5,
+   "vencido_teto": 238.51,
+   "celulas": 10,
+   "semaforo": "VERDE",
+   "rpnp_a_liquidar": 215126.87,
+   "rpnp_bloqueado": 16500.0,
+   "por_ug": {
+    "160246": {
+     "provisao": 3618666.98,
+     "empenhado": 3609088.01,
+     "liquidado": 2420095.0,
+     "a_liquidar": 1188993.01,
+     "em_tela": 9578.97,
+     "pct_empenhado": 99.74,
+     "rpnp_a_liquidar": 214923.13,
+     "rpnp_bloqueado": 16500.0,
+     "vencido_piso": 3.65,
+     "vencido_teto": 3.66
+    },
+    "167246": {
+     "provisao": 271867.72,
+     "empenhado": 271632.39,
+     "liquidado": 207628.5,
+     "a_liquidar": 64003.89,
+     "em_tela": 235.33,
+     "pct_empenhado": 99.91,
+     "rpnp_a_liquidar": 203.74,
+     "rpnp_bloqueado": 0.0,
+     "vencido_piso": 234.85,
+     "vencido_teto": 234.85
+    }
+   }
+  },
+  "1º D Sup": {
+   "provisao": 20022422.92,
+   "empenhado": 19313372.6,
+   "pct_empenhado": 96.46,
+   "liquidado": 11377864.74,
+   "pct_liquidado": 56.83,
+   "a_liquidar": 7935507.86,
+   "em_tela": 709050.32,
+   "vencido_piso": 633189.95,
+   "vencido_teto": 633210.49,
+   "celulas": 26,
+   "semaforo": "VERMELHO",
+   "rpnp_a_liquidar": 219249.16,
+   "rpnp_bloqueado": 0.0,
+   "por_ug": {
+    "160307": {
+     "provisao": 18045081.39,
+     "empenhado": 17336103.03,
+     "liquidado": 9709366.36,
+     "a_liquidar": 7626736.67,
+     "em_tela": 708978.36,
+     "pct_empenhado": 96.07,
+     "rpnp_a_liquidar": 219249.16,
+     "rpnp_bloqueado": 0.0,
+     "vencido_piso": 633117.99,
+     "vencido_teto": 633138.53
+    },
+    "167307": {
+     "provisao": 1977341.53,
+     "empenhado": 1977269.57,
+     "liquidado": 1668498.38,
+     "a_liquidar": 308771.19,
+     "em_tela": 71.96,
+     "pct_empenhado": 100.0,
+     "rpnp_a_liquidar": 0.0,
+     "rpnp_bloqueado": 0.0,
+     "vencido_piso": 71.96,
+     "vencido_teto": 71.96
+    }
+   }
+  }
+ },
+ "total": {
+  "provisao": 53168181.52,
+  "empenhado": 51291616.25,
+  "pct_empenhado": 96.47,
+  "liquidado": 30933889.22,
+  "pct_liquidado": 58.18,
+  "a_liquidar": 20357727.03,
+  "em_tela": 1876565.27,
+  "vencido_piso": 1587783.84,
+  "vencido_teto": 1701179.07,
+  "celulas": 110,
+  "rpnp_a_liquidar": 831431.46,
+  "rpnp_bloqueado": 16500.0
+ },
+ "recolhido_no_ano": {
+  "ncs": 380,
+  "valor": 6767500.55
+ },
+ "referencia_1rm": {
+  "indices": [
+   {
+    "nome": "Ba Ap Log (6 OMDS)",
+    "indice": 92.13,
+    "destaque": true
+   },
+   {
+    "nome": "1ª RM",
+    "indice": 95.72
+   },
+   {
+    "nome": "12 RM",
+    "indice": 89.73
+   }
+  ],
+  "nota": "Índice = (liquidado + cancelado) / inscrito, critério do 1º CGCFEx. Planilha «RPNP por Região Militar» recebida do Cmt em 12/11: movimento até 09/11, só a ação 212B e com filtro de PI (subsistência à vista; água, esgoto e energia ocultos). As 51 linhas das 6 OMDS conferem ao centavo com o TG. Pendências do recorte: DC Mun (PASA, R$ 99.944,50) e 1º D Sup."
+ }
+}

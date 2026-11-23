@@ -425,8 +425,12 @@ def render_html(dados):
     corpo = json_canonico(dados)
     h = hashlib.sha256(corpo.encode("utf-8")).hexdigest()
     seguro = corpo.replace("</", "<\\/")  # nunca fechar o <script> por acidente
+    # brasões das OM (motor/brasoes.json: PNG 128 px em data URI, da pasta do projeto); bloco próprio, fora do hash dos dados
+    pb = Path(__file__).with_name("brasoes.json")
+    brasoes = pb.read_text(encoding="utf-8").replace("</", "<\\/") if pb.exists() else "{}"
     return (Path(__file__).with_name("gof_painel_modelo.html").read_text(encoding="utf-8")
-            .replace("__DADOS__", seguro).replace("__HASH__", h).replace("__TITULO__", html.escape("Painel GOF-BaApLog")))
+            .replace("__DADOS__", seguro).replace("__BRASOES__", brasoes).replace("__HASH__", h)
+            .replace("__TITULO__", html.escape("Painel GOF-BaApLog")))
 
 
 def ler_carteira_json(caminho):
@@ -461,6 +465,10 @@ def main(argv=None):
                     help="coleta de capacidade com o saldo de ata calculado (gof_capacidade_saldo.py); ausente = sem o bloco")
     ap.add_argument("--dispensa", default="dados/dispensa/ultimo.json",
                     help="leitura SEM PESSOA do empenhado em dispensa por subitem (TG); ausente = sem o bloco")
+    ap.add_argument("--liquidacao", default="dados/liquidacao/ultimo.json",
+                    help="liquidação por OMDS gerada todo dia pela ponte do TG (gof_ponte_tg.py); ausente = sem o bloco")
+    ap.add_argument("--regua", default="dados/encerramento/regua.json",
+                    help="crédito em tela e régua por OMDS (leitura datada do TG, manual); ausente = sem o bloco")
     ap.add_argument("--saida")
     ap.add_argument("--hoje", default=dt.date.today().isoformat())
     o = ap.parse_args(argv)
@@ -532,6 +540,12 @@ def main(argv=None):
     dados["capacidade"] = bloco_capacidade(cap)
     disp = json.load(open(o.dispensa, encoding="utf-8")) if o.dispensa and Path(o.dispensa).exists() else None
     dados["dispensa"] = bloco_dispensa(disp)
+    # Encerramento do exercício (Portaria 399-SEF): liquidação diária (ponte) e crédito em tela/régua (leitura datada)
+    for chave, caminho in (("liquidacao", o.liquidacao), ("regua", o.regua)):
+        dados[chave] = json.load(open(caminho, encoding="utf-8")) if caminho and Path(caminho).exists() else None
+        if dados[chave]:
+            dados["meta"]["fontes"].append({"nome": chave, "arquivo": Path(caminho).name, "sha256": sha256(caminho),
+                                            "data_dado": dados[chave].get("data_dado")})
     s = Path(o.saida)
     s.mkdir(parents=True, exist_ok=True)
     (s / "dados.json").write_text(json.dumps(dados, ensure_ascii=False, indent=1), encoding="utf-8")

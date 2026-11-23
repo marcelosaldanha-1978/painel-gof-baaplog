@@ -92,6 +92,7 @@ jobs:
           cp saida/dados.json saida/index.html dados/painel/ultimo/
           (cd "dados/painel/$hoje" && sha256sum ./* > SHA256SUMS)
           git add dados/painel dados/carteira_processos.json dados/kpis_painel.json dados/execucao
+          if [ -d dados/liquidacao ]; then git add dados/liquidacao; fi
           if [ -d dados/portal ]; then git add dados/portal; fi
           if git diff --cached --quiet; then echo "sem mudanca"; exit 0; fi
           git commit --quiet -m "montagem: $hoje (run ${GITHUB_RUN_ID})"

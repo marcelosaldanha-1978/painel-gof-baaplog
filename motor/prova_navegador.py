@@ -44,11 +44,14 @@ def main(argv=None):
             sw, cw = pg.evaluate("[document.documentElement.scrollWidth, document.documentElement.clientWidth]")
             if sw > cw:
                 falhas.append("%dpx: rolagem lateral (%d > %d)" % (largura, sw, cw))
-            for bloco in ("b1", "b3", "b4"):
-                if not pg.evaluate("document.getElementById('%s').innerHTML.length > 100" % bloco):
+            # v2 (23/11/2026): página do encerramento do exercício — prazos, resumo e as 6 OMDS uma a uma (UG 160 e 167)
+            for bloco in ("prazos", "resumo", "omds"):
+                if not pg.evaluate("(document.getElementById('%s')||{innerHTML:''}).innerHTML.length > 100" % bloco):
                     falhas.append("%dpx: bloco %s vazio" % (largura, bloco))
-            if not pg.evaluate("document.getElementById('faixa').textContent.includes('Fonte do B1')"):
-                falhas.append("%dpx: faixa sem a fonte do B1" % largura)
+            if pg.evaluate("document.querySelectorAll('#omds .ug').length") < 12:
+                falhas.append("%dpx: menos de 12 UG (6 OMDS x UG 160 e 167) no bloco das OMDS" % largura)
+            if not pg.evaluate("document.getElementById('status').textContent.includes('Fonte:')"):
+                falhas.append("%dpx: cabeçalho sem a fonte dos dados" % largura)
             ctx.close()
         nav.close()
     if falhas:
