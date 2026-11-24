@@ -20,12 +20,16 @@ import datetime as dt
 import json
 import re
 import sys
+import sys as _sys  # noqa: E402
 from collections import Counter, defaultdict
+from pathlib import Path as _Path  # noqa: E402
+
+_sys.path.insert(0, str(_Path(__file__).resolve().parent))
+import gof_config as cfg  # noqa: E402
 
 TOL = 0.01
 # UG -> OMDS: mesma tabela do projeto (sempre as duas UG de cada OMDS, D3)
-UGS = {"160238": "BaApLog", "167238": "BaApLog", "160329": "BCMS", "167329": "BCMS", "160304": "BMSA", "167304": "BMSA",
-       "160321": "ECT", "167321": "ECT", "160246": "DCMun", "167246": "DCMun", "160307": "1oDSup", "167307": "1oDSup"}
+UGS = cfg.ug_para_chave_intercalado()  # config/om.json
 
 
 def _num_br(s):
