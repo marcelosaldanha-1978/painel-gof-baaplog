@@ -78,7 +78,8 @@ flowchart TB
 | Escrita só no job que grava | `contents: write` nos jobs que gravam histórico (montagem, fichas, conferência, capacidade); `pages: write` e `id-token: write` (OIDC do deploy) só na publicação; `issues: write` só no vigia |
 | `persist-credentials: false` no checkout | **6 de 6** |
 | Entradas externas só por `env` (sem `${{ }}` em `run`) | auditado pelo zizmor |
-| `zizmor` a cada push (severidade e confiança mínimas «low») | portão 7: no CI e de novo na montagem; zizmor reprovado **impede a publicação** (o push em si não é bloqueado: a `main` não tem proteção de branch) |
+| `zizmor` a cada push (severidade e confiança mínimas «low») | portão 7: no CI e de novo na montagem; zizmor reprovado **impede a publicação** (o push em si não exige o CI) |
+| Regra da `main` (ruleset 27954387, 23/11/2026) | **bloqueia force push e exclusão** da branch; não exige status check, para não travar os commits do bot da montagem |
 
 ```mermaid
 flowchart LR

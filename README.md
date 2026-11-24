@@ -181,11 +181,11 @@ Datas marcadas como «estimadas» no Calendário podem mudar por mensagem da D C
 
 | | Workflow | Quando (Brasília) | O que faz |
 |---|---|---|---|
-| 🟢 | `montagem.yml` | acionada pela ponte (~06h e ~11h, por evento); agenda 07:33 e 12:33 como reserva | ponte do TG, régua, portões e publicação |
+| 🟢 | `montagem.yml` | acionada pela ponte (~06h e ~11h, por evento); agenda 07:33 e 12:33 como reserva | ponte do TG, régua, portões e publicação; **resumo da execução** (origem, datas, portões) na página da execução |
 | 🔵 | `ci.yml` | a cada push | portões de código |
 | 🟣 | `fichas-pncp.yml` | segunda 07:17 | pregões, atas e fornecedores (PNCP e Compras.gov) |
 | 🟠 | `conferencia.yml` | segunda 08:03 | confronto planilha × portais (só leitura) |
-| 🟡 | `vigia.yml` | segunda e quinta 08:41 | avisa montagem parada, dado parado e o lembrete anual do TG |
+| 🟡 | `vigia.yml` | segunda e quinta 08:41 | abre issue se a montagem, o B1 ou a régua pararem, ou se dado novo chegou e a ponte não acionou a montagem por evento (token vencido, Apps Script sem autorização); lembrete anual do TG |
 | ⚪ | `capacidade.yml` | segunda 02:17 | capacidade imediata de empenho em atas (no `dados.json`, fora da página) |
 
 ```mermaid
