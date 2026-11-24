@@ -46,7 +46,7 @@ def mesclar(antigas, novas):
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("--fichas", required=True)
+    ap.add_argument("--fichas", default=None, help="fichas PNCP da carteira GCALC; sem ele (OM sem o bloco), nenhum pregão")
     ap.add_argument("--saida", default="dados/portal")
     ap.add_argument("--dias-uteis", type=int, default=10, help="janela recoletada a cada dia (o Portal atrasa ~7 dias)")
     ap.add_argument("--desde", default=None, help="início fixo (carga inicial); ignora --dias-uteis")
@@ -54,7 +54,7 @@ def main(argv=None):
     o = ap.parse_args(argv)
     ate = dt.date.fromisoformat(o.ate) if o.ate else dt.date.today()
     desde = dt.date.fromisoformat(o.desde) if o.desde else janela(ate, o.dias_uteis)
-    fichas = tr.ficha_de_pncp(json.load(open(o.fichas, encoding="utf-8")))
+    fichas = tr.ficha_de_pncp(json.load(open(o.fichas, encoding="utf-8"))) if o.fichas else []
     regs, falhas = tr.coletar(desde, ate)
     # segunda tentativa, so nos pares (UG, dia) que falharam
     resta = []

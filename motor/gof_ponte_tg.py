@@ -202,7 +202,7 @@ def listar_pasta(tok):
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("--fichas", required=True)
+    ap.add_argument("--fichas", default=None, help="fichas PNCP da carteira GCALC; sem ele (OM sem o bloco), nenhum pregão")
     ap.add_argument("--saida", required=True, help="dados/execucao")
     o = ap.parse_args(argv)
     import gof_google
@@ -225,7 +225,7 @@ def main(argv=None):
                   for k in ("emissao_sem_pessoa", "info_complementar")}
         liquido, chaves = montar_entradas(brutos["emissao_sem_pessoa"].decode("utf-8"), brutos["info_complementar"].decode("utf-8"))
         liq_omds = liquidacao(agregar_emissao(brutos["emissao_sem_pessoa"].decode("utf-8")), data_exec)
-        fichas = tr.ficha_de_pncp(json.load(open(o.fichas, encoding="utf-8")))
+        fichas = tr.ficha_de_pncp(json.load(open(o.fichas, encoding="utf-8"))) if o.fichas else []
         origem = [{"arquivo": "%s_%s.tsv (assinatura do TG via ponte)" % (entrega, k), "sha256": hashlib.sha256(b).hexdigest()}
                   for k, b in brutos.items()]
         extrato = ext.gerar(liquido, chaves, fichas, data_exec, origem)
