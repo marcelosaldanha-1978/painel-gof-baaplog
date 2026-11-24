@@ -27,7 +27,9 @@ jobs:
         with:
           persist-credentials: false
       - id: bloco
-        run: echo "ligado=$(python3 motor/gof_config.py --bloco carteira_gcalc)" >> "$GITHUB_OUTPUT"
+        run: |
+          v="$(python3 motor/gof_config.py --bloco carteira_gcalc)"  # falha do Python derruba o passo (bash -e)
+          echo "ligado=$v" >> "$GITHUB_OUTPUT"
 
   confrontar:
     needs: config

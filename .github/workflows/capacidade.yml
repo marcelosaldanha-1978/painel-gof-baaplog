@@ -29,7 +29,9 @@ jobs:
         with:
           persist-credentials: false
       - id: bloco
-        run: echo "ligado=$(python3 motor/gof_config.py --bloco capacidade)" >> "$GITHUB_OUTPUT"
+        run: |
+          v="$(python3 motor/gof_config.py --bloco capacidade)"  # falha do Python derruba o passo (bash -e)
+          echo "ligado=$v" >> "$GITHUB_OUTPUT"
 
   capacidade:
     needs: config

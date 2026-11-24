@@ -44,8 +44,9 @@ jobs:
         env:
           PORTAO_ATAS_OFFLINE: "1"  # prova sem rede: reaproveita a ultima coleta de atas versionada
         run: |
-          if [ ! -f dados/execucao/ultimo.json ]; then
-            echo "::notice::sem extrato do TG ainda (copia nova): prova com o extrato vazio e valido"
+          om="$(python -c "import json;print(json.load(open('config/om.json',encoding='utf-8'))['id'])")"
+          if [ ! -f dados/execucao/ultimo.json ] && [ "$om" != "baaplog" ]; then
+            echo "::notice::copia para $om sem extrato do TG ainda: prova com o extrato vazio e valido"
             export PORTAO_EXTRATO=tests/dados/extrato_vazio.json
           fi
           bash motor/portao.sh prova

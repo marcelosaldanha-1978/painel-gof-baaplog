@@ -45,7 +45,9 @@ jobs:
         run: pip install -r requirements.txt
       - name: Blocos ligados no config da OM (v2.3; a mesma montagem serve a qualquer OM)
         id: blocos
-        run: echo "gcalc=$(python motor/gof_config.py --bloco carteira_gcalc)" >> "$GITHUB_OUTPUT"
+        run: |
+          v="$(python motor/gof_config.py --bloco carteira_gcalc)"  # falha do Python derruba o passo (bash -e)
+          echo "gcalc=$v" >> "$GITHUB_OUTPUT"
       - name: Portoes 1, 2 e 7 (suite, lint, zizmor)
         env:
           GH_TOKEN: ${{ github.token }}  # so para listar tags das actions (zizmor)

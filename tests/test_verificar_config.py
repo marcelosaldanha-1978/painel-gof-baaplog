@@ -107,3 +107,12 @@ def test_exemplo_df_monta_com_extrato_vazio_e_mostra_as_6_ug(tmp_path):
     _rodar([str(MOTOR / "recalculo_independente.py"), "--dados", str(saida / "dados.json"), "--extrato", str(vazio),
             "--hoje", HOJE.isoformat()], env)
     _rodar([str(MOTOR / "verificar_saida.py"), "--saida", str(saida)], env)
+
+
+def test_consulta_de_bloco_rejeita_nome_desconhecido():
+    import gof_config
+
+    assert gof_config.main(["--bloco", "carteira_gcalc"]) == 0
+    with pytest.raises(SystemExit) as e:
+        gof_config.main(["--bloco", "carteira_gcalcc"])
+    assert e.value.code == 2

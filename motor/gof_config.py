@@ -191,7 +191,10 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description="consulta a configuração da OM (config/om.json ou GOF_CONFIG)")
     ap.add_argument("--bloco", required=True, help="nome do bloco em «blocos» (ex.: carteira_gcalc, capacidade)")
     o = ap.parse_args(argv)
-    print(int(bloco_ligado(o.bloco)))
+    blocos = carregar().get("blocos") or {}
+    if o.bloco not in blocos:  # nome errado não pode virar «desligado» calado
+        ap.error("bloco desconhecido no config: %s (há: %s)" % (o.bloco, ", ".join(sorted(blocos)) or "nenhum"))
+    print(int(bool(blocos[o.bloco])))
     return 0
 
 

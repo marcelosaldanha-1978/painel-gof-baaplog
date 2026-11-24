@@ -56,7 +56,7 @@ DIAS_UTEIS_FRESCO = 2  # D17 revista: ate 2 dias uteis o dado e fresco
 DIAS_PENDENCIAS_AMARELO = 14  # D20
 # OMDS, rótulos, exercício e calendário vêm de config/om.json (Etapa A, v2.2): nada da OM fica fixo no código
 OMDS = cfg.chaves_omds()
-UG_CONFIG = {o["chave"]: (o["ug160"], o["ug167"]) for o in cfg.omds()}  # v2.3: UG sem NE ainda aparece no card
+UG_CONFIG = {o["chave"]: (o["ug160"], o.get("ug167")) for o in cfg.omds()}  # v2.3: UG sem NE ainda aparece no card
 ROTULO_OMDS = cfg.rotulos_curtos_diferentes()
 EXERCICIO = cfg.exercicio()
 MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"]
