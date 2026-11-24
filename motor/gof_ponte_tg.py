@@ -26,6 +26,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import gcalc_transparencia as tr  # noqa: E402
+import gof_config as cfg  # noqa: E402
 import gof_extrato_tg as ext  # noqa: E402
 
 PASTA = "PONTE_TG_SEM_PESSOA"
@@ -69,7 +70,7 @@ def agregar_emissao(texto):
     return out
 
 
-OMDS_ROTULO = {"BaApLog": "Cmdo BaApLog", "BCMS": "BCMS", "BMSA": "BMSA", "ECT": "ECT", "DCMun": "DC Mun", "1oDSup": "1º D Sup"}
+OMDS_ROTULO = cfg.rotulo_por_chave()  # config/om.json
 
 
 def liquidacao(em, data_exec):
