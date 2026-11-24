@@ -1,6 +1,7 @@
 """Ordem do usuário de 24/11/2026 (PAINEL GOF DF, LOG-033): na DF, a página mostra para quem os recursos vão.
 Só o config da OM libera (dados_pessoais); a BaApLog continua sem favorecido. CPF mascarado salvo «completo»."""
 import copy
+import datetime as dt
 import json
 from pathlib import Path
 
@@ -8,6 +9,7 @@ import gof_config as cfg
 import gof_contratos as C
 import gof_rp_por_ano as R
 import pytest
+import verificar_config as vc
 import verificar_saida as VS
 from test_contratos import HOJE, reg
 from test_rp_por_ano import LINHAS, REGUA
@@ -15,6 +17,23 @@ from test_rp_por_ano import LINHAS, REGUA
 RAIZ = Path(__file__).resolve().parent.parent
 REF = cfg.carregar(RAIZ / "tests" / "dados" / "baaplog" / "om.json")
 DF = RAIZ / "config" / "exemplos" / "df" / "om.json"
+REF_P = RAIZ / "tests" / "dados" / "baaplog" / "om.json"
+
+
+def _df_cfg(tmp_path, dados_pessoais, prefixo=None):
+    om = json.loads(DF.read_text(encoding="utf-8"))
+    if dados_pessoais is not None:
+        om["dados_pessoais"] = dados_pessoais
+    if prefixo is not None:
+        om["assinaturas_tg"]["prefixo_assunto"] = prefixo
+    p = tmp_path / "om.json"
+    p.write_text(json.dumps(om, ensure_ascii=False), encoding="utf-8")
+    for nome in ("calendario", "metas", "brasoes"):
+        if om.get(nome):
+            destino = tmp_path / om[nome]
+            destino.parent.mkdir(parents=True, exist_ok=True)
+            destino.write_bytes(cfg._resolver(DF.parent, om[nome]).read_bytes())
+    return p
 
 
 def _com(favorecido=True, cpf="mascarado"):
@@ -100,7 +119,7 @@ def _saida(tmp_path, dados):
 def test_verificar_saida_segue_o_config(tmp_path, monkeypatch, config, doc, ok):
     if config:
         monkeypatch.setenv("GOF_CONFIG", str(config))
-    dados = {"x": [{"favorecido": "PESSOA FICTICIA", "documento": doc}]}
+    dados = {"liquidacao": {"por_ne": [{"favorecido": "PESSOA FICTICIA", "documento": doc}]}}
     rc = VS.main(["--saida", _saida(tmp_path, dados)])
     assert (rc == 0) == ok
 
@@ -145,3 +164,60 @@ def test_recalculo_confere_o_detalhe_por_ne(monkeypatch):
     ruim["por_ne"][0].update(a_liquidar=90.0, favorecido="NOME FICTICIO 12345678901")
     falhas = fn({"rp_por_ano": ruim})
     assert any("detalhe por NE" in f for f in falhas) and any("CPF inteiro" in f for f in falhas)
+
+
+def test_cpf_completo_nao_vale_na_pagina_publica(tmp_path):
+    om = _com(cpf="completo")
+    assert cfg.dados_pessoais(om)["cpf"] == "mascarado"
+    erros = vc.verificar(_df_cfg(tmp_path, {"favorecido": True, "cpf": "completo"}), hoje=dt.date(2026, 11, 24))
+    assert any("só aceita «mascarado»" in e for e in erros)
+
+
+@pytest.mark.parametrize("bruto", ["123 456 789 01", "123.456.789–01", "123.456.789.01", "123.456.789/01", "12345678901"])
+def test_mascara_com_outros_separadores(bruto):
+    assert cfg.mascarar_cpf("X " + bruto) == "X ***.456.789-**"
+
+
+def test_favorecido_fora_do_lugar_reprova(tmp_path, monkeypatch):
+    monkeypatch.setenv("GOF_CONFIG", str(DF))
+    assert VS.main(["--saida", _saida(tmp_path, {"portal": {"favorecido": "EMPRESA FICTICIA"}})]) == 1
+
+
+def test_cpf_sem_separador_em_ressalva_reprova(tmp_path, monkeypatch):
+    monkeypatch.setenv("GOF_CONFIG", str(DF))
+    assert VS.main(["--saida", _saida(tmp_path, {"liquidacao": {"ressalva_favorecido": "PESSOA 12345678901"}})]) == 1
+
+
+def test_recalculo_confere_o_detalhe_do_b1(monkeypatch):
+    import recalculo_independente as RI
+    monkeypatch.setenv("GOF_CONFIG", str(DF))
+    lq = {"por_omds": {"DF": {"por_ug": {"160336": {"a_liquidar": 600.0}}}},
+          "por_ne": [{"ug": "160336", "a_liquidar": 600.0, "favorecido": "EMPRESA FICTICIA LTDA", "documento": ""}]}
+    assert RI.conferir_v24({"liquidacao": lq}) == []
+    lq["por_ne"][0].update(a_liquidar=1e9, documento="123.456.789-01")
+    f = RI.conferir_v24({"liquidacao": lq})
+    assert any("detalhe por NE" in x for x in f) and any("CPF inteiro" in x for x in f)
+
+
+def test_prefixo_que_contem_o_da_baaplog_e_clone_fora_do_repo(tmp_path, monkeypatch):
+    erros = vc.verificar(_df_cfg(tmp_path, None, prefixo="X GOF-BaApLog-CONF-"), hoje=dt.date(2026, 11, 24))
+    assert any("se confunde" in e for e in erros)
+    monkeypatch.setenv("GITHUB_REPOSITORY", "dono/painel-gof-df")
+    assert any("repositório que não é o dela" in e for e in vc.verificar(REF_P, hoje=dt.date(2026, 11, 24), raiz_dados=tmp_path))
+
+
+def test_favorecido_do_b1_ausente_ou_cp1252_nao_derruba(monkeypatch):
+    import gof_ponte_tg as pt
+    favs, fonte = pt.carregar_favorecidos({}, "2026-11-24", "tok")
+    assert favs == {} and "indisponível" in fonte["ressalva"]
+    ne = "160336000012026NE000001"
+    linha = '"%s"' % ne + chr(9) + '"JOSÉ FICTICIO 12345678901"' + chr(9) + '""' + chr(10)
+    monkeypatch.setattr(pt, "_get", lambda u, t: linha.encode("cp1252"))
+    favs, fonte = pt.carregar_favorecidos({"2026-11-24_favorecido_por_ne.tsv": "id"}, "2026-11-24", "tok")
+    assert favs[ne]["favorecido"] == "JOSÉ FICTICIO ***.456.789-**" and len(fonte["sha256"]) == 64
+
+
+def test_rp_sem_coluna_de_favorecido_avisa():
+    linhas, avisos = R.ler(_com_favorecido().replace(b"NE CCor - Favorecido", b"Coluna X"), permitir_favorecido=True,
+                           config=_com(), guardar_favorecido=True)
+    assert avisos.get("coluna de favorecido não encontrada no cabeçalho") == 1

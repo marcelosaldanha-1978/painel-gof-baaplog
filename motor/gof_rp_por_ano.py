@@ -2,7 +2,7 @@
 """
 gof_rp_por_ano.py (v0.1, 24nov2026) — RESTOS A PAGAR NÃO PROCESSADOS POR ANO DE INSCRIÇÃO (bloco `rp_por_ano`, v2.4).
 
-Entrada (assinatura do TG copiada pelo Apps Script para a pasta privada `PONTE_TG_SEM_PESSOA`, SEM favorecido):
+Entrada (assinatura do TG copiada pelo Apps Script para a pasta privada da OM; com favorecido só se o config liberar):
   <entrega>_rpnp_por_ne.csv   «<prefixo>RPNP por NE»: por UG Executora e NE, Movim. Líquido das contas 531xx (inscrição e
                               reinscrição) e 631xx (a liquidar, em liquidação, liquidado, pago, bloqueado, excetuado, cancelado)
 Saída: `dados/encerramento/rp_por_ano.json`, só agregado por UG/OMDS e ano (nenhuma NE individual, nenhuma pessoa).
@@ -105,7 +105,12 @@ def ler(b, permitir_favorecido=False, config=None, guardar_favorecido=False):
     cab = L[h]
     if any(RE_PESSOA.search(c) for r in L[h:h + 3] for c in r) and not permitir_favorecido:
         raise ValueError("RPNP por NE: o arquivo traz coluna de favorecido (portão P-RP-4); a ponte tem de cortá-la")
-    jfav = next((j for r in L[h:h + 3] for j, c in enumerate(r) if RE_PESSOA.search(c)), None) if guardar_favorecido else None
+    jfav = None
+    if guardar_favorecido:
+        jfav = next((j for r in L[h:h + 3] for j, c in enumerate(r) if c.strip().strip('"').lower() == "ne ccor - favorecido"),
+                    None)
+        if jfav is None:
+            jfav = next((j for r in L[h:h + 3] for j, c in enumerate(r) if RE_PESSOA.search(c)), None)
     modo_cpf = cfg.dados_pessoais(config)["cpf"]
     cols = {c: j for j, c in enumerate(cab) if RE_CONTA.fullmatch(c)}
     desconhecidas = sorted(c for c in cols if papel(c) is None)
@@ -142,6 +147,12 @@ def ler(b, permitir_favorecido=False, config=None, guardar_favorecido=False):
         x["contas"].update(valores)
     if not por_ne:
         raise ValueError("RPNP por NE: nenhuma NE das UG da OM no arquivo")
+    if guardar_favorecido:
+        sem = sum(1 for x in por_ne.values() if not x.get("favorecido"))
+        if jfav is None:
+            avisos["coluna de favorecido não encontrada no cabeçalho"] += 1
+        elif sem:
+            avisos["NE sem favorecido no arquivo"] += sem
     soma = collections.defaultdict(collections.Counter)
     for x in por_ne.values():
         soma[x["ug"]].update(x["contas"])
@@ -254,7 +265,7 @@ def detalhe_ne(linhas_ne, config=None):
     chave = cfg.ug_para_chave_intercalado(config)
     out = [{"omds": chave[x["ug"]], "ug": x["ug"], "ne": x["ne"], "ano": x["ano"], "favorecido": x.get("favorecido") or "",
             "a_liquidar": round(x["contas"].get("631100000", 0.0), 2)}
-           for x in linhas_ne if round(x["contas"].get("631100000", 0.0), 2) > TOL]
+           for x in linhas_ne if abs(round(x["contas"].get("631100000", 0.0), 2)) > TOL]
     return sorted(out, key=lambda d: (-d["a_liquidar"], d["ne"]))
 
 

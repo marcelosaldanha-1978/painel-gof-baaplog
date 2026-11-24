@@ -81,11 +81,31 @@ def ler_favorecidos(texto, modo_cpf="mascarado"):
     return out
 
 
+def carregar_favorecidos(arquivos, entrega, tok):
+    """Arquivo de favorecido da mesma entrega -> ({NE: ...}, fonte). Falha ou ausência não derruba a ponte: vira ressalva."""
+    nome = ARQ_FAVORECIDO % entrega
+    if nome not in arquivos:
+        print("PONTE: aviso — %s ausente; empenhos a liquidar sem favorecido nesta montagem" % nome)
+        return {}, {"arquivo": nome, "ressalva": "favorecido indisponível na entrega %s" % entrega}
+    try:
+        b = _get("https://www.googleapis.com/drive/v3/files/%s?alt=media" % arquivos[nome], tok)
+        try:
+            texto = b.decode("utf-8")
+        except UnicodeDecodeError:
+            texto = b.decode("cp1252")
+        favs = ler_favorecidos(texto)
+    except (OSError, ValueError) as e:
+        print("PONTE: aviso — %s ilegível (%s); empenhos a liquidar sem favorecido" % (nome, e))
+        return {}, {"arquivo": nome, "ressalva": "favorecido ilegível na entrega %s" % entrega}
+    return favs, {"arquivo": nome, "sha256": hashlib.sha256(b).hexdigest(), "ne": len(favs)}
+
+
 OMDS_ROTULO = cfg.rotulo_por_chave()  # config/om.json
 
 
 def liquidacao(em, data_exec, favorecidos=None):
     """Liquidação por OMDS (Portaria 399-SEF, item 6.d; evento 27: liquidar até 29/12) a partir das contas 6229201xx.
+    Com `favorecidos` (só na OM cujo config libera), publica também `por_ne`: cada NE com saldo a liquidar e o favorecido.
     a liquidar = 622920101 (a liquidar) + 622920102 (em liquidação); liquidado = 622920103 + 622920104 (pago);
     idade = dias corridos da emissão até a data dos dados. Sem pessoa: só totais por OMDS."""
     ref = dt.date.fromisoformat(data_exec)
@@ -107,7 +127,7 @@ def liquidacao(em, data_exec, favorecidos=None):
                 f = favorecidos.get(v["ne"], {})
                 por_ne.append({"ne": v["ne"], "omds": o, "ug": v["ug"], "dia": v["dia"], "dias": dias,
                                "favorecido": f.get("favorecido", ""), "documento": f.get("documento", ""),
-                               "a_liquidar": aliq, "liquidado": liqd})
+                               "a_liquidar": round(aliq, 2), "liquidado": round(liqd, 2)})
         for r in (por[o], por_ug.setdefault(o, {}).setdefault(v["ug"], dict(base))):  # OMDS e a UG (160xxx/167xxx)
             r["empenhado"] += v["liq"]
             r["liquidado"] += liqd
@@ -146,6 +166,9 @@ def liquidacao(em, data_exec, favorecidos=None):
          "por_omds": por, "total": total}
     if favorecidos is not None:  # só na OM que mostra favorecido; a saída da BaApLog não muda
         r["por_ne"] = sorted(por_ne, key=lambda x: (-x["a_liquidar"], x["ne"]))
+        sem = sum(1 for x in por_ne if not x["favorecido"])
+        if sem:
+            r["ressalva_favorecido"] = "%d de %d NE a liquidar sem favorecido no arquivo da ponte" % (sem, len(por_ne))
     return r
 
 
@@ -247,13 +270,12 @@ def main(argv=None):
         brutos = {k: _get("https://www.googleapis.com/drive/v3/files/%s?alt=media" % arquivos["%s_%s.tsv" % (entrega, k)], tok)
                   for k in ("emissao_sem_pessoa", "info_complementar")}
         liquido, chaves = montar_entradas(brutos["emissao_sem_pessoa"].decode("utf-8"), brutos["info_complementar"].decode("utf-8"))
-        dp = cfg.dados_pessoais()
-        nfav = ARQ_FAVORECIDO % entrega
-        favs = None
-        if dp["favorecido"]:
-            favs = ler_favorecidos(_get("https://www.googleapis.com/drive/v3/files/%s?alt=media" % arquivos[nfav], tok)
-                                   .decode("utf-8"), dp["cpf"]) if nfav in arquivos else {}
+        favs, fonte_fav = None, None
+        if cfg.dados_pessoais()["favorecido"]:
+            favs, fonte_fav = carregar_favorecidos(arquivos, entrega, tok)
         liq_omds = liquidacao(agregar_emissao(brutos["emissao_sem_pessoa"].decode("utf-8")), data_exec, favorecidos=favs)
+        if fonte_fav is not None:
+            liq_omds["fonte_favorecido"] = fonte_fav
         fichas = tr.ficha_de_pncp(json.load(open(o.fichas, encoding="utf-8"))) if o.fichas else []
         origem = [{"arquivo": "%s_%s.tsv (assinatura do TG via ponte)" % (entrega, k), "sha256": hashlib.sha256(b).hexdigest()}
                   for k, b in brutos.items()]

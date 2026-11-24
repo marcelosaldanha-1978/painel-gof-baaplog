@@ -20,22 +20,44 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import gof_config as cfg  # noqa: E402
 
 RE_CPF = re.compile(r"(?<!\d)\d{3}\.\d{3}\.\d{3}-\d{2}(?!\d)|(?<!\d)\*{3}\.\d{3}\.\d{3}-\*{2}(?!\d)")
-RE_CPF_INTEIRO = re.compile(r"(?<![\d*])\d{3}\.\d{3}\.\d{3}-\d{2}(?![\d*])")
-RE_CPF_SO_DIGITOS = re.compile(r"(?<![\d*])\d{3}\.?\d{3}\.?\d{3}-?\d{2}(?![\d*])")
-CAMPOS_PESSOA = ("favorecido", "fornecedor", "documento", "objeto")
+# CPF inteiro com separador (ponto, espaço, travessão, hífen ou barra antes do DV): vale para o texto todo
+RE_CPF_INTEIRO = re.compile(r"(?<![\d*])\d{3}[\s.\u2013\u2014]\d{3}[\s.\u2013\u2014]\d{3}[\s.\-\u2013\u2014/]\d{2}(?![\d*])")
+# CPF inteiro também sem separador: só nos campos de texto (no resto, 11 dígitos podem ser hash)
+RE_CPF_SO_DIGITOS = cfg._RE_CPF
+CAMPOS_PESSOA = ("favorecido", "fornecedor", "documento", "objeto", "ressalva", "ressalvas", "ressalva_favorecido",
+                 "texto", "nome", "avisos", "regra")
+# onde a chave «favorecido» pode aparecer quando o config libera (detalhes por NE e contratos)
+CAMINHOS_FAVORECIDO = (("liquidacao", "por_ne"), ("rp_por_ano", "por_ne"))
 
 
-def textos_de_pessoa(obj, acc):
-    """Valores dos campos de pessoa, onde CPF sem pontuação também conta (no resto da página, 11 dígitos podem ser hash)."""
+def textos_de_pessoa(obj, acc, dentro=False):
+    """Textos dos campos de pessoa e de ressalva (onde CPF sem separador também conta)."""
     if isinstance(obj, dict):
         for k, v in obj.items():
-            if k in CAMPOS_PESSOA and isinstance(v, str):
+            alvo = dentro or k in CAMPOS_PESSOA
+            if alvo and isinstance(v, str):
                 acc.append(v)
-            textos_de_pessoa(v, acc)
+            textos_de_pessoa(v, acc, alvo)
     elif isinstance(obj, list):
         for v in obj:
-            textos_de_pessoa(v, acc)
+            if dentro and isinstance(v, str):
+                acc.append(v)
+            textos_de_pessoa(v, acc, dentro)
     return acc
+
+
+def favorecido_fora_do_lugar(obj, caminho=()):
+    """Caminhos onde a chave «favorecido» aparece fora dos detalhes autorizados."""
+    out = []
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if k.lower() == "favorecido" and caminho[:2] not in CAMINHOS_FAVORECIDO:
+                out.append("/".join(caminho + (k,)))
+            out += favorecido_fora_do_lugar(v, caminho + (k,))
+    elif isinstance(obj, list):
+        for v in obj:
+            out += favorecido_fora_do_lugar(v, caminho)
+    return out
 CHAVES_PROIBIDAS = ("favorecido", "codigoFavorecido", "observacao", "contato", "telefone", "email", "cpf")
 LIMITE_BYTES = 2 * 1024 * 1024
 
@@ -62,13 +84,15 @@ def main(argv=None):
     falhas = []
     # 5. dado pessoal (o config da OM pode liberar o favorecido; CPF inteiro só com «cpf: completo»)
     dp = cfg.dados_pessoais()
-    padrao = None if (dp["favorecido"] and dp["cpf"] == "completo") else (RE_CPF_INTEIRO if dp["favorecido"] else RE_CPF)
     for nome, txt in (("dados.json", dados_txt), ("index.html", pagina)):
-        m = padrao.search(txt) if padrao else None
-        if m:
+        if (RE_CPF_INTEIRO if dp["favorecido"] else RE_CPF).search(txt):
             falhas.append("%s contém padrão de CPF" % nome)
-    if dp["favorecido"] and dp["cpf"] != "completo" and any(RE_CPF_SO_DIGITOS.search(x) for x in textos_de_pessoa(dados, [])):
-        falhas.append("dados.json tem CPF inteiro (sem máscara) em campo de pessoa")
+    if dp["favorecido"] and any(RE_CPF_SO_DIGITOS.search(x) for x in textos_de_pessoa(dados, [])):
+        falhas.append("dados.json tem CPF inteiro (sem máscara) em campo de texto")
+    if dp["favorecido"]:
+        fora = favorecido_fora_do_lugar(dados)
+        if fora:
+            falhas.append("chave favorecido fora dos detalhes autorizados: " + ", ".join(fora[:5]))
     proibidas = {c.lower() for c in CHAVES_PROIBIDAS} - ({"favorecido"} if dp["favorecido"] else set())
     ruins = sorted(k for k in chaves(dados, set()) if k.lower() in proibidas)
     if ruins:
@@ -97,7 +121,7 @@ def main(argv=None):
         for f in falhas:
             print("  - " + f)
         return 1
-    pessoal = ("favorecido liberado pelo config; CPF %s" % dp["cpf"]) if dp["favorecido"] else "sem dado pessoal"
+    pessoal = "favorecido liberado pelo config; CPF mascarado" if dp["favorecido"] else "sem dado pessoal"
     print("VERIFICACAO: ok (%s; JSON embutido e hash conferem; sem pedido externo; %d bytes)" % (pessoal, tam))
     return 0
 

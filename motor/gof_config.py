@@ -62,7 +62,9 @@ def carregar(caminho=None):
 
 PASTA_PONTE_PADRAO = "PONTE_TG_SEM_PESSOA"
 MODOS_CPF = ("mascarado", "completo")
-_RE_CPF = re.compile(r"(?<![\d*])(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})(?![\d*])")
+SEP_CPF = r"[\s.\u2013\u2014]?"          # espaço, ponto ou travessão entre os grupos
+SEP_DV = r"[\s.\-\u2013\u2014/]?"        # antes do dígito verificador, também hífen e barra
+_RE_CPF = re.compile(r"(?<![\d*])(\d{3})" + SEP_CPF + r"(\d{3})" + SEP_CPF + r"(\d{3})" + SEP_DV + r"(\d{2})(?![\d*])")
 
 
 def dados_pessoais(caminho=None):
@@ -71,7 +73,9 @@ def dados_pessoais(caminho=None):
     Transparência) ou «completo» (só com a página fora da internet aberta; decisão do usuário, LOG-033 do PAINEL GOF DF)."""
     om = caminho if isinstance(caminho, dict) else carregar(caminho)
     d = om.get("dados_pessoais") or {}
-    return {"favorecido": bool(d.get("favorecido")), "cpf": d.get("cpf") if d.get("cpf") in MODOS_CPF else "mascarado"}
+    # «completo» não vale enquanto a página for pública (decisão do usuário, LOG-034 do PAINEL GOF DF): o verificar_config
+    # o reprova e, por segurança, aqui ele vira «mascarado» — nada publica CPF inteiro.
+    return {"favorecido": bool(d.get("favorecido")), "cpf": "mascarado"}
 
 
 def mascarar_cpf(texto, modo="mascarado"):

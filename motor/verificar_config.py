@@ -19,6 +19,7 @@ Sai com código 1 se houver erro. Nada de segredo é lido ou exigido aqui.
 import argparse
 import datetime as dt
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -48,6 +49,7 @@ DADOS_DO_BLOCO = {
 ID_REFERENCIA = "baaplog"
 PREFIXO_REFERENCIA = "GOF-BaApLog-CONF-"
 SIGLA_REFERENCIA = "BaApLog"
+REPO_REFERENCIA = "painel-gof-baaplog"
 RE_ASPAS = re.compile("[\"'\\\\]")
 
 
@@ -169,11 +171,14 @@ def verificar(caminho, hoje=None, raiz_dados=None, avisos=None):
         if valor != valor.strip() or RE_ASPAS.search(valor):
             erros.append("assinaturas_tg.%s com espaço nas pontas ou aspas: %r" % (campo, valor))
     eh_referencia = om.get("id") == ID_REFERENCIA
+    repo = os.environ.get("GITHUB_REPOSITORY", "")
+    if eh_referencia and repo and not repo.lower().endswith("/" + REPO_REFERENCIA):
+        erros.append("config da OM de referência (id «%s») num repositório que não é o dela (%s): troque o id" % (ID_REFERENCIA, repo))
     if eh_referencia and str(om.get("sigla") or "") != SIGLA_REFERENCIA:
         erros.append("id «%s» reservado à OM de referência, mas a sigla é %r: troque o id da OM nova" % (ID_REFERENCIA, om.get("sigla")))
     if not eh_referencia:
         p1, p2 = prefixo.strip().casefold(), PREFIXO_REFERENCIA.casefold()
-        if p1 and (p1.startswith(p2) or p2.startswith(p1)):
+        if p1 and (p2 in p1 or p1 in p2):
             erros.append("assinaturas_tg.prefixo_assunto se confunde com o da OM de referência (%s): as pontes se cruzariam no Gmail" % PREFIXO_REFERENCIA)
         if pasta.strip().casefold() == cfg.PASTA_PONTE_PADRAO.casefold():
             erros.append("assinaturas_tg.pasta_drive ausente ou igual à da OM de referência (%s): defina uma pasta própria" % cfg.PASTA_PONTE_PADRAO)
@@ -181,8 +186,8 @@ def verificar(caminho, hoje=None, raiz_dados=None, avisos=None):
     if dp is not None:
         if not isinstance(dp, dict) or not isinstance(dp.get("favorecido", False), bool):
             erros.append("dados_pessoais deve ser objeto com «favorecido» booleano")
-        elif dp.get("cpf") not in (None,) + cfg.MODOS_CPF:
-            erros.append("dados_pessoais.cpf deve ser «mascarado» ou «completo»: %r" % dp.get("cpf"))
+        elif dp.get("cpf") not in (None, "mascarado"):
+            erros.append("dados_pessoais.cpf só aceita «mascarado»: a página é pública e CPF inteiro não sai (%r)" % dp.get("cpf"))
         if eh_referencia and isinstance(dp, dict) and dp.get("favorecido"):
             erros.append("a OM de referência (BaApLog) não mostra favorecido (regra do projeto-mãe)")
     # brasões (opcional)
