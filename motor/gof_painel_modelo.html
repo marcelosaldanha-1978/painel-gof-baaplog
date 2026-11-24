@@ -10,13 +10,13 @@
 /* Painel GOF-BaApLog — v2 «Encerramento do exercício» (23/11/2026). Ordem = Portaria SEF/C Ex nº 399/2026:
    prazos (Calendário) -> crédito em tela (6.a) -> liquidação (6.d) -> restos a pagar (6.b). Cada OMDS uma a uma, UG 160 e 167.
    Padrão visual: tipografia do sistema, hierarquia por tamanho e peso, espaço, cor só para estado e sempre com texto. */
-:root{--bg:#f5f5f7;--card:#fff;--ink:#1d1d1f;--sec:#6e6e73;--ter:#86868b;--sep:#e5e5ea;--fill:#ececf0;
---red:#d70015;--orange:#b25000;--green:#248a3d;--blue:#0066cc;--redbg:#fff1f0;--orangebg:#fff4e5;--greenbg:#ecf9ef;
---bar:#1d1d1f;--bar2:#c7c7cc;--r:20px;
+:root{--bg:#f5f5f7;--card:#fff;--grp:#f5f5f7;--ink:#1d1d1f;--sec:#6e6e73;--ter:#6e6e73;--sep:#e5e5ea;--fill:#e8e8ed;
+--red:#d70015;--orange:#b25000;--green:#248a3d;--blue:#0071e3;--redbg:#fff1f0;--orangebg:#fff4e5;--greenbg:#ecf9ef;
+--bar:#0071e3;--bar2:#c7c7cc;--r:22px;--nav:rgba(245,245,247,.8);
 --f:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif}
-@media (prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--ink:#f5f5f7;--sec:#a1a1a6;--ter:#8e8e93;--sep:#38383a;
---fill:#2c2c2e;--red:#ff453a;--orange:#ff9f0a;--green:#30d158;--blue:#2997ff;--redbg:#3a1614;--orangebg:#3a2a10;
---greenbg:#11301b;--bar:#f5f5f7;--bar2:#48484a}}
+@media (prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--grp:#2c2c2e;--ink:#f5f5f7;--sec:#a1a1a6;--ter:#98989d;--sep:#3a3a3c;
+--fill:#3a3a3c;--red:#ff453a;--orange:#ff9f0a;--green:#30d158;--blue:#0a84ff;--redbg:rgba(255,69,58,.16);--orangebg:rgba(255,159,10,.16);
+--greenbg:rgba(48,209,88,.16);--bar:#0a84ff;--bar2:#48484a;--nav:rgba(0,0,0,.72)}}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.47 var(--f);-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
@@ -54,44 +54,61 @@ h2{font-size:34px;line-height:1.1;font-weight:700;letter-spacing:-.03em;margin:0
 .tile .mid{margin-top:2px}
 .tile .note{margin-top:8px}
 /* OMDS uma a uma */
-.omds{display:grid;gap:16px}
-.oh{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 16px;margin:0 0 18px}
-.oh h3{font-size:26px;line-height:1.1;font-weight:700;letter-spacing:-.025em;margin:0}
-.ot{display:flex;align-items:center;gap:14px}
+.omds{display:grid;gap:20px}
+.oh{display:flex;align-items:center;gap:16px;margin:0 0 20px}
+.oh h3{font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-.028em;margin:0}
+.oh .tag{margin-left:auto}
+.ot{display:flex;align-items:center;gap:14px;min-width:0}
 img.br{width:auto;height:56px;flex:none}
-.mini-br{display:inline-flex;gap:4px;vertical-align:middle;margin-left:4px}
-img.brs{width:auto;height:22px}
-.oh .tag{font-size:14px}
-.oh .tag{font-size:14px}
-.tag{display:inline-flex;align-items:center;gap:6px;font-weight:600;white-space:nowrap}
-.ugs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.ug{background:var(--bg);border-radius:14px;padding:16px 18px}
-.ug h4{font-size:15px;font-weight:600;margin:0 0 10px;color:var(--sec)}
-.ug h4 b{color:var(--ink);font-variant-numeric:tabular-nums}
-.kv{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--sep);font-size:15px}
-.kv:first-of-type{border-top:0}
-.kv span{color:var(--sec)}
-.kv b{font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
-.kv b small{display:block;font-weight:400;color:var(--ter);font-size:12px}
-.track{height:6px;border-radius:3px;background:var(--fill);overflow:hidden;margin:4px 0 10px}
-.track i{display:block;height:100%;background:var(--bar)}
+.mini-br{display:inline-flex;gap:4px;vertical-align:middle;margin-left:6px}
+img.brs{width:auto;height:20px}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;white-space:nowrap;padding:5px 12px;border-radius:999px}
+.tag.red{background:var(--redbg)}.tag.orange{background:var(--orangebg)}.tag.green{background:var(--greenbg)}
+.ugs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ug{background:var(--grp);border-radius:16px;padding:18px 20px}
+.ug h4{font-size:13px;font-weight:600;margin:0 0 6px;color:var(--sec);text-transform:uppercase;letter-spacing:.04em}
+.ug h4 b{color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:0}
+.ug h4 .un{text-transform:none;letter-spacing:0;font-weight:500}
+.ugtop{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding:6px 0 14px}
+.ugtop .lbl{margin:0 0 2px;font-size:13px}
+.ugtop .v{font-size:26px;font-weight:650;letter-spacing:-.025em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ugtop .cap{font-size:13px;color:var(--sec);text-align:right}
+.kv{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:10px 0;border-top:1px solid var(--sep);font-size:15px}
+.kv>span{color:var(--sec)}
+.kv b{font-weight:600;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.kv b small{display:block;font-weight:400;color:var(--sec);font-size:13px;white-space:normal}
+.kv b.zero{color:var(--ter);font-weight:400}
+.track{height:4px;border-radius:2px;background:var(--fill);overflow:hidden;margin:-2px 0 4px}
+.track i{display:block;height:100%;background:var(--bar);border-radius:2px}
+/* navegação fixa (segmentada) */
+nav.seg{position:sticky;top:0;z-index:10;background:var(--nav);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--sep)}
+nav.seg .in{max-width:1080px;margin:0 auto;padding:10px 22px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+nav.seg .in::-webkit-scrollbar{display:none}
+nav.seg a{flex:none;font-size:13px;font-weight:500;color:var(--ink);text-decoration:none;padding:6px 12px;border-radius:999px;background:var(--fill)}
+nav.seg a:hover{background:var(--sep)}
+nav.seg a .dot{display:inline-block;width:6px;height:6px;margin:0 6px 1px 0;vertical-align:middle}
+section,.omds>.card{scroll-margin-top:64px}
 details{margin:16px 0 0}
 summary{cursor:pointer;color:var(--blue);font-size:15px;font-weight:500;list-style:none}
 summary::-webkit-details-marker{display:none}
 summary::after{content:" ›"}
-footer{color:var(--ter);font-size:12px;padding:52px 0 40px;overflow-wrap:anywhere}
+footer{color:var(--sec);font-size:12px;padding:52px 0 40px;overflow-wrap:anywhere;border-top:1px solid var(--sep);margin-top:56px}
 footer code{word-break:break-all}
+footer details summary{font-size:13px}
+.tile .mid,.big{white-space:nowrap}
 @media (max-width:860px){.tiles{grid-template-columns:1fr 1fr}}
 @media (max-width:700px){
  header{padding-top:30px}h1{font-size:34px}.lead{font-size:17px}h2{font-size:27px}
- .big{font-size:42px}.mid{font-size:25px}.card{padding:22px 18px}.tile{padding:18px}
+ .big{font-size:40px}.mid{font-size:22px}.card{padding:22px 18px}.tile{padding:16px}
  .ugs{grid-template-columns:1fr}.tl{grid-template-columns:58px 1fr}.tl .q{grid-column:2;text-align:left}
+ .oh{flex-wrap:wrap}.oh h3{font-size:24px}img.br{height:48px}.ug{padding:16px}
 }
 @media print{body{background:#fff}.card,.tile{box-shadow:none;border:1px solid #ddd}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
+<nav class="seg" aria-label="Seções"><div class="in" id="nav"></div></nav>
 <div class="wrap">
 <header>
 <p class="eyebrow">BaApLog · 6 OMDS · UG 160 e 167</p>
@@ -132,6 +149,7 @@ var NOME={BaApLog:"Cmdo BaApLog",BCMS:"BCMS",BMSA:"BMSA",ECT:"ECT",DCMun:"DC Mun
 var ORDEM=["Cmdo BaApLog","BCMS","BMSA","ECT","DC Mun","1º D Sup"];
 var UGNOME={"160238":"Cmdo, Cia Cmdo e HCmp"};
 var BR={};try{BR=JSON.parse(document.getElementById("brasoes").textContent)||{};}catch(e){BR={};}
+function slug(s){return "o-"+String(s).normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^A-Za-z0-9]+/g,"-").toLowerCase();}
 function brasao(nome,cls){return BR[nome]?'<img class="'+(cls||"br")+'" src="'+BR[nome]+'" alt="Brasão '+esc(nome)+'">':"";}
 
 // ---------- cabeçalho
@@ -172,29 +190,34 @@ var h='<p class="kicker">Uma a uma</p><h2 id="tomds">Cada OMDS, UG 160 e UG 167<
 ORDEM.forEach(function(o){var g=G&&G.por_omds[o],l=L&&L.por_omds[o],e=b1[o];if(!g&&!l&&!e)return;
  var ugs=[];[g&&g.por_ug,l&&l.por_ug].forEach(function(x){if(x)Object.keys(x).forEach(function(u){if(ugs.indexOf(u)<0)ugs.push(u);});});
  if(!ugs.length&&e)ugs=[e.ug160,e.ug167];ugs.sort();
- h+='<div class="card"><div class="oh"><div class="ot">'+brasao(o)+'<h3>'+esc(o)+'</h3></div>'+(g?sem(g.semaforo):'')+'</div><div class="ugs">';
+ h+='<div class="card" id="'+slug(o)+'"><div class="oh"><div class="ot">'+brasao(o)+'<h3>'+esc(o)+'</h3></div>'+(g?sem(g.semaforo):'')+'</div><div class="ugs">';
  ugs.forEach(function(u){var gu=g&&g.por_ug&&g.por_ug[u],lu=l&&l.por_ug&&l.por_ug[u],is160=u.slice(0,3)==="160";
   var emp=lu?lu.empenhado:(e?(is160?e.valor160:e.valor167):0),nne=e?(is160?e.ne160:e.ne167):null;
-  h+='<div class="ug"><h4>UG <b>'+esc(u)+'</b>'+(UGNOME[u]?' · '+esc(UGNOME[u])+' <span class="mini-br">'+brasao("Cia Cmdo","brs")+brasao("HCmp","brs")+'</span>':'')+'</h4>';
-  h+='<div class="kv"><span>Empenhado</span><b>'+rs(emp)+(nne!=null?'<small>'+n(nne)+' NE</small>':'')+'</b></div>';
-  if(gu)h+='<div class="kv"><span>do crédito recebido</span><b>'+pc(gu.pct_empenhado)+'</b></div>';
+  function val(v,cls){return Math.abs(v||0)<0.005?'<b class="zero">—</b>':'<b'+(cls?' class="'+cls+'"':'')+'>'+rs(v);}
+  h+='<div class="ug"><h4>UG <b>'+esc(u)+'</b>'+(UGNOME[u]?' <span class="un">· '+esc(UGNOME[u])+'</span><span class="mini-br">'+brasao("Cia Cmdo","brs")+brasao("HCmp","brs")+'</span>':'')+'</h4>';
+  // 1º o que a Portaria cobra agora (6.a): crédito em tela e o vencido
+  if(gu){var vc=gu.vencido_piso>0.005,cv=gu.vencido_piso>=1000?"red":(vc?"orange":(gu.em_tela>0.005?"":"green"));
+   h+='<div class="ugtop"><div><p class="lbl">Crédito em tela</p><div class="v '+cv+'">'+(gu.em_tela>0.005?rs(gu.em_tela):"R$ 0,00")+'</div></div><div class="cap">'+
+    (vc?'<span class="'+cv+'">vencido '+(Math.abs(gu.vencido_piso-gu.vencido_teto)<0.01?rs(gu.vencido_piso):rs(gu.vencido_piso)+'<br>a '+rs(gu.vencido_teto))+'</span>':(gu.em_tela>0.005?'nada vencido':'tela zerada'))+'</div></div>';}
+  h+='<div class="kv"><span>Empenhado</span><b>'+rs(emp)+'<small>'+(nne!=null?n(nne)+' NE':'')+(gu?(nne!=null?' · ':'')+pc(gu.pct_empenhado)+' do recebido':'')+'</small></b></div>';
   if(lu){h+='<div class="kv"><span>Liquidado</span><b>'+pc(lu.pct_liquidado)+'<small>'+rs(lu.liquidado)+'</small></b></div><div class="track" title="liquidado sobre empenhado"><i style="width:'+Math.min(100,lu.pct_liquidado)+'%"></i></div>';
-   h+='<div class="kv"><span>A liquidar</span><b>'+rs(lu.a_liquidar)+'</b></div>';
-   h+='<div class="kv"><span>há mais de 60 dias</span><b class="'+(lu.mais60_valor>0?"orange":"")+'">'+rs(lu.mais60_valor)+'<small>'+n(lu.mais60_ne)+' NE · '+rs(lu.mais60_sem_nenhuma_liq_valor)+' sem liquidação</small></b></div>';}
-  if(gu){var vc=gu.vencido_piso>0.005,cv=gu.vencido_piso>=1000?"red":(vc?"orange":"");
-   h+='<div class="kv"><span>Crédito em tela</span><b class="'+cv+'">'+rs(gu.em_tela)+'<small>'+(vc?'vencido '+(Math.abs(gu.vencido_piso-gu.vencido_teto)<0.01?rs(gu.vencido_piso):rs(gu.vencido_piso)+' a '+rs(gu.vencido_teto)):'nada vencido')+'</small></b></div>';
-   h+='<div class="kv"><span>Restos a pagar a liquidar</span><b>'+rs(gu.rpnp_a_liquidar)+(gu.rpnp_bloqueado?'<small class="red">bloqueado '+rs(gu.rpnp_bloqueado)+'</small>':'')+'</b></div>';}
+   h+='<div class="kv"><span>A liquidar</span>'+val(lu.a_liquidar)+(lu.mais60_valor>0.005?'<small class="orange">'+rs(lu.mais60_valor)+' há +60 dias · '+n(lu.mais60_ne)+' NE</small>':'')+(lu.a_liquidar>0.005?'</b>':'')+'</div>';}
+  if(gu)h+='<div class="kv"><span>Restos a pagar</span>'+val(gu.rpnp_a_liquidar)+(gu.rpnp_bloqueado?'<small class="red">bloqueado '+rs(gu.rpnp_bloqueado)+'</small>':'')+(gu.rpnp_a_liquidar>0.005?'</b>':'')+'</div>';
   h+='</div>';});
  h+='</div></div>';});
 h+='</div>';
-if(G)h+='<p class="note">Crédito em tela e RPNP: '+esc(G.posicao_siafi)+'. '+esc(G.regra_vencido)+'.</p>';
-if(L)h+='<p class="note">Empenho e liquidação: '+esc(L.fonte)+'; '+esc(L.regra)+'; dados até '+dbr(L.data_dado)+'.</p>';
 el.innerHTML=h;})();
 
 // ---------- rodapé
-var f='<p><strong>Fontes:</strong> ';(D.meta.fontes||[]).forEach(function(x,i){f+=(i?"; ":"")+esc(x.arquivo)+" ("+dbr(x.data_dado)+", sha256 <code>"+esc(String(x.sha256).slice(0,12))+"</code>)";});
-f+='.</p><p>Sem dado pessoal por construção. Norma balizadora: Portaria SEF/C Ex nº 399, de 24/09/2026 (Diretriz e Calendário do Encerramento do Exercício de 2026). Motor v'+esc(D.meta.versao_motor)+' · gerado em '+dbr(D.meta.hoje)+' · hash dos dados <code>__HASH__</code>.</p>';
+var f='<p>Norma balizadora: Portaria SEF/C Ex nº 399, de 24/09/2026 (Diretriz e Calendário do Encerramento do Exercício de 2026). Sem dado pessoal por construção. Gerado em '+dbr(D.meta.hoje)+'.</p><details><summary>Fontes e método</summary><p>';
+(D.meta.fontes||[]).forEach(function(x,i){f+=(i?"; ":"")+esc(x.arquivo)+" ("+dbr(x.data_dado)+", sha256 <code>"+esc(String(x.sha256).slice(0,12))+"</code>)";});
+f+='.</p>'+(G?'<p>Crédito em tela e RPNP: '+esc(G.posicao_siafi)+'. '+esc(G.regra_vencido)+'.</p>':'')+(L?'<p>Empenho e liquidação: '+esc(L.fonte)+'; '+esc(L.regra)+'.</p>':'')+'<p>Motor v'+esc(D.meta.versao_motor)+' · hash dos dados <code>__HASH__</code>.</p></details>';
 document.getElementById("rodape").innerHTML=f;
+// navegação fixa: prazos, resumo e as 6 OMDS
+(function(){var nv='<a href="#prazos">Prazos</a><a href="#resumo">As seis juntas</a>';
+ORDEM.forEach(function(o){var g=G&&G.por_omds[o];var c=g?({VERMELHO:"red",AMARELO:"orange",VERDE:"green"}[g.semaforo]||""):"";
+ nv+='<a href="#'+slug(o)+'">'+(c?'<span class="dot '+c+'" style="background:currentColor"></span>':'')+esc(o)+'</a>';});
+document.getElementById("nav").innerHTML=nv;})();
 })();
 </script>
 </body>
