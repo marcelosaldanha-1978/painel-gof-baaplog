@@ -48,13 +48,16 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import gcalc_transparencia as tr  # noqa: E402
+import gof_config as cfg  # noqa: E402
 from vinculo_siasg import VERSAO_REGRA as VERSAO_VINCULO_SIASG  # noqa: E402
 
 VERSAO_MOTOR = "0.4"
 DIAS_UTEIS_FRESCO = 2  # D17 revista: ate 2 dias uteis o dado e fresco
 DIAS_PENDENCIAS_AMARELO = 14  # D20
-OMDS = ["BaApLog", "BCMS", "BMSA", "ECT", "DCMun", "1oDSup"]
-ROTULO_OMDS = {"1oDSup": "1º D Sup"}
+# OMDS, rótulos, exercício e calendário vêm de config/om.json (Etapa A, v2.2): nada da OM fica fixo no código
+OMDS = cfg.chaves_omds()
+ROTULO_OMDS = cfg.rotulos_curtos_diferentes()
+EXERCICIO = cfg.exercicio()
 MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"]
 DIAS_ATA_A_VENCER = 90
 NIVEIS_A_VERIFICAR = ("ALERTA", "AMBIGUO", "CITADO_SEM_ATA", "SEM_CHAVE_CITA")
@@ -90,20 +93,14 @@ def dias_uteis(desde, ate):
     return n
 
 
-# Calendário para o Encerramento do Exercício de 2026 (Portaria SEF/C Ex nº 399, de 24/09/2026), só o que toca a UGE.
-FERIADOS_2026 = {dt.date(2026, 11, 20), dt.date(2026, 12, 25)}
-MARCOS_ENCERRAMENTO = [
-    ("2026-11-25", "ev. 6 e 7", "Data-limite para a UGE emitir NE (a UGR pode prorrogar, em caráter excepcional) e nomear em BI quem indica RPNP"),
-    ("2026-11-26", "ev. 8", "A UGR recolhe todo o crédito que restar em tela"),
-    ("2026-12-03", "ev. 10", "Data-limite de NE dos créditos remanejados"),
-    ("2026-12-04", "ev. 11", "Última NC do EME ou da UGR"),
-    ("2026-12-15", "ev. 16", "Fase interna das demandas do PCA 2027 concluída"),
-    ("2026-12-23", "ev. 19 e 20", "Fim da indicação no SIAFI das NE a inscrever em RPNP (início em 01/12) e desbloqueio de RPNP de 2024"),
-    ("2026-12-30", "ev. 26, 28 e 32", "Liquidar RPNP inscrito até 2023; ordens bancárias até 14h; anular NE não indicadas"),
-]
+# Calendário do encerramento do exercício (config/calendario/encerramento_<ano>.json), só o que toca a UGE.
+FERIADOS = cfg.feriados()
+FERIADOS_2026 = FERIADOS  # nome antigo, mantido para compatibilidade
+MARCOS_ENCERRAMENTO = cfg.marcos_encerramento()
+NORMA_ENCERRAMENTO = cfg.calendario()["diploma"]
 
 
-def dias_uteis_com_feriados(desde, ate, feriados=FERIADOS_2026):
+def dias_uteis_com_feriados(desde, ate, feriados=FERIADOS):
     """Dias úteis depois de `desde` até `ate` (inclusive), sem sábado, domingo e os feriados nacionais listados."""
     if ate <= desde:
         return 0
@@ -122,8 +119,8 @@ def bloco_encerramento(hoje, leitura=None):
         d = dt.date.fromisoformat(data)
         marcos.append({"data": data, "evento": ev, "texto": texto, "vencido": d < hoje,
                        "dias_uteis": dias_uteis_com_feriados(hoje, d), "dias_corridos": (d - hoje).days})
-    enc = {"norma": "Portaria SEF/C Ex nº 399, de 24/09/2026 (EB90-D-08.001)", "marcos": marcos,
-           "feriados_considerados": sorted(f.isoformat() for f in FERIADOS_2026),
+    enc = {"norma": NORMA_ENCERRAMENTO, "marcos": marcos,
+           "feriados_considerados": sorted(f.isoformat() for f in FERIADOS),
            "dias_uteis_ate_limite_ne": marcos[0]["dias_uteis"], "ne60": None, "rpnp": None, "credito_por_ugr": None, "vedadas": None}
     if leitura:
         enc["ne60"] = {"fonte": leitura.get("fonte"), "posicao_siafi": leitura.get("posicao_siafi"), "hoje": leitura.get("hoje"),
@@ -186,9 +183,9 @@ def ler_pendencias(obj):
 # ------------------------------------------------------------------ B1 execucao
 BASES_B1 = {
     "liquido": ("Tesouro Gerencial, empenhado LÍQUIDO (contas 6229201xx = item 23 «despesas empenhadas»: emissão + reforço "
-                "− anulação), NE emitidas em 2026, UG 160xxx e 167xxx", "Empenhado líquido nas 6 OMDS"),
-    "emissao": ("Tesouro Gerencial, conta 522920101 (EMISSÃO BRUTA, sem reforço nem anulação), NE emitidas em 2026, "
-                "UG 160xxx e 167xxx", "Emissão bruta nas 6 OMDS (não é o empenhado líquido)"),
+                "− anulação), NE emitidas em %d, UG 160xxx e 167xxx" % EXERCICIO, "Empenhado líquido nas %d OMDS" % len(OMDS)),
+    "emissao": ("Tesouro Gerencial, conta 522920101 (EMISSÃO BRUTA, sem reforço nem anulação), NE emitidas em %d, "
+                "UG 160xxx e 167xxx" % EXERCICIO, "Emissão bruta nas %d OMDS (não é o empenhado líquido)" % len(OMDS)),
     "portal": ("Portal da Transparência (RESERVA): valor da NE no Portal, que mistura emissão e valor atualizado; "
                "não comparável ao líquido do TG", "Valor das NE no Portal (reserva; base mista)"),
 }
@@ -218,7 +215,7 @@ def bloco_b1(regs, data_dado, base="emissao", vinculos=None):
         o["ne" + lado] += 1
         o["valor" + lado] += v
         d = tr._data(r.get("data"))
-        if d and d.year == 2026:
+        if d and d.year == EXERCICIO:
             o["por_mes"][d.month - 1] += v
     linhas = []
     for o in OMDS:
@@ -233,8 +230,7 @@ def bloco_b1(regs, data_dado, base="emissao", vinculos=None):
     out = {"fonte": fonte, "base": base, "rotulo_total": rotulo,
            "data_dado": data_dado, "omds": linhas, "total": round(sum(x["total"] for x in linhas), 2),
            "ne": sum(x["ne"] for x in linhas),
-           "marco": "O marco de empenho de 100% (OUT) da Tabela 2 venceu em 31/10/2026. O percentual sobre o crédito "
-                    "recebido só entra depois da P-034 (conferência do crédito por UG).",
+           "marco": cfg.texto("b1_marco"),
            "lastro": "exato (TG, conferido ao centavo com o item 23)" if base == "liquido" else
                      ("exato (TG), mas é emissão bruta" if base == "emissao" else "reserva com lacunas")}
     if base == "liquido":
@@ -425,12 +421,23 @@ def render_html(dados):
     corpo = json_canonico(dados)
     h = hashlib.sha256(corpo.encode("utf-8")).hexdigest()
     seguro = corpo.replace("</", "<\\/")  # nunca fechar o <script> por acidente
-    # brasões das OM (motor/brasoes.json: PNG 128 px em data URI, da pasta do projeto); bloco próprio, fora do hash dos dados
-    pb = Path(__file__).with_name("brasoes.json")
-    brasoes = pb.read_text(encoding="utf-8").replace("</", "<\\/") if pb.exists() else "{}"
-    return (Path(__file__).with_name("gof_painel_modelo.html").read_text(encoding="utf-8")
-            .replace("__DADOS__", seguro).replace("__BRASOES__", brasoes).replace("__HASH__", h)
-            .replace("__TITULO__", html.escape("Painel GOF-BaApLog")))
+    # brasões das OM (config/brasoes_<om>.json: PNG 128 px em data URI); bloco próprio, fora do hash dos dados
+    pb = cfg.brasoes_caminho()
+    brasoes = pb.read_text(encoding="utf-8").replace("</", "<\\/") if pb and pb.exists() else "{}"
+    ref = cfg.referencia_regional() or {}
+    cal = cfg.calendario()
+    # textos e tabelas da OM injetados no modelo (antes fixos no HTML); grafia idêntica à da v2.1
+    trocas = {"__NOME_JS__": cfg.js_objeto(cfg.rotulo_por_chave()), "__ORDEM_JS__": cfg.js_lista(cfg.ordem_rotulos()),
+              "__UGNOME_JS__": cfg.js_objeto(cfg.ug_nome()), "__EYEBROW__": html.escape(cfg.texto("eyebrow"), quote=False),
+              "__TITULO_H1__": html.escape(cfg.texto("titulo"), quote=False),
+              "__NORMA_CURTA__": html.escape(cal.get("diploma_curto", ""), quote=False),
+              "__NORMA_RODAPE__": html.escape(cal.get("diploma_rodape", ""), quote=False),
+              "__REF_REGIONAL__": html.escape(ref.get("resumo", ""), quote=False)}
+    modelo = Path(__file__).with_name("gof_painel_modelo.html").read_text(encoding="utf-8")
+    for k, v in trocas.items():
+        modelo = modelo.replace(k, v)
+    return (modelo.replace("__DADOS__", seguro).replace("__BRASOES__", brasoes).replace("__HASH__", h)
+            .replace("__TITULO__", html.escape(cfg.texto("titulo_pagina"))))
 
 
 def ler_carteira_json(caminho):
