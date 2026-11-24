@@ -59,13 +59,15 @@ jobs:
           GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
         run: |
           cd motor
-          python gof_ponte_tg.py --fichas ../dados/pncp/ultimo.json --saida ../dados/execucao || echo "::warning::ponte do TG sem extrato novo; segue com o vigente"
+          set -o pipefail
+          python gof_ponte_tg.py --fichas ../dados/pncp/ultimo.json --saida ../dados/execucao 2>&1 | tee -a ../resumo_etapas.log || echo "::warning::ponte do TG sem extrato novo; segue com o vigente"
       - name: Ponte do TG - regua (credito em tela, vencido, RPNP) por UG; falha mantem a regua anterior
         env:
           GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
         run: |
           cd motor
-          python gof_regua_tg.py --saida ../dados/encerramento/regua.json || echo "::warning::regua sem trio novo; segue com a vigente"
+          set -o pipefail
+          python gof_regua_tg.py --saida ../dados/encerramento/regua.json 2>&1 | tee -a ../resumo_etapas.log || echo "::warning::regua sem trio novo; segue com a vigente"
       - name: Portal da Transparencia como reserva do B1 (D17); falha mantem o extrato anterior
         env:
           PORTAL_TRANSPARENCIA_API_KEY: ${{ secrets.PORTAL_TRANSPARENCIA_API_KEY }}
@@ -79,12 +81,13 @@ jobs:
         id: portao
         run: |
           set -euo pipefail
-          bash motor/portao.sh saida
+          bash motor/portao.sh saida 2>&1 | tee -a resumo_etapas.log
           echo "publicar=sim" >> "$GITHUB_OUTPUT"
       - name: Portao 6 (navegador headless)
         run: |
           python -m playwright install --with-deps chromium
-          python motor/prova_navegador.py --saida saida
+          set -o pipefail
+          python motor/prova_navegador.py --saida saida 2>&1 | tee -a resumo_etapas.log
       - name: Gravar a montagem no historico (dados/painel)
         env:
           GH_TOKEN: ${{ github.token }}
@@ -109,6 +112,12 @@ jobs:
           mkdir -p site
           cp saida/index.html saida/dados.json site/
           cp -r dados/painel site/historico
+      - name: Resumo da execucao (job summary; nunca derruba a montagem)
+        if: always()
+        env:
+          EVENTO: ${{ github.event_name }}
+          RESULTADO: ${{ job.status }}
+        run: python motor/resumo_execucao.py --logs resumo_etapas.log --dados saida/dados.json >> "$GITHUB_STEP_SUMMARY" || true
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: site/

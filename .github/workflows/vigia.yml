@@ -1,4 +1,5 @@
 # painel-gof-baaplog — VIGIA (D18): toda segunda e quinta confere, em dias uteis, se houve montagem e se o dado do B1 anda;
+# v2 (23/11/2026): tambem a regua do encerramento e se a ponte do TG esta acionando a montagem por evento;
 # se nao, abre (ou atualiza) uma issue "VIGIA". Em outubro lembra de recadastrar a subscricao do TG (cancelamento anual
 # pela STN em 31/10). Somente leitura no repositorio; `issues: write` so neste job.
 name: Vigia
@@ -27,6 +28,7 @@ jobs:
     timeout-minutes: 10
     permissions:
       contents: read
+      actions: read  # le as execucoes da montagem (disparo por evento, v2)
       issues: write  # abre ou comenta a issue VIGIA
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -36,6 +38,11 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.14'
+      - name: Execucoes recentes da montagem (para conferir o disparo por evento)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/montagem.yml/runs?per_page=60"             --jq '[.workflow_runs[] | {event, conclusion, created_at}]' > runs.json || echo "[]" > runs.json
       - name: Avaliar
         id: vigia
         env:
@@ -44,7 +51,7 @@ jobs:
           set +e
           extra=""
           if [ -n "${SIMULAR_HOJE:-}" ]; then extra="--hoje ${SIMULAR_HOJE}"; echo "SIMULACAO com a data ${SIMULAR_HOJE}" > vigia.txt; fi
-          cd motor && python gof_vigia.py --dados ../dados/painel/ultimo/dados.json --outubro --json ../vigia.json $extra | tee -a ../vigia.txt
+          cd motor && python gof_vigia.py --dados ../dados/painel/ultimo/dados.json --outubro --json ../vigia.json --runs ../runs.json $extra | tee -a ../vigia.txt
           echo "rc=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
       - name: Abrir ou atualizar a issue VIGIA
         if: steps.vigia.outputs.rc != '0'
