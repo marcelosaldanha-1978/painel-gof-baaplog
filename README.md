@@ -99,7 +99,7 @@ flowchart TB
     end
     TG --> G["📧 Gmail"] --> P["⚙️ <b>Ponte P-041</b> · Apps Script ~06h e ~11h<br/>tira favorecido e CPF da emissão"] --> D[("🔒 Drive privado<br/>só a conta de serviço lê")]
     D --> GA
-    subgraph GA["☁️ GitHub Actions · 2 vezes ao dia"]
+    subgraph GA["☁️ GitHub Actions · acionado pela ponte, em segundos"]
       direction LR
       M1["gof_ponte_tg.py<br/>empenho · liquidação"] --> M3["gof_painel.py<br/>monta a página"]
       M2["gof_regua_tg.py<br/>tela · vencido · RPNP"] --> M3
@@ -122,15 +122,15 @@ sequenceDiagram
     Note over TG: seg a sex, após a carga do DW
     TG->>GM: ~03h · 5 assinaturas usadas pelo painel (CSV ou ZIP)
     GM->>AS: ~06h · copia para o Drive privado (emissão sem favorecido)
-    AS->>GH: montagem agendada (07:33, na prática à tarde) · lê com a conta de serviço
+    AS->>GH: ~06h · gravou arquivo novo → aciona a montagem (repository_dispatch)
     GH->>GH: 7 portões (testes, recálculo, sem dado pessoal, navegador)
     GH->>PG: publica só se todos passarem
-    Note over AS,PG: ~11h e 2ª montagem · segunda rodada, se o SERPRO atrasar
+    Note over AS,PG: ~11h · segunda rodada, se o SERPRO atrasar · agenda 07:33 e 12:33 como reserva
 ```
 
 > **Se o SERPRO não disparar** uma assinatura, nada quebra: o painel mantém o último dado bom e mostra a data dele na faixa de status. **Se o PNCP não responder** durante a montagem, a página do dia não é publicada e fica a anterior.
 >
-> **Horário real:** a agenda do GitHub Actions atrasa. A montagem está marcada para 07:33 e 12:33, mas, de 19 a 23/11/2026, as execuções agendadas saíram entre cerca de 14h45 e 19h (Brasília). O dado continua sendo o do dia; só a hora da publicação é outra.
+> **Horário:** desde 23/11/2026 a ponte **aciona a montagem por evento** assim que grava arquivo novo (~06h e ~11h); a montagem começa em segundos e a página fica pronta por volta das 06h15–06h30. A agenda do GitHub Actions (07:33 e 12:33) fica como reserva — ela atrasa horas: de 19 a 23/11 saiu entre ~14h45 e ~19h.
 
 ---
 
@@ -181,7 +181,7 @@ Datas marcadas como «estimadas» no Calendário podem mudar por mensagem da D C
 
 | | Workflow | Quando (Brasília) | O que faz |
 |---|---|---|---|
-| 🟢 | `montagem.yml` | todo dia, agendado 07:33 e 12:33 (na prática, à tarde) | ponte do TG, régua, portões e publicação |
+| 🟢 | `montagem.yml` | acionada pela ponte (~06h e ~11h, por evento); agenda 07:33 e 12:33 como reserva | ponte do TG, régua, portões e publicação |
 | 🔵 | `ci.yml` | a cada push | portões de código |
 | 🟣 | `fichas-pncp.yml` | segunda 07:17 | pregões, atas e fornecedores (PNCP e Compras.gov) |
 | 🟠 | `conferencia.yml` | segunda 08:03 | confronto planilha × portais (só leitura) |

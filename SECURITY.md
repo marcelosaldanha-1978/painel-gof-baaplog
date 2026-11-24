@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img alt="Segredos" src="https://img.shields.io/badge/segredos-2%20%C2%B7%20s%C3%B3%20leitura-30d158">
+  <img alt="Segredos" src="https://img.shields.io/badge/segredos-2%20de%20leitura%20%2B%201%20token%20de%20disparo-ff9f0a">
   <img alt="Actions" src="https://img.shields.io/badge/actions-16%2F16%20fixadas%20por%20SHA-0a84ff">
   <img alt="Permissões" src="https://img.shields.io/badge/permiss%C3%B5es-contents%3A%20read%20no%20topo-6e6e73">
   <img alt="Dado pessoal" src="https://img.shields.io/badge/dado%20pessoal-zero%20por%20constru%C3%A7%C3%A3o-30d158">
@@ -53,7 +53,19 @@ flowchart TB
 | `GOOGLE_SA_JSON` | chave da conta de serviço `gof-painel-leitura` | **Leitor** da planilha GCALC e da pasta `PONTE_TG_SEM_PESSOA`; escopos só de leitura | `montagem.yml`, `conferencia.yml` |
 | `PORTAL_TRANSPARENCIA_API_KEY` | chave da API do Portal da Transparência | consulta pública (reserva do B1) | `montagem.yml` |
 
-**Nunca aqui:** token pessoal do GitHub, chave do Composio, conta de serviço com escrita. O teto (decisão D14) é de **dois** segredos, ambos de leitura. Os dois foram cadastrados em 07/11/2026.
+**Nunca aqui:** token pessoal do GitHub, chave do Composio, conta de serviço com escrita. O teto (decisão D14) é de **dois** segredos no repositório, ambos de leitura. Os dois foram cadastrados em 07/11/2026.
+
+### ⚠️ Exceção à D14 — token de disparo (23/11/2026, decisão do usuário)
+
+| | |
+|---|---|
+| **O quê** | token *fine-grained* do GitHub «Painel 21EM - ponte Apps Script», ampliado para este repositório |
+| **Onde fica** | **fora do GitHub**: na propriedade `GITHUB_DISPATCH_TOKEN` do Apps Script do GOF (conta Google do usuário); nunca no código nem no git |
+| **Alcance** | só `painel-gof-baaplog` e `painel-21em-catrimani`; permissões *Contents: read and write* e *Metadata: read* |
+| **Para quê** | `v2PonteTG` aciona a montagem (`repository_dispatch`, tipo `csv-chegou`) assim que grava arquivo novo, em vez de esperar a agenda do GitHub, que atrasa horas |
+| **Validade** | **04/01/2027** (expira sozinho); revogar antes se o painel for arquivado |
+| **Risco aceito** | quem obtiver o token pode alterar o código deste repositório (e, por ele, a página); mitigado por ficar só na conta Google do usuário, pelo alcance de dois repositórios e pela validade curta |
+| **Sem o token** | nada quebra: `v2PonteTG` registra «sem token, fica a agenda» e a montagem sai pela agenda |
 
 ---
 
@@ -98,7 +110,9 @@ timeline
     title Credenciais do painel
     07 nov 2026 : conta de serviço gof-painel-leitura e chave do Portal cadastradas (D14)
     23 nov 2026 : pasta PONTE_TG_SEM_PESSOA compartilhada só com a conta de serviço
+                : token de disparo no Apps Script (exceção à D14)
                 : projeto encerrado — operação mínima
+    04 jan 2027 : token de disparo expira sozinho
     jan 2027    : 1ª carga do TG de 2027
                 : revogar a conta de serviço · apagar a pasta da ponte
                 : cancelar as assinaturas · arquivar o repositório

@@ -37,7 +37,7 @@
     <text x="60" y="224" fill="#d1d5db" font-size="21">sem passar pelos sete portões.</text>
 
     <rect class="chip" x="60" y="262" width="212" height="40" rx="20"/>
-    <text x="82" y="288" class="ct">🔒 2 segredos, só leitura</text>
+    <text x="82" y="288" class="ct">🔒 2 segredos de leitura</text>
     <rect class="chip" x="284" y="262" width="200" height="40" rx="20"/>
     <text x="306" y="288" class="ct">📌 16 actions por SHA</text>
     <rect class="chip" x="496" y="262" width="214" height="40" rx="20"/>
