@@ -28,18 +28,19 @@ import sys
 import time
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import gof_config as cfg  # noqa: E402
+
 try:
     sys.stdout.reconfigure(encoding="utf-8")
 except (AttributeError, ValueError):
     pass
 
 BASE = "https://api.portaldatransparencia.gov.br/api-de-dados"
-UGS = {"160238": "BaApLog", "160329": "BCMS", "160304": "BMSA", "160321": "ECT", "160246": "DCMun", "160307": "1oDSup",
-       # regra viva de 05/11/2026 (LOG-098): toda consulta inclui a UG secundaria 167xxx de cada OMDS
-       "167238": "BaApLog", "167329": "BCMS", "167304": "BMSA", "167321": "ECT", "167246": "DCMun", "167307": "1oDSup"}
-# UG alvo ampliadas: as 6 do GCALC + participantes de atas + unidades com adesao aprovada (coleta de 04/11/2026)
-UGS_ALVO = set(UGS) | {"160253", "160290", "160317", "160501", "785340", "160311", "160315", "160279", "930147",
-                       "160327", "160123", "160236", "765703", "160468"}
+# UG -> OMDS (config/om.json); regra viva de 05/11/2026 (LOG-098): toda consulta inclui a UG secundária 167xxx
+UGS = cfg.ug_para_chave_160_depois_167()
+# UG alvo ampliadas: as da OM + participantes de atas + unidades com adesão aprovada (config/om.json)
+UGS_ALVO = set(UGS) | set(cfg.ugs_alvo_extras())
 POR_PAGINA = 15
 MAX_PAGINAS = 40  # teto de seguranca; se atingido, a coleta ABORTA o dia (nunca trunca em silencio)
 PAUSA = 0.75
@@ -365,7 +366,7 @@ def main():
     ap = argparse.ArgumentParser(description="Coleta empenhos e vincula aos pregoes (somente leitura)")
     ap.add_argument("--conjunto", required=True, help="pncp_12_processos.json")
     ap.add_argument("--bruto", help="JSON de empenhos ja coletado (evita rede)")
-    ap.add_argument("--desde", default="2026-09-28")
+    ap.add_argument("--desde", default=cfg.janela("portal_desde"))
     ap.add_argument("--ate", default=dt.date.today().isoformat())
     ap.add_argument("--saida", default=".")
     o = ap.parse_args()

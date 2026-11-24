@@ -10,6 +10,13 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import gof_config as cfg  # noqa: E402
+
+# UG esperadas no bloco das OMDS: as duas de cada OMDS da OM (config/om.json); 12 na BaApLog
+N_UG = len(cfg.ug_para_chave_intercalado())
+N_OMDS = len(cfg.chaves_omds())
+
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
@@ -48,8 +55,8 @@ def main(argv=None):
             for bloco in ("prazos", "resumo", "omds"):
                 if not pg.evaluate("(document.getElementById('%s')||{innerHTML:''}).innerHTML.length > 100" % bloco):
                     falhas.append("%dpx: bloco %s vazio" % (largura, bloco))
-            if pg.evaluate("document.querySelectorAll('#omds .ug').length") < 12:
-                falhas.append("%dpx: menos de 12 UG (6 OMDS x UG 160 e 167) no bloco das OMDS" % largura)
+            if pg.evaluate("document.querySelectorAll('#omds .ug').length") < N_UG:
+                falhas.append("%dpx: menos de %d UG (%d OMDS x UG 160 e 167) no bloco das OMDS" % (largura, N_UG, N_OMDS))
             if not pg.evaluate("document.getElementById('status').textContent.includes('Fonte:')"):
                 falhas.append("%dpx: cabeçalho sem a fonte dos dados" % largura)
             ctx.close()

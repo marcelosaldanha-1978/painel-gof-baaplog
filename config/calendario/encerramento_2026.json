@@ -1,0 +1,20 @@
+{
+  "versao_config": 1,
+  "exercicio": 2026,
+  "diploma": "Portaria SEF/C Ex nº 399, de 24/09/2026 (EB90-D-08.001)",
+  "diploma_curto": "Portaria SEF/C Ex nº 399/2026",
+  "diploma_rodape": "Portaria SEF/C Ex nº 399, de 24/09/2026 (Diretriz e Calendário do Encerramento do Exercício de 2026)",
+  "validade": "2026-12-31",
+  "feriados": ["2026-11-20", "2026-12-25"],
+  "feriados_ano": ["2026-01-01", "2026-02-16", "2026-02-17", "2026-04-03", "2026-04-21", "2026-05-01", "2026-06-04",
+                   "2026-09-07", "2026-10-12", "2026-11-02", "2026-11-15", "2026-11-20", "2026-12-25"],
+  "eventos": [
+    {"ev": "6 e 7", "data": "2026-11-25", "papel": "UGE", "bloco": "B2", "texto": "Data-limite para a UGE emitir NE (a UGR pode prorrogar, em caráter excepcional) e nomear em BI quem indica RPNP"},
+    {"ev": "8", "data": "2026-11-26", "papel": "UGR", "bloco": "B2", "texto": "A UGR recolhe todo o crédito que restar em tela"},
+    {"ev": "10", "data": "2026-12-03", "papel": "UGE", "bloco": "B2", "texto": "Data-limite de NE dos créditos remanejados"},
+    {"ev": "11", "data": "2026-12-04", "papel": "UGR", "bloco": "B2", "texto": "Última NC do EME ou da UGR"},
+    {"ev": "16", "data": "2026-12-15", "papel": "UGE", "bloco": "B1", "texto": "Fase interna das demandas do PCA 2027 concluída"},
+    {"ev": "19 e 20", "data": "2026-12-23", "papel": "UGE", "bloco": "B7", "texto": "Fim da indicação no SIAFI das NE a inscrever em RPNP (início em 01/12) e desbloqueio de RPNP de 2024"},
+    {"ev": "26, 28 e 32", "data": "2026-12-30", "papel": "UGE", "bloco": "B7", "texto": "Liquidar RPNP inscrito até 2023; ordens bancárias até 14h; anular NE não indicadas"}
+  ]
+}

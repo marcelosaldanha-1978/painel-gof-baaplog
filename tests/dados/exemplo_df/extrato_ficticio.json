@@ -1,0 +1,112 @@
+{
+ "_ficticio": "DADOS FICTICIOS para a prova da configuracao de exemplo da DF (Etapa A). Nao sao do TG.",
+ "versao": 2,
+ "data_execucao": "2026-11-23",
+ "origem": [
+  {
+   "arquivo": "ficticio",
+   "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  }
+ ],
+ "regra_vinculo": "2.0",
+ "base": "liquido_6229201",
+ "total_item23": 7030.74,
+ "campos": [
+  "documento",
+  "ug",
+  "data",
+  "valor",
+  "valor_emitido",
+  "modalidade",
+  "nivel",
+  "pregao",
+  "candidatos",
+  "chave"
+ ],
+ "ne": [
+  {
+   "documento": "160336000012026NE900001",
+   "ug": "160336",
+   "data": "05/03/2026",
+   "valor": 1000.0,
+   "valor_emitido": 1000.0,
+   "modalidade": "06",
+   "nivel": null,
+   "pregao": null,
+   "candidatos": [],
+   "chave": null
+  },
+  {
+   "documento": "160336000012026NE900002",
+   "ug": "160336",
+   "data": "10/06/2026",
+   "valor": 0.0,
+   "valor_emitido": 500.0,
+   "modalidade": "06",
+   "nivel": null,
+   "pregao": null,
+   "candidatos": [],
+   "chave": null
+  },
+  {
+   "documento": "167336000012026NE900003",
+   "ug": "167336",
+   "data": "12/04/2026",
+   "valor": 250.5,
+   "valor_emitido": 250.5,
+   "modalidade": "06",
+   "nivel": null,
+   "pregao": null,
+   "candidatos": [],
+   "chave": null
+  },
+  {
+   "documento": "160285000012026NE900004",
+   "ug": "160285",
+   "data": "20/07/2026",
+   "valor": 3200.0,
+   "valor_emitido": 3000.0,
+   "modalidade": "06",
+   "nivel": null,
+   "pregao": null,
+   "candidatos": [],
+   "chave": null
+  },
+  {
+   "documento": "167285000012026NE900005",
+   "ug": "167285",
+   "data": "01/08/2026",
+   "valor": 80.0,
+   "valor_emitido": 80.0,
+   "modalidade": "06",
+   "nivel": null,
+   "pregao": null,
+   "candidatos": [],
+   "chave": null
+  },
+  {
+   "documento": "160529000012026NE900006",
+   "ug": "160529",
+   "data": "15/09/2026",
+   "valor": 1500.25,
+   "valor_emitido": 1500.25,
+   "modalidade": "06",
+   "nivel": null,
+   "pregao": null,
+   "candidatos": [],
+   "chave": null
+  },
+  {
+   "documento": "167529000012026NE900007",
+   "ug": "167529",
+   "data": "30/10/2026",
+   "valor": 999.99,
+   "valor_emitido": 999.99,
+   "modalidade": "06",
+   "nivel": null,
+   "pregao": null,
+   "candidatos": [],
+   "chave": null
+  }
+ ]
+}

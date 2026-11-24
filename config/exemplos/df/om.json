@@ -1,0 +1,31 @@
+{
+  "versao_config": 1,
+  "_exemplo": "EXEMPLO da Diretoria de Fabricação para provar a parametrização (Etapa A). Não está em uso. As 6 UG foram medidas no TG em 24/11/2026 (PAINEL GOF DF, LOG-011). O que estiver marcado «A CONFIRMAR» depende da DF (lacuna L1 e P-011: validar com o OD em 03/12/2026).",
+  "id": "df",
+  "nome": "Diretoria de Fabricação",
+  "sigla": "DF",
+  "coordenacao": "A CONFIRMAR (DCT)",
+  "exercicio": 2026,
+  "metas": "metas/dtz_esp_econ_fin_cmt_ex_2026_2027.json",
+  "calendario": "calendario/encerramento_2026.json",
+  "brasoes": null,
+  "omds": [
+    {"chave": "DF", "rotulo": "DF", "rotulo_curto": "DF", "ordem": 1, "ug160": "160336", "ug167": "167336", "uasg": "160336",
+     "nota_ug": "Diretoria de Fabricação (UASG da DF)"},
+    {"chave": "AGR", "rotulo": "AGR", "rotulo_curto": "AGR", "ordem": 2, "ug160": "160285", "ug167": "167285", "uasg": "160285",
+     "nota_ug": "Arsenal de Guerra do Rio (UASG A CONFIRMAR)"},
+    {"chave": "AGSP", "rotulo": "AGSP", "rotulo_curto": "AGSP", "ordem": 3, "ug160": "160529", "ug167": "167529", "uasg": "160529",
+     "nota_ug": "Arsenal de Guerra de São Paulo (UASG A CONFIRMAR)"}
+  ],
+  "ugs_alvo_extras": [],
+  "referencia_regional": null,
+  "blocos": {"carteira_gcalc": false, "pncp_atas": false, "capacidade": false, "dispensa": false},
+  "janelas": {"execucao_desde": "2026-01-01", "portal_desde": "2026-11-01", "contratacoes": [["2026-01-01", null]]},
+  "assinaturas_tg": {"prefixo_assunto": "PAINEL-DF-CONF-"},
+  "textos": {
+    "titulo_pagina": "Painel GOF-DF",
+    "eyebrow": "DF · 3 UG executoras · UG 160 e 167",
+    "titulo": "Encerramento do exercício de 2026",
+    "b1_marco": "Marco de empenho da Tabela 2 da Diretriz 26-27 a conferir para a DF (exemplo)."
+  }
+}

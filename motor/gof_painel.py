@@ -48,13 +48,16 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import gcalc_transparencia as tr  # noqa: E402
+import gof_config as cfg  # noqa: E402
 from vinculo_siasg import VERSAO_REGRA as VERSAO_VINCULO_SIASG  # noqa: E402
 
 VERSAO_MOTOR = "0.4"
 DIAS_UTEIS_FRESCO = 2  # D17 revista: ate 2 dias uteis o dado e fresco
 DIAS_PENDENCIAS_AMARELO = 14  # D20
-OMDS = ["BaApLog", "BCMS", "BMSA", "ECT", "DCMun", "1oDSup"]
-ROTULO_OMDS = {"1oDSup": "1º D Sup"}
+# OMDS, rótulos, exercício e calendário vêm de config/om.json (Etapa A, v2.2): nada da OM fica fixo no código
+OMDS = cfg.chaves_omds()
+ROTULO_OMDS = cfg.rotulos_curtos_diferentes()
+EXERCICIO = cfg.exercicio()
 MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"]
 DIAS_ATA_A_VENCER = 90
 NIVEIS_A_VERIFICAR = ("ALERTA", "AMBIGUO", "CITADO_SEM_ATA", "SEM_CHAVE_CITA")
@@ -90,20 +93,14 @@ def dias_uteis(desde, ate):
     return n
 
 
-# Calendário para o Encerramento do Exercício de 2026 (Portaria SEF/C Ex nº 399, de 24/09/2026), só o que toca a UGE.
-FERIADOS_2026 = {dt.date(2026, 11, 20), dt.date(2026, 12, 25)}
-MARCOS_ENCERRAMENTO = [
-    ("2026-11-25", "ev. 6 e 7", "Data-limite para a UGE emitir NE (a UGR pode prorrogar, em caráter excepcional) e nomear em BI quem indica RPNP"),
-    ("2026-11-26", "ev. 8", "A UGR recolhe todo o crédito que restar em tela"),
-    ("2026-12-03", "ev. 10", "Data-limite de NE dos créditos remanejados"),
-    ("2026-12-04", "ev. 11", "Última NC do EME ou da UGR"),
-    ("2026-12-15", "ev. 16", "Fase interna das demandas do PCA 2027 concluída"),
-    ("2026-12-23", "ev. 19 e 20", "Fim da indicação no SIAFI das NE a inscrever em RPNP (início em 01/12) e desbloqueio de RPNP de 2024"),
-    ("2026-12-30", "ev. 26, 28 e 32", "Liquidar RPNP inscrito até 2023; ordens bancárias até 14h; anular NE não indicadas"),
-]
+# Calendário do encerramento do exercício (config/calendario/encerramento_<ano>.json), só o que toca a UGE.
+FERIADOS = cfg.feriados()
+FERIADOS_2026 = FERIADOS  # nome antigo, mantido para compatibilidade
+MARCOS_ENCERRAMENTO = cfg.marcos_encerramento()
+NORMA_ENCERRAMENTO = cfg.calendario()["diploma"]
 
 
-def dias_uteis_com_feriados(desde, ate, feriados=FERIADOS_2026):
+def dias_uteis_com_feriados(desde, ate, feriados=FERIADOS):
     """Dias úteis depois de `desde` até `ate` (inclusive), sem sábado, domingo e os feriados nacionais listados."""
     if ate <= desde:
         return 0
@@ -122,8 +119,8 @@ def bloco_encerramento(hoje, leitura=None):
         d = dt.date.fromisoformat(data)
         marcos.append({"data": data, "evento": ev, "texto": texto, "vencido": d < hoje,
                        "dias_uteis": dias_uteis_com_feriados(hoje, d), "dias_corridos": (d - hoje).days})
-    enc = {"norma": "Portaria SEF/C Ex nº 399, de 24/09/2026 (EB90-D-08.001)", "marcos": marcos,
-           "feriados_considerados": sorted(f.isoformat() for f in FERIADOS_2026),
+    enc = {"norma": NORMA_ENCERRAMENTO, "marcos": marcos,
+           "feriados_considerados": sorted(f.isoformat() for f in FERIADOS),
            "dias_uteis_ate_limite_ne": marcos[0]["dias_uteis"], "ne60": None, "rpnp": None, "credito_por_ugr": None, "vedadas": None}
     if leitura:
         enc["ne60"] = {"fonte": leitura.get("fonte"), "posicao_siafi": leitura.get("posicao_siafi"), "hoje": leitura.get("hoje"),
@@ -186,9 +183,9 @@ def ler_pendencias(obj):
 # ------------------------------------------------------------------ B1 execucao
 BASES_B1 = {
     "liquido": ("Tesouro Gerencial, empenhado LÍQUIDO (contas 6229201xx = item 23 «despesas empenhadas»: emissão + reforço "
-                "− anulação), NE emitidas em 2026, UG 160xxx e 167xxx", "Empenhado líquido nas 6 OMDS"),
-    "emissao": ("Tesouro Gerencial, conta 522920101 (EMISSÃO BRUTA, sem reforço nem anulação), NE emitidas em 2026, "
-                "UG 160xxx e 167xxx", "Emissão bruta nas 6 OMDS (não é o empenhado líquido)"),
+                "− anulação), NE emitidas em %d, UG 160xxx e 167xxx" % EXERCICIO, "Empenhado líquido nas %d OMDS" % len(OMDS)),
+    "emissao": ("Tesouro Gerencial, conta 522920101 (EMISSÃO BRUTA, sem reforço nem anulação), NE emitidas em %d, "
+                "UG 160xxx e 167xxx" % EXERCICIO, "Emissão bruta nas %d OMDS (não é o empenhado líquido)" % len(OMDS)),
     "portal": ("Portal da Transparência (RESERVA): valor da NE no Portal, que mistura emissão e valor atualizado; "
                "não comparável ao líquido do TG", "Valor das NE no Portal (reserva; base mista)"),
 }
@@ -218,7 +215,7 @@ def bloco_b1(regs, data_dado, base="emissao", vinculos=None):
         o["ne" + lado] += 1
         o["valor" + lado] += v
         d = tr._data(r.get("data"))
-        if d and d.year == 2026:
+        if d and d.year == EXERCICIO:
             o["por_mes"][d.month - 1] += v
     linhas = []
     for o in OMDS:
@@ -233,8 +230,7 @@ def bloco_b1(regs, data_dado, base="emissao", vinculos=None):
     out = {"fonte": fonte, "base": base, "rotulo_total": rotulo,
            "data_dado": data_dado, "omds": linhas, "total": round(sum(x["total"] for x in linhas), 2),
            "ne": sum(x["ne"] for x in linhas),
-           "marco": "O marco de empenho de 100% (OUT) da Tabela 2 venceu em 31/10/2026. O percentual sobre o crédito "
-                    "recebido só entra depois da P-034 (conferência do crédito por UG).",
+           "marco": cfg.texto("b1_marco"),
            "lastro": "exato (TG, conferido ao centavo com o item 23)" if base == "liquido" else
                      ("exato (TG), mas é emissão bruta" if base == "emissao" else "reserva com lacunas")}
     if base == "liquido":
@@ -398,7 +394,8 @@ def base_do_extrato(extrato):
 
 # ------------------------------------------------------------------ montagem e HTML
 def montar(regs, data_execucao, processos, kpis, atas, fichas, pendencias, hoje, fontes, vinculos=None, conferencia=None,
-           base="emissao", regra=None):
+           base="emissao", regra=None, gcalc=True):
+    """gcalc=False (config: blocos.carteira_gcalc desligado): B3 e B4 saem como None, sem quebrar a montagem."""
     if vinculos is None:
         vinculos = tr.vincular(regs, fichas)
     pend = ler_pendencias(pendencias)
@@ -411,9 +408,10 @@ def montar(regs, data_execucao, processos, kpis, atas, fichas, pendencias, hoje,
                       "b1_fresco": idade_b1 <= DIAS_UTEIS_FRESCO, "dias_uteis_fresco": DIAS_UTEIS_FRESCO,
                       "dias_pendencias_amarelo": DIAS_PENDENCIAS_AMARELO},
              "b1": bloco_b1(regs, data_execucao, base, vinculos if regra == VERSAO_VINCULO_SIASG else None),
-             "b3": bloco_b3(processos, kpis),
-             "b4": bloco_b4(atas, processos, vinculos, pend, hoje, conferencia, regra)}
-    dados["b4"]["data_dado_atas"] = next((f["data_dado"] for f in fontes if f["nome"] == "atas"), None)
+             "b3": bloco_b3(processos, kpis) if gcalc else None,
+             "b4": bloco_b4(atas, processos, vinculos, pend, hoje, conferencia, regra) if gcalc else None}
+    if gcalc:
+        dados["b4"]["data_dado_atas"] = next((f["data_dado"] for f in fontes if f["nome"] == "atas"), None)
     return dados
 
 
@@ -425,12 +423,23 @@ def render_html(dados):
     corpo = json_canonico(dados)
     h = hashlib.sha256(corpo.encode("utf-8")).hexdigest()
     seguro = corpo.replace("</", "<\\/")  # nunca fechar o <script> por acidente
-    # brasões das OM (motor/brasoes.json: PNG 128 px em data URI, da pasta do projeto); bloco próprio, fora do hash dos dados
-    pb = Path(__file__).with_name("brasoes.json")
-    brasoes = pb.read_text(encoding="utf-8").replace("</", "<\\/") if pb.exists() else "{}"
-    return (Path(__file__).with_name("gof_painel_modelo.html").read_text(encoding="utf-8")
-            .replace("__DADOS__", seguro).replace("__BRASOES__", brasoes).replace("__HASH__", h)
-            .replace("__TITULO__", html.escape("Painel GOF-BaApLog")))
+    # brasões das OM (config/brasoes_<om>.json: PNG 128 px em data URI); bloco próprio, fora do hash dos dados
+    pb = cfg.brasoes_caminho()
+    brasoes = pb.read_text(encoding="utf-8").replace("</", "<\\/") if pb and pb.exists() else "{}"
+    ref = cfg.referencia_regional() or {}
+    cal = cfg.calendario()
+    # textos e tabelas da OM injetados no modelo (antes fixos no HTML); grafia idêntica à da v2.1
+    trocas = {"__NOME_JS__": cfg.js_objeto(cfg.rotulo_por_chave()), "__ORDEM_JS__": cfg.js_lista(cfg.ordem_rotulos()),
+              "__UGNOME_JS__": cfg.js_objeto(cfg.ug_nome()), "__EYEBROW__": html.escape(cfg.texto("eyebrow"), quote=False),
+              "__TITULO_H1__": html.escape(cfg.texto("titulo"), quote=False),
+              "__NORMA_CURTA__": html.escape(cal.get("diploma_curto", ""), quote=False),
+              "__NORMA_RODAPE__": html.escape(cal.get("diploma_rodape", ""), quote=False),
+              "__REF_REGIONAL__": html.escape(ref.get("resumo", ""), quote=False)}
+    modelo = Path(__file__).with_name("gof_painel_modelo.html").read_text(encoding="utf-8")
+    for k, v in trocas.items():
+        modelo = modelo.replace(k, v)
+    return (modelo.replace("__DADOS__", seguro).replace("__BRASOES__", brasoes).replace("__HASH__", h)
+            .replace("__TITULO__", html.escape(cfg.texto("titulo_pagina"))))
 
 
 def ler_carteira_json(caminho):
@@ -450,7 +459,7 @@ def main(argv=None):
     ex.add_argument("--execucao", help="glob dos CSV do TG (um por OMDS); so onde o CSV com pessoa estiver")
     ex.add_argument("--extrato", help="extrato SEM PESSOA da execucao (JSON de gerar_extrato); e o que roda na nuvem")
     ap.add_argument("--data-execucao", help="data da exportacao do TG (AAAA-MM-DD); obrigatoria com --execucao")
-    ap.add_argument("--fichas", required=True)
+    ap.add_argument("--fichas", help="conjunto PNCP da carteira GCALC; obrigatório só com o bloco carteira_gcalc ligado")
     ap.add_argument("--so-extrato", help="com --execucao: grava so o extrato sem pessoa neste caminho e sai")
     ap.add_argument("--carteira", help="CSV da aba Controle Processos ou dados/carteira_processos.json")
     ap.add_argument("--data-carteira", default=None, help="data da leitura da planilha (AAAA-MM-DD)")
@@ -473,7 +482,10 @@ def main(argv=None):
     ap.add_argument("--hoje", default=dt.date.today().isoformat())
     o = ap.parse_args(argv)
     hoje = dt.date.fromisoformat(o.hoje)
-    conj = json.load(open(o.fichas, encoding="utf-8"))
+    gcalc = cfg.bloco_ligado("carteira_gcalc")
+    if gcalc and not o.fichas:
+        raise SystemExit("--fichas e obrigatorio com o bloco carteira_gcalc ligado (config/om.json)")
+    conj = json.load(open(o.fichas, encoding="utf-8")) if o.fichas else {"processos": [], "dados": {}}
     fichas = tr.ficha_de_pncp(conj)
     data_fichas = str(conj.get("coletado_em") or "2026-11-03")[:10]
     fonte_b1, motivo_b1, data_portal, base, regra = "tg", None, None, "emissao", None
@@ -512,33 +524,38 @@ def main(argv=None):
                        "data_dado": data_exec, "nota": "RESERVA (D17): Portal da Transparencia, lacunas e atraso de ~7 dias; extrato sem pessoa"}]
         else:
             motivo_b1 = "TG fresco (%d dias uteis)" % idade_tg if idade_tg <= DIAS_UTEIS_FRESCO else "TG parado, mas Portal nao e mais atual (%s <= %s)" % (data_portal, data_exec)
-    for k in ("carteira", "kpis", "atas", "pendencias", "saida"):
+    for k in (("carteira", "kpis", "atas", "pendencias", "saida") if gcalc else ("saida",)):
         if not getattr(o, k):
             raise SystemExit("--%s e obrigatorio para montar o painel" % k)
-    processos = ler_carteira_json(o.carteira) if o.carteira.endswith(".json") else ler_carteira(o.carteira)
-    kpis = json.load(open(o.kpis, encoding="utf-8"))
-    pa = Path(o.atas)
-    if not pa.exists():
-        pa.write_text(json.dumps({"coletado_em": hoje.isoformat(), "atas": coletar_atas(processos)}, ensure_ascii=False,
-                                 indent=1), encoding="utf-8")
-    atas_j = json.load(open(pa, encoding="utf-8"))
-    pend = json.load(open(o.pendencias, encoding="utf-8"))
-    fontes = (f_exec
-              + [{"nome": "carteira", "arquivo": Path(o.carteira).name, "sha256": sha256(o.carteira),
-                  "data_dado": o.data_carteira or hoje.isoformat()},
-                 {"nome": "kpis_painel", "arquivo": Path(o.kpis).name, "sha256": sha256(o.kpis), "data_dado": kpis.get("lido_em")},
-                 {"nome": "atas", "arquivo": pa.name, "sha256": sha256(pa), "data_dado": atas_j.get("coletado_em")},
-                 {"nome": "fichas_pncp", "arquivo": Path(o.fichas).name, "sha256": sha256(o.fichas), "data_dado": data_fichas}])
+    if gcalc:
+        processos = ler_carteira_json(o.carteira) if o.carteira.endswith(".json") else ler_carteira(o.carteira)
+        kpis = json.load(open(o.kpis, encoding="utf-8"))
+        pa = Path(o.atas)
+        if not pa.exists():
+            pa.write_text(json.dumps({"coletado_em": hoje.isoformat(), "atas": coletar_atas(processos)}, ensure_ascii=False,
+                                     indent=1), encoding="utf-8")
+        atas_j = json.load(open(pa, encoding="utf-8"))
+        pend = json.load(open(o.pendencias, encoding="utf-8"))
+        fontes = (f_exec
+                  + [{"nome": "carteira", "arquivo": Path(o.carteira).name, "sha256": sha256(o.carteira),
+                      "data_dado": o.data_carteira or hoje.isoformat()},
+                     {"nome": "kpis_painel", "arquivo": Path(o.kpis).name, "sha256": sha256(o.kpis), "data_dado": kpis.get("lido_em")},
+                     {"nome": "atas", "arquivo": pa.name, "sha256": sha256(pa), "data_dado": atas_j.get("coletado_em")},
+                     {"nome": "fichas_pncp", "arquivo": Path(o.fichas).name, "sha256": sha256(o.fichas), "data_dado": data_fichas}])
+    else:  # OM sem carteira GCALC (config): B3 e B4 desligados
+        processos, kpis, atas_j, pend, fontes = [], {}, {"atas": []}, [], list(f_exec)
     conf = json.load(open(o.conferencia, encoding="utf-8")) if o.conferencia and Path(o.conferencia).exists() else None
     dados = montar(regs, data_exec, processos, kpis, atas_j["atas"], fichas, pend, hoje, fontes, vinculos=vinculos, conferencia=conf,
-                   base=base, regra=regra)
+                   base=base, regra=regra, gcalc=gcalc)
     dados["meta"].update({"fonte_b1": fonte_b1, "fonte_b1_motivo": motivo_b1, "data_portal": data_portal,
                           "data_tg": data_exec if (o.execucao or fonte_b1 == "tg") else ext["data_execucao"]})
     leitura = json.load(open(o.encerramento, encoding="utf-8")) if o.encerramento and Path(o.encerramento).exists() else None
     dados["encerramento"] = bloco_encerramento(hoje, leitura)
-    cap = json.load(open(o.capacidade, encoding="utf-8")) if o.capacidade and Path(o.capacidade).exists() else None
+    cap = (json.load(open(o.capacidade, encoding="utf-8"))
+           if cfg.bloco_ligado("capacidade") and o.capacidade and Path(o.capacidade).exists() else None)
     dados["capacidade"] = bloco_capacidade(cap)
-    disp = json.load(open(o.dispensa, encoding="utf-8")) if o.dispensa and Path(o.dispensa).exists() else None
+    disp = (json.load(open(o.dispensa, encoding="utf-8"))
+            if cfg.bloco_ligado("dispensa") and o.dispensa and Path(o.dispensa).exists() else None)
     dados["dispensa"] = bloco_dispensa(disp)
     # Encerramento do exercício (Portaria 399-SEF): liquidação diária (ponte) e crédito em tela/régua (leitura datada)
     for chave, caminho in (("liquidacao", o.liquidacao), ("regua", o.regua)):
@@ -550,6 +567,9 @@ def main(argv=None):
     s.mkdir(parents=True, exist_ok=True)
     (s / "dados.json").write_text(json.dumps(dados, ensure_ascii=False, indent=1), encoding="utf-8")
     (s / "index.html").write_text(render_html(dados), encoding="utf-8")
+    if not gcalc:
+        print("B1: %d NE, R$ %.2f | B3 e B4 desligados (sem carteira GCALC no config)" % (dados["b1"]["ne"], dados["b1"]["total"]))
+        return 0
     print("B1: %d NE, R$ %.2f | B3: %d processos | B4: %d atas vigentes, %d a vencer, %d processos em atencao, %d NE a verificar"
           % (dados["b1"]["ne"], dados["b1"]["total"], dados["b3"]["resumo"]["processos"], dados["b4"]["atas"]["n_vigentes"],
              len(dados["b4"]["atas"]["a_vencer"]), len(dados["b4"]["processos"]), len(dados["b4"]["ne_verificar"]["lista"])))

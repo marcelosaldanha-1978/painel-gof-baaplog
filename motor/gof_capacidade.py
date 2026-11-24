@@ -34,10 +34,14 @@ import sys
 import time
 import urllib.parse
 import urllib.request
+from pathlib import Path as _Path
+
+sys.path.insert(0, str(_Path(__file__).resolve().parent))
+import gof_config as cfg  # noqa: E402
 
 ARP = "https://dadosabertos.compras.gov.br/modulo-arp"
 CTR = "https://contratos.comprasnet.gov.br/api"
-OMDS = {"160238": "Cmdo BaApLog", "160246": "DC Mun", "160304": "BMSA", "160307": "1º D Sup", "160321": "ECT", "160329": "BCMS"}
+OMDS = cfg.uasg_para_rotulo_numerico()  # config/om.json
 
 
 CACHE = None  # pasta de cache (opcional): cada URL respondida uma vez por coleta

@@ -111,8 +111,8 @@ footer details summary{font-size:13px}
 <nav class="seg" aria-label="Seções"><div class="in" id="nav"></div></nav>
 <div class="wrap">
 <header>
-<p class="eyebrow">BaApLog · 6 OMDS · UG 160 e 167</p>
-<h1>Encerramento do exercício de 2026</h1>
+<p class="eyebrow">__EYEBROW__</p>
+<h1>__TITULO_H1__</h1>
 <p class="lead" id="lead"></p>
 <div class="status" id="status" role="status"></div>
 </header>
@@ -145,16 +145,16 @@ function sem(s){var m={VERMELHO:["red","Tela vencida"],AMARELO:["orange","Atenç
  return '<span class="tag '+m[0]+'"><span class="dot"></span>'+m[1]+'</span>';}
 var E=D.encerramento||{},G=D.regua,L=D.liquidacao,B=D.b1;
 // mapeia o rótulo do B1 para o da régua/liquidação
-var NOME={BaApLog:"Cmdo BaApLog",BCMS:"BCMS",BMSA:"BMSA",ECT:"ECT",DCMun:"DC Mun","1oDSup":"1º D Sup"};
-var ORDEM=["Cmdo BaApLog","BCMS","BMSA","ECT","DC Mun","1º D Sup"];
-var UGNOME={"160238":"Cmdo, Cia Cmdo e HCmp"};
+var NOME=__NOME_JS__;
+var ORDEM=__ORDEM_JS__;
+var UGNOME=__UGNOME_JS__;
 var BR={};try{BR=JSON.parse(document.getElementById("brasoes").textContent)||{};}catch(e){BR={};}
 function slug(s){return "o-"+String(s).normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^A-Za-z0-9]+/g,"-").toLowerCase();}
 function brasao(nome,cls){return BR[nome]?'<img class="'+(cls||"br")+'" src="'+BR[nome]+'" alt="Brasão '+esc(nome)+'">':"";}
 
 // ---------- cabeçalho
 var tg=(D.meta&&D.meta.fonte_b1==="portal")?"Portal da Transparência (reserva)":"Tesouro Gerencial";
-document.getElementById("lead").innerHTML="O que importa acompanhar até 31/12, na ordem da Portaria SEF/C Ex nº 399/2026: prazos, crédito em tela, liquidação e restos a pagar — de cada OMDS, nas UG 160 e 167.";
+document.getElementById("lead").innerHTML="O que importa acompanhar até 31/12, na ordem da __NORMA_CURTA__: prazos, crédito em tela, liquidação e restos a pagar — de cada OMDS, nas UG 160 e 167.";
 var st='<span class="pill">Fonte: '+esc(tg)+'</span>'+idadePill("Empenho e liquidação",L?L.data_dado:B.data_dado,false);
 var gManual=!!(G&&/MANUAL/i.test(G.atualizacao||""));
 if(G)st+=idadePill("Crédito em tela e RPNP",G.data_dado,gManual);
@@ -180,7 +180,7 @@ if(L)h+='<div class="tile"><p class="lbl">Liquidado do empenhado</p><div class="
 if(L)h+='<div class="tile"><p class="lbl">A liquidar há mais de 60 dias</p><div class="mid orange">'+mi(L.total.mais60_valor)+'</div><p class="note">'+n(L.total.mais60_ne)+' NE · '+mi(L.total.mais60_sem_nenhuma_liq_valor)+' sem nenhuma liquidação</p></div>';
 if(G)h+='<div class="tile"><p class="lbl">Restos a pagar a liquidar</p><div class="mid">'+mi(G.total.rpnp_a_liquidar)+'</div><p class="note">'+(G.total.rpnp_bloqueado?'<span class="red">bloqueado '+rs(G.total.rpnp_bloqueado)+': cancela em 30/12</span>':'sem RPNP bloqueado')+'</p></div>';
 el.innerHTML=h+'</div>';
-var R=G&&G.referencia_1rm;if(R){el.innerHTML+='<details><summary>Restos a pagar: comparação com a 1ª RM (planilha de 10/11)</summary><div class="card" style="margin-top:12px"><div class="tiles" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">'+R.indices.map(function(x){return '<div><p class="lbl">'+esc(x.nome)+'</p><div class="mid">'+pc(x.indice)+'</div></div>';}).join("")+'</div><p class="note">'+esc(R.nota)+'</p></div></details>';}
+var R=G&&G.referencia_1rm;if(R){el.innerHTML+='<details><summary>Restos a pagar: comparação com a __REF_REGIONAL__</summary><div class="card" style="margin-top:12px"><div class="tiles" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">'+R.indices.map(function(x){return '<div><p class="lbl">'+esc(x.nome)+'</p><div class="mid">'+pc(x.indice)+'</div></div>';}).join("")+'</div><p class="note">'+esc(R.nota)+'</p></div></details>';}
 })();
 
 // ---------- 3. OMDS UMA A UMA, UG 160 E 167
@@ -209,7 +209,7 @@ h+='</div>';
 el.innerHTML=h;})();
 
 // ---------- rodapé
-var f='<p>Norma balizadora: Portaria SEF/C Ex nº 399, de 24/09/2026 (Diretriz e Calendário do Encerramento do Exercício de 2026). Sem dado pessoal por construção. Gerado em '+dbr(D.meta.hoje)+'.</p><details><summary>Fontes e método</summary><p>';
+var f='<p>Norma balizadora: __NORMA_RODAPE__. Sem dado pessoal por construção. Gerado em '+dbr(D.meta.hoje)+'.</p><details><summary>Fontes e método</summary><p>';
 (D.meta.fontes||[]).forEach(function(x,i){f+=(i?"; ":"")+esc(x.arquivo)+" ("+dbr(x.data_dado)+", sha256 <code>"+esc(String(x.sha256).slice(0,12))+"</code>)";});
 f+='.</p>'+(G?'<p>Crédito em tela e RPNP: '+esc(G.posicao_siafi)+'. '+esc(G.regra_vencido)+'.</p>':'')+(L?'<p>Empenho e liquidação: '+esc(L.fonte)+'; '+esc(L.regra)+'.</p>':'')+'<p>Motor v'+esc(D.meta.versao_motor)+' · hash dos dados <code>__HASH__</code>.</p></details>';
 document.getElementById("rodape").innerHTML=f;
