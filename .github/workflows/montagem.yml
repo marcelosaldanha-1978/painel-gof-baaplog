@@ -2,7 +2,7 @@
 # Dois horarios por dia fora da hora cheia (D18) + disparo manual + disparo por evento (repository_dispatch, opcional, D16/D18).
 # Sequencia: portoes (suite, montagem com atas do PNCP, recalculo independente, verificador sem dado pessoal, navegador)
 # -> grava a montagem em dados/painel/<data> e dados/painel/ultimo (historico, sem force push) -> publica no GitHub Pages.
-# Nada e publicado se um portao reprovar. Somente leitura nas fontes; segredo nenhum neste workflow (passo 5 traz os dois da D14).
+# Nada e publicado se um portao reprovar. Somente leitura nas fontes; usa os dois segredos da D14 (GOOGLE_SA_JSON e PORTAL_TRANSPARENCIA_API_KEY), ambos de leitura.
 name: Montagem e publicacao
 
 on:

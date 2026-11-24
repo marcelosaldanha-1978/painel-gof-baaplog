@@ -62,15 +62,15 @@
   <g class="f">
     <circle cx="86" cy="281" r="8" fill="#30d158" class="pulse"/>
     <text x="102" y="287" class="lbl">Tesouro Gerencial</text>
-    <text x="80" y="314" class="sub">6 assinaturas do SERPRO</text>
+    <text x="80" y="314" class="sub">5 assinaturas do SERPRO</text>
     <text x="80" y="335" class="sub">entregues por e-mail ~03h</text>
     <circle cx="371" cy="281" r="8" fill="#64d2ff" class="pulse"/>
     <text x="387" y="287" class="lbl">Ponte P-041</text>
     <text x="365" y="314" class="sub">Apps Script · 06h e 11h</text>
-    <text x="365" y="335" class="sub">remove favorecido e CPF</text>
+    <text x="365" y="335" class="sub">tira favorecido da emissão</text>
     <circle cx="656" cy="281" r="8" fill="#0a84ff" class="pulse"/>
     <text x="672" y="287" class="lbl">7 portões</text>
-    <text x="650" y="314" class="sub">GitHub Actions · 07:33 · 12:33</text>
+    <text x="650" y="314" class="sub">GitHub Actions · 2× ao dia</text>
     <text x="650" y="335" class="sub">recálculo ao centavo</text>
     <circle cx="941" cy="281" r="8" fill="#bf5af2" class="pulse"/>
     <text x="957" y="287" class="lbl">Página pública</text>
