@@ -54,14 +54,17 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--dados", required=True)
     ap.add_argument("--extrato", required=True)
-    ap.add_argument("--carteira", required=True)
-    ap.add_argument("--atas", required=True)
+    ap.add_argument("--carteira", help="obrigatório quando o dados.json tem B3 (carteira GCALC ligada)")
+    ap.add_argument("--atas", help="obrigatório quando o dados.json tem B4")
     ap.add_argument("--hoje", default=None)
     o = ap.parse_args(argv)
     D = json.load(open(o.dados, encoding="utf-8"))
     ext = json.load(open(o.extrato, encoding="utf-8"))
-    cart = json.load(open(o.carteira, encoding="utf-8"))
-    atas = json.load(open(o.atas, encoding="utf-8"))["atas"]
+    gcalc = D.get("b3") is not None
+    if gcalc and not (o.carteira and o.atas):
+        raise SystemExit("--carteira e --atas sao obrigatorios quando o dados.json tem B3/B4")
+    cart = json.load(open(o.carteira, encoding="utf-8")) if gcalc else {"processos": []}
+    atas = json.load(open(o.atas, encoding="utf-8"))["atas"] if gcalc else []
     hoje = dt.date.fromisoformat(o.hoje or D["meta"]["hoje"])
     falhas = []
 
@@ -100,7 +103,7 @@ def main(argv=None):
         por[omds][lado] += float(x["valor"])
         por[omds]["n" + lado] += 1
         d = _data(x.get("data"))
-        if d and d.year == 2026:
+        if d and d.year == cfg.exercicio():
             por[omds]["meses"][d.month - 1] += float(x["valor"])
     total = round(sum(v["160"] + v["167"] for v in por.values()), 2)
     chk("B1 total", total, D["b1"]["total"])
@@ -110,7 +113,7 @@ def main(argv=None):
         chk("B1 emissao bruta", round(emitido, 2), D["b1"]["apoio"]["emissao_bruta"])
         chk("B1 NE anuladas", anuladas, D["b1"]["apoio"]["ne_anuladas"])
         chk("B1 NE emitidas", len(docs), D["b1"]["apoio"]["ne_emitidas"])
-        pub = {x["pregao"]: x for x in D["b1"]["vinculo_gcalc"]["pregoes"]}
+        pub = {x["pregao"]: x for x in (D["b1"].get("vinculo_gcalc") or {}).get("pregoes", [])}
         chk("B1 vinculo pregoes", sorted(siasg), sorted(pub), numerico=False)
         for p_, (n_, v_) in siasg.items():
             if p_ in pub:
@@ -124,8 +127,14 @@ def main(argv=None):
         chk("B1 %s total" % linha["omds"], round(v["160"] + v["167"], 2), linha["total"])
         chk("B1 %s ne" % linha["omds"], v["n160"] + v["n167"], linha["ne"])
         chk("B1 %s soma dos meses" % linha["omds"], round(sum(v["meses"]), 2), round(sum(linha["por_mes"]), 2))
-    # ---- B3 a partir da carteira
     procs = cart["processos"]
+    if not gcalc:  # OM sem carteira GCALC: B3 e B4 desligados no config
+        for f in falhas:
+            print("  - " + f)
+        print("RECALCULO: %s (B1 R$ %.2f, %d NE; B3 e B4 desligados)"
+              % ("%d divergencia(s)" % len(falhas) if falhas else "confere ao centavo", total, n_contadas))
+        return 1 if falhas else 0
+    # ---- B3 a partir da carteira
     r = D["b3"]["resumo"]
     chk("B3 processos", len(procs), r["processos"])
     chk("B3 estimado", round(sum(_num_br(p.get("estimado")) for p in procs), 2), r["estimado"])

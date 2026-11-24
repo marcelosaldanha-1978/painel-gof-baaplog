@@ -394,7 +394,8 @@ def base_do_extrato(extrato):
 
 # ------------------------------------------------------------------ montagem e HTML
 def montar(regs, data_execucao, processos, kpis, atas, fichas, pendencias, hoje, fontes, vinculos=None, conferencia=None,
-           base="emissao", regra=None):
+           base="emissao", regra=None, gcalc=True):
+    """gcalc=False (config: blocos.carteira_gcalc desligado): B3 e B4 saem como None, sem quebrar a montagem."""
     if vinculos is None:
         vinculos = tr.vincular(regs, fichas)
     pend = ler_pendencias(pendencias)
@@ -407,9 +408,10 @@ def montar(regs, data_execucao, processos, kpis, atas, fichas, pendencias, hoje,
                       "b1_fresco": idade_b1 <= DIAS_UTEIS_FRESCO, "dias_uteis_fresco": DIAS_UTEIS_FRESCO,
                       "dias_pendencias_amarelo": DIAS_PENDENCIAS_AMARELO},
              "b1": bloco_b1(regs, data_execucao, base, vinculos if regra == VERSAO_VINCULO_SIASG else None),
-             "b3": bloco_b3(processos, kpis),
-             "b4": bloco_b4(atas, processos, vinculos, pend, hoje, conferencia, regra)}
-    dados["b4"]["data_dado_atas"] = next((f["data_dado"] for f in fontes if f["nome"] == "atas"), None)
+             "b3": bloco_b3(processos, kpis) if gcalc else None,
+             "b4": bloco_b4(atas, processos, vinculos, pend, hoje, conferencia, regra) if gcalc else None}
+    if gcalc:
+        dados["b4"]["data_dado_atas"] = next((f["data_dado"] for f in fontes if f["nome"] == "atas"), None)
     return dados
 
 
@@ -457,7 +459,7 @@ def main(argv=None):
     ex.add_argument("--execucao", help="glob dos CSV do TG (um por OMDS); so onde o CSV com pessoa estiver")
     ex.add_argument("--extrato", help="extrato SEM PESSOA da execucao (JSON de gerar_extrato); e o que roda na nuvem")
     ap.add_argument("--data-execucao", help="data da exportacao do TG (AAAA-MM-DD); obrigatoria com --execucao")
-    ap.add_argument("--fichas", required=True)
+    ap.add_argument("--fichas", help="conjunto PNCP da carteira GCALC; obrigatório só com o bloco carteira_gcalc ligado")
     ap.add_argument("--so-extrato", help="com --execucao: grava so o extrato sem pessoa neste caminho e sai")
     ap.add_argument("--carteira", help="CSV da aba Controle Processos ou dados/carteira_processos.json")
     ap.add_argument("--data-carteira", default=None, help="data da leitura da planilha (AAAA-MM-DD)")
@@ -480,7 +482,10 @@ def main(argv=None):
     ap.add_argument("--hoje", default=dt.date.today().isoformat())
     o = ap.parse_args(argv)
     hoje = dt.date.fromisoformat(o.hoje)
-    conj = json.load(open(o.fichas, encoding="utf-8"))
+    gcalc = cfg.bloco_ligado("carteira_gcalc")
+    if gcalc and not o.fichas:
+        raise SystemExit("--fichas e obrigatorio com o bloco carteira_gcalc ligado (config/om.json)")
+    conj = json.load(open(o.fichas, encoding="utf-8")) if o.fichas else {"processos": [], "dados": {}}
     fichas = tr.ficha_de_pncp(conj)
     data_fichas = str(conj.get("coletado_em") or "2026-11-03")[:10]
     fonte_b1, motivo_b1, data_portal, base, regra = "tg", None, None, "emissao", None
@@ -519,33 +524,38 @@ def main(argv=None):
                        "data_dado": data_exec, "nota": "RESERVA (D17): Portal da Transparencia, lacunas e atraso de ~7 dias; extrato sem pessoa"}]
         else:
             motivo_b1 = "TG fresco (%d dias uteis)" % idade_tg if idade_tg <= DIAS_UTEIS_FRESCO else "TG parado, mas Portal nao e mais atual (%s <= %s)" % (data_portal, data_exec)
-    for k in ("carteira", "kpis", "atas", "pendencias", "saida"):
+    for k in (("carteira", "kpis", "atas", "pendencias", "saida") if gcalc else ("saida",)):
         if not getattr(o, k):
             raise SystemExit("--%s e obrigatorio para montar o painel" % k)
-    processos = ler_carteira_json(o.carteira) if o.carteira.endswith(".json") else ler_carteira(o.carteira)
-    kpis = json.load(open(o.kpis, encoding="utf-8"))
-    pa = Path(o.atas)
-    if not pa.exists():
-        pa.write_text(json.dumps({"coletado_em": hoje.isoformat(), "atas": coletar_atas(processos)}, ensure_ascii=False,
-                                 indent=1), encoding="utf-8")
-    atas_j = json.load(open(pa, encoding="utf-8"))
-    pend = json.load(open(o.pendencias, encoding="utf-8"))
-    fontes = (f_exec
-              + [{"nome": "carteira", "arquivo": Path(o.carteira).name, "sha256": sha256(o.carteira),
-                  "data_dado": o.data_carteira or hoje.isoformat()},
-                 {"nome": "kpis_painel", "arquivo": Path(o.kpis).name, "sha256": sha256(o.kpis), "data_dado": kpis.get("lido_em")},
-                 {"nome": "atas", "arquivo": pa.name, "sha256": sha256(pa), "data_dado": atas_j.get("coletado_em")},
-                 {"nome": "fichas_pncp", "arquivo": Path(o.fichas).name, "sha256": sha256(o.fichas), "data_dado": data_fichas}])
+    if gcalc:
+        processos = ler_carteira_json(o.carteira) if o.carteira.endswith(".json") else ler_carteira(o.carteira)
+        kpis = json.load(open(o.kpis, encoding="utf-8"))
+        pa = Path(o.atas)
+        if not pa.exists():
+            pa.write_text(json.dumps({"coletado_em": hoje.isoformat(), "atas": coletar_atas(processos)}, ensure_ascii=False,
+                                     indent=1), encoding="utf-8")
+        atas_j = json.load(open(pa, encoding="utf-8"))
+        pend = json.load(open(o.pendencias, encoding="utf-8"))
+        fontes = (f_exec
+                  + [{"nome": "carteira", "arquivo": Path(o.carteira).name, "sha256": sha256(o.carteira),
+                      "data_dado": o.data_carteira or hoje.isoformat()},
+                     {"nome": "kpis_painel", "arquivo": Path(o.kpis).name, "sha256": sha256(o.kpis), "data_dado": kpis.get("lido_em")},
+                     {"nome": "atas", "arquivo": pa.name, "sha256": sha256(pa), "data_dado": atas_j.get("coletado_em")},
+                     {"nome": "fichas_pncp", "arquivo": Path(o.fichas).name, "sha256": sha256(o.fichas), "data_dado": data_fichas}])
+    else:  # OM sem carteira GCALC (config): B3 e B4 desligados
+        processos, kpis, atas_j, pend, fontes = [], {}, {"atas": []}, [], list(f_exec)
     conf = json.load(open(o.conferencia, encoding="utf-8")) if o.conferencia and Path(o.conferencia).exists() else None
     dados = montar(regs, data_exec, processos, kpis, atas_j["atas"], fichas, pend, hoje, fontes, vinculos=vinculos, conferencia=conf,
-                   base=base, regra=regra)
+                   base=base, regra=regra, gcalc=gcalc)
     dados["meta"].update({"fonte_b1": fonte_b1, "fonte_b1_motivo": motivo_b1, "data_portal": data_portal,
                           "data_tg": data_exec if (o.execucao or fonte_b1 == "tg") else ext["data_execucao"]})
     leitura = json.load(open(o.encerramento, encoding="utf-8")) if o.encerramento and Path(o.encerramento).exists() else None
     dados["encerramento"] = bloco_encerramento(hoje, leitura)
-    cap = json.load(open(o.capacidade, encoding="utf-8")) if o.capacidade and Path(o.capacidade).exists() else None
+    cap = (json.load(open(o.capacidade, encoding="utf-8"))
+           if cfg.bloco_ligado("capacidade") and o.capacidade and Path(o.capacidade).exists() else None)
     dados["capacidade"] = bloco_capacidade(cap)
-    disp = json.load(open(o.dispensa, encoding="utf-8")) if o.dispensa and Path(o.dispensa).exists() else None
+    disp = (json.load(open(o.dispensa, encoding="utf-8"))
+            if cfg.bloco_ligado("dispensa") and o.dispensa and Path(o.dispensa).exists() else None)
     dados["dispensa"] = bloco_dispensa(disp)
     # Encerramento do exercício (Portaria 399-SEF): liquidação diária (ponte) e crédito em tela/régua (leitura datada)
     for chave, caminho in (("liquidacao", o.liquidacao), ("regua", o.regua)):
@@ -557,6 +567,9 @@ def main(argv=None):
     s.mkdir(parents=True, exist_ok=True)
     (s / "dados.json").write_text(json.dumps(dados, ensure_ascii=False, indent=1), encoding="utf-8")
     (s / "index.html").write_text(render_html(dados), encoding="utf-8")
+    if not gcalc:
+        print("B1: %d NE, R$ %.2f | B3 e B4 desligados (sem carteira GCALC no config)" % (dados["b1"]["ne"], dados["b1"]["total"]))
+        return 0
     print("B1: %d NE, R$ %.2f | B3: %d processos | B4: %d atas vigentes, %d a vencer, %d processos em atencao, %d NE a verificar"
           % (dados["b1"]["ne"], dados["b1"]["total"], dados["b3"]["resumo"]["processos"], dados["b4"]["atas"]["n_vigentes"],
              len(dados["b4"]["atas"]["a_vencer"]), len(dados["b4"]["processos"]), len(dados["b4"]["ne_verificar"]["lista"])))
