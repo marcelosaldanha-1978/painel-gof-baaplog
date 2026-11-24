@@ -9,3 +9,5 @@ vigia.json
 vigia.txt
 .env
 *.csv
+# saidas locais de teste do portao
+saida_*/
