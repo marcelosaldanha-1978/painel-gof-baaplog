@@ -446,6 +446,11 @@ def render_html(dados):
         js = Path(__file__).with_name("gof_painel_v24.js").read_text(encoding="utf-8")
         fim = modelo.rindex("})();\n</script>")
         modelo = modelo[:fim] + js + modelo[fim:]
+        # texto livre dos blocos novos (objeto de contrato) não pode casar com marcador nem abrir tag: os dados entram
+        # por último, numa passada só, com «<» escapado no JSON (só neste caminho; a saída da BaApLog não muda)
+        modelo = (modelo.replace("__BRASOES__", brasoes).replace("__HASH__", h)
+                  .replace("__TITULO__", html.escape(cfg.texto("titulo_pagina"))))
+        return modelo.replace("__DADOS__", corpo.replace("<", "\\u003c"))
     return (modelo.replace("__DADOS__", seguro).replace("__BRASOES__", brasoes).replace("__HASH__", h)
             .replace("__TITULO__", html.escape(cfg.texto("titulo_pagina"))))
 
@@ -584,10 +589,14 @@ def main(argv=None):
              "Contratos vigentes: coleta ainda não disponível (API pública fora do ar ou não coletada).")):
         if not cfg.bloco_ligado(bloco):
             continue
-        if caminho and Path(caminho).exists():
-            dados[bloco] = json.load(open(caminho, encoding="utf-8"))
+        try:
+            lido = json.load(open(caminho, encoding="utf-8")) if caminho and Path(caminho).exists() else None
+        except (OSError, ValueError):
+            lido = None  # arquivo ilegível: o bloco sai com ressalva e a página publica
+        if isinstance(lido, dict):
+            dados[bloco] = lido
             dados["meta"]["fontes"].append({"nome": bloco, "arquivo": Path(caminho).name, "sha256": sha256(caminho),
-                                            "data_dado": dados[bloco].get(data_campo)})
+                                            "data_dado": lido.get(data_campo)})
         else:
             dados[bloco] = {"ausente": True, "ressalva": ressalva}
     s = Path(o.saida)

@@ -78,17 +78,23 @@ jobs:
           set -o pipefail
           python gof_regua_tg.py --saida ../dados/encerramento/regua.json 2>&1 | tee -a ../resumo_etapas.log || echo "::warning::regua sem trio novo; segue com a vigente"
       - name: Ponte do TG - RPNP por ano de inscricao (v2.4, bloco rp_por_ano); falha mantem o anterior
+        timeout-minutes: 15
+        continue-on-error: true  # falha do bloco nunca impede a publicacao (segue o arquivo anterior)
         env:
           GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
         run: |
           cd motor
-          if [ "$(python gof_config.py --bloco rp_por_ano)" != "1" ]; then echo "bloco rp_por_ano desligado"; exit 0; fi
+          ligado="$(python gof_config.py --bloco rp_por_ano)"  # nome errado no config derruba o passo (bash -e), nao vira desligado
+          if [ "$ligado" != "1" ]; then echo "bloco rp_por_ano desligado"; exit 0; fi
           set -o pipefail
           python gof_rp_por_ano.py --regua ../dados/encerramento/regua.json --saida ../dados/encerramento/rp_por_ano.json 2>&1 | tee -a ../resumo_etapas.log || echo "::warning::RPNP por NE sem arquivo novo ou reprovado nos portoes; segue com o anterior"
       - name: Contratos vigentes (v2.4, bloco contratos; API publica do Contratos.gov.br); falha mantem o anterior
+        timeout-minutes: 15
+        continue-on-error: true  # falha do bloco nunca impede a publicacao (segue o arquivo anterior)
         run: |
           cd motor
-          if [ "$(python gof_config.py --bloco contratos)" != "1" ]; then echo "bloco contratos desligado"; exit 0; fi
+          ligado="$(python gof_config.py --bloco contratos)"  # nome errado no config derruba o passo (bash -e), nao vira desligado
+          if [ "$ligado" != "1" ]; then echo "bloco contratos desligado"; exit 0; fi
           set -o pipefail
           python gof_contratos.py --saida ../dados/contratos/contratos.json 2>&1 | tee -a ../resumo_etapas.log || echo "::warning::contratos nao coletados; segue com o anterior"
       - name: Portal da Transparencia como reserva do B1 (D17); falha mantem o extrato anterior

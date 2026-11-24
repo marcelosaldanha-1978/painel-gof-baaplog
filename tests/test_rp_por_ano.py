@@ -99,7 +99,7 @@ def test_conta_desconhecida_e_ne_de_outra_ug():
     with pytest.raises(ValueError, match="sem papel"):
         R.ler(csv(cab=CAB.replace('"631980000"', '"639990000"', 1)))
     linha = '"160321"\t"ECT"\t"160329000012025NE000001"\t"NAO SE APLICA"\t"1,00"\t""\t"1,00"\t""\t""\t""\t""\n'
-    with pytest.raises(ValueError, match="na linha da UG"):
+    with pytest.raises(ValueError, match="na linha de outra UG"):
         R.ler(csv(linhas=linha))
 
 
@@ -121,3 +121,40 @@ def test_linha_total_do_tg_e_conferida_e_nao_somada():
     ruim = total.replace('"200,00"', '"200,01"')
     with pytest.raises(ValueError, match="Total"):
         R.ler(csv(linhas=LINHAS + ruim))
+
+
+# ---- auditoria independente de 24/11 (itens 3, 4, 5 e 7)
+def test_num_estrito():
+    assert R.num("R$ 5.000,00") == 5000.0 and R.num("1 234,56") == 1234.56
+    assert R.num("1.959,88-") == -1959.88 and R.num("1,234.56") == 1234.56 and R.num("1.234.567") == 1234567.0
+    for ruim in ("1.234", "abc", "1,2,3"):
+        with pytest.raises(ValueError):
+            R.num(ruim)
+
+
+def test_total_com_ne_e_conferido_e_nao_somado():
+    sub = '"160321"\t"ECT"\t"160321000012025NE000001"\t"Total"\t"1.000,00"\t""\t"400,00"\t"0,00"\t"600,00"\t""\t""\n'
+    ls, _ = R.ler(csv(linhas=LINHAS + sub))
+    x = next(x for x in ls if x["ne"].endswith("NE000001"))
+    assert x["contas"]["531110100"] == 1000.0
+    with pytest.raises(ValueError, match="subtotal de uma NE"):
+        R.ler(csv(linhas=LINHAS + sub.replace('"400,00"', '"401,00"')))
+
+
+def test_linha_com_valor_sem_ug_e_recusada():
+    cont = '""\t""\t""\t"NAO SE APLICA"\t"500,00"\t""\t"500,00"\t""\t""\t""\t""\n'
+    with pytest.raises(ValueError, match="sem UG"):
+        R.ler(csv(linhas=LINHAS + cont))
+
+
+def test_alerta_usa_a_data_legal_do_ano():
+    linha = '"160321"\t"ECT"\t"160321000012021NE000004"\t"NAO SE APLICA"\t""\t"10,00"\t"10,00"\t""\t""\t""\t""\n'
+    res = R.agregar(R.ler(csv(linhas=linha))[0], exercicio=2026)
+    a = res["alertas"][0]
+    assert a["data"] == "2024-12-31" and "vencido" in a["texto"]
+
+
+def test_credor_tambem_e_recusado():
+    cab = CAB.replace('"NE CCor"\t', '"NE CCor"\t"Credor (CPF/CNPJ)"\t', 1)
+    with pytest.raises(ValueError, match="P-RP-4"):
+        R.ler(csv(cab=cab, linhas=""))

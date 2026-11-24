@@ -59,3 +59,21 @@ def test_api_fora_em_todas_nao_escreve():
 
     with pytest.raises(RuntimeError, match="todas"):
         C.montar(HOJE, ler=ler)
+
+
+# ---- auditoria independente de 24/11 (itens 1, 2 e 8)
+def test_cpf_cnpj_no_objeto_sao_apagados_e_pf_omite_objeto():
+    a = reg("6/2025", "2027-12-31")
+    a["objeto"] = "SERVICO FICTICIO, CNPJ 00.000.000/0001-91, CPF 12345678909 e 123.456.789-09"
+    b = reg("7/2025", "2027-12-31")
+    b["objeto"] = "LOCACAO DE IMOVEL DE FULANO FICTICIO"
+    b["fornecedor"] = {"nome": "FULANO FICTICIO", "cnpj_cpf_idgener": "123.456.789-09", "tipo": "FISICA"}
+    cs = {c["numero"]: c for c in C.vigentes([a, b], HOJE)}
+    assert "0001-91" not in cs["6/2025"]["objeto"] and "12345678909" not in cs["6/2025"]["objeto"]
+    assert "789-09" not in cs["6/2025"]["objeto"]
+    assert cs["7/2025"]["objeto"] == C.OBJETO_PF
+
+
+def test_resposta_fora_do_formato_vira_ressalva():
+    r = C.montar(HOJE, ler=lambda ug: {"erro": "x"} if ug == "160321" else [None, reg("3/2025", "2027-12-31")])
+    assert len(r["ressalvas"]) == 1 and all(x["indisponivel"] or x["quantidade"] == 1 for x in r["por_omds"])

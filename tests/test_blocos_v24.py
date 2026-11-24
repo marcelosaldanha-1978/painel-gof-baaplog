@@ -44,3 +44,23 @@ def test_recalculo_v24_contratos_sem_fornecedor():
     c["fornecedor"] = "EMPRESA FICTICIA"
     assert ri.conferir_v24({"contratos": {"por_omds": [o]}})
     assert ri.conferir_v24({"contratos": {"ausente": True}}) == []
+
+
+# ---- auditoria independente de 24/11 (itens 9 e 12)
+def test_texto_de_bloco_nao_casa_com_marcador_nem_abre_tag():
+    import json
+    import re
+
+    obj = "__HASH__ __BRASOES__ <!--<script></script>"
+    dados = {"meta": {}, "contratos": {"por_omds": [{"omds": "ECT", "contratos": [{"objeto": obj}]}]}}
+    h = gp.render_html(dados)
+    m = re.search(r'<script type="application/json" id="dados">(.*?)</script>', h, re.S)
+    assert json.loads(m.group(1)) == dados and "<!--<script" not in m.group(1)
+
+
+def test_recalculo_v24_acusa_documento_no_objeto():
+    c = {"numero": "1/2025", "objeto": "CNPJ 00.000.000/0001-91", "vigencia_fim": "2027-01-01", "dias_para_vencer": 38,
+         "valor_global_teto": 10.0}
+    o = {"omds": "ECT", "indisponivel": False, "contratos": [c], "quantidade": 1, "teto_total": 10.0,
+         "vencem_90": 1, "vencem_180": 1, "vencem_365": 1}
+    assert any("CPF/CNPJ" in f for f in ri.conferir_v24({"contratos": {"por_omds": [o]}}))

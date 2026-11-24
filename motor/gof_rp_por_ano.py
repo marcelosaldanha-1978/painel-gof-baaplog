@@ -32,6 +32,8 @@ import gof_config as cfg  # noqa: E402
 from gof_regua_tg import linhas  # noqa: E402  (mesma leitura tolerante da régua)
 
 RE_CONTA = re.compile(r"\d{9}")
+RE_PESSOA = re.compile(r"favorecido|credor|\bcpf\b|\bcnpj\b|raz[aã]o social", re.I)
+RE_NUM = re.compile(r"^\(?-?(R\$)?\s*[\d.,]*\d[\d.,]*-?\)?$")
 RE_NE = re.compile(r"^\d{6}\d{5}(20\d\d)NE\d{6}$")
 TOL = 0.005  # meio centavo: as identidades são exatas
 
@@ -51,20 +53,35 @@ def papel(conta):
 
 
 def num(s):
-    """«1.060,78» (pt-BR) ou «(1959.88)» (negativo com ponto decimal, como o TG exporta) -> float."""
-    s = (s or "").strip().replace('"', "")
-    if not s:
+    """Número do CSV do TG -> float. Estrito: o que não se lê com segurança levanta ValueError (falha fechada).
+
+    Aceita «1.060,78» e «1.060.000» (pt-BR), «(1959.88)» e «1959.88» (ponto decimal, como o TG exporta negativos),
+    sinal «-» no início ou no fim, «R$» e espaços. Ponto único seguido de exatamente 3 dígitos («1.234») é ambíguo
+    (milhar ou decimal) e é recusado."""
+    t = (s or "").strip().replace('"', "")
+    if not t:
         return 0.0
-    neg = s.startswith("(") or s.startswith("-")
-    s = s.strip("()-").strip()
-    if "," in s:
-        s = s.replace(".", "").replace(",", ".")
-    elif s.count(".") > 1:  # «1.234.567» sem decimais
-        s = s.replace(".", "")
-    try:
-        x = float(s)
-    except ValueError:
-        return 0.0
+    t = t.replace("R$", "").replace("\u00a0", "").replace(" ", "")
+    neg = False
+    if t.startswith("(") and t.endswith(")"):
+        neg, t = True, t[1:-1]
+    if t.endswith("-"):
+        neg, t = not neg, t[:-1]
+    if t.startswith("-"):
+        neg, t = not neg, t[1:]
+    if not re.fullmatch(r"[\d.,]+", t or "x"):
+        raise ValueError("número ilegível no CSV: %r" % s)
+    if "," in t and "." in t:  # o último separador é o decimal
+        t = t.replace(".", "").replace(",", ".") if t.rfind(",") > t.rfind(".") else t.replace(",", "")
+    elif "," in t:
+        if t.count(",") > 1:
+            raise ValueError("número ilegível no CSV: %r" % s)
+        t = t.replace(",", ".")
+    elif t.count(".") > 1:
+        t = t.replace(".", "")
+    elif re.fullmatch(r"\d{1,3}\.\d{3}", t):
+        raise ValueError("número ambíguo no CSV (milhar ou decimal?): %r" % s)
+    x = float(t)
     return -x if neg else x
 
 
@@ -85,7 +102,7 @@ def ler(b, permitir_favorecido=False, config=None):
     if h is None:
         raise ValueError("RPNP por NE: cabeçalho com as contas contábeis não encontrado")
     cab = L[h]
-    if any("favorecido" in c.lower() for r in L[h:h + 3] for c in r) and not permitir_favorecido:
+    if any(RE_PESSOA.search(c) for r in L[h:h + 3] for c in r) and not permitir_favorecido:
         raise ValueError("RPNP por NE: o arquivo traz coluna de favorecido (portão P-RP-4); a ponte tem de cortá-la")
     cols = {c: j for j, c in enumerate(cab) if RE_CONTA.fullmatch(c)}
     desconhecidas = sorted(c for c in cols if papel(c) is None)
@@ -93,22 +110,29 @@ def ler(b, permitir_favorecido=False, config=None):
         raise ValueError("RPNP por NE: conta sem papel no bloco: %s" % ", ".join(desconhecidas))
     por_ne = {}
     totais = collections.defaultdict(collections.Counter)
+    totais_ne = collections.defaultdict(collections.Counter)
     avisos = collections.Counter()
+    nf = min(cols.values())  # colunas de atributo (UG, NE, dia...) vêm antes das contas
     for r in L[h + 1:]:
         ug = next((_ug_valida(c, sufixos) for c in r[:3] if _ug_valida(c, sufixos)), None)
+        com_valor = any(RE_NUM.match(r[j].replace('"', "").strip()) and re.search(r"[1-9]", r[j]) for j in cols.values()
+                        if j < len(r))
+        eh_total = any(c.strip().lower() == "total" for c in r[:nf])
         if not ug:
+            if com_valor and not eh_total:
+                raise ValueError("RPNP por NE: linha com valor sem UG válida (célula mesclada ou UG fora da OM)")
             continue
-        ne = next((c for c in r[:min(len(r), min(cols.values()))] if RE_NE.match(c)), None)
+        ne = next((c for c in r[:nf] if RE_NE.match(c)), None)
         valores = {c: num(r[j]) for c, j in cols.items() if j < len(r)}
-        if not ne and any(c.lower() == "total" for c in r[: min(cols.values())]):
-            totais[ug].update(valores)  # subtotal da UG que o TG põe no CSV: conferido abaixo, não somado
+        if eh_total:  # subtotal do TG (da UG ou da NE): conferido abaixo, nunca somado
+            (totais_ne[ne] if ne else totais[ug]).update(valores)
             continue
         if not ne:
             if any(abs(x) > TOL for x in valores.values()):
                 avisos["linhas sem NE válida (com valor)"] += 1
             continue
         if ne[:6] != ug:
-            raise ValueError("RPNP por NE: NE %s na linha da UG %s" % (ne, ug))
+            raise ValueError("RPNP por NE: NE de uma UG na linha de outra UG (%s)" % ug)
         x = por_ne.setdefault(ne, {"ug": ug, "ne": ne, "ano": int(RE_NE.match(ne).group(1)), "contas": collections.Counter()})
         x["contas"].update(valores)
     if not por_ne:
@@ -116,6 +140,10 @@ def ler(b, permitir_favorecido=False, config=None):
     soma = collections.defaultdict(collections.Counter)
     for x in por_ne.values():
         soma[x["ug"]].update(x["contas"])
+    for ne, t in totais_ne.items():
+        c0 = (por_ne.get(ne) or {}).get("contas") or collections.Counter()
+        if any(abs(t[c] - c0[c]) > TOL for c in set(t) | set(c0)):
+            raise ValueError("RPNP por NE: subtotal de uma NE ≠ soma das suas linhas (UG %s)" % ne[:6])
     for ug, t in totais.items():  # o subtotal do próprio TG tem de bater com a soma das NE, conta a conta
         ruins = [c for c in set(t) | set(soma[ug]) if abs(t[c] - soma[ug][c]) > TOL]
         if ruins:
@@ -188,9 +216,13 @@ def agregar(linhas_ne, exercicio=None, config=None):
     for x in por_ug:
         saldo = round(x["a_liquidar"] + x["em_liquidacao"] + x["bloqueado"], 2)
         if x["ano"] <= exercicio - 3 and saldo > TOL:
+            canc = x["cancelamento"]
+            vencido = canc < "%d-12-31" % exercicio
+            texto = ("RPNP de %d com saldo e prazo de cancelamento vencido em %s: conferir exceção (Lei 14.133, art. 105) "
+                     "ou cancelamento" % (x["ano"], "/".join(reversed(canc.split("-"))))) if vencido else (
+                     "RPNP de %d com saldo: cancela em %s se não liquidado" % (x["ano"], "/".join(reversed(canc.split("-")))))
             alertas.append({"omds": x["omds"], "ug": x["ug"], "ano": x["ano"], "saldo": saldo,
-                            "evento": "cancelamento", "data": "%d-12-31" % exercicio,
-                            "texto": "RPNP de %d com saldo: cancela em 31/12/%d se não liquidado" % (x["ano"], exercicio)})
+                            "evento": "cancelamento", "data": canc, "texto": texto})
         if abs(x["a_classificar"]) > TOL:
             alertas.append({"omds": x["omds"], "ug": x["ug"], "ano": x["ano"], "saldo": x["a_classificar"],
                             "evento": "conta_6316", "data": None,
@@ -220,7 +252,8 @@ def calcular(b, regua, data_dado, config=None, permitir_favorecido=False):
     linhas_ne, avisos = ler(b, permitir_favorecido=permitir_favorecido, config=config)
     res = agregar(linhas_ne, config=config)
     if res["nao_fecham"]:
-        raise ValueError("portão P-RP-5: %d NE com Σ531 ≠ Σ631 (ex.: %s)" % (len(res["nao_fecham"]), res["nao_fecham"][0]))
+        raise ValueError("portão P-RP-5: %d NE com Σ531 ≠ Σ631 (diferença total R$ %.2f)"
+                         % (len(res["nao_fecham"]), sum(d for _, d in res["nao_fecham"])))
     div = identidade_regua(res, regua)
     if div:
         raise ValueError("portão P-RP-1: Σ 631100000 por NE ≠ item 43 da régua: %s" % div)
@@ -259,9 +292,12 @@ def main(argv=None):
         print("RP_POR_ANO: bloco desligado no config; nada a fazer")
         return 0
     saida, regua_p = Path(o.saida), Path(o.regua)
-    ant = json.loads(saida.read_text(encoding="utf-8")) if saida.exists() else {}
-    regua = json.loads(regua_p.read_text(encoding="utf-8")) if regua_p.exists() else {}
     try:
+        ant = json.loads(saida.read_text(encoding="utf-8")) if saida.exists() else {}
+    except (OSError, ValueError):
+        ant = {}  # arquivo anterior ilegível: o novo, se passar nos portões, substitui
+    try:
+        regua = json.loads(regua_p.read_text(encoding="utf-8")) if regua_p.exists() else {}
         if o.local:
             b, data_dado, origem = Path(o.local).read_bytes(), o.data_dado, "exportação manual (conferência local)"
             r = calcular(b, regua, data_dado, permitir_favorecido=True)

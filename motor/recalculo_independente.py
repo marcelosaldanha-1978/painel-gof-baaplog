@@ -96,8 +96,11 @@ def conferir_v24(D):
                                    ("vencem_365", sum(c["dias_para_vencer"] <= 365 for c in cs), o["vencem_365"])):
                 if not igual(esp, pub):
                     falhas.append("Contratos %s %s: recalculado %s, publicado %s" % (o["omds"], nome, esp, pub))
-            if any(k in c for c in cs for k in ("fornecedor", "cnpj", "empenhado_ano")):
+            if any(k in c for c in cs for k in ("fornecedor", "cnpj", "cnpj_cpf_idgener", "empenhado", "empenhado_ano")):
                 falhas.append("Contratos %s: campo de fornecedor/CNPJ/empenhado na saída" % o["omds"])
+            doc = re.compile(r"\b\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2}\b|\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b")
+            if any(doc.search(str(c.get("objeto") or "")) for c in cs):
+                falhas.append("Contratos %s: CPF/CNPJ no texto do objeto" % o["omds"])
     return falhas
 
 
