@@ -70,28 +70,21 @@ Cada OMDS aparece com o seu brasão e as **duas UG** lado a lado. Em cada UG, o 
 ## Do Tesouro Gerencial à tela, sem pessoa
 
 ```mermaid
-flowchart LR
-    subgraph TG["🏦 Tesouro Gerencial (SERPRO)"]
-      A1["Emissão 5229 × execução 6229 por NE"]
-      A2["NE · informação complementar"]
-      A3["Régua de crédito e RPNP por UG"]
-      A4["Crédito em tela por NC<br/>(ZIP · 62 MB → 0,5 MB)"]
-      A5["Crédito por NC · movimento 2026"]
+flowchart TB
+    subgraph TG["🏦 Tesouro Gerencial · assinaturas seg a sex, ~03h"]
+      direction LR
+      A1["<b>Empenho e liquidação</b><br/>emissão 5229 × execução 6229<br/>+ informação complementar"]
+      A2["<b>Crédito em tela e RPNP</b><br/>régua por UG · crédito por NC (ZIP)<br/>+ movimento 2026"]
     end
-    G["📧 Gmail<br/>entrega ~03h"]
-    P["⚙️ Apps Script v2PonteTG<br/>06h e 11h<br/><b>remove favorecido e CPF</b>"]
-    D[("🔒 Drive privado<br/>PONTE_TG_SEM_PESSOA<br/>só a conta de serviço lê")]
+    TG --> G["📧 Gmail"] --> P["⚙️ <b>Ponte P-041</b> · Apps Script 06h e 11h<br/>remove favorecido e CPF"] --> D[("🔒 Drive privado<br/>só a conta de serviço lê")]
+    D --> GA
     subgraph GA["☁️ GitHub Actions · 07:33 e 12:33"]
-      M1["gof_ponte_tg.py<br/>empenho e liquidação"]
-      M2["gof_regua_tg.py<br/>tela · vencido · RPNP"]
-      M3["gof_painel.py<br/>monta a página"]
+      direction LR
+      M1["gof_ponte_tg.py<br/>empenho · liquidação"] --> M3["gof_painel.py<br/>monta a página"]
+      M2["gof_regua_tg.py<br/>tela · vencido · RPNP"] --> M3
     end
-    X["🌐 GitHub Pages<br/>página + dados.json"]
-    O1["📋 PNCP · Compras.gov<br/>fichas e atas"]
-    O2["🏛️ Portal da Transparência<br/>reserva do B1"]
-    O3["📊 Planilha GCALC<br/>só leitura"]
-    A1 & A2 & A3 & A4 & A5 --> G --> P --> D --> M1 & M2 --> M3 --> X
-    O1 & O2 & O3 -.-> M3
+    O["📋 PNCP · Compras.gov · Portal da Transparência · planilha GCALC"] -.-> GA
+    GA --> X["🌐 <b>Página pública</b> + dados.json<br/>GitHub Pages"]
     style P fill:#0a84ff,color:#fff,stroke:#0a84ff
     style D fill:#1d1d1f,color:#fff,stroke:#1d1d1f
     style X fill:#30d158,color:#fff,stroke:#30d158
@@ -121,13 +114,19 @@ sequenceDiagram
 ## Sete portões antes de publicar
 
 ```mermaid
-flowchart LR
-    S(["push ou agenda"]) --> P1["1 · suíte de testes"] --> P2["2 · lint (ruff)"] --> P7["7 · auditoria dos workflows (zizmor)"]
-    P7 --> P3["3 · montagem com atas do PNCP"] --> P4["4 · recálculo independente<br/>tolerância R$ 0,01"] --> P5["5 · verificador<br/>zero dado pessoal · hash · até 2 MB"] --> P6["6 · navegador headless<br/>390 e 1280 px · 0 erro de JS"]
-    P6 --> OK(["✅ publica"])
-    P4 -. reprova .-> NO(["⛔ mantém a versão anterior"])
-    P5 -. reprova .-> NO
-    P6 -. reprova .-> NO
+flowchart TB
+    S(["push ou agenda"]) --> C
+    subgraph C["🧪 Código"]
+      direction LR
+      P1["1 · testes"] --> P2["2 · lint"] --> P7["7 · auditoria<br/>dos workflows"]
+    end
+    C --> Dd
+    subgraph Dd["📊 Dados e página"]
+      direction LR
+      P3["3 · montagem"] --> P4["4 · recálculo<br/>ao centavo"] --> P5["5 · zero dado<br/>pessoal"] --> P6["6 · navegador<br/>390 e 1280 px"]
+    end
+    Dd -->|todos passam| OK(["✅ publica"])
+    Dd -.->|um reprova| NO(["⛔ mantém a versão anterior"])
     style OK fill:#30d158,color:#fff,stroke:#30d158
     style NO fill:#ff453a,color:#fff,stroke:#ff453a
 ```
