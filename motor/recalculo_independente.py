@@ -83,6 +83,22 @@ def conferir_v24(D):
             for u in sorted(set(item43) | set(aliq)):
                 if not igual(item43.get(u, 0.0), aliq.get(u, 0.0)):
                     falhas.append("RP UG %s a liquidar: régua %.2f, por NE %.2f" % (u, item43.get(u, 0.0), aliq.get(u, 0.0)))
+        if rp.get("por_ne") is not None:
+            dp = cfg.dados_pessoais()
+            if not dp["favorecido"]:
+                falhas.append("RP: detalhe por NE publicado sem permissão do config")
+            soma_ne = defaultdict(float)
+            for x in rp["por_ne"]:
+                soma_ne[x["ug"]] += x["a_liquidar"]
+            al_ug = defaultdict(float)
+            for x in rp["por_ug"]:
+                al_ug[x["ug"]] += x["a_liquidar"]
+            for u in sorted(set(soma_ne) | set(al_ug)):
+                if abs(soma_ne.get(u, 0.0) - al_ug.get(u, 0.0)) > 0.01 * max(1, len(rp["por_ne"])):
+                    falhas.append("RP UG %s: detalhe por NE %.2f, por ano %.2f" % (u, soma_ne.get(u, 0.0), al_ug.get(u, 0.0)))
+            cpf = re.compile(r"(?<![\d*])\d{3}\.?\d{3}\.?\d{3}-?\d{2}(?![\d*])")
+            if dp["cpf"] != "completo" and any(cpf.search(str(x.get("favorecido") or "")) for x in rp["por_ne"]):
+                falhas.append("RP: CPF inteiro no favorecido do detalhe por NE")
     ct = D.get("contratos")
     if ct and not ct.get("ausente"):
         for o in ct["por_omds"]:
@@ -101,8 +117,8 @@ def conferir_v24(D):
             if any(k in c for c in cs for k in vetadas):
                 falhas.append("Contratos %s: campo vetado pelo config na saída (fornecedor/CNPJ/empenhado)" % o["omds"])
             if dp["favorecido"]:
-                doc = None if dp["cpf"] == "completo" else re.compile(r"(?<![\d*])\d{3}\.?\d{3}\.?\d{3}-?\d{2}(?![\d*/])")
-                campos = ("objeto", "documento")
+                doc = None if dp["cpf"] == "completo" else re.compile(r"(?<![\d*])\d{3}\.?\d{3}\.?\d{3}-?\d{2}(?![\d*])")
+                campos = ("objeto", "documento", "fornecedor")
             else:
                 doc = re.compile(r"\b\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2}\b|\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b")
                 campos = ("objeto",)

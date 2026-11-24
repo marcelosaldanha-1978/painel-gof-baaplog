@@ -95,7 +95,8 @@ def ler(b, permitir_favorecido=False, config=None, guardar_favorecido=False):
     """bytes do CSV -> (linhas por NE agregadas, avisos). Cada linha: {ug, ne, ano, contas{conta: valor}}.
 
     `permitir_favorecido` existe só para a conferência local com a exportação manual (que traz a coluna); na montagem é
-    sempre False (portão P-RP-4). O favorecido nunca é lido nem devolvido."""
+    False salvo quando o config da OM libera o favorecido (dados_pessoais); só então `guardar_favorecido` lê a coluna
+    (pelo nome do cabeçalho) e devolve o favorecido de cada NE, com o CPF conforme o modo do config."""
     sufixos = {o["ug160"][3:] for o in cfg.omds(config)}
     L = linhas(b)
     h = next((i for i, r in enumerate(L) if sum(bool(RE_CONTA.fullmatch(c)) for c in r) >= 2), None)

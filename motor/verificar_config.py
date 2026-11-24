@@ -183,7 +183,7 @@ def verificar(caminho, hoje=None, raiz_dados=None, avisos=None):
             erros.append("dados_pessoais deve ser objeto com «favorecido» booleano")
         elif dp.get("cpf") not in (None,) + cfg.MODOS_CPF:
             erros.append("dados_pessoais.cpf deve ser «mascarado» ou «completo»: %r" % dp.get("cpf"))
-        if eh_referencia and dp.get("favorecido"):
+        if eh_referencia and isinstance(dp, dict) and dp.get("favorecido"):
             erros.append("a OM de referência (BaApLog) não mostra favorecido (regra do projeto-mãe)")
     # brasões (opcional)
     if om.get("brasoes") and not cfg._resolver(p.parent, om["brasoes"]).exists():

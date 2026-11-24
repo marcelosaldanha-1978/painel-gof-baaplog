@@ -21,6 +21,21 @@ import gof_config as cfg  # noqa: E402
 
 RE_CPF = re.compile(r"(?<!\d)\d{3}\.\d{3}\.\d{3}-\d{2}(?!\d)|(?<!\d)\*{3}\.\d{3}\.\d{3}-\*{2}(?!\d)")
 RE_CPF_INTEIRO = re.compile(r"(?<![\d*])\d{3}\.\d{3}\.\d{3}-\d{2}(?![\d*])")
+RE_CPF_SO_DIGITOS = re.compile(r"(?<![\d*])\d{3}\.?\d{3}\.?\d{3}-?\d{2}(?![\d*])")
+CAMPOS_PESSOA = ("favorecido", "fornecedor", "documento", "objeto")
+
+
+def textos_de_pessoa(obj, acc):
+    """Valores dos campos de pessoa, onde CPF sem pontuação também conta (no resto da página, 11 dígitos podem ser hash)."""
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if k in CAMPOS_PESSOA and isinstance(v, str):
+                acc.append(v)
+            textos_de_pessoa(v, acc)
+    elif isinstance(obj, list):
+        for v in obj:
+            textos_de_pessoa(v, acc)
+    return acc
 CHAVES_PROIBIDAS = ("favorecido", "codigoFavorecido", "observacao", "contato", "telefone", "email", "cpf")
 LIMITE_BYTES = 2 * 1024 * 1024
 
@@ -52,6 +67,8 @@ def main(argv=None):
         m = padrao.search(txt) if padrao else None
         if m:
             falhas.append("%s contém padrão de CPF" % nome)
+    if dp["favorecido"] and dp["cpf"] != "completo" and any(RE_CPF_SO_DIGITOS.search(x) for x in textos_de_pessoa(dados, [])):
+        falhas.append("dados.json tem CPF inteiro (sem máscara) em campo de pessoa")
     proibidas = {c.lower() for c in CHAVES_PROIBIDAS} - ({"favorecido"} if dp["favorecido"] else set())
     ruins = sorted(k for k in chaves(dados, set()) if k.lower() in proibidas)
     if ruins:

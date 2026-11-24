@@ -58,7 +58,8 @@ def fornecedor(c, modo_cpf):
     f = c.get("fornecedor") or {}
     if not isinstance(f, dict):
         return "", ""
-    return str(f.get("nome") or "").strip(), cfg.mascarar_cpf(str(f.get("cnpj_cpf_idgener") or "").strip(), modo_cpf)
+    return (cfg.mascarar_cpf(str(f.get("nome") or "").strip(), modo_cpf),
+            cfg.mascarar_cpf(str(f.get("cnpj_cpf_idgener") or "").strip(), modo_cpf))
 
 
 def vigentes(lista, hoje, pessoais=None):

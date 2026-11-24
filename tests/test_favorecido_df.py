@@ -117,3 +117,31 @@ def test_b1_liquidacao_com_favorecido_por_ne():
     assert x["favorecido"] == "PESSOA FICTICIA ***.456.789-**" and x["documento"] == "***.456.789-**"
     assert x["a_liquidar"] == 600.0 and x["dias"] == 325
     assert "por_ne" not in pt.liquidacao(pt.agregar_emissao(txt), "2026-11-23")  # sem permissão, nada muda
+
+
+def test_nome_de_mei_com_cpf_e_mascarado_no_contratado():
+    pf = reg("3/2026", "2027-03-01", forn="NOME FICTICIO 12345678901")
+    pf["fornecedor"]["cnpj_cpf_idgener"] = "12.345.678/0001-90"
+    cs = C.vigentes([pf], HOJE, pessoais={"favorecido": True, "cpf": "mascarado"})
+    assert cs[0]["fornecedor"] == "NOME FICTICIO ***.456.789-**" and cs[0]["documento"] == "12.345.678/0001-90"
+
+
+def test_verificar_saida_df_reprova_cpf_sem_pontuacao_em_campo_de_pessoa(tmp_path, monkeypatch):
+    monkeypatch.setenv("GOF_CONFIG", str(DF))
+    dados = {"x": [{"fornecedor": "NOME FICTICIO 12345678901"}]}
+    assert VS.main(["--saida", _saida(tmp_path, dados)]) == 1
+
+
+def test_recalculo_confere_o_detalhe_por_ne(monkeypatch):
+    import recalculo_independente as RI
+    monkeypatch.setenv("GOF_CONFIG", str(DF))
+    base = {"por_ug": [{"omds": "DF", "ug": "160336", "ano": 2025, "a_liquidar": 100.0, "inscrito": 100.0, "liquidado": 0.0,
+                        "cancelado": 0.0, "em_liquidacao": 0.0, "bloqueado": 0.0, "excetuado": 0.0}],
+            "por_omds": [], "data_dado": "2026-11-23",
+            "por_ne": [{"ug": "160336", "a_liquidar": 100.0, "favorecido": "EMPRESA FICTICIA LTDA"}]}
+    fn = RI.conferir_v24
+    assert fn({"rp_por_ano": base}) == []
+    ruim = copy.deepcopy(base)
+    ruim["por_ne"][0].update(a_liquidar=90.0, favorecido="NOME FICTICIO 12345678901")
+    falhas = fn({"rp_por_ano": ruim})
+    assert any("detalhe por NE" in f for f in falhas) and any("CPF inteiro" in f for f in falhas)
