@@ -18,7 +18,22 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  config:
+    # v2.3: este workflow serve so a OM com o bloco «capacidade» ligado no config/om.json; nas outras, o job abaixo e pulado
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      ligado: ${{ steps.bloco.outputs.ligado }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - id: bloco
+        run: echo "ligado=$(python3 motor/gof_config.py --bloco capacidade)" >> "$GITHUB_OUTPUT"
+
   capacidade:
+    needs: config
+    if: needs.config.outputs.ligado == '1'
     runs-on: ubuntu-latest
     timeout-minutes: 330
     permissions:
