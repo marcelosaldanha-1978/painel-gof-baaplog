@@ -182,3 +182,18 @@ def js_objeto(d):
 
 def js_lista(xs):
     return "[" + ",".join(json.dumps(x, ensure_ascii=False) for x in xs) + "]"
+
+
+def main(argv=None):
+    """v2.3: os workflows e o portao.sh perguntam ao config se um bloco está ligado (imprime 1 ou 0)."""
+    import argparse
+
+    ap = argparse.ArgumentParser(description="consulta a configuração da OM (config/om.json ou GOF_CONFIG)")
+    ap.add_argument("--bloco", required=True, help="nome do bloco em «blocos» (ex.: carteira_gcalc, capacidade)")
+    o = ap.parse_args(argv)
+    print(int(bloco_ligado(o.bloco)))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
