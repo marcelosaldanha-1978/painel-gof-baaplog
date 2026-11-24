@@ -16,6 +16,7 @@ import argparse
 import datetime as dt
 import json
 import sys
+from zoneinfo import ZoneInfo
 
 from gof_painel import dias_uteis
 
@@ -72,7 +73,8 @@ def main(argv=None):
     ap.add_argument("--json", default=None)
     ap.add_argument("--runs", default=None, help="JSON com as execuções do workflow de montagem (event, conclusion, created_at)")
     o = ap.parse_args(argv)
-    hoje = dt.date.fromisoformat(o.hoje) if o.hoje else dt.date.today()
+    # data de Brasília: o runner do GitHub está em UTC e, à noite, já estaria no dia seguinte
+    hoje = dt.date.fromisoformat(o.hoje) if o.hoje else dt.datetime.now(ZoneInfo("America/Sao_Paulo")).date()
     runs = None
     if o.runs:
         try:
