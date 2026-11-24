@@ -34,7 +34,9 @@ def test_config_exemplo_df_passa_no_verificador_e_tem_as_6_ug():
     om = json.loads(DF.read_text(encoding="utf-8"))
     ugs = {u for o in om["omds"] for u in (o["ug160"], o["ug167"])}
     assert ugs == {"160336", "167336", "160285", "167285", "160529", "167529"}
-    assert not any(om["blocos"].values())  # sem carteira GCALC, atas PNCP, capacidade nem dispensa
+    # sem carteira GCALC, atas PNCP, capacidade nem dispensa; v2.4: RP por ano e contratos ligados (P-003 da DF)
+    assert not any(om["blocos"][b] for b in ("carteira_gcalc", "pncp_atas", "capacidade", "dispensa"))
+    assert om["blocos"]["rp_por_ano"] and om["blocos"]["contratos"]
     assert om["assinaturas_tg"]["prefixo_assunto"] == "PAINEL-DF-CONF-"
 
 

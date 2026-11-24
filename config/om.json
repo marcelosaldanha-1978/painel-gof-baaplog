@@ -21,7 +21,7 @@
                       "160327", "160123", "160236", "765703", "160468"],
   "referencia_regional": {"rotulo": "1ª RM", "resumo": "1ª RM (planilha de 10/11)", "fonte": "planilha da 1ª RM de 10/11/2026",
                           "data": "2026-11-10"},
-  "blocos": {"carteira_gcalc": true, "pncp_atas": true, "capacidade": true, "dispensa": true},
+  "blocos": {"carteira_gcalc": true, "pncp_atas": true, "capacidade": true, "dispensa": true, "rp_por_ano": false, "contratos": false},
   "janelas": {"execucao_desde": "2026-04-01", "portal_desde": "2026-09-28",
               "contratacoes": [["2025-09-01", "2025-12-31"], ["2026-01-01", "2026-06-30"], ["2026-07-01", null]]},
   "assinaturas_tg": {"prefixo_assunto": "GOF-BaApLog-CONF-"},
