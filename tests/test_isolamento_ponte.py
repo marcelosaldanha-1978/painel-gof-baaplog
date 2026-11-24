@@ -6,6 +6,7 @@ from pathlib import Path
 
 import gof_config as cfg
 import gof_ponte_tg as pt
+import pytest
 import verificar_config as vc
 
 RAIZ = Path(__file__).resolve().parent.parent
@@ -43,7 +44,7 @@ def test_outra_om_sem_pasta_propria_reprova(tmp_path):
 
 def test_outra_om_com_prefixo_da_baaplog_reprova(tmp_path):
     erros = vc.verificar(_df_alterado(tmp_path, prefixo_assunto="GOF-BaApLog-CONF-", pasta_drive="X_DF"), hoje=HOJE)
-    assert any("prefixo_assunto da OM de referência" in e for e in erros)
+    assert any("se confunde com o da OM de referência" in e for e in erros)
 
 
 def test_listar_pasta_usa_o_nome_do_config(monkeypatch):
@@ -63,9 +64,47 @@ def test_listar_pasta_usa_o_nome_do_config(monkeypatch):
 
 def test_duas_pastas_com_o_mesmo_nome_reprova(monkeypatch):
     monkeypatch.setattr(pt, "_get", lambda u, t: json.dumps({"files": [{"id": "1"}, {"id": "2"}]}).encode())
-    try:
+    with pytest.raises(RuntimeError, match="2 encontradas"):
         pt.listar_pasta("tok", nome="PONTE_TG_SEM_PESSOA_DF")
-    except RuntimeError as e:
-        assert "2 encontradas" in str(e)
-    else:
-        raise AssertionError("devia reprovar")
+
+
+def test_listar_pasta_sem_nome_le_o_config_da_om(monkeypatch):
+    monkeypatch.setenv("GOF_CONFIG", str(DF))
+    pedidos = []
+
+    def falso_get(url, tok):
+        pedidos.append(url)
+        return json.dumps({"files": [{"id": "P1", "name": "x"}]}).encode()
+
+    monkeypatch.setattr(pt, "_get", falso_get)
+    pt.listar_pasta("tok")
+    assert "PONTE_TG_SEM_PESSOA_DF" in pedidos[0].replace("+", " ").replace("%27", "'")
+
+
+def test_prefixo_vazio_reprova(tmp_path):
+    assert any("prefixo_assunto vazio" in e for e in vc.verificar(_df_alterado(tmp_path, prefixo_assunto="", pasta_drive="X_DF"), hoje=HOJE))
+
+
+@pytest.mark.parametrize("prefixo", ["GOF-", "gof-baaplog-conf-", "GOF-BaApLog-CONF-X"])
+def test_prefixo_que_se_confunde_com_o_da_baaplog_reprova(tmp_path, prefixo):
+    erros = vc.verificar(_df_alterado(tmp_path, prefixo_assunto=prefixo, pasta_drive="X_DF"), hoje=HOJE)
+    assert any("se confunde" in e for e in erros)
+
+
+@pytest.mark.parametrize("pasta", ["ponte_tg_sem_pessoa", "X_DF ", "X'DF"])
+def test_pasta_igual_sem_caixa_ou_com_espaco_ou_aspas_reprova(tmp_path, pasta):
+    erros = vc.verificar(_df_alterado(tmp_path, prefixo_assunto="PAINEL-DF-CONF-", pasta_drive=pasta), hoje=HOJE)
+    assert any("pasta_drive" in e for e in erros)
+
+
+def test_id_da_baaplog_em_outra_om_reprova(tmp_path):
+    om = json.loads(_df_alterado(tmp_path, prefixo_assunto="PAINEL-DF-CONF-", pasta_drive="X_DF").read_text(encoding="utf-8"))
+    om["id"] = "baaplog"
+    p = tmp_path / "om.json"
+    p.write_text(json.dumps(om, ensure_ascii=False), encoding="utf-8")
+    assert any("reservado à OM de referência" in e for e in vc.verificar(p, hoje=HOJE))
+
+
+@pytest.mark.dados_baaplog
+def test_baaplog_continua_aprovada_com_a_regra_de_isolamento():
+    assert vc.verificar(REF, hoje=HOJE) == []

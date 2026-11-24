@@ -47,6 +47,8 @@ DADOS_DO_BLOCO = {
 
 ID_REFERENCIA = "baaplog"
 PREFIXO_REFERENCIA = "GOF-BaApLog-CONF-"
+SIGLA_REFERENCIA = "BaApLog"
+RE_ASPAS = re.compile("[\"'\\\\]")
 
 
 def _data(s):
@@ -156,15 +158,24 @@ def verificar(caminho, hoje=None, raiz_dados=None, avisos=None):
                 for campo in ("empenho", "liquidacao", "liquidacao_rp"):
                     if len(g.get(campo) or []) != n:
                         erros.append("metas: grupo %s.%s sem um valor por marco (%d)" % (g.get("id"), campo, n))
-    # isolamento da cadeia do TG (salvaguarda de 24/11/2026: outra OM pode rodar na mesma conta Google e GitHub)
+    # isolamento da cadeia do TG (salvaguarda de 24/11/2026: outra OM pode rodar na mesma conta Google e GitHub).
+    # Alcance: o config e a montagem (pasta lida no Drive). No Gmail, quem separa é a trava da ponte da OM (Apps Script).
     atg = om.get("assinaturas_tg") or {}
-    prefixo, pasta = str(atg.get("prefixo_assunto") or ""), str(atg.get("pasta_drive") or cfg.PASTA_PONTE_PADRAO)
+    prefixo = str(atg.get("prefixo_assunto") or "")
+    pasta = str(atg.get("pasta_drive") or cfg.PASTA_PONTE_PADRAO)
     if not prefixo.strip():
         erros.append("assinaturas_tg.prefixo_assunto vazio")
-    if om.get("id") != ID_REFERENCIA:
-        if prefixo.startswith(PREFIXO_REFERENCIA):
-            erros.append("assinaturas_tg.prefixo_assunto da OM de referência (%s) numa OM diferente: as pontes se cruzariam no Gmail" % PREFIXO_REFERENCIA)
-        if pasta == cfg.PASTA_PONTE_PADRAO:
+    for campo, valor in (("prefixo_assunto", prefixo), ("pasta_drive", pasta)):
+        if valor != valor.strip() or RE_ASPAS.search(valor):
+            erros.append("assinaturas_tg.%s com espaço nas pontas ou aspas: %r" % (campo, valor))
+    eh_referencia = om.get("id") == ID_REFERENCIA
+    if eh_referencia and str(om.get("sigla") or "") != SIGLA_REFERENCIA:
+        erros.append("id «%s» reservado à OM de referência, mas a sigla é %r: troque o id da OM nova" % (ID_REFERENCIA, om.get("sigla")))
+    if not eh_referencia:
+        p1, p2 = prefixo.strip().casefold(), PREFIXO_REFERENCIA.casefold()
+        if p1 and (p1.startswith(p2) or p2.startswith(p1)):
+            erros.append("assinaturas_tg.prefixo_assunto se confunde com o da OM de referência (%s): as pontes se cruzariam no Gmail" % PREFIXO_REFERENCIA)
+        if pasta.strip().casefold() == cfg.PASTA_PONTE_PADRAO.casefold():
             erros.append("assinaturas_tg.pasta_drive ausente ou igual à da OM de referência (%s): defina uma pasta própria" % cfg.PASTA_PONTE_PADRAO)
     # brasões (opcional)
     if om.get("brasoes") and not cfg._resolver(p.parent, om["brasoes"]).exists():

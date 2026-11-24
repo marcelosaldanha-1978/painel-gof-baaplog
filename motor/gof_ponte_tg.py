@@ -196,6 +196,7 @@ def listar_pasta(tok, nome=None):
     pastas = json.loads(_get(u, tok))["files"]
     if len(pastas) != 1:
         raise RuntimeError("pasta %s: %d encontradas (esperada 1, compartilhada com a conta de serviço)" % (nome, len(pastas)))
+    print("PONTE: pasta do Drive «%s» (1 encontrada)" % nome)
     q = "'%s' in parents and trashed = false" % pastas[0]["id"]
     u = "https://www.googleapis.com/drive/v3/files?" + urllib.parse.urlencode(
         {"q": q, "fields": "files(id,name)", "pageSize": 1000, "orderBy": "name desc"})
