@@ -20,9 +20,9 @@ import csv
 import datetime as dt
 import io
 import re
-import sys as _sys  # noqa: E402
+import sys as _sys
 import unicodedata
-from pathlib import Path as _Path  # noqa: E402
+from pathlib import Path as _Path
 
 _sys.path.insert(0, str(_Path(__file__).resolve().parent))
 import gof_config as cfg  # noqa: E402

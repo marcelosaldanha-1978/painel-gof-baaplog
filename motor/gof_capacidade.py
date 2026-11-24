@@ -31,13 +31,12 @@ import json
 import os
 import re
 import sys
-import sys as _sys  # noqa: E402
 import time
 import urllib.parse
 import urllib.request
-from pathlib import Path as _Path  # noqa: E402
+from pathlib import Path as _Path
 
-_sys.path.insert(0, str(_Path(__file__).resolve().parent))
+sys.path.insert(0, str(_Path(__file__).resolve().parent))
 import gof_config as cfg  # noqa: E402
 
 ARP = "https://dadosabertos.compras.gov.br/modulo-arp"
