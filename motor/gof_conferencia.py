@@ -45,6 +45,7 @@ try:
     sys.stdout.reconfigure(encoding="utf-8")
 except (AttributeError, ValueError):
     pass
+import gof_config as cfg  # noqa: E402
 import gof_google  # noqa: E402
 import requests
 
@@ -59,14 +60,7 @@ API = "https://sheets.googleapis.com/v4/spreadsheets/" + SP
 ACC_SA = "sa"
 ACC_DONO = "7aa3cd63-2e78-41ad-81be-57dd59abce59"
 CNPJ = "00394452000103"
-UASGS = {
-    "160238": "BaApLog",
-    "160329": "BCMS",
-    "160304": "BMSA",
-    "160321": "ECT",
-    "160246": "DCMun",
-    "160307": "1oDSup",
-}
+UASGS = cfg.uasg_para_chave()  # config/om.json
 EPOCH = dt.date(1899, 12, 30)
 MAX_CELULAS = 30
 SITUACAO_AZ = {"Divulgada no PNCP": "Ativo", "Suspensa": "Suspenso", "Anulada": "Anulado", "Revogada": "Revogado"}
@@ -173,7 +167,7 @@ def compras_gov_contratacoes(hoje):
     """Todas as contratacoes (pregao) das 6 UASGs desde 01/09/2025, inclusive excluidas: serve para achar relancamento."""
     base = "https://dadosabertos.compras.gov.br/modulo-contratacoes/1_consultarContratacoes_PNCP_14133"
     out = {}
-    janelas = [("2025-09-01", "2025-12-31"), ("2026-01-01", "2026-06-30"), ("2026-07-01", hoje.isoformat())]
+    janelas = [(a, b or hoje.isoformat()) for a, b in cfg.janela("contratacoes")]  # config/om.json
     for u in UASGS:
         todos = []
         for excl in ("false", "true"):
@@ -360,7 +354,7 @@ def main():
         action="store_true",
         help="acrescenta a secao Execucao da despesa (Portal da Transparencia + ficha ao vivo); so leitura",
     )
-    ap.add_argument("--execucao-desde", default="2026-04-01", help="inicio da janela de empenhos (AAAA-MM-DD)")
+    ap.add_argument("--execucao-desde", default=cfg.janela("execucao_desde"), help="inicio da janela de empenhos (AAAA-MM-DD)")
     ap.add_argument(
         "--execucao-ugs-ampliadas", action="store_true", help="coleta tambem as UG participantes/adesoes (mais lento)"
     )
