@@ -13,6 +13,10 @@
 
 ---
 
+<p align="center"><img src="docs/img/credenciais.svg" alt="Quadro de credenciais: dois segredos de leitura, um token de disparo que expira em 04/01/2027, main protegida e vigia" width="100%"></p>
+
+---
+
 ## 🛡️ Defesa em camadas
 
 ```mermaid
@@ -30,6 +34,11 @@ flowchart TB
       G["verificar_saida.py<br/>barra CPF e chaves proibidas"] --> H["recálculo ao centavo<br/>+ navegador headless"]
     end
     I["🌐 Página pública + histórico no git"]
+    subgraph C5["5 · Depois de publicar — guardas"]
+      K["🛡️ main: sem force push<br/>e sem exclusão (ruleset)"]
+      L["👁️ vigia v2: montagem, B1, régua<br/>e disparo por evento"]
+    end
+    I --> C5
     B --> D --> E
     F --> G
     H -->|tudo passa| I

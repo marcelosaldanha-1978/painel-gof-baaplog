@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="Quadro de credenciais e proteções: dois segredos de leitura, um token de disparo que expira em 4 de janeiro de 2027, main protegida e vigia">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220"/><stop offset="1" stop-color="#0d1a17"/>
+    </linearGradient>
+    <style>
+      .f{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","Helvetica Neue",Arial,sans-serif}
+      .h{fill:#fff;font-size:18px;font-weight:700}
+      .s{fill:#a1a1aa;font-size:13px}
+      .k{font-size:12px;font-weight:700;letter-spacing:1.4px}
+    </style>
+  </defs>
+  <rect width="1200" height="400" rx="28" fill="url(#bg)"/>
+  <g class="f">
+    <text x="50" y="56" fill="#8e8e93" font-size="14" font-weight="600" letter-spacing="2.2">QUADRO DE CREDENCIAIS E PROTEÇÕES · 23/11/2026</text>
+    <text x="48" y="96" fill="#fff" font-size="30" font-weight="800" letter-spacing="-.6">O que pode ler, o que pode escrever, e até quando</text>
+
+    <!-- 1 -->
+    <rect x="50" y="130" width="255" height="220" rx="20" fill="#30d158" fill-opacity=".10" stroke="#30d158" stroke-opacity=".55"/>
+    <text x="72" y="162" class="k" fill="#30d158">SÓ LEITURA</text>
+    <text x="72" y="194" class="h">🔑 GOOGLE_SA_JSON</text>
+    <text x="72" y="222" class="s">conta de serviço</text>
+    <text x="72" y="242" class="s">gof-painel-leitura</text>
+    <text x="72" y="268" class="s">Leitor da planilha GCALC</text>
+    <text x="72" y="288" class="s">e da pasta da ponte</text>
+    <text x="72" y="326" class="s">secret do GitHub · desde 07/11</text>
+
+    <!-- 2 -->
+    <rect x="325" y="130" width="255" height="220" rx="20" fill="#30d158" fill-opacity=".10" stroke="#30d158" stroke-opacity=".55"/>
+    <text x="347" y="162" class="k" fill="#30d158">SÓ LEITURA</text>
+    <text x="347" y="194" class="h">🔑 Portal da Transp.</text>
+    <text x="347" y="222" class="s">chave da API pública</text>
+    <text x="347" y="242" class="s">(reserva do B1)</text>
+    <text x="347" y="326" class="s">secret do GitHub · desde 07/11</text>
+
+    <!-- 3 -->
+    <rect x="600" y="130" width="275" height="220" rx="20" fill="#ff9f0a" fill-opacity=".10" stroke="#ff9f0a" stroke-opacity=".65"/>
+    <text x="622" y="162" class="k" fill="#ff9f0a">ESCRITA · EXCEÇÃO À D14</text>
+    <text x="622" y="194" class="h">⚡ token de disparo</text>
+    <text x="622" y="222" class="s">fine-grained, 2 repositórios</text>
+    <text x="622" y="242" class="s">fica no Apps Script (Google),</text>
+    <text x="622" y="262" class="s">nunca no código nem no git</text>
+    <rect x="622" y="290" width="230" height="34" rx="17" fill="#ff9f0a" fill-opacity=".2"/>
+    <text x="640" y="312" fill="#ffd60a" font-size="14" font-weight="700">⏳ expira em 04/01/2027</text>
+
+    <!-- 4 -->
+    <rect x="895" y="130" width="255" height="220" rx="20" fill="#0a84ff" fill-opacity=".10" stroke="#0a84ff" stroke-opacity=".6"/>
+    <text x="917" y="162" class="k" fill="#64d2ff">GUARDAS</text>
+    <text x="917" y="194" class="h">🛡️ main protegida</text>
+    <text x="917" y="216" class="s">sem force push, sem exclusão</text>
+    <text x="917" y="252" class="h">👁️ vigia v2</text>
+    <text x="917" y="274" class="s">montagem, B1, régua e</text>
+    <text x="917" y="294" class="s">disparo por evento</text>
+    <text x="917" y="326" class="s">🔍 secret scanning + push protection</text>
+  </g>
+</svg>

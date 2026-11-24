@@ -60,6 +60,12 @@
 
 ---
 
+## Um dia útil do painel
+
+<p align="center"><img src="docs/img/dia.svg" alt="Linha do dia: e-mail do TG às 3h, ponte às 6h, montagem acionada em 2 segundos, página por volta das 6h30; antes, entre 14h45 e 19h" width="100%"></p>
+
+---
+
 ## As seis OMDS, uma a uma — UG 160 e UG 167
 
 <p align="center"><img src="docs/img/omds_brasoes.png" alt="Brasões e UG das seis OMDS" width="92%"></p>
@@ -108,7 +114,9 @@ flowchart TB
     GA --> X["🌐 <b>Página pública</b> + dados.json<br/>GitHub Pages"]
     style P fill:#0a84ff,color:#fff,stroke:#0a84ff
     style D fill:#1d1d1f,color:#fff,stroke:#1d1d1f
+    V["👁️ vigia v2"] -.->|confere a cadeia| GA
     style X fill:#30d158,color:#fff,stroke:#30d158
+    style V fill:#ff9f0a,color:#fff,stroke:#ff9f0a
 ```
 
 ```mermaid
@@ -130,7 +138,29 @@ sequenceDiagram
 
 > **Se o SERPRO não disparar** uma assinatura, nada quebra: o painel mantém o último dado bom e mostra a data dele na faixa de status. **Se o PNCP não responder** durante a montagem, a página do dia não é publicada e fica a anterior.
 >
-> **Horário:** desde 23/11/2026 a ponte **aciona a montagem por evento** assim que grava arquivo novo (~06h e ~11h); a montagem começa em segundos e a página fica pronta por volta das 06h15–06h30. A agenda do GitHub Actions (07:33 e 12:33) fica como reserva — ela atrasa horas: de 19 a 23/11 saiu entre ~14h45 e ~19h.
+> **Horário:** desde 23/11/2026 a ponte **aciona a montagem por evento** assim que grava arquivo novo (~06h e ~11h); a montagem começa em segundos (2 s no teste) e a página fica pronta por volta das 06h15–06h30. A agenda do GitHub Actions (07:33 e 12:33) fica como reserva — ela atrasa horas: de 19 a 23/11 saiu entre ~14h45 e ~19h.
+
+---
+
+## Como saber, todo dia, que está funcionando
+
+<table>
+<tr>
+<td width="33%" valign="top"><h3>📋 Resumo da execução</h3>Cada montagem deixa, na própria página da execução do Actions, uma tabela com a <b>origem</b> (evento da ponte ou agenda), se <b>publicou</b>, a <b>data dos dados</b> do B1 e da régua e o resultado da ponte, da régua e de cada portão. Sem abrir log.</td>
+<td width="33%" valign="top"><h3>👁️ Vigia v2</h3>Segunda e quinta, abre ou comenta a issue <b>VIGIA</b> se a montagem, o B1 ou a régua pararem mais de 2 dias úteis, ou se <b>chegou dado novo e a ponte não acionou</b> a montagem por evento — sinal de token vencido ou Apps Script sem autorização.</td>
+<td width="33%" valign="top"><h3>🏷️ Faixa de status</h3>No topo da página, a data de cada fonte com a cor da idade: verde até 2 dias úteis, laranja de 3 a 5, vermelho acima de 5. Dado velho nunca se passa por novo.</td>
+</tr>
+</table>
+
+```mermaid
+flowchart LR
+    M["⚙️ montagem"] --> R["📋 resumo da execução<br/>origem · datas · portões"]
+    M --> P["🌐 página<br/>faixa de status por fonte"]
+    V["👁️ vigia v2<br/>seg e qui"] -->|montagem, B1 ou régua parados| I["🔔 issue VIGIA"]
+    V -->|dado novo sem disparo por evento| I
+    style I fill:#ff9f0a,color:#fff,stroke:#ff9f0a
+    style P fill:#30d158,color:#fff,stroke:#30d158
+```
 
 ---
 

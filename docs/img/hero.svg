@@ -70,7 +70,7 @@
     <text x="365" y="335" class="sub">tira favorecido da emissão</text>
     <circle cx="656" cy="281" r="8" fill="#0a84ff" class="pulse"/>
     <text x="672" y="287" class="lbl">7 portões</text>
-    <text x="650" y="314" class="sub">GitHub Actions · 2× ao dia</text>
+    <text x="650" y="314" class="sub">acionados pela ponte em 2 s</text>
     <text x="650" y="335" class="sub">recálculo ao centavo</text>
     <circle cx="941" cy="281" r="8" fill="#bf5af2" class="pulse"/>
     <text x="957" y="287" class="lbl">Página pública</text>
@@ -80,14 +80,16 @@
 
   <!-- selos -->
   <g class="f">
-    <rect class="chip" x="60" y="372" width="214" height="30" rx="15"/>
-    <text x="78" y="392" class="chipt">Portaria SEF/C Ex nº 399/2026</text>
-    <rect class="chip" x="286" y="372" width="170" height="30" rx="15"/>
-    <text x="304" y="392" class="chipt">Lei nº 14.133/2021</text>
-    <rect class="chip" x="468" y="372" width="150" height="30" rx="15"/>
-    <text x="486" y="392" class="chipt">Lei nº 4.320/1964</text>
-    <rect class="chip" x="630" y="372" width="250" height="30" rx="15"/>
-    <circle cx="650" cy="387" r="5" fill="#30d158" class="pulse"/>
-    <text x="664" y="392" class="chipt">operação até a 1ª carga de 2027</text>
+    <rect class="chip" x="60" y="372" width="200" height="30" rx="15"/>
+    <text x="78" y="392" class="chipt">⚡ página ~06h30 (antes ~15h)</text>
+    <rect class="chip" x="272" y="372" width="190" height="30" rx="15"/>
+    <text x="290" y="392" class="chipt">👁️ vigia da cadeia inteira</text>
+    <rect class="chip" x="474" y="372" width="160" height="30" rx="15"/>
+    <text x="492" y="392" class="chipt">🛡️ main protegida</text>
+    <rect class="chip" x="646" y="372" width="214" height="30" rx="15"/>
+    <text x="664" y="392" class="chipt">Portaria SEF/C Ex nº 399/2026</text>
+    <rect class="chip" x="872" y="372" width="268" height="30" rx="15"/>
+    <circle cx="892" cy="387" r="5" fill="#30d158" class="pulse"/>
+    <text x="906" y="392" class="chipt">operação até a 1ª carga de 2027</text>
   </g>
 </svg>

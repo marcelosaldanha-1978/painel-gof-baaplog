@@ -36,14 +36,14 @@
     <text x="60" y="196" fill="#d1d5db" font-size="21">o favorecido é cortado antes de sair da conta Google, e nada é publicado</text>
     <text x="60" y="224" fill="#d1d5db" font-size="21">sem passar pelos sete portões.</text>
 
-    <rect class="chip" x="60" y="262" width="212" height="40" rx="20"/>
-    <text x="82" y="288" class="ct">🔒 2 segredos de leitura</text>
-    <rect class="chip" x="284" y="262" width="200" height="40" rx="20"/>
-    <text x="306" y="288" class="ct">📌 16 actions por SHA</text>
-    <rect class="chip" x="496" y="262" width="214" height="40" rx="20"/>
-    <text x="518" y="288" class="ct">🧪 zizmor a cada push</text>
-    <rect class="chip" x="722" y="262" width="150" height="40" rx="20"/>
-    <text x="744" y="288" class="ct">🚫 0 CPF</text>
+    <rect class="chip" x="60" y="262" width="196" height="40" rx="20"/>
+    <text x="80" y="288" class="ct">🔒 2 segredos de leitura</text>
+    <rect class="chip" x="266" y="262" width="196" height="40" rx="20"/>
+    <text x="286" y="288" class="ct">⚡ 1 token até 04/01/27</text>
+    <rect class="chip" x="472" y="262" width="176" height="40" rx="20"/>
+    <text x="492" y="288" class="ct">🛡️ main protegida</text>
+    <rect class="chip" x="658" y="262" width="176" height="40" rx="20"/>
+    <text x="678" y="288" class="ct">📌 16/16 por SHA</text>
   </g>
 
   <!-- escudo -->
