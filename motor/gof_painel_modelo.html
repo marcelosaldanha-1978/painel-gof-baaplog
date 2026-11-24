@@ -138,7 +138,8 @@ function brasao(nome,cls){return BR[nome]?'<img class="'+(cls||"br")+'" src="'+B
 var tg=(D.meta&&D.meta.fonte_b1==="portal")?"Portal da Transparência (reserva)":"Tesouro Gerencial";
 document.getElementById("lead").innerHTML="O que importa acompanhar até 31/12, na ordem da Portaria SEF/C Ex nº 399/2026: prazos, crédito em tela, liquidação e restos a pagar — de cada OMDS, nas UG 160 e 167.";
 var st='<span class="pill">Fonte: '+esc(tg)+'</span>'+idadePill("Empenho e liquidação",L?L.data_dado:B.data_dado,false);
-if(G)st+=idadePill("Crédito em tela e RPNP",G.data_dado,true);
+var gManual=!!(G&&/MANUAL/i.test(G.atualizacao||""));
+if(G)st+=idadePill("Crédito em tela e RPNP",G.data_dado,gManual);
 document.getElementById("status").innerHTML=st;
 
 // ---------- 1. PRAZOS (Calendário da Portaria 399)
@@ -167,7 +168,7 @@ var R=G&&G.referencia_1rm;if(R){el.innerHTML+='<details><summary>Restos a pagar:
 // ---------- 3. OMDS UMA A UMA, UG 160 E 167
 (function(){var el=document.getElementById("omds");
 var b1={};B.omds.forEach(function(o){b1[NOME[o.omds]||o.rotulo]=o;});
-var h='<p class="kicker">Uma a uma</p><h2 id="tomds">Cada OMDS, UG 160 e UG 167</h2><p class="sub">Empenho e liquidação são atualizados todo dia útil. Crédito em tela, percentual do crédito recebido e restos a pagar vêm de leitura do TG com data própria (o relatório de crédito ainda não tem assinatura diária).</p><div class="omds">';
+var h='<p class="kicker">Uma a uma</p><h2 id="tomds">Cada OMDS, UG 160 e UG 167</h2><p class="sub">'+(gManual?'Empenho e liquidação são atualizados todo dia útil. Crédito em tela, percentual do crédito recebido e restos a pagar vêm de leitura do TG com data própria.':'Tudo atualizado todo dia útil, direto das assinaturas do Tesouro Gerencial.')+'</p><div class="omds">';
 ORDEM.forEach(function(o){var g=G&&G.por_omds[o],l=L&&L.por_omds[o],e=b1[o];if(!g&&!l&&!e)return;
  var ugs=[];[g&&g.por_ug,l&&l.por_ug].forEach(function(x){if(x)Object.keys(x).forEach(function(u){if(ugs.indexOf(u)<0)ugs.push(u);});});
  if(!ugs.length&&e)ugs=[e.ug160,e.ug167];ugs.sort();

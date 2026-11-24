@@ -60,6 +60,12 @@ jobs:
         run: |
           cd motor
           python gof_ponte_tg.py --fichas ../dados/pncp/ultimo.json --saida ../dados/execucao || echo "::warning::ponte do TG sem extrato novo; segue com o vigente"
+      - name: Ponte do TG - regua (credito em tela, vencido, RPNP) por UG; falha mantem a regua anterior
+        env:
+          GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
+        run: |
+          cd motor
+          python gof_regua_tg.py --saida ../dados/encerramento/regua.json || echo "::warning::regua sem trio novo; segue com a vigente"
       - name: Portal da Transparencia como reserva do B1 (D17); falha mantem o extrato anterior
         env:
           PORTAL_TRANSPARENCIA_API_KEY: ${{ secrets.PORTAL_TRANSPARENCIA_API_KEY }}
@@ -93,6 +99,7 @@ jobs:
           (cd "dados/painel/$hoje" && sha256sum ./* > SHA256SUMS)
           git add dados/painel dados/carteira_processos.json dados/kpis_painel.json dados/execucao
           if [ -d dados/liquidacao ]; then git add dados/liquidacao; fi
+          git add dados/encerramento/regua.json
           if [ -d dados/portal ]; then git add dados/portal; fi
           if git diff --cached --quiet; then echo "sem mudanca"; exit 0; fi
           git commit --quiet -m "montagem: $hoje (run ${GITHUB_RUN_ID})"
