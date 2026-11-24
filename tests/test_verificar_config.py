@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 import gof_config as cfg
+import pytest
 import verificar_config as vc
 
 RAIZ = Path(__file__).resolve().parent.parent
@@ -17,6 +18,13 @@ EXTRATO_DF = RAIZ / "tests" / "dados" / "exemplo_df" / "extrato_ficticio.json"
 HOJE = dt.date(2026, 11, 24)
 
 
+
+def test_config_do_repositorio_passa_no_verificador():
+    # v2.3: o config/om.json do repositório (BaApLog aqui; a OM da cópia numa réplica) passa no portão 0, com os dados dela
+    assert vc.verificar(cfg.PASTA_CONFIG / "om.json", hoje=HOJE) == []
+
+
+@pytest.mark.dados_baaplog
 def test_config_baaplog_passa_no_verificador():
     assert vc.verificar(cfg.caminho_om(), hoje=HOJE) == []
 

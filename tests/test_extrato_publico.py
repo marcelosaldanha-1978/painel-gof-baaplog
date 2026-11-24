@@ -28,12 +28,14 @@ def extrato():
     return json.load(open(EXTRATO, encoding="utf-8"))
 
 
+@pytest.mark.dados_baaplog
 def test_extrato_publico_nao_tem_pessoa(extrato):
     t = json.dumps(extrato, ensure_ascii=False)
     assert "favorecido" not in t and "observacao" not in t
     assert set(extrato["campos"]) == set(gp.CAMPOS_EXTRATO)
 
 
+@pytest.mark.dados_baaplog
 def test_extrato_publico_reproduz_o_log_120(extrato):
     regs, _ = gp.ler_extrato(extrato)
     b1 = gp.bloco_b1(regs, extrato["data_execucao"])
@@ -42,12 +44,14 @@ def test_extrato_publico_reproduz_o_log_120(extrato):
     assert por["DCMun"] == (537, 4867896.06) and por["BCMS"] == (467, 14227680.04)
 
 
+@pytest.mark.dados_baaplog
 def test_extrato_publico_reproduz_o_log_131(extrato):
     _, vin = gp.ler_extrato(extrato)
     n = collections.Counter(v["nivel"] for v in vin)
     assert (n["CONFIRMADO"], n["ALERTA"], n["CITADO_SEM_ATA"], n["AMBIGUO"], n["PROVAVEL"]) == (85, 1, 83, 34, 196)
 
 
+@pytest.mark.dados_baaplog
 def test_carteira_json_coerente_com_o_kpi_da_planilha():
     # a carteira muda com o tempo (lida todo dia pela conta de servico): o teste confere a coerencia com o KPI do Painel,
     # lido da mesma planilha no mesmo dia, e nao um valor congelado
@@ -76,6 +80,7 @@ def test_pendencias_aceitam_formato_novo_e_lista_nua():
     assert nua["editado_em"] is None and nua["itens"] == [{"id": "Y"}]
 
 
+@pytest.mark.dados_baaplog
 def test_pendencias_versionadas_tem_data():
     p = json.load(open(DADOS / "pendencias_coordenador.json", encoding="utf-8"))
     dt.date.fromisoformat(p["editado_em"])
@@ -94,6 +99,7 @@ def saida(tmp_path_factory, extrato):
     return s
 
 
+@pytest.mark.dados_baaplog
 def test_montagem_publica_tem_meta_da_v03(saida):
     d = json.load(open(saida / "dados.json", encoding="utf-8"))
     assert d["meta"]["versao_motor"] == gp.VERSAO_MOTOR and d["meta"]["fonte_b1"] == "tg"
@@ -105,12 +111,14 @@ def _run(script, *args):
     return subprocess.run([sys.executable, str(RAIZ / "motor" / script), *args], capture_output=True, text=True)
 
 
+@pytest.mark.dados_baaplog
 def test_recalculo_independente_confere(saida):
     r = _run("recalculo_independente.py", "--dados", str(saida / "dados.json"), "--extrato", str(EXTRATO),
              "--carteira", str(DADOS / "carteira_processos.json"), "--atas", str(DADOS / "painel" / "2026-11-07" / "atas_pncp_2026-11-07.json"))
     assert r.returncode == 0, r.stdout + r.stderr
 
 
+@pytest.mark.dados_baaplog
 def test_recalculo_independente_pega_numero_adulterado(saida, tmp_path):
     d = json.load(open(saida / "dados.json", encoding="utf-8"))
     d["b1"]["total"] += 0.02
@@ -120,6 +128,7 @@ def test_recalculo_independente_pega_numero_adulterado(saida, tmp_path):
     assert r.returncode == 1 and "B1 total" in r.stdout
 
 
+@pytest.mark.dados_baaplog
 def test_verificador_de_saida_aprova_e_reprova(saida, tmp_path):
     assert _run("verificar_saida.py", "--saida", str(saida)).returncode == 0
     (tmp_path / "dados.json").write_text((saida / "dados.json").read_text(encoding="utf-8"), encoding="utf-8")
@@ -129,6 +138,7 @@ def test_verificador_de_saida_aprova_e_reprova(saida, tmp_path):
 
 
 # ----------------------------------------------------------------- D18: vigia
+@pytest.mark.dados_baaplog
 def test_vigia_em_dias_uteis(saida):
     d = json.load(open(saida / "dados.json", encoding="utf-8"))
     assert vg.avaliar(d, dt.date(2026, 11, 9), 2)["ok"]  # segunda: montagem de sabado (1 util), B1 de sexta (1 util)
@@ -149,6 +159,7 @@ def _montar(tmp_path, extrato, hoje, portal=None):
     return json.load(open(s / "dados.json", encoding="utf-8"))
 
 
+@pytest.mark.dados_baaplog
 def test_d17_portal_so_substitui_tg_parado_e_mais_atual(tmp_path, extrato):
     # "portal" sintetico: o mesmo extrato publico com data de emissao mais recente e metade das NE
     portal = dict(extrato, data_execucao="2026-11-10", ne=extrato["ne"][: len(extrato["ne"]) // 2])
@@ -166,6 +177,7 @@ def test_d17_portal_so_substitui_tg_parado_e_mais_atual(tmp_path, extrato):
 
 
 # ----------------------------------------------------------------- gof_portal: nova tentativa e tolerancia a falhas pontuais
+@pytest.mark.dados_baaplog
 def test_portal_tolera_falha_pontual_e_mantem_o_anterior(tmp_path, monkeypatch):
     import gcalc_transparencia as tr
     import gof_portal as gpo
