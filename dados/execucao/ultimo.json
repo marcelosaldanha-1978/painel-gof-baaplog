@@ -1,19 +1,19 @@
 {
 "versao": 2,
-"data_execucao": "2026-11-19",
+"data_execucao": "2026-11-23",
 "origem": [
 {
-"arquivo": "GOF-BaApLog-ASSINATURA-20nov2026_liquido_sem_pessoa.csv",
-"sha256": "5abc21e4e706c76e2905555a7eddc646129e6c7048843d7aeec25e90855f17c9"
+"arquivo": "2026-11-24_emissao_sem_pessoa.tsv (assinatura do TG via ponte)",
+"sha256": "763167c7f7226caf31fabb05f1f6a011ac27f67ab1c4d4fde9d6eb8958abeae4"
 },
 {
-"arquivo": "GOF-BaApLog-ASSINATURA-20nov2026_chaves_cp1252_tab.csv",
-"sha256": "e4d5924bd93fef938222553edef4f01ccd6b813fc75c4787832046b71587351a"
+"arquivo": "2026-11-24_info_complementar.tsv (assinatura do TG via ponte)",
+"sha256": "3d97746f932ba15b1866820c1a8cf2b1063ede3944c81990a48abc401ad6c582"
 }
 ],
 "regra_vinculo": "2.0",
 "base": "liquido_6229201",
-"total_item23": 53589415.51,
+"total_item23": 53671579.29,
 "campos": [
 "documento",
 "ug",
@@ -17134,6 +17134,30 @@
 "chave": "160304-05-00080/2026"
 },
 {
+"documento": "160304000012026NE000514",
+"ug": "160304",
+"data": "23/11/2026",
+"valor": 16147.9,
+"valor_emitido": 16147.9,
+"modalidade": "08",
+"nivel": null,
+"pregao": null,
+"candidatos": [],
+"chave": null
+},
+{
+"documento": "160304000012026NE000515",
+"ug": "160304",
+"data": "23/11/2026",
+"valor": 1755.08,
+"valor_emitido": 1755.08,
+"modalidade": "08",
+"nivel": null,
+"pregao": null,
+"candidatos": [],
+"chave": null
+},
+{
 "documento": "160307000012026NE000001",
 "ug": "160307",
 "data": "16/01/2026",
@@ -27010,6 +27034,30 @@
 "chave": null
 },
 {
+"documento": "160321000012026NE000293",
+"ug": "160321",
+"data": "23/11/2026",
+"valor": 36046.28,
+"valor_emitido": 36046.28,
+"modalidade": "08",
+"nivel": null,
+"pregao": null,
+"candidatos": [],
+"chave": null
+},
+{
+"documento": "160321000012026NE000294",
+"ug": "160321",
+"data": "23/11/2026",
+"valor": 28204.08,
+"valor_emitido": 28204.08,
+"modalidade": "08",
+"nivel": null,
+"pregao": null,
+"candidatos": [],
+"chave": null
+},
+{
 "documento": "160329000012026NE000001",
 "ug": "160329",
 "data": "23/01/2026",
@@ -36455,7 +36503,7 @@
 "documento": "167304000012026NE000122",
 "ug": "167304",
 "data": "28/10/2026",
-"valor": 1581.76,
+"valor": 1592.2,
 "valor_emitido": 1581.76,
 "modalidade": "08",
 "nivel": null,

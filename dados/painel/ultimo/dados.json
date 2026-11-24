@@ -3,14 +3,14 @@
   "versao_motor": "0.4",
   "regra_vinculo": "2.0",
   "base_b1": "liquido",
-  "hoje": "2026-11-23",
+  "hoje": "2026-11-24",
   "fase": "A",
   "fontes": [
    {
     "nome": "execucao_tg",
     "arquivo": "ultimo.json",
-    "sha256": "4b8b2cfc5e4e39d00ae261d3673c680e67ebe3d706f517957eb17604186835b2",
-    "data_dado": "2026-11-19",
+    "sha256": "f04269288bde4c72658344b79c176ba4bf9e01d6259c5db40cedb43a243116f7",
+    "data_dado": "2026-11-23",
     "nota": "extrato sem pessoa; vínculo v2.0"
    },
    {
@@ -27,9 +27,9 @@
    },
    {
     "nome": "atas",
-    "arquivo": "atas_pncp_2026-11-23.json",
-    "sha256": "0ce7acfea31a42977a88b380b0bf7fb2ae353dfecd1b71d2b6f44d96344fe4bc",
-    "data_dado": "2026-11-23"
+    "arquivo": "atas_pncp_2026-11-24.json",
+    "sha256": "2caacdc654e04a37ed9c37e98f8c6f0f261e3ddd2e25c4a50516dbbec40fa2cf",
+    "data_dado": "2026-11-24"
    },
    {
     "nome": "fichas_pncp",
@@ -40,30 +40,30 @@
    {
     "nome": "liquidacao",
     "arquivo": "ultimo.json",
-    "sha256": "36a7d5fc4dc3b6c610f40d1f4d0d63cb5fd10a3f3ae279e131435433a34248df",
-    "data_dado": "2026-11-19"
+    "sha256": "313b8e80a683d8846da8b8b23b865ab26a80d28e3bafce5c5fecf9d86e50abbe",
+    "data_dado": "2026-11-23"
    },
    {
     "nome": "regua",
     "arquivo": "regua.json",
-    "sha256": "e111969697758437196431d17b457ef5ca0d2bb8adf6c211e8afa75c179fa379",
-    "data_dado": "2026-11-20"
+    "sha256": "a7ade382fbdce657283b6958566159113d404097d01043b8197093b42984f4f0",
+    "data_dado": "2026-11-23"
    }
   ],
   "fonte_b1": "tg",
-  "idade_b1_dias_uteis": 2,
+  "idade_b1_dias_uteis": 1,
   "b1_fresco": true,
   "dias_uteis_fresco": 2,
   "dias_pendencias_amarelo": 14,
-  "fonte_b1_motivo": "TG fresco (2 dias uteis)",
+  "fonte_b1_motivo": "TG fresco (1 dias uteis)",
   "data_portal": "2026-11-18",
-  "data_tg": "2026-11-19"
+  "data_tg": "2026-11-23"
  },
  "b1": {
   "fonte": "Tesouro Gerencial, empenhado LÍQUIDO (contas 6229201xx = item 23 «despesas empenhadas»: emissão + reforço − anulação), NE emitidas em 2026, UG 160xxx e 167xxx",
   "base": "liquido",
   "rotulo_total": "Empenhado líquido nas 6 OMDS",
-  "data_dado": "2026-11-19",
+  "data_dado": "2026-11-23",
   "omds": [
    {
     "omds": "BaApLog",
@@ -126,10 +126,10 @@
     "rotulo": "BMSA",
     "ug160": "160304",
     "ug167": "167304",
-    "ne160": 482,
-    "valor160": 4618153.06,
+    "ne160": 484,
+    "valor160": 4636056.04,
     "ne167": 107,
-    "valor167": 656787.72,
+    "valor167": 656798.16,
     "por_mes": [
      0.0,
      1041574.72,
@@ -140,22 +140,22 @@
      835239.65,
      783667.93,
      716268.73,
-     660179.02,
-     131087.91,
+     660189.46,
+     148990.89,
      0.0
     ],
     "ne_anuladas": 57,
-    "emitido": 5175971.95,
-    "total": 5274940.78,
-    "ne": 589
+    "emitido": 5193874.93,
+    "total": 5292854.2,
+    "ne": 591
    },
    {
     "omds": "ECT",
     "rotulo": "ECT",
     "ug160": "160321",
     "ug167": "167321",
-    "ne160": 241,
-    "valor160": 6324198.47,
+    "ne160": 243,
+    "valor160": 6388448.83,
     "ne167": 23,
     "valor167": 30080.77,
     "por_mes": [
@@ -169,13 +169,13 @@
      34337.88,
      644025.93,
      433971.89,
-     723359.87,
+     787610.23,
      0.0
     ],
     "ne_anuladas": 54,
-    "emitido": 10557134.39,
-    "total": 6354279.24,
-    "ne": 264
+    "emitido": 10621384.75,
+    "total": 6418529.6,
+    "ne": 266
    },
    {
     "omds": "DCMun",
@@ -234,13 +234,13 @@
     "ne": 463
    }
   ],
-  "total": 53589415.51,
-  "ne": 2684,
+  "total": 53671579.29,
+  "ne": 2688,
   "marco": "O marco de empenho de 100% (OUT) da Tabela 2 venceu em 31/10/2026. O percentual sobre o crédito recebido só entra depois da P-034 (conferência do crédito por UG).",
   "lastro": "exato (TG, conferido ao centavo com o item 23)",
   "apoio": {
-   "emissao_bruta": 68840026.0,
-   "ne_emitidas": 3199,
+   "emissao_bruta": 68922179.34,
+   "ne_emitidas": 3203,
    "ne_anuladas": 515,
    "nota": "Líquido = emissão + reforço − anulação. A emissão bruta não soma os reforços nem desconta as anulações (inclusive de NE anuladas e reemitidas). O ritmo mensal usa o mês de emissão da NE."
   },
@@ -527,7 +527,7 @@
     "processo": "PE 90315/2026",
     "ata": "00014/2026",
     "vigencia_fim": "2027-05-17",
-    "dias": 175
+    "dias": 174
    }
   },
   "processos": [
@@ -662,7 +662,7 @@
      "desde": "2026-11-04"
     }
    ],
-   "dias": 16
+   "dias": 17
   },
   "conferencia": {
    "data": "2026-11-23",
@@ -691,7 +691,7 @@
    ],
    "fonte": "confronto semanal planilha x PNCP/Compras.gov no runner (D19 parte 1); a gravacao do provado e sessao do Claude"
   },
-  "data_dado_atas": "2026-11-23"
+  "data_dado_atas": "2026-11-24"
  },
  "encerramento": {
   "norma": "Portaria SEF/C Ex nº 399, de 24/09/2026 (EB90-D-08.001)",
@@ -701,63 +701,63 @@
     "evento": "ev. 6 e 7",
     "texto": "Data-limite para a UGE emitir NE (a UGR pode prorrogar, em caráter excepcional) e nomear em BI quem indica RPNP",
     "vencido": false,
-    "dias_uteis": 2,
-    "dias_corridos": 2
+    "dias_uteis": 1,
+    "dias_corridos": 1
    },
    {
     "data": "2026-11-26",
     "evento": "ev. 8",
     "texto": "A UGR recolhe todo o crédito que restar em tela",
     "vencido": false,
-    "dias_uteis": 3,
-    "dias_corridos": 3
+    "dias_uteis": 2,
+    "dias_corridos": 2
    },
    {
     "data": "2026-12-03",
     "evento": "ev. 10",
     "texto": "Data-limite de NE dos créditos remanejados",
     "vencido": false,
-    "dias_uteis": 8,
-    "dias_corridos": 10
+    "dias_uteis": 7,
+    "dias_corridos": 9
    },
    {
     "data": "2026-12-04",
     "evento": "ev. 11",
     "texto": "Última NC do EME ou da UGR",
     "vencido": false,
-    "dias_uteis": 9,
-    "dias_corridos": 11
+    "dias_uteis": 8,
+    "dias_corridos": 10
    },
    {
     "data": "2026-12-15",
     "evento": "ev. 16",
     "texto": "Fase interna das demandas do PCA 2027 concluída",
     "vencido": false,
-    "dias_uteis": 16,
-    "dias_corridos": 22
+    "dias_uteis": 15,
+    "dias_corridos": 21
    },
    {
     "data": "2026-12-23",
     "evento": "ev. 19 e 20",
     "texto": "Fim da indicação no SIAFI das NE a inscrever em RPNP (início em 01/12) e desbloqueio de RPNP de 2024",
     "vencido": false,
-    "dias_uteis": 22,
-    "dias_corridos": 30
+    "dias_uteis": 21,
+    "dias_corridos": 29
    },
    {
     "data": "2026-12-30",
     "evento": "ev. 26, 28 e 32",
     "texto": "Liquidar RPNP inscrito até 2023; ordens bancárias até 14h; anular NE não indicadas",
     "vencido": false,
-    "dias_uteis": 26,
-    "dias_corridos": 37
+    "dias_uteis": 25,
+    "dias_corridos": 36
    }
   ],
   "feriados_considerados": [
    "2026-11-20",
    "2026-12-25"
   ],
-  "dias_uteis_ate_limite_ne": 2,
+  "dias_uteis_ate_limite_ne": 1,
   "ne60": {
    "fonte": "TG, relatório próprio «GOF-BaApLog-CONF-Saldo a liquidar por NE 2026 (v1.0, 09nov2026)», execução de 12/11/2026, 08h36, sem filtro de exibição",
    "posicao_siafi": "12/11/2026 02:06 (movimento até 11/11/2026)",
@@ -1720,122 +1720,122 @@
   "subitens_acima_do_teto": 5
  },
  "liquidacao": {
-  "data_dado": "2026-11-19",
+  "data_dado": "2026-11-23",
   "fonte": "TG, assinatura «Emissão 5229 x execução 6229 por NE 2026» (contas 6229201xx), pela ponte P-041",
   "regra": "a liquidar = 622920101 + 622920102; liquidado = 622920103 + 622920104; idade em dias corridos desde a emissão",
   "por_omds": {
    "Cmdo BaApLog": {
     "empenhado": 4927320.31,
-    "liquidado": 2748967.89,
-    "a_liquidar": 2178352.42,
+    "liquidado": 2782697.13,
+    "a_liquidar": 2144623.18,
     "ne_com_saldo": 156,
-    "mais60_valor": 1196715.09,
-    "mais60_ne": 62,
-    "mais90_valor": 1060798.44,
+    "mais60_valor": 1170211.95,
+    "mais60_ne": 63,
+    "mais90_valor": 1027069.2,
     "mais90_ne": 51,
-    "mais60_sem_nenhuma_liq_valor": 324503.23,
-    "mais60_sem_nenhuma_liq_ne": 35,
-    "pct_liquidado": 55.79,
+    "mais60_sem_nenhuma_liq_valor": 331729.33,
+    "mais60_sem_nenhuma_liq_ne": 36,
+    "pct_liquidado": 56.47,
     "por_ug": {
      "160238": {
       "empenhado": 4285013.05,
-      "liquidado": 2348777.65,
-      "a_liquidar": 1936235.4,
+      "liquidado": 2382506.89,
+      "a_liquidar": 1902506.16,
       "ne_com_saldo": 126,
-      "mais60_valor": 1147501.88,
+      "mais60_valor": 1113772.64,
       "mais60_ne": 52,
-      "mais90_valor": 1025723.48,
+      "mais90_valor": 991994.24,
       "mais90_ne": 43,
       "mais60_sem_nenhuma_liq_valor": 276021.27,
       "mais60_sem_nenhuma_liq_ne": 26,
-      "pct_liquidado": 54.81
+      "pct_liquidado": 55.6
      },
      "167238": {
       "empenhado": 642307.26,
       "liquidado": 400190.24,
       "a_liquidar": 242117.02,
       "ne_com_saldo": 30,
-      "mais60_valor": 49213.21,
-      "mais60_ne": 10,
+      "mais60_valor": 56439.31,
+      "mais60_ne": 11,
       "mais90_valor": 35074.96,
       "mais90_ne": 8,
-      "mais60_sem_nenhuma_liq_valor": 48481.96,
-      "mais60_sem_nenhuma_liq_ne": 9,
+      "mais60_sem_nenhuma_liq_valor": 55708.06,
+      "mais60_sem_nenhuma_liq_ne": 10,
       "pct_liquidado": 62.31
      }
     }
    },
    "BCMS": {
     "empenhado": 12276983.41,
-    "liquidado": 6038786.53,
-    "a_liquidar": 6238196.88,
-    "ne_com_saldo": 132,
-    "mais60_valor": 2884176.78,
+    "liquidado": 6112726.48,
+    "a_liquidar": 6164256.93,
+    "ne_com_saldo": 128,
+    "mais60_valor": 2926671.38,
     "mais60_ne": 60,
-    "mais90_valor": 2755702.25,
-    "mais90_ne": 45,
-    "mais60_sem_nenhuma_liq_valor": 2524321.72,
-    "mais60_sem_nenhuma_liq_ne": 31,
-    "pct_liquidado": 49.19,
+    "mais90_valor": 2779469.33,
+    "mais90_ne": 48,
+    "mais60_sem_nenhuma_liq_valor": 2523674.53,
+    "mais60_sem_nenhuma_liq_ne": 32,
+    "pct_liquidado": 49.79,
     "por_ug": {
      "160329": {
       "empenhado": 9804800.1,
-      "liquidado": 4983394.25,
-      "a_liquidar": 4821405.85,
-      "ne_com_saldo": 111,
-      "mais60_valor": 1502707.69,
+      "liquidado": 5028414.23,
+      "a_liquidar": 4776385.87,
+      "ne_com_saldo": 107,
+      "mais60_valor": 1574122.26,
       "mais60_ne": 45,
-      "mais90_valor": 1385350.62,
-      "mais90_ne": 32,
-      "mais60_sem_nenhuma_liq_valor": 1322623.36,
-      "mais60_sem_nenhuma_liq_ne": 21,
-      "pct_liquidado": 50.83
+      "mais90_valor": 1428037.71,
+      "mais90_ne": 34,
+      "mais60_sem_nenhuma_liq_valor": 1321976.17,
+      "mais60_sem_nenhuma_liq_ne": 22,
+      "pct_liquidado": 51.29
      },
      "167329": {
       "empenhado": 2472183.31,
-      "liquidado": 1055392.28,
-      "a_liquidar": 1416791.03,
+      "liquidado": 1084312.25,
+      "a_liquidar": 1387871.06,
       "ne_com_saldo": 21,
-      "mais60_valor": 1381469.09,
+      "mais60_valor": 1352549.12,
       "mais60_ne": 15,
-      "mais90_valor": 1370351.63,
-      "mais90_ne": 13,
+      "mais90_valor": 1351431.62,
+      "mais90_ne": 14,
       "mais60_sem_nenhuma_liq_valor": 1201698.36,
       "mais60_sem_nenhuma_liq_ne": 10,
-      "pct_liquidado": 42.69
+      "pct_liquidado": 43.86
      }
     }
    },
    "BMSA": {
-    "empenhado": 5274940.78,
-    "liquidado": 3416399.73,
-    "a_liquidar": 1858541.05,
-    "ne_com_saldo": 192,
-    "mais60_valor": 1133882.67,
-    "mais60_ne": 77,
-    "mais90_valor": 778111.89,
-    "mais90_ne": 61,
-    "mais60_sem_nenhuma_liq_valor": 855313.35,
+    "empenhado": 5292854.2,
+    "liquidado": 3457346.73,
+    "a_liquidar": 1835507.47,
+    "ne_com_saldo": 190,
+    "mais60_valor": 1132797.5,
+    "mais60_ne": 79,
+    "mais90_valor": 769543.9,
+    "mais90_ne": 60,
+    "mais60_sem_nenhuma_liq_valor": 863976.5,
     "mais60_sem_nenhuma_liq_ne": 45,
-    "pct_liquidado": 64.77,
+    "pct_liquidado": 65.32,
     "por_ug": {
      "160304": {
-      "empenhado": 4618153.06,
-      "liquidado": 3173472.21,
-      "a_liquidar": 1444680.85,
-      "ne_com_saldo": 159,
-      "mais60_valor": 782302.87,
-      "mais60_ne": 62,
-      "mais90_valor": 503862.69,
-      "mais90_ne": 52,
-      "mais60_sem_nenhuma_liq_valor": 503783.55,
+      "empenhado": 4636056.04,
+      "liquidado": 3214419.21,
+      "a_liquidar": 1421636.83,
+      "ne_com_saldo": 157,
+      "mais60_valor": 781217.7,
+      "mais60_ne": 64,
+      "mais90_valor": 495294.7,
+      "mais90_ne": 51,
+      "mais60_sem_nenhuma_liq_valor": 512446.7,
       "mais60_sem_nenhuma_liq_ne": 31,
-      "pct_liquidado": 68.72
+      "pct_liquidado": 69.34
      },
      "167304": {
-      "empenhado": 656787.72,
+      "empenhado": 656798.16,
       "liquidado": 242927.52,
-      "a_liquidar": 413860.2,
+      "a_liquidar": 413870.64,
       "ne_com_saldo": 33,
       "mais60_valor": 351579.8,
       "mais60_ne": 15,
@@ -1848,30 +1848,30 @@
     }
    },
    "ECT": {
-    "empenhado": 6354279.24,
+    "empenhado": 6418529.6,
     "liquidado": 4853027.93,
-    "a_liquidar": 1501251.31,
-    "ne_com_saldo": 75,
+    "a_liquidar": 1565501.67,
+    "ne_com_saldo": 77,
     "mais60_valor": 269979.45,
     "mais60_ne": 22,
     "mais90_valor": 97830.2,
     "mais90_ne": 15,
     "mais60_sem_nenhuma_liq_valor": 165994.59,
     "mais60_sem_nenhuma_liq_ne": 13,
-    "pct_liquidado": 76.37,
+    "pct_liquidado": 75.61,
     "por_ug": {
      "160321": {
-      "empenhado": 6324198.47,
+      "empenhado": 6388448.83,
       "liquidado": 4832437.15,
-      "a_liquidar": 1491761.32,
-      "ne_com_saldo": 64,
+      "a_liquidar": 1556011.68,
+      "ne_com_saldo": 66,
       "mais60_valor": 265045.4,
       "mais60_ne": 18,
       "mais90_valor": 92896.15,
       "mais90_ne": 11,
       "mais60_sem_nenhuma_liq_valor": 161060.54,
       "mais60_sem_nenhuma_liq_ne": 9,
-      "pct_liquidado": 76.41
+      "pct_liquidado": 75.64
      },
      "167321": {
       "empenhado": 30080.77,
@@ -1893,12 +1893,12 @@
     "liquidado": 2693990.1,
     "a_liquidar": 1190514.0,
     "ne_com_saldo": 127,
-    "mais60_valor": 550817.55,
-    "mais60_ne": 54,
+    "mais60_valor": 566053.71,
+    "mais60_ne": 55,
     "mais90_valor": 387905.45,
     "mais90_ne": 32,
-    "mais60_sem_nenhuma_liq_valor": 307386.61,
-    "mais60_sem_nenhuma_liq_ne": 36,
+    "mais60_sem_nenhuma_liq_valor": 322622.77,
+    "mais60_sem_nenhuma_liq_ne": 37,
     "pct_liquidado": 69.35,
     "por_ug": {
      "160246": {
@@ -1906,12 +1906,12 @@
       "liquidado": 2485810.18,
       "a_liquidar": 1127061.53,
       "ne_com_saldo": 103,
-      "mais60_valor": 517361.05,
-      "mais60_ne": 43,
+      "mais60_valor": 532597.21,
+      "mais60_ne": 44,
       "mais90_valor": 360910.95,
       "mais90_ne": 23,
-      "mais60_sem_nenhuma_liq_valor": 275422.61,
-      "mais60_sem_nenhuma_liq_ne": 29,
+      "mais60_sem_nenhuma_liq_valor": 290658.77,
+      "mais60_sem_nenhuma_liq_ne": 30,
       "pct_liquidado": 68.8
      },
      "167246": {
@@ -1934,12 +1934,12 @@
     "liquidado": 11501358.27,
     "a_liquidar": 9370029.4,
     "ne_com_saldo": 137,
-    "mais60_valor": 2961456.59,
-    "mais60_ne": 57,
+    "mais60_valor": 3254662.57,
+    "mais60_ne": 61,
     "mais90_valor": 2211852.26,
     "mais90_ne": 43,
-    "mais60_sem_nenhuma_liq_valor": 2426383.35,
-    "mais60_sem_nenhuma_liq_ne": 29,
+    "mais60_sem_nenhuma_liq_valor": 2692866.01,
+    "mais60_sem_nenhuma_liq_ne": 31,
     "pct_liquidado": 55.11,
     "por_ug": {
      "160307": {
@@ -1947,12 +1947,12 @@
       "liquidado": 9830159.89,
       "a_liquidar": 9063958.21,
       "ne_com_saldo": 133,
-      "mais60_valor": 2938102.13,
-      "mais60_ne": 54,
+      "mais60_valor": 3231308.11,
+      "mais60_ne": 58,
       "mais90_valor": 2188497.8,
       "mais90_ne": 40,
-      "mais60_sem_nenhuma_liq_valor": 2426383.35,
-      "mais60_sem_nenhuma_liq_ne": 29,
+      "mais60_sem_nenhuma_liq_valor": 2692866.01,
+      "mais60_sem_nenhuma_liq_ne": 31,
       "pct_liquidado": 52.03
      },
      "167307": {
@@ -1972,17 +1972,17 @@
    }
   },
   "total": {
-   "empenhado": 53589415.51,
-   "liquidado": 31252530.45,
-   "a_liquidar": 22336885.06,
-   "ne_com_saldo": 819,
-   "mais60_valor": 8997028.13,
-   "mais60_ne": 332,
-   "mais90_valor": 7292200.49,
-   "mais90_ne": 247,
-   "mais60_sem_nenhuma_liq_valor": 6603902.85,
-   "mais60_sem_nenhuma_liq_ne": 189,
-   "pct_liquidado": 58.32
+   "empenhado": 53671579.29,
+   "liquidado": 31401146.64,
+   "a_liquidar": 22270432.65,
+   "ne_com_saldo": 815,
+   "mais60_valor": 9320376.56,
+   "mais60_ne": 340,
+   "mais90_valor": 7273670.34,
+   "mais90_ne": 249,
+   "mais60_sem_nenhuma_liq_valor": 6900863.73,
+   "mais60_sem_nenhuma_liq_ne": 194,
+   "pct_liquidado": 58.51
   }
  },
  "regua": {
@@ -1990,150 +1990,150 @@
    "Cmdo BaApLog": {
     "por_ug": {
      "160238": {
-      "provisao": 4483592.46,
+      "provisao": 4473910.89,
       "empenhado": 4285013.05,
-      "liquidado": 2348777.65,
-      "a_liquidar": 1936235.4,
-      "em_tela": 198579.41,
-      "pct_empenhado": 95.57,
-      "pct_liquidado": 52.39,
+      "liquidado": 2382506.89,
+      "a_liquidar": 1902506.16,
+      "em_tela": 188897.84,
+      "pct_empenhado": 95.78,
+      "pct_liquidado": 53.25,
       "rpnp_a_liquidar": 133277.77,
       "rpnp_bloqueado": 0.0,
-      "vencido_piso": 79701.69,
-      "vencido_teto": 195716.37,
-      "celulas_em_tela": 198579.41
+      "vencido_piso": 70686.94,
+      "vencido_teto": 186701.62,
+      "celulas_em_tela": 188897.84
      },
      "167238": {
-      "provisao": 644625.1,
+      "provisao": 643281.6,
       "empenhado": 642307.26,
       "liquidado": 400190.24,
       "a_liquidar": 242117.02,
-      "em_tela": 2317.84,
-      "pct_empenhado": 99.64,
-      "pct_liquidado": 62.08,
+      "em_tela": 974.34,
+      "pct_empenhado": 99.85,
+      "pct_liquidado": 62.21,
       "rpnp_a_liquidar": 0.0,
       "rpnp_bloqueado": 0.0,
       "vencido_piso": 317.55,
-      "vencido_teto": 1661.05,
-      "celulas_em_tela": 2317.84
+      "vencido_teto": 317.55,
+      "celulas_em_tela": 974.34
      }
     },
-    "provisao": 5128217.56,
+    "provisao": 5117192.49,
     "empenhado": 4927320.31,
-    "liquidado": 2748967.89,
-    "a_liquidar": 2178352.42,
-    "em_tela": 200897.25,
+    "liquidado": 2782697.13,
+    "a_liquidar": 2144623.18,
+    "em_tela": 189872.18,
     "rpnp_a_liquidar": 133277.77,
     "rpnp_bloqueado": 0.0,
-    "vencido_piso": 80019.24,
-    "vencido_teto": 197377.42,
-    "pct_empenhado": 96.08,
-    "pct_liquidado": 53.6,
+    "vencido_piso": 71004.49,
+    "vencido_teto": 187019.17,
+    "pct_empenhado": 96.29,
+    "pct_liquidado": 54.38,
     "semaforo": "AMARELO"
    },
    "BCMS": {
     "por_ug": {
      "160329": {
-      "provisao": 9894424.48,
+      "provisao": 9894369.6,
       "empenhado": 9804800.1,
-      "liquidado": 4983394.25,
-      "a_liquidar": 4821405.85,
-      "em_tela": 89624.38,
+      "liquidado": 5028414.23,
+      "a_liquidar": 4776385.87,
+      "em_tela": 89569.5,
       "pct_empenhado": 99.09,
-      "pct_liquidado": 50.37,
+      "pct_liquidado": 50.82,
       "rpnp_a_liquidar": 42331.53,
       "rpnp_bloqueado": 0.0,
-      "vencido_piso": 88340.81,
-      "vencido_teto": 88340.81,
-      "celulas_em_tela": 89624.38
+      "vencido_piso": 88285.93,
+      "vencido_teto": 88285.93,
+      "celulas_em_tela": 89569.5
      },
      "167329": {
-      "provisao": 2475017.85,
+      "provisao": 2474967.22,
       "empenhado": 2472183.31,
-      "liquidado": 1055392.28,
-      "a_liquidar": 1416791.03,
-      "em_tela": 2834.54,
+      "liquidado": 1084312.25,
+      "a_liquidar": 1387871.06,
+      "em_tela": 2783.91,
       "pct_empenhado": 99.89,
-      "pct_liquidado": 42.64,
+      "pct_liquidado": 43.81,
       "rpnp_a_liquidar": 0.0,
       "rpnp_bloqueado": 0.0,
       "vencido_piso": 2783.91,
       "vencido_teto": 2783.91,
-      "celulas_em_tela": 2834.54
+      "celulas_em_tela": 2783.91
      }
     },
-    "provisao": 12369442.33,
+    "provisao": 12369336.82,
     "empenhado": 12276983.41,
-    "liquidado": 6038786.53,
-    "a_liquidar": 6238196.88,
-    "em_tela": 92458.92,
+    "liquidado": 6112726.48,
+    "a_liquidar": 6164256.93,
+    "em_tela": 92353.41,
     "rpnp_a_liquidar": 42331.53,
     "rpnp_bloqueado": 0.0,
-    "vencido_piso": 91124.72,
-    "vencido_teto": 91124.72,
+    "vencido_piso": 91069.84,
+    "vencido_teto": 91069.84,
     "pct_empenhado": 99.25,
-    "pct_liquidado": 48.82,
+    "pct_liquidado": 49.42,
     "semaforo": "AMARELO"
    },
    "BMSA": {
     "por_ug": {
      "160304": {
-      "provisao": 4636856.43,
-      "empenhado": 4618153.06,
-      "liquidado": 3173472.21,
-      "a_liquidar": 1444680.85,
-      "em_tela": 18703.37,
-      "pct_empenhado": 99.6,
-      "pct_liquidado": 68.44,
+      "provisao": 4636833.83,
+      "empenhado": 4636056.04,
+      "liquidado": 3214419.21,
+      "a_liquidar": 1421636.83,
+      "em_tela": 777.79,
+      "pct_empenhado": 99.98,
+      "pct_liquidado": 69.32,
       "rpnp_a_liquidar": 109203.83,
       "rpnp_bloqueado": 0.0,
       "vencido_piso": 0.0,
       "vencido_teto": 0.0,
-      "celulas_em_tela": 18703.37
+      "celulas_em_tela": 777.79
      },
      "167304": {
       "provisao": 661135.98,
-      "empenhado": 656787.72,
+      "empenhado": 656798.16,
       "liquidado": 242927.52,
-      "a_liquidar": 413860.2,
-      "em_tela": 4348.26,
+      "a_liquidar": 413870.64,
+      "em_tela": 4337.82,
       "pct_empenhado": 99.34,
       "pct_liquidado": 36.74,
       "rpnp_a_liquidar": 0.0,
       "rpnp_bloqueado": 0.0,
       "vencido_piso": 3330.8,
       "vencido_teto": 3330.8,
-      "celulas_em_tela": 4348.26
+      "celulas_em_tela": 4337.82
      }
     },
-    "provisao": 5297992.41,
-    "empenhado": 5274940.78,
-    "liquidado": 3416399.73,
-    "a_liquidar": 1858541.05,
-    "em_tela": 23051.63,
+    "provisao": 5297969.81,
+    "empenhado": 5292854.2,
+    "liquidado": 3457346.73,
+    "a_liquidar": 1835507.47,
+    "em_tela": 5115.61,
     "rpnp_a_liquidar": 109203.83,
     "rpnp_bloqueado": 0.0,
     "vencido_piso": 3330.8,
     "vencido_teto": 3330.8,
-    "pct_empenhado": 99.56,
-    "pct_liquidado": 64.48,
+    "pct_empenhado": 99.9,
+    "pct_liquidado": 65.26,
     "semaforo": "VERDE"
    },
    "ECT": {
     "por_ug": {
      "160321": {
-      "provisao": 6577282.52,
-      "empenhado": 6324198.47,
+      "provisao": 6576282.52,
+      "empenhado": 6388448.83,
       "liquidado": 4832437.15,
-      "a_liquidar": 1491761.32,
-      "em_tela": 253084.05,
-      "pct_empenhado": 96.15,
-      "pct_liquidado": 73.47,
+      "a_liquidar": 1556011.68,
+      "em_tela": 187833.69,
+      "pct_empenhado": 97.14,
+      "pct_liquidado": 73.48,
       "rpnp_a_liquidar": 81986.24,
       "rpnp_bloqueado": 0.0,
-      "vencido_piso": 188133.58,
-      "vencido_teto": 188133.58,
-      "celulas_em_tela": 253084.05
+      "vencido_piso": 187133.58,
+      "vencido_teto": 187133.58,
+      "celulas_em_tela": 187833.69
      },
      "167321": {
       "provisao": 46089.24,
@@ -2150,34 +2150,34 @@
       "celulas_em_tela": 16008.47
      }
     },
-    "provisao": 6623371.76,
-    "empenhado": 6354279.24,
+    "provisao": 6622371.76,
+    "empenhado": 6418529.6,
     "liquidado": 4853027.93,
-    "a_liquidar": 1501251.31,
-    "em_tela": 269092.52,
+    "a_liquidar": 1565501.67,
+    "em_tela": 203842.16,
     "rpnp_a_liquidar": 81986.24,
     "rpnp_bloqueado": 0.0,
-    "vencido_piso": 204142.05,
-    "vencido_teto": 204142.05,
-    "pct_empenhado": 95.94,
-    "pct_liquidado": 73.27,
+    "vencido_piso": 203142.05,
+    "vencido_teto": 203142.05,
+    "pct_empenhado": 96.92,
+    "pct_liquidado": 73.28,
     "semaforo": "VERMELHO"
    },
    "DC Mun": {
     "por_ug": {
      "160246": {
-      "provisao": 3622450.68,
+      "provisao": 3622447.06,
       "empenhado": 3612871.71,
       "liquidado": 2485810.18,
       "a_liquidar": 1127061.53,
-      "em_tela": 9578.97,
+      "em_tela": 9575.35,
       "pct_empenhado": 99.74,
       "pct_liquidado": 68.62,
       "rpnp_a_liquidar": 214923.13,
       "rpnp_bloqueado": 16500.0,
-      "vencido_piso": 3.66,
-      "vencido_teto": 3.66,
-      "celulas_em_tela": 9578.97
+      "vencido_piso": 0.04,
+      "vencido_teto": 0.04,
+      "celulas_em_tela": 9575.35
      },
      "167246": {
       "provisao": 271867.72,
@@ -2194,15 +2194,15 @@
       "celulas_em_tela": 235.33
      }
     },
-    "provisao": 3894318.4,
+    "provisao": 3894314.78,
     "empenhado": 3884504.1,
     "liquidado": 2693990.1,
     "a_liquidar": 1190514.0,
-    "em_tela": 9814.3,
+    "em_tela": 9810.68,
     "rpnp_a_liquidar": 215126.87,
     "rpnp_bloqueado": 16500.0,
-    "vencido_piso": 238.51,
-    "vencido_teto": 238.51,
+    "vencido_piso": 234.89,
+    "vencido_teto": 234.89,
     "pct_empenhado": 99.75,
     "pct_liquidado": 69.18,
     "semaforo": "VERDE"
@@ -2210,18 +2210,18 @@
    "1º D Sup": {
     "por_ug": {
      "160307": {
-      "provisao": 19257674.14,
+      "provisao": 19256670.34,
       "empenhado": 18894118.1,
       "liquidado": 9830159.89,
       "a_liquidar": 9063958.21,
-      "em_tela": 363556.04,
-      "pct_empenhado": 98.11,
+      "em_tela": 362552.24,
+      "pct_empenhado": 98.12,
       "pct_liquidado": 51.05,
       "rpnp_a_liquidar": 219249.16,
       "rpnp_bloqueado": 0.0,
-      "vencido_piso": 176132.06,
-      "vencido_teto": 363047.71,
-      "celulas_em_tela": 363556.04
+      "vencido_piso": 262043.91,
+      "vencido_teto": 362043.91,
+      "celulas_em_tela": 362552.24
      },
      "167307": {
       "provisao": 1977341.53,
@@ -2238,41 +2238,41 @@
       "celulas_em_tela": 71.96
      }
     },
-    "provisao": 21235015.67,
+    "provisao": 21234011.87,
     "empenhado": 20871387.67,
     "liquidado": 11501358.27,
     "a_liquidar": 9370029.4,
-    "em_tela": 363628.0,
+    "em_tela": 362624.2,
     "rpnp_a_liquidar": 219249.16,
     "rpnp_bloqueado": 0.0,
-    "vencido_piso": 176204.02,
-    "vencido_teto": 363119.67,
+    "vencido_piso": 262115.87,
+    "vencido_teto": 362115.87,
     "pct_empenhado": 98.29,
     "pct_liquidado": 54.16,
     "semaforo": "VERMELHO"
    }
   },
   "total": {
-   "provisao": 54548358.13,
-   "empenhado": 53589415.51,
-   "liquidado": 31252530.45,
-   "a_liquidar": 22336885.06,
-   "em_tela": 958942.62,
+   "provisao": 54535197.53,
+   "empenhado": 53671579.29,
+   "liquidado": 31401146.64,
+   "a_liquidar": 22270432.65,
+   "em_tela": 863618.24,
    "rpnp_a_liquidar": 801175.4,
    "rpnp_bloqueado": 16500.0,
-   "vencido_piso": 555059.34,
-   "vencido_teto": 859333.17,
-   "pct_empenhado": 98.24,
-   "pct_liquidado": 57.29
+   "vencido_piso": 630897.94,
+   "vencido_teto": 846912.62,
+   "pct_empenhado": 98.42,
+   "pct_liquidado": 57.58
   },
   "recolhido_no_ano": {
-   "ncs": 387,
-   "valor": 6774135.91
+   "ncs": 402,
+   "valor": 6787296.51
   },
-  "data_dado": "2026-11-20",
-  "posicao_siafi": "TG, assinaturas entregues em 23/11 (dados até 20/11)",
+  "data_dado": "2026-11-23",
+  "posicao_siafi": "TG, assinaturas entregues em 24/11 (dados até 23/11)",
   "fonte": "TG, assinaturas «Execução Crédito e RPNP por UG», «Crédito por NC» e «Crédito por NC movimento 2026», pela ponte P-041",
-  "regra_vencido": "vencido = saldo da célula coberto por NC de outra UG com prazo escrito anterior a 23/11; NC de «empenho imediato» conta como vencida; piso e teto porque o TG não dá saldo por NC; ajuste de ND da própria UG não é rastreado à NC de origem (piso conservador)",
+  "regra_vencido": "vencido = saldo da célula coberto por NC de outra UG com prazo escrito anterior a 24/11; NC de «empenho imediato» conta como vencida; piso e teto porque o TG não dá saldo por NC; ajuste de ND da própria UG não é rastreado à NC de origem (piso conservador)",
   "atualizacao": "diária (assinaturas do TG, ponte P-041)",
   "referencia_1rm": {
    "indices": [
