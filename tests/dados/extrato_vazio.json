@@ -1,0 +1,27 @@
+{
+ "_vazio": "EXTRATO VAZIO E VALIDO (v2.3): so para a prova da CI numa copia sem extrato do TG (antes do 1o par da ponte). Nunca e publicado.",
+ "versao": 2,
+ "data_execucao": "2026-11-23",
+ "origem": [
+  {
+   "arquivo": "nenhum (extrato vazio da prova)",
+   "sha256": null
+  }
+ ],
+ "regra_vinculo": "2.0",
+ "base": "liquido_6229201",
+ "total_item23": 0.0,
+ "campos": [
+  "documento",
+  "ug",
+  "data",
+  "valor",
+  "valor_emitido",
+  "modalidade",
+  "nivel",
+  "pregao",
+  "candidatos",
+  "chave"
+ ],
+ "ne": []
+}

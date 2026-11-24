@@ -90,3 +90,20 @@ def test_exemplo_df_monta_sem_blocos_do_gcalc(tmp_path):
     _rodar([str(MOTOR / "recalculo_independente.py"), "--dados", str(saida / "dados.json"), "--extrato", str(EXTRATO_DF),
             "--hoje", HOJE.isoformat()], env)
     _rodar([str(MOTOR / "verificar_saida.py"), "--saida", str(saida)], env)
+
+
+def test_exemplo_df_monta_com_extrato_vazio_e_mostra_as_6_ug(tmp_path):
+    # v2.3 (P-012 do PAINEL GOF DF): copia nova, antes do 1º par da ponte; a CI prova com o extrato vazio e válido
+    env = {**os.environ, "GOF_CONFIG": str(DF), "PYTHONUTF8": "1"}
+    saida = tmp_path / "saida"
+    nada = str(tmp_path / "inexistente.json")
+    vazio = RAIZ / "tests" / "dados" / "extrato_vazio.json"
+    _rodar([str(MOTOR / "gof_painel.py"), "--extrato", str(vazio), "--saida", str(saida), "--hoje", HOJE.isoformat(),
+            "--encerramento", nada, "--liquidacao", nada, "--regua", nada], env)
+    dados = json.loads((saida / "dados.json").read_text(encoding="utf-8"))
+    assert dados["b1"]["total"] == 0 and dados["b1"]["ne"] == 0
+    assert [(o["ug160"], o["ug167"]) for o in dados["b1"]["omds"]] == [("160336", "167336"), ("160285", "167285"),
+                                                                        ("160529", "167529")]
+    _rodar([str(MOTOR / "recalculo_independente.py"), "--dados", str(saida / "dados.json"), "--extrato", str(vazio),
+            "--hoje", HOJE.isoformat()], env)
+    _rodar([str(MOTOR / "verificar_saida.py"), "--saida", str(saida)], env)
