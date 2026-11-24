@@ -8,6 +8,8 @@ SAIDA="${1:?pasta de saida}"
 HOJE="${2:-$(TZ=America/Sao_Paulo date +%Y-%m-%d)}"
 cd "$(dirname "$0")/.."
 mkdir -p "$SAIDA"
+# portao 0: configuracao da OM (config/om.json ou GOF_CONFIG) completa e coerente; calendario vencido so avisa
+python motor/verificar_config.py --hoje "$HOJE"
 ATAS="$SAIDA/atas_pncp_${HOJE}.json"
 if [ "${PORTAO_ATAS_OFFLINE:-}" = "1" ]; then
   # prova sem rede: reaproveita a ultima coleta de atas versionada
