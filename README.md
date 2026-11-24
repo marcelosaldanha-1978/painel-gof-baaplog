@@ -301,6 +301,20 @@ python -m pytest tests -q
 
 </details>
 
+<details>
+<summary><b>🔁 Replicar para outra OM (v2.3)</b></summary>
+
+Desde a release `v2.3-replicavel`, o mesmo código serve a outra OM sem editar motor, portão, testes nem workflows:
+
+1. Copiar o código-fonte da release (não fazer fork) e trocar `config/om.json` pelo da OM (exemplo: `config/exemplos/df/om.json`); `python motor/verificar_config.py` tem de passar.
+2. Esvaziar `dados/` (são números da BaApLog). Manter `config/metas`, `config/calendario` e `config/brasoes_baaplog.json`, que a suíte usa.
+3. A suíte testa o motor com o config de referência da BaApLog (`tests/dados/baaplog/om.json`, fixado no `tests/conftest.py`); os testes marcados `dados_baaplog` conferem números reais da BaApLog e são pulados numa cópia.
+4. Os workflows perguntam ao config quais blocos estão ligados (`python motor/gof_config.py --bloco <nome>`): sem `carteira_gcalc`, a montagem não lê a planilha GCALC nem passa `--fichas`, e `conferencia.yml` e `fichas-pncp.yml` pulam o job; sem `capacidade`, `capacidade.yml` pula.
+5. Antes do 1º par da ponte não há `dados/execucao/ultimo.json`: a montagem reprova com mensagem clara e **não publica**; a CI prova com o extrato vazio e válido (`tests/dados/extrato_vazio.json`).
+6. A CI daqui roda o job `replica` (`motor/prova_replica.sh` com o config da DF e `dados/` vazio) a cada push: se a réplica quebrar, a CI da BaApLog fica vermelha antes de alguém copiar.
+
+</details>
+
 ---
 
 <sub>Governança, decisões (D1 a D20) e plano vivem na pasta do projeto GOF-BaApLog (OneDrive); este repositório é a fonte única do <b>código</b> do painel. Segurança: <a href="SECURITY.md">SECURITY.md</a>. Fundamento: Lei nº 4.320/1964, Lei nº 14.133/2021 e Portaria SEF/C Ex nº 399/2026.</sub>
