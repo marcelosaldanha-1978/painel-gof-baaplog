@@ -59,6 +59,17 @@ def carregar(caminho=None):
     return _carregar(str(Path(caminho).resolve() if caminho else caminho_om()))
 
 
+PASTA_PONTE_PADRAO = "PONTE_TG_SEM_PESSOA"
+
+
+def pasta_ponte(caminho=None):
+    """Nome da pasta privada do Drive que a ponte do TG grava e a montagem lê (`assinaturas_tg.pasta_drive`).
+
+    Sem o campo, vale o nome histórico da BaApLog. Outra OM na mesma conta Google deve ter pasta própria, para que
+    as duas cadeias não se cruzem (verificar_config reprova o nome padrão fora da BaApLog)."""
+    return (carregar(caminho).get("assinaturas_tg") or {}).get("pasta_drive") or PASTA_PONTE_PADRAO
+
+
 def omds(cfg=None):
     """Lista de OMDS na ordem de exibição."""
     cfg = cfg or carregar()

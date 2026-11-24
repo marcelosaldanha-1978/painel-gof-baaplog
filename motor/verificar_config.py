@@ -45,6 +45,10 @@ DADOS_DO_BLOCO = {
 }
 
 
+ID_REFERENCIA = "baaplog"
+PREFIXO_REFERENCIA = "GOF-BaApLog-CONF-"
+
+
 def _data(s):
     try:
         return dt.date.fromisoformat(str(s))
@@ -152,6 +156,16 @@ def verificar(caminho, hoje=None, raiz_dados=None, avisos=None):
                 for campo in ("empenho", "liquidacao", "liquidacao_rp"):
                     if len(g.get(campo) or []) != n:
                         erros.append("metas: grupo %s.%s sem um valor por marco (%d)" % (g.get("id"), campo, n))
+    # isolamento da cadeia do TG (salvaguarda de 24/11/2026: outra OM pode rodar na mesma conta Google e GitHub)
+    atg = om.get("assinaturas_tg") or {}
+    prefixo, pasta = str(atg.get("prefixo_assunto") or ""), str(atg.get("pasta_drive") or cfg.PASTA_PONTE_PADRAO)
+    if not prefixo.strip():
+        erros.append("assinaturas_tg.prefixo_assunto vazio")
+    if om.get("id") != ID_REFERENCIA:
+        if prefixo.startswith(PREFIXO_REFERENCIA):
+            erros.append("assinaturas_tg.prefixo_assunto da OM de referência (%s) numa OM diferente: as pontes se cruzariam no Gmail" % PREFIXO_REFERENCIA)
+        if pasta == cfg.PASTA_PONTE_PADRAO:
+            erros.append("assinaturas_tg.pasta_drive ausente ou igual à da OM de referência (%s): defina uma pasta própria" % cfg.PASTA_PONTE_PADRAO)
     # brasões (opcional)
     if om.get("brasoes") and not cfg._resolver(p.parent, om["brasoes"]).exists():
         erros.append("brasões não encontrados: %s" % om["brasoes"])

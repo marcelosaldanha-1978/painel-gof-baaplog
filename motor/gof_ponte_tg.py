@@ -29,7 +29,7 @@ import gcalc_transparencia as tr  # noqa: E402
 import gof_config as cfg  # noqa: E402
 import gof_extrato_tg as ext  # noqa: E402
 
-PASTA = "PONTE_TG_SEM_PESSOA"
+PASTA = cfg.PASTA_PONTE_PADRAO  # nome histórico; o vigente vem de cfg.pasta_ponte()
 RE_NE = re.compile(r"^\d{6}\d{5}\d{4}NE\d{6}$")
 RE_ARQ = re.compile(r"^(\d{4}-\d{2}-\d{2})_(emissao_sem_pessoa|info_complementar)\.tsv$")
 RE_DIA = re.compile(r"^\d{2}/\d{2}/\d{4}$")
@@ -188,12 +188,14 @@ def _get(url, tok):
         return r.read()
 
 
-def listar_pasta(tok):
-    q = "name = '%s' and mimeType = 'application/vnd.google-apps.folder' and trashed = false" % PASTA
+def listar_pasta(tok, nome=None):
+    """Arquivos da pasta da ponte. `nome` vem do config (`assinaturas_tg.pasta_drive`); sem ele, o nome histórico."""
+    nome = nome or cfg.pasta_ponte()
+    q = "name = '%s' and mimeType = 'application/vnd.google-apps.folder' and trashed = false" % nome
     u = "https://www.googleapis.com/drive/v3/files?" + urllib.parse.urlencode({"q": q, "fields": "files(id,name)"})
     pastas = json.loads(_get(u, tok))["files"]
     if len(pastas) != 1:
-        raise RuntimeError("pasta %s: %d encontradas (esperada 1, compartilhada com a conta de serviço)" % (PASTA, len(pastas)))
+        raise RuntimeError("pasta %s: %d encontradas (esperada 1, compartilhada com a conta de serviço)" % (nome, len(pastas)))
     q = "'%s' in parents and trashed = false" % pastas[0]["id"]
     u = "https://www.googleapis.com/drive/v3/files?" + urllib.parse.urlencode(
         {"q": q, "fields": "files(id,name)", "pageSize": 1000, "orderBy": "name desc"})
@@ -215,7 +217,7 @@ def main(argv=None):
         arquivos = listar_pasta(tok)
         entrega = escolher_par(arquivos)
         if not entrega:
-            print("PONTE: nenhum par completo na pasta %s; extrato vigente %s mantido" % (PASTA, data_vigente))
+            print("PONTE: nenhum par completo na pasta %s; extrato vigente %s mantido" % (cfg.pasta_ponte(), data_vigente))
             return 2
         data_exec = dia_util_anterior(dt.date.fromisoformat(entrega)).isoformat()
         if data_exec <= data_vigente:
