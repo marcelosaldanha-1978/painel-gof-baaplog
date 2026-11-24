@@ -279,7 +279,7 @@ def calcular(b_regua, b_credito, b_mov, ref):
 
 # ---------------------------------------------------------------- passo da montagem (nuvem)
 CHAVES = ("regua_por_ug", "credito_por_nc", "credito_movimento")
-RE_ARQ = re.compile(r"^(\d{4}-\d{2}-\d{2})_(regua_por_ug|credito_por_nc|credito_movimento)\.csv$")
+RE_ARQ = re.compile(r"^(\d{4}-\d{2}-\d{2})_(regua_por_ug|credito_por_nc|credito_movimento)\.(csv|zip)$")
 
 
 def escolher_trio(nomes):
@@ -319,8 +319,15 @@ def main(argv=None):
         if data_dado <= (ant.get("data_dado") or "") and "assinaturas" in (ant.get("atualizacao") or ""):
             print("REGUA: trio de %s (dados até %s) não é mais novo que o vigente; nada a fazer" % (entrega, data_dado))
             return 0
-        b = {k: pt._get("https://www.googleapis.com/drive/v3/files/%s?alt=media" % arqs["%s_%s.csv" % (entrega, k)], tok)
-             for k in CHAVES}
+        b = {}
+        for k in CHAVES:
+            nome = next(n for n in arqs if RE_ARQ.match(n) and n.startswith("%s_%s." % (entrega, k)))
+            bruto = pt._get("https://www.googleapis.com/drive/v3/files/%s?alt=media" % arqs[nome], tok)
+            if nome.endswith(".zip"):  # o CSV cruzado vem compactado (assinatura com «Compactar conteúdo»)
+                import zipfile
+                z = zipfile.ZipFile(io.BytesIO(bruto))
+                bruto = z.read(z.namelist()[0])
+            b[k] = bruto
         r = calcular(b["regua_por_ug"], b["credito_por_nc"], b["credito_movimento"], dt.date.fromisoformat(entrega))
     except (OSError, ValueError, RuntimeError, KeyError, StopIteration) as e:
         print("REGUA: falhou (%s: %s); régua vigente (%s) mantida" % (type(e).__name__, e, ant.get("data_dado")))

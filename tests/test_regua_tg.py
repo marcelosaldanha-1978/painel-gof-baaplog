@@ -68,3 +68,8 @@ def test_trava_celulas_nao_fecham_com_a_regua():
     mov = 'T\n\n' + "\t".join(['"Emitente - UG"', '""', '"UG Executora"', '""', '"NC"', '"15"']) + "\n"
     with pytest.raises(ValueError, match="não fecham"):
         R.calcular(utf16(REGUA), cred.encode("cp1252"), mov.encode("cp1252"), dt.date(2026, 11, 23))
+
+
+def test_escolher_trio_com_zip():
+    n = ["2026-11-23_regua_por_ug.csv", "2026-11-23_credito_por_nc.zip", "2026-11-23_credito_movimento.csv"]
+    assert R.escolher_trio(n) == "2026-11-23"
