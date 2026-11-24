@@ -8,7 +8,7 @@
   "criterio_rp": "(liquidado + cancelado) ÷ (inscrito + reinscrito)",
   "apuracao_dez": "posição de 31/12 apurada em 02/01",
   "regra_ultimo_marco": "comparar com a meta do último marco preenchido (traço não é 100% em DEZ)",
-  "pendente_conferir": ["L10: a ação de Movimentação aparece como «2120» no texto extraído do PDF; o uso corrente é «212O». Conferir no PDF antes de usar."],
+  "conferido": ["L10 (24/11/2026): o PDF imprime «AO 2120» com o algarismo zero (pág. 32), erro tipográfico; no TG a ação é «212O» (letra O), que é o código usado aqui (PAINEL GOF DF, LOG-016)."],
   "marcos": ["ABR", "JUN", "AGO", "OUT", "DEZ"],
   "grupos": [
     {"id": "discricionarias", "nome": "Despesas discricionárias (Tabela 2)", "acoes": [],
