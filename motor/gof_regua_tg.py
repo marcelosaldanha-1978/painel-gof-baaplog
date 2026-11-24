@@ -20,10 +20,16 @@ import csv
 import datetime as dt
 import io
 import re
+import sys as _sys  # noqa: E402
 import unicodedata
+from pathlib import Path as _Path  # noqa: E402
 
-OM = {"238": "Cmdo BaApLog", "246": "DC Mun", "304": "BMSA", "307": "1º D Sup", "321": "ECT", "329": "BCMS"}
-ORDEM = ["Cmdo BaApLog", "BCMS", "BMSA", "ECT", "DC Mun", "1º D Sup"]
+_sys.path.insert(0, str(_Path(__file__).resolve().parent))
+import gof_config as cfg  # noqa: E402
+
+# OMDS da OM (config/om.json): sufixo da UG (3 dígitos) -> rótulo, e a ordem de exibição
+OM = cfg.rotulo_por_sufixo()
+ORDEM = cfg.ordem_rotulos()
 
 
 # ---------------------------------------------------------------- leitura tolerante
@@ -92,9 +98,7 @@ def linha_regua(r):
 
 
 # ---------------------------------------------------------------- prazo escrito na NC (prazo_v2.py, 12nov2026)
-FER = {dt.date(2026, 1, 1), dt.date(2026, 2, 16), dt.date(2026, 2, 17), dt.date(2026, 4, 3), dt.date(2026, 4, 21), dt.date(2026, 5, 1),
-       dt.date(2026, 6, 4), dt.date(2026, 9, 7), dt.date(2026, 10, 12), dt.date(2026, 11, 2), dt.date(2026, 11, 15),
-       dt.date(2026, 11, 20), dt.date(2026, 12, 25)}
+FER = cfg.feriados_ano()  # feriados nacionais do exercício (config/calendario/encerramento_<ano>.json)
 MES = {"JAN": 1, "FEV": 2, "MAR": 3, "ABR": 4, "MAI": 5, "JUN": 6, "JUL": 7, "AGO": 8, "SET": 9, "OUT": 10, "NOV": 11, "DEZ": 12}
 ATE = r"(?:ATE|AT E|AT)"
 M = r"(JAN|FEV|MAR|ABR|MAI|JUN|JUL|AGO|SET|OUT|NOV|DEZ)"
