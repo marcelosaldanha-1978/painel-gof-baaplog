@@ -442,7 +442,8 @@ def render_html(dados):
     modelo = Path(__file__).with_name("gof_painel_modelo.html").read_text(encoding="utf-8")
     for k, v in trocas.items():
         modelo = modelo.replace(k, v)
-    if any(k in dados for k in BLOCOS_V24):  # v2.4: sem bloco ligado, o modelo sai intacto (ouro da OM de origem)
+    if any(k in dados for k in BLOCOS_V24) or (dados.get("liquidacao") or {}).get("por_ne") is not None:
+        # v2.4: sem bloco ligado nem favorecido, o modelo sai intacto (ouro da OM de origem)
         js = Path(__file__).with_name("gof_painel_v24.js").read_text(encoding="utf-8")
         fim = modelo.rindex("})();\n</script>")
         modelo = modelo[:fim] + js + modelo[fim:]

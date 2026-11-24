@@ -80,7 +80,8 @@ def main(argv=None):
         for f in falhas:
             print("  - " + f)
         return 1
-    print("VERIFICACAO: ok (sem dado pessoal; JSON embutido e hash conferem; sem pedido externo; %d bytes)" % tam)
+    pessoal = ("favorecido liberado pelo config; CPF %s" % dp["cpf"]) if dp["favorecido"] else "sem dado pessoal"
+    print("VERIFICACAO: ok (%s; JSON embutido e hash conferem; sem pedido externo; %d bytes)" % (pessoal, tam))
     return 0
 
 

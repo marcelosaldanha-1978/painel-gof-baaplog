@@ -103,3 +103,17 @@ def test_verificar_saida_segue_o_config(tmp_path, monkeypatch, config, doc, ok):
     dados = {"x": [{"favorecido": "PESSOA FICTICIA", "documento": doc}]}
     rc = VS.main(["--saida", _saida(tmp_path, dados)])
     assert (rc == 0) == ok
+
+
+def test_b1_liquidacao_com_favorecido_por_ne():
+    import gof_ponte_tg as pt
+    from test_ponte_tg import NE1, NE2, emissao
+    txt = emissao(["160238", "BASE", NE1, "02/01/2026", "1000,00", "0", "0", "600,00", "0", "400,00", "0"],
+                  ["160238", "BASE", NE2, "02/10/2026", "500,00", "0", "0", "0", "0", "500,00", "0"])
+    favs = pt.ler_favorecidos('"%s"\t"PESSOA FICTICIA 12345678901"\t"123.456.789-01"\n' % NE1)
+    r = pt.liquidacao(pt.agregar_emissao(txt), "2026-11-23", favorecidos=favs)
+    assert [x["ne"] for x in r["por_ne"]] == [NE1]  # só NE com saldo a liquidar
+    x = r["por_ne"][0]
+    assert x["favorecido"] == "PESSOA FICTICIA ***.456.789-**" and x["documento"] == "***.456.789-**"
+    assert x["a_liquidar"] == 600.0 and x["dias"] == 325
+    assert "por_ne" not in pt.liquidacao(pt.agregar_emissao(txt), "2026-11-23")  # sem permissão, nada muda

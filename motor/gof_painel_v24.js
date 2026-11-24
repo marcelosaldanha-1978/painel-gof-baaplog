@@ -20,6 +20,14 @@ if(RP!==undefined){var el=sec("rpano","trpano");
    RP.por_ne.forEach(function(x){h+='<tr><td '+tl+'>'+esc(x.ne)+'</td><td '+tl+'>'+esc(NOME[x.omds]||x.omds)+'</td><td '+td+'>'+esc(x.ano)+'</td><td '+tl+'>'+esc(x.favorecido)+'</td><td '+td+'>'+rs(x.a_liquidar)+'</td></tr>';});
    h+='</tbody></table></div></details></div>';}}
  el.innerHTML=h;if(nv)nv.innerHTML+='<a href="#rpano">Restos a pagar</a>';}
+var LQ=D.liquidacao;
+if(LQ&&LQ.por_ne){var el2=sec("aliqne","taliqne");
+ var q='<p class="kicker">Execução do exercício · TG, contas 6229201xx</p><h2 id="taliqne">Empenhos a liquidar por favorecido</h2><p class="sub">Dados até '+dbr(LQ.data_dado)+'. CPF de pessoa física mascarado.</p>';
+ if(!LQ.por_ne.length){q+='<div class="card"><p class="note">Nenhum empenho do exercício a liquidar.</p></div>';}
+ else{q+='<div class="card"><details><summary>Ver as '+n(LQ.por_ne.length)+' NE</summary><div style="overflow-x:auto"><table '+tb+'><thead><tr><th '+tl+'>NE</th><th '+tl+'>OM</th><th '+th+'>Emissão</th><th '+th+'>Dias</th><th '+tl+'>Favorecido</th><th '+tl+'>CNPJ/CPF</th><th '+th+'>Liquidado</th><th '+th+'>A liquidar</th></tr></thead><tbody>';
+  LQ.por_ne.forEach(function(x){var cor=x.dias>90?"red":(x.dias>60?"orange":"");q+='<tr><td '+tl+'>'+esc(x.ne)+'</td><td '+tl+'>'+esc(x.omds)+'</td><td '+td+'>'+esc(x.dia)+'</td><td '+td+'><span class="'+cor+'">'+n(x.dias)+'</span></td><td '+tl+'>'+esc(x.favorecido||"—")+'</td><td '+tl+'>'+esc(x.documento||"")+'</td><td '+td+'>'+rs(x.liquidado)+'</td><td '+td+'>'+rs(x.a_liquidar)+'</td></tr>';});
+  q+='</tbody></table></div></details></div>';}
+ el2.innerHTML=q;if(nv)nv.innerHTML+='<a href="#aliqne">A liquidar por favorecido</a>';}
 var CT=D.contratos;
 if(CT!==undefined){var ec=sec("contratos","tcontratos");
  var c='<p class="kicker">Contratos · Contratos.gov.br</p><h2 id="tcontratos">Contratos vigentes</h2>';
