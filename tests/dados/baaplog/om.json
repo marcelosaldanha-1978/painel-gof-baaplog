@@ -1,0 +1,34 @@
+{
+  "versao_config": 1,
+  "id": "baaplog",
+  "nome": "Base de Apoio Logístico do Exército",
+  "sigla": "BaApLog",
+  "coordenacao": "E10/EMG",
+  "exercicio": 2026,
+  "metas": "metas/dtz_esp_econ_fin_cmt_ex_2026_2027.json",
+  "calendario": "calendario/encerramento_2026.json",
+  "brasoes": "brasoes_baaplog.json",
+  "omds": [
+    {"chave": "BaApLog", "rotulo": "Cmdo BaApLog", "rotulo_curto": "BaApLog", "ordem": 1, "ug160": "160238", "ug167": "167238",
+     "uasg": "160238", "nota_ug": "Cmdo, Cia Cmdo e HCmp", "brasoes_extras": ["Cia Cmdo", "HCmp"]},
+    {"chave": "BCMS", "rotulo": "BCMS", "rotulo_curto": "BCMS", "ordem": 2, "ug160": "160329", "ug167": "167329", "uasg": "160329"},
+    {"chave": "BMSA", "rotulo": "BMSA", "rotulo_curto": "BMSA", "ordem": 3, "ug160": "160304", "ug167": "167304", "uasg": "160304"},
+    {"chave": "ECT", "rotulo": "ECT", "rotulo_curto": "ECT", "ordem": 4, "ug160": "160321", "ug167": "167321", "uasg": "160321"},
+    {"chave": "DCMun", "rotulo": "DC Mun", "rotulo_curto": "DCMun", "ordem": 5, "ug160": "160246", "ug167": "167246", "uasg": "160246"},
+    {"chave": "1oDSup", "rotulo": "1º D Sup", "rotulo_curto": "1º D Sup", "ordem": 6, "ug160": "160307", "ug167": "167307", "uasg": "160307"}
+  ],
+  "ugs_alvo_extras": ["160253", "160290", "160317", "160501", "785340", "160311", "160315", "160279", "930147",
+                      "160327", "160123", "160236", "765703", "160468"],
+  "referencia_regional": {"rotulo": "1ª RM", "resumo": "1ª RM (planilha de 10/11)", "fonte": "planilha da 1ª RM de 10/11/2026",
+                          "data": "2026-11-10"},
+  "blocos": {"carteira_gcalc": true, "pncp_atas": true, "capacidade": true, "dispensa": true},
+  "janelas": {"execucao_desde": "2026-04-01", "portal_desde": "2026-09-28",
+              "contratacoes": [["2025-09-01", "2025-12-31"], ["2026-01-01", "2026-06-30"], ["2026-07-01", null]]},
+  "assinaturas_tg": {"prefixo_assunto": "GOF-BaApLog-CONF-"},
+  "textos": {
+    "titulo_pagina": "Painel GOF-BaApLog",
+    "eyebrow": "BaApLog · 6 OMDS · UG 160 e 167",
+    "titulo": "Encerramento do exercício de 2026",
+    "b1_marco": "O marco de empenho de 100% (OUT) da Tabela 2 venceu em 31/10/2026. O percentual sobre o crédito recebido só entra depois da P-034 (conferência do crédito por UG)."
+  }
+}

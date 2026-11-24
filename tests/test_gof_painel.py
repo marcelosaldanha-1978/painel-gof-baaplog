@@ -198,6 +198,7 @@ def test_capacidade_soma_as_omds_e_separa_registro_por_valor():
     assert g.bloco_capacidade(None) is None and g.bloco_capacidade({"saldo": {}}) is None
 
 
+@pytest.mark.dados_baaplog
 def test_capacidade_real_fecha_com_o_saldo_publicado():
     import json
 
@@ -209,6 +210,7 @@ def test_capacidade_real_fecha_com_o_saldo_publicado():
     assert round(t["registrado"] - t["empenhado_tg"], 2) == t["saldo"]
 
 
+@pytest.mark.dados_baaplog
 def test_dispensa_reconta_acima_do_teto_e_nao_traz_pessoa():
     import json
 

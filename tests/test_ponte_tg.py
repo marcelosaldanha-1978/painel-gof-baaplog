@@ -75,3 +75,14 @@ def test_escolher_par_mais_recente_completo():
 def test_dia_util_anterior():
     assert pt.dia_util_anterior(dt.date(2026, 11, 20)) == dt.date(2026, 11, 19)  # sexta -> quinta
     assert pt.dia_util_anterior(dt.date(2026, 11, 23)) == dt.date(2026, 11, 20)  # segunda -> sexta
+
+
+def test_extrato_sem_fichas_para_om_sem_carteira_gcalc():
+    # v2.3 (P-012 do PAINEL GOF DF): OM sem o bloco carteira_gcalc chama a ponte sem --fichas; nenhuma NE vira pregão
+    import gof_extrato_tg as ext
+
+    e = emissao(["160238", "BASE", NE1, "29/01/2026", "1.000,00", "", "", "1.000,00", "", "", ""])
+    liq, cha = pt.montar_entradas(e, info(ln_info(NE1, "1.000,00")))
+    extrato = ext.gerar(liq, cha, [], "2026-11-23", [])
+    assert extrato["total_item23"] == 1000.0
+    assert [n["pregao"] for n in extrato["ne"]] == [None]

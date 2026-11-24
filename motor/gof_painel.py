@@ -56,6 +56,7 @@ DIAS_UTEIS_FRESCO = 2  # D17 revista: ate 2 dias uteis o dado e fresco
 DIAS_PENDENCIAS_AMARELO = 14  # D20
 # OMDS, rótulos, exercício e calendário vêm de config/om.json (Etapa A, v2.2): nada da OM fica fixo no código
 OMDS = cfg.chaves_omds()
+UG_CONFIG = {o["chave"]: (o["ug160"], o.get("ug167")) for o in cfg.omds()}  # v2.3: UG sem NE ainda aparece no card
 ROTULO_OMDS = cfg.rotulos_curtos_diferentes()
 EXERCICIO = cfg.exercicio()
 MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"]
@@ -195,7 +196,7 @@ def bloco_b1(regs, data_dado, base="emissao", vinculos=None):
     """Empenhado por OMDS (UG 160 e 167 separadas) e por mes de emissao. regs = saida de tr.ler_csv_tg ou de ler_extrato.
     base: "liquido" (extrato v2), "emissao" (CSV do R1 ou extrato v1) ou "portal". Na base liquida, NE com valor 0,00
     (anulada por inteiro) nao entra na contagem de NE; o valor emitido vai ao apoio."""
-    por = {o: {"omds": o, "rotulo": ROTULO_OMDS.get(o, o), "ug160": None, "ug167": None, "ne160": 0, "valor160": 0.0,
+    por = {o: {"omds": o, "rotulo": ROTULO_OMDS.get(o, o), "ug160": UG_CONFIG[o][0], "ug167": UG_CONFIG[o][1], "ne160": 0, "valor160": 0.0,
                "ne167": 0, "valor167": 0.0, "por_mes": [0.0] * 12, "ne_anuladas": 0, "emitido": 0.0} for o in OMDS}
     docs = set()
     for r in regs:

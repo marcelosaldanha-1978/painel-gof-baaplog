@@ -95,11 +95,11 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--liquido", required=True)
     ap.add_argument("--chaves", required=True)
-    ap.add_argument("--fichas", required=True)
+    ap.add_argument("--fichas", default=None, help="fichas PNCP da carteira GCALC; sem ele (OM sem o bloco), nenhum pregão")
     ap.add_argument("--data-execucao", required=True)
     ap.add_argument("--saida", required=True)
     o = ap.parse_args(argv)
-    fichas = tr.ficha_de_pncp(json.load(open(o.fichas, encoding="utf-8")))
+    fichas = tr.ficha_de_pncp(json.load(open(o.fichas, encoding="utf-8"))) if o.fichas else []
     origem = [{"arquivo": Path(c).name, "sha256": hashlib.sha256(Path(c).read_bytes()).hexdigest()} for c in (o.liquido, o.chaves)]
     ext = gerar(ler_liquido(o.liquido), ler_chaves(o.chaves), fichas, o.data_execucao, origem)
     Path(o.saida).write_text(json.dumps(ext, ensure_ascii=False, indent=0), encoding="utf-8")

@@ -1,8 +1,14 @@
 """Etapa A (v2.2): as tabelas derivadas de config/om.json são idênticas às constantes fixas da v2.1 (inventário v1.0, §3),
-inclusive na ordem."""
+inclusive na ordem.
+
+v2.3: a suite fixa o config de referencia da BaApLog (tests/dados/baaplog/om.json, pelo conftest); no repositorio da
+BaApLog ele tem de ser igual ao config/om.json, para que o teste de equivalencia continue provando a configuracao real."""
 import datetime as dt
+import json
+from pathlib import Path
 
 import gof_config as cfg
+import pytest
 
 # valores fixos da release v2.1-encerramento (commit ea7aaea), copiados do código
 V21_REGUA_OM = {"238": "Cmdo BaApLog", "246": "DC Mun", "304": "BMSA", "307": "1º D Sup", "321": "ECT", "329": "BCMS"}
@@ -70,3 +76,11 @@ def test_modulos_usam_o_config():
     assert cap.OMDS == V21_CAPACIDADE
     assert conf.UASGS == V21_CONFERENCIA
     assert _itens(tr.UGS) == _itens(V21_TR_UGS)
+
+
+@pytest.mark.dados_baaplog
+def test_config_de_referencia_igual_ao_config_do_repositorio_da_baaplog():
+    raiz = Path(__file__).resolve().parents[1]
+    ref = json.loads((raiz / "tests" / "dados" / "baaplog" / "om.json").read_text(encoding="utf-8"))
+    real = json.loads((raiz / "config" / "om.json").read_text(encoding="utf-8"))
+    assert ref == real, "config/om.json da BaApLog mudou: atualize tests/dados/baaplog/om.json no mesmo commit"
