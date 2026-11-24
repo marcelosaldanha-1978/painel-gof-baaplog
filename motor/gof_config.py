@@ -11,6 +11,7 @@ Os caminhos de `metas`, `calendario` e `brasoes` são relativos à pasta do om.j
 import datetime as dt
 import json
 import os
+import re
 from functools import cache
 from pathlib import Path
 
@@ -60,6 +61,24 @@ def carregar(caminho=None):
 
 
 PASTA_PONTE_PADRAO = "PONTE_TG_SEM_PESSOA"
+MODOS_CPF = ("mascarado", "completo")
+_RE_CPF = re.compile(r"(?<![\d*])(\d{3})\.?(\d{3})\.?(\d{3})-?(\d{2})(?![\d*])")
+
+
+def dados_pessoais(caminho=None):
+    """O que a OM mostra de favorecido (campo `dados_pessoais` do config). Sem o campo (BaApLog): nada, o corte
+    histórico. `favorecido`: nome e documento de quem recebe; `cpf`: «mascarado» (***.456.789-**, padrão do Portal da
+    Transparência) ou «completo» (só com a página fora da internet aberta; decisão do usuário, LOG-033 do PAINEL GOF DF)."""
+    om = caminho if isinstance(caminho, dict) else carregar(caminho)
+    d = om.get("dados_pessoais") or {}
+    return {"favorecido": bool(d.get("favorecido")), "cpf": d.get("cpf") if d.get("cpf") in MODOS_CPF else "mascarado"}
+
+
+def mascarar_cpf(texto, modo="mascarado"):
+    """CPF (11 dígitos, com ou sem pontuação) -> ***.ddd.ddd-** quando o modo é «mascarado»; CNPJ não é tocado."""
+    if modo == "completo":
+        return texto
+    return _RE_CPF.sub(lambda m: "***.%s.%s-**" % (m.group(2), m.group(3)), str(texto))
 
 
 def pasta_ponte(caminho=None):
@@ -67,7 +86,8 @@ def pasta_ponte(caminho=None):
 
     Sem o campo, vale o nome histórico da BaApLog. Outra OM na mesma conta Google deve ter pasta própria, para que
     as duas cadeias não se cruzem (verificar_config reprova o nome padrão fora da BaApLog)."""
-    return (carregar(caminho).get("assinaturas_tg") or {}).get("pasta_drive") or PASTA_PONTE_PADRAO
+    om = caminho if isinstance(caminho, dict) else carregar(caminho)
+    return (om.get("assinaturas_tg") or {}).get("pasta_drive") or PASTA_PONTE_PADRAO
 
 
 def omds(cfg=None):

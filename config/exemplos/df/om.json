@@ -21,7 +21,7 @@
   "referencia_regional": null,
   "blocos": {"carteira_gcalc": false, "pncp_atas": false, "capacidade": false, "dispensa": false, "rp_por_ano": true, "contratos": true},
   "janelas": {"execucao_desde": "2026-01-01", "portal_desde": "2026-11-01", "contratacoes": [["2026-01-01", null]]},
-  "assinaturas_tg": {"prefixo_assunto": "PAINEL-DF-CONF-", "pasta_drive": "PONTE_TG_SEM_PESSOA_DF"},
+  "assinaturas_tg": {"prefixo_assunto": "PAINEL-DF-CONF-", "pasta_drive": "PONTE_TG_SEM_PESSOA_DF"}, "dados_pessoais": {"favorecido": true, "cpf": "mascarado"},
   "textos": {
     "titulo_pagina": "Painel GOF-DF",
     "eyebrow": "DF · 3 UG executoras · UG 160 e 167",

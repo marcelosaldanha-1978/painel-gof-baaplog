@@ -53,10 +53,19 @@ def objeto_publico(c):
     return RE_DOC.sub("[documento omitido]", (c.get("objeto") or "").strip())[:200]
 
 
-def vigentes(lista, hoje):
+def fornecedor(c, modo_cpf):
+    """Nome e documento do contratado (CPF conforme o modo do config)."""
+    f = c.get("fornecedor") or {}
+    if not isinstance(f, dict):
+        return "", ""
+    return str(f.get("nome") or "").strip(), cfg.mascarar_cpf(str(f.get("cnpj_cpf_idgener") or "").strip(), modo_cpf)
+
+
+def vigentes(lista, hoje, pessoais=None):
     """Registros da API -> contratos de despesa vigentes em `hoje`, só com os campos da v2.4, por fim de vigência."""
     if not isinstance(lista, list):
         raise ValueError("resposta da API fora do formato (esperada lista de contratos)")
+    pessoais = pessoais or {"favorecido": False, "cpf": "mascarado"}
     out = []
     for c in lista:
         if not isinstance(c, dict) or c.get("receita_despesa") != "Despesa":
@@ -68,12 +77,19 @@ def vigentes(lista, hoje):
         if fim < hoje:
             continue
         dias = (fim - hoje).days
-        out.append({
-            "numero": c.get("numero"), "tipo": c.get("tipo"), "objeto": objeto_publico(c),
+        if pessoais["favorecido"]:
+            objeto = cfg.mascarar_cpf((c.get("objeto") or "").strip(), pessoais["cpf"])[:200]
+        else:
+            objeto = objeto_publico(c)
+        reg = {
+            "numero": c.get("numero"), "tipo": c.get("tipo"), "objeto": objeto,
             "vigencia_inicio": (c.get("vigencia_inicio") or "")[:10] or None, "vigencia_fim": fim.isoformat(),
             "dias_para_vencer": dias, "faixa": faixa(dias), "valor_global_teto": round(cap.num(c.get("valor_global")), 2),
             "situacao_api": c.get("situacao"),
-        })
+        }
+        if pessoais["favorecido"]:
+            reg["fornecedor"], reg["documento"] = fornecedor(c, pessoais["cpf"])
+        out.append(reg)
     return sorted(out, key=lambda x: (x["vigencia_fim"], x["numero"] or ""))
 
 
@@ -87,7 +103,7 @@ def montar(hoje, ler=coletar, config=None):
     for o in cfg.omds(config):
         base = {"omds": o["chave"], "rotulo": o["rotulo"], "ug": o["ug160"]}
         try:
-            cs = vigentes(ler(o["ug160"]), hoje)
+            cs = vigentes(ler(o["ug160"]), hoje, pessoais=cfg.dados_pessoais(config))
         except (RuntimeError, OSError, ValueError, TypeError, AttributeError) as e:
             por_omds.append(dict(base, indisponivel=True, contratos=[]))
             ressalvas.append("%s: API do Contratos.gov.br não respondeu (%s)" % (o["rotulo"], str(e)[-80:]))
@@ -102,7 +118,9 @@ def montar(hoje, ler=coletar, config=None):
     return {"data_coleta": hoje.isoformat(), "por_omds": por_omds, "ressalvas": ressalvas,
             "fonte": "API pública do Contratos.gov.br (/contrato/ug/{ug}), UG 160 de cada OMDS",
             "regra": "vigente = fim da vigência na data da coleta ou depois; valor global como teto do instrumento; "
-                     "sem fornecedor nem CNPJ; empenhado da API não exibido (a execução vem do TG)"}
+                     + ("com fornecedor e documento (CPF %s); " % cfg.dados_pessoais(config)["cpf"]
+                        if cfg.dados_pessoais(config)["favorecido"] else "sem fornecedor nem CNPJ; ")
+                     + "empenhado da API não exibido (a execução vem do TG)"}
 
 
 def main(argv=None):

@@ -16,7 +16,11 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import gof_config as cfg  # noqa: E402
+
 RE_CPF = re.compile(r"(?<!\d)\d{3}\.\d{3}\.\d{3}-\d{2}(?!\d)|(?<!\d)\*{3}\.\d{3}\.\d{3}-\*{2}(?!\d)")
+RE_CPF_INTEIRO = re.compile(r"(?<![\d*])\d{3}\.\d{3}\.\d{3}-\d{2}(?![\d*])")
 CHAVES_PROIBIDAS = ("favorecido", "codigoFavorecido", "observacao", "contato", "telefone", "email", "cpf")
 LIMITE_BYTES = 2 * 1024 * 1024
 
@@ -41,12 +45,15 @@ def main(argv=None):
     pagina = (s / "index.html").read_text(encoding="utf-8")
     dados = json.loads(dados_txt)
     falhas = []
-    # 5. dado pessoal
+    # 5. dado pessoal (o config da OM pode liberar o favorecido; CPF inteiro só com «cpf: completo»)
+    dp = cfg.dados_pessoais()
+    padrao = None if (dp["favorecido"] and dp["cpf"] == "completo") else (RE_CPF_INTEIRO if dp["favorecido"] else RE_CPF)
     for nome, txt in (("dados.json", dados_txt), ("index.html", pagina)):
-        m = RE_CPF.search(txt)
+        m = padrao.search(txt) if padrao else None
         if m:
             falhas.append("%s contém padrão de CPF" % nome)
-    ruins = sorted(k for k in chaves(dados, set()) if k.lower() in {c.lower() for c in CHAVES_PROIBIDAS})
+    proibidas = {c.lower() for c in CHAVES_PROIBIDAS} - ({"favorecido"} if dp["favorecido"] else set())
+    ruins = sorted(k for k in chaves(dados, set()) if k.lower() in proibidas)
     if ruins:
         falhas.append("dados.json tem chave proibida: " + ", ".join(ruins))
     # 4. JSON embutido = dados.json; hash do rodape
