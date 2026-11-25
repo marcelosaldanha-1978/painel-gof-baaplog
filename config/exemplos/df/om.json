@@ -13,9 +13,9 @@
     {"chave": "DF", "rotulo": "DF", "rotulo_curto": "DF", "ordem": 1, "ug160": "160336", "ug167": "167336", "uasg": "160336",
      "nota_ug": "Diretoria de Fabricação (UASG da DF)"},
     {"chave": "AGR", "rotulo": "AGR", "rotulo_curto": "AGR", "ordem": 2, "ug160": "160285", "ug167": "167285", "uasg": "160285",
-     "nota_ug": "Arsenal de Guerra do Rio (UASG A CONFIRMAR)"},
+     "nota_ug": "Arsenal de Guerra do Rio (UASG 160285 ativa no Compras.gov.br em 25/11/2026)"},
     {"chave": "AGSP", "rotulo": "AGSP", "rotulo_curto": "AGSP", "ordem": 3, "ug160": "160529", "ug167": "167529", "uasg": "160529",
-     "nota_ug": "Arsenal de Guerra de São Paulo (UASG A CONFIRMAR)"}
+     "nota_ug": "Arsenal de Guerra de São Paulo (UASG 160529 ativa no Compras.gov.br em 25/11/2026)"}
   ],
   "ugs_alvo_extras": [],
   "referencia_regional": null,
