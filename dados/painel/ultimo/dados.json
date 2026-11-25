@@ -16,14 +16,14 @@
    {
     "nome": "carteira",
     "arquivo": "carteira_processos.json",
-    "sha256": "32532bf7866b4b04888b717ebc1bab8c1f5cf74bae22e31c16af232c2ae4a7b1",
-    "data_dado": "2026-11-24"
+    "sha256": "2a5629068e441b9d9883aa7e319dde06858d0603b954fc4a480a0c7291265e44",
+    "data_dado": "2026-11-25"
    },
    {
     "nome": "kpis_painel",
     "arquivo": "kpis_painel.json",
-    "sha256": "2fef0a71c8e7b3df859c3b632cc2d651225822b5f2fc7df8bd342edd0a413438",
-    "data_dado": "2026-11-24"
+    "sha256": "0f24f0b34af4bbac445175401a170c3a5c5719612f90d0c8d4931ab74dcb2c50",
+    "data_dado": "2026-11-25"
    },
    {
     "nome": "atas",
@@ -56,7 +56,7 @@
   "dias_uteis_fresco": 2,
   "dias_pendencias_amarelo": 14,
   "fonte_b1_motivo": "TG fresco (1 dias uteis)",
-  "data_portal": "2026-11-18",
+  "data_portal": "2026-11-23",
   "data_tg": "2026-11-23"
  },
  "b1": {
@@ -506,8 +506,8 @@
    "nao_publicados": 2
   },
   "kpis_painel": {
-   "lido_em": "2026-11-24",
-   "origem": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-24 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Painel, linha 5 (A5:E5)",
+   "lido_em": "2026-11-25",
+   "origem": "Planilha GCALC_BAAPLOG_-_VF, lida em 2026-11-25 pela conta de serviço só de leitura (gof-painel-leitura@claude-workspace-mcp-486219.iam.gserviceaccount.com); aba Painel, linha 5 (A5:E5)",
    "processos": "12",
    "valor_estimado": "R$ 75.312.730,52",
    "score_bsc": "66,9%",
