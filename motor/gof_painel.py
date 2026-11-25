@@ -416,6 +416,9 @@ def montar(regs, data_execucao, processos, kpis, atas, fichas, pendencias, hoje,
     return dados
 
 
+BLOCOS_V24 = ("rp_por_ano", "contratos")
+
+
 def json_canonico(dados):
     return json.dumps(dados, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
@@ -439,6 +442,15 @@ def render_html(dados):
     modelo = Path(__file__).with_name("gof_painel_modelo.html").read_text(encoding="utf-8")
     for k, v in trocas.items():
         modelo = modelo.replace(k, v)
+    if any(k in dados for k in BLOCOS_V24):  # v2.4: sem bloco ligado, o modelo sai intacto (ouro da OM de origem)
+        js = Path(__file__).with_name("gof_painel_v24.js").read_text(encoding="utf-8")
+        fim = modelo.rindex("})();\n</script>")
+        modelo = modelo[:fim] + js + modelo[fim:]
+        # texto livre dos blocos novos (objeto de contrato) não pode casar com marcador nem abrir tag: os dados entram
+        # por último, numa passada só, com «<» escapado no JSON (só neste caminho; a saída da BaApLog não muda)
+        modelo = (modelo.replace("__BRASOES__", brasoes).replace("__HASH__", h)
+                  .replace("__TITULO__", html.escape(cfg.texto("titulo_pagina"))))
+        return modelo.replace("__DADOS__", corpo.replace("<", "\\u003c"))
     return (modelo.replace("__DADOS__", seguro).replace("__BRASOES__", brasoes).replace("__HASH__", h)
             .replace("__TITULO__", html.escape(cfg.texto("titulo_pagina"))))
 
@@ -479,6 +491,10 @@ def main(argv=None):
                     help="liquidação por OMDS gerada todo dia pela ponte do TG (gof_ponte_tg.py); ausente = sem o bloco")
     ap.add_argument("--regua", default="dados/encerramento/regua.json",
                     help="crédito em tela e régua por OMDS (leitura datada do TG, manual); ausente = sem o bloco")
+    ap.add_argument("--rp-por-ano", default="dados/encerramento/rp_por_ano.json",
+                    help="v2.4: RPNP por ano de inscrição (gof_rp_por_ano.py); só com o bloco rp_por_ano ligado")
+    ap.add_argument("--contratos", default="dados/contratos/contratos.json",
+                    help="v2.4: contratos vigentes (gof_contratos.py); só com o bloco contratos ligado")
     ap.add_argument("--saida")
     ap.add_argument("--hoje", default=dt.date.today().isoformat())
     o = ap.parse_args(argv)
@@ -564,6 +580,25 @@ def main(argv=None):
         if dados[chave]:
             dados["meta"]["fontes"].append({"nome": chave, "arquivo": Path(caminho).name, "sha256": sha256(caminho),
                                             "data_dado": dados[chave].get("data_dado")})
+    # v2.4: blocos opcionais; a chave só entra no dados.json com o bloco ligado (OM sem o bloco: saída idêntica à v2.3)
+    for bloco, caminho, data_campo, ressalva in (
+            ("rp_por_ano", o.rp_por_ano, "data_dado",
+             "Restos a pagar por ano de inscrição: a leitura do TG por NE ainda não chegou ou não passou na conferência "
+             "(soma por NE = item 43 da régua); a página segue com a régua."),
+            ("contratos", o.contratos, "data_coleta",
+             "Contratos vigentes: coleta ainda não disponível (API pública fora do ar ou não coletada).")):
+        if not cfg.bloco_ligado(bloco):
+            continue
+        try:
+            lido = json.load(open(caminho, encoding="utf-8")) if caminho and Path(caminho).exists() else None
+        except (OSError, ValueError):
+            lido = None  # arquivo ilegível: o bloco sai com ressalva e a página publica
+        if isinstance(lido, dict):
+            dados[bloco] = lido
+            dados["meta"]["fontes"].append({"nome": bloco, "arquivo": Path(caminho).name, "sha256": sha256(caminho),
+                                            "data_dado": lido.get(data_campo)})
+        else:
+            dados[bloco] = {"ausente": True, "ressalva": ressalva}
     s = Path(o.saida)
     s.mkdir(parents=True, exist_ok=True)
     (s / "dados.json").write_text(json.dumps(dados, ensure_ascii=False, indent=1), encoding="utf-8")

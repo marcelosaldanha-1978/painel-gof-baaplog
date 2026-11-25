@@ -12,6 +12,8 @@ O que se recalcula:
       bruta de apoio; total liquido = total_item23 declarado no extrato; vinculo pela chave SIASG por pregao.
   B3  nº de processos, estimado e homologado somados da carteira.
   B4  contagem de NE a verificar por nível; atas a vencer (<= limite) contra o JSON de atas.
+  v2.4 (P-RP-2) blocos rp_por_ano e contratos, quando presentes: somas por OMDS/ano, índice, a liquidar = item 43 da régua,
+      recontagem dos contratos e ausência de fornecedor/CNPJ.
 Uso: python recalculo_independente.py --dados saida/dados.json --extrato dados/execucao/ultimo.json \
         --carteira dados/carteira_processos.json --atas saida/atas_pncp_AAAA-MM-DD.json [--hoje AAAA-MM-DD]
 """
@@ -48,6 +50,58 @@ def _data(s):
 
 def igual(a, b):
     return abs(float(a) - float(b)) <= TOL
+
+
+def conferir_v24(D):
+    """v2.4 (P-RP-2): recalcula, SEM o motor, as somas dos blocos rp_por_ano e contratos publicados no dados.json.
+
+    RP: por OMDS e ano = soma das UG; total da OMDS = soma dos anos; índice = (liquidado + cancelado) ÷ inscrito; a liquidar
+    por UG = RPNP a liquidar (item 43) da régua publicada na mesma página, quando a régua for do mesmo dia.
+    Contratos: quantidade, teto e contagens de vencimento = recontagem da lista; nenhum fornecedor nem CNPJ."""
+    falhas = []
+    rp = D.get("rp_por_ano")
+    if rp and not rp.get("ausente"):
+        campos = ("inscrito", "liquidado", "cancelado", "a_liquidar", "em_liquidacao", "bloqueado", "excetuado")
+        soma = defaultdict(lambda: defaultdict(float))
+        for x in rp["por_ug"]:
+            for k in (x["ano"], "total"):
+                for c in campos:
+                    soma[(x["omds"], k)][c] += x[c]
+        for x in rp["por_omds"]:
+            for c in campos:
+                if not igual(soma[(x["omds"], x["ano"])][c], x[c]):
+                    falhas.append("RP %s %s %s: recalculado %.2f, publicado %.2f" % (x["omds"], x["ano"], c, soma[(x["omds"], x["ano"])][c], x[c]))
+            ind = round(100 * (x["liquidado"] + x["cancelado"]) / x["inscrito"], 2) if abs(x["inscrito"]) > 0.005 else None
+            if (ind is None) != (x["indice"] is None) or (ind is not None and abs(ind - x["indice"]) > 0.01):
+                falhas.append("RP %s %s índice: recalculado %s, publicado %s" % (x["omds"], x["ano"], ind, x["indice"]))
+        g = D.get("regua") or {}
+        if g.get("data_dado") == rp.get("data_dado"):
+            item43 = {u: v["rpnp_a_liquidar"] for o in (g.get("por_omds") or {}).values() for u, v in o["por_ug"].items()}
+            aliq = defaultdict(float)
+            for x in rp["por_ug"]:
+                aliq[x["ug"]] += x["a_liquidar"]
+            for u in sorted(set(item43) | set(aliq)):
+                if not igual(item43.get(u, 0.0), aliq.get(u, 0.0)):
+                    falhas.append("RP UG %s a liquidar: régua %.2f, por NE %.2f" % (u, item43.get(u, 0.0), aliq.get(u, 0.0)))
+    ct = D.get("contratos")
+    if ct and not ct.get("ausente"):
+        for o in ct["por_omds"]:
+            if o.get("indisponivel"):
+                continue
+            cs = o["contratos"]
+            for nome, esp, pub in (("quantidade", len(cs), o["quantidade"]),
+                                   ("teto", round(sum(c["valor_global_teto"] for c in cs), 2), o["teto_total"]),
+                                   ("vencem_90", sum(c["dias_para_vencer"] <= 90 for c in cs), o["vencem_90"]),
+                                   ("vencem_180", sum(c["dias_para_vencer"] <= 180 for c in cs), o["vencem_180"]),
+                                   ("vencem_365", sum(c["dias_para_vencer"] <= 365 for c in cs), o["vencem_365"])):
+                if not igual(esp, pub):
+                    falhas.append("Contratos %s %s: recalculado %s, publicado %s" % (o["omds"], nome, esp, pub))
+            if any(k in c for c in cs for k in ("fornecedor", "cnpj", "cnpj_cpf_idgener", "empenhado", "empenhado_ano")):
+                falhas.append("Contratos %s: campo de fornecedor/CNPJ/empenhado na saída" % o["omds"])
+            doc = re.compile(r"\b\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2}\b|\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b")
+            if any(doc.search(str(c.get("objeto") or "")) for c in cs):
+                falhas.append("Contratos %s: CPF/CNPJ no texto do objeto" % o["omds"])
+    return falhas
 
 
 def main(argv=None):
@@ -127,6 +181,7 @@ def main(argv=None):
         chk("B1 %s total" % linha["omds"], round(v["160"] + v["167"], 2), linha["total"])
         chk("B1 %s ne" % linha["omds"], v["n160"] + v["n167"], linha["ne"])
         chk("B1 %s soma dos meses" % linha["omds"], round(sum(v["meses"]), 2), round(sum(linha["por_mes"]), 2))
+    falhas += conferir_v24(D)  # v2.4: só age se o dados.json tiver os blocos (OM sem eles: nada muda)
     procs = cart["processos"]
     if not gcalc:  # OM sem carteira GCALC: B3 e B4 desligados no config
         for f in falhas:

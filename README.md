@@ -315,6 +315,40 @@ Desde a release `v2.3-replicavel`, o mesmo código serve a outra OM sem editar m
 
 </details>
 
+
+<details>
+<summary><b>🧩 Blocos opcionais da v2.4: restos a pagar por ano e contratos vigentes</b></summary>
+
+Dois blocos ligados pelo config (`blocos.rp_por_ano` e `blocos.contratos`). Na BaApLog os dois ficam **desligados**, e a saída é idêntica à da v2.3: o `dados.json` não ganha as chaves e o `index.html` não ganha o código (`motor/gof_painel_v24.js` só entra com um dos blocos ligado).
+
+- **Restos a pagar por ano de inscrição** (`motor/gof_rp_por_ano.py`): mostra, por OMDS e por ano da NE, as seguintes colunas:
+  - inscrito + reinscrito;
+  - liquidado;
+  - cancelado;
+  - a liquidar;
+  - bloqueado;
+  - excetuado (Lei 14.133/2021, art. 105);
+  - índice da Diretriz, (liquidado + cancelado) ÷ (inscrito + reinscrito).
+
+  Traz também as datas legais (bloqueio em 30/06 do 2º ano; cancelamento do desbloqueado em 31/12 do ano seguinte) e o alerta de RPNP que cancela em 31/12 do exercício.
+
+  A fonte é a assinatura «RPNP por NE» do TG, copiada pela ponte **sem a coluna de favorecido**, que é cortada pelo nome do cabeçalho. A saída não traz NE individual. Portões:
+  - P-RP-1: Σ 631100000 por NE = item 43 da régua do mesmo dia, ao centavo;
+  - P-RP-4: arquivo com favorecido é recusado;
+  - P-RP-5: Σ531 = Σ631 em cada NE;
+  - a linha «Total» do TG é conferida, não somada;
+  - P-RP-2: recálculo independente das somas.
+
+  Se uma conferência falhar, o arquivo anterior é mantido. Sem arquivo, a página mostra o bloco com ressalva.
+- **Contratos vigentes** (`motor/gof_contratos.py`): fonte é a API pública do Contratos.gov.br, pela UG 160 de cada OMDS. Regras:
+  - vigente = `vigencia_fim` igual ou posterior à data da coleta, e não «situação Ativo»;
+  - mostra número, objeto, fim, dias para vencer e valor global **como teto**;
+  - **sem fornecedor, sem CNPJ e sem o empenhado da API**: a execução vem do TG.
+
+  Se a API falhar numa OMDS, essa OMDS sai com ressalva. Se falhar em todas, o arquivo anterior é mantido.
+
+</details>
+
 ---
 
 <sub>Governança, decisões (D1 a D20) e plano vivem na pasta do projeto GOF-BaApLog (OneDrive); este repositório é a fonte única do <b>código</b> do painel. Segurança: <a href="SECURITY.md">SECURITY.md</a>. Fundamento: Lei nº 4.320/1964, Lei nº 14.133/2021 e Portaria SEF/C Ex nº 399/2026.</sub>

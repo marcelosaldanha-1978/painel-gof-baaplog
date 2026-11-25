@@ -52,6 +52,8 @@ flowchart TB
 **Onde o favorecido morre:** no Apps Script, dentro da conta Google do usuário, antes de gravar no Drive privado: a assinatura de emissão perde as colunas de favorecido (nome e CPF/CNPJ). As demais (informação complementar e crédito) não têm coluna de favorecido, mas levam **texto livre de NE e de NC**, que pode citar pessoas: esse texto fica só no Drive privado, o motor o usa apenas para o vínculo e para o prazo da NC, e ele nunca entra na saída, em artefato ou em log.
 
 > **Ponto de atenção:** o corte é por posição de coluna. Se o Tesouro Gerencial mudar o layout da assinatura de emissão, o favorecido pode passar ao Drive privado (não ao GitHub, que continua protegido pelo verificador). Revisar `PonteTG.gs` a cada mudança de layout.
+>
+> **v2.4 (bloco `rp_por_ano`):** a assinatura «RPNP por NE» também traz o favorecido. Para ela, o acréscimo da ponte corta **pelo nome do cabeçalho** («Favorecido», «CPF», «CNPJ»), não pela posição, e não grava nada se não achar o cabeçalho das contas. O motor (`gof_rp_por_ano.py`, portão P-RP-4) recusa o arquivo se a coluna ainda estiver lá. A saída é só agregada por UG, OMDS e ano, sem NE.
 
 ---
 
@@ -105,6 +107,7 @@ flowchart LR
 | Trava | Onde | O que impede |
 |---|---|---|
 | Corte de colunas | `PonteTG.gs` (Apps Script do GOF) | favorecido e CPF/CNPJ saírem do Gmail |
+| Recusa de favorecido (v2.4) | `gof_rp_por_ano.py` (P-RP-4) | arquivo de RPNP por NE com coluna de favorecido ser lido |
 | Saída sem texto | `gof_regua_tg.py`, `gof_ponte_tg.py` | texto de NC/NE ir à página (totais por UG e OMDS; no B1, NE por número, sem favorecido) |
 | Verificador | `motor/verificar_saida.py` | padrão de CPF formatado ou mascarado (não pega 11 dígitos soltos nem CNPJ: por isso o corte é na origem) e chaves `favorecido`, `codigoFavorecido`, `observacao`, `contato`, `telefone`, `email`, `cpf` |
 | Histórico público | decisões D7 e D13 | só extratos sem pessoa (D7); dados de gestão (fase, prazo, pendências) publicados por decisão do usuário, com risco aceito (D13, 07/11/2026); contatos das SALC e observação livre ficam fora |

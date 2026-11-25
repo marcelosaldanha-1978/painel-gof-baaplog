@@ -39,6 +39,9 @@ DADOS_DO_BLOCO = {
     "pncp_atas": ["dados/pncp/ultimo.json"],
     "capacidade": ["dados/capacidade/ultimo.json"],
     "dispensa": ["dados/dispensa/ultimo.json"],
+    # v2.4: sem arquivo obrigatório; sem o dado, a página publica o bloco com ressalva (P-RP-3)
+    "rp_por_ano": [],
+    "contratos": [],
 }
 
 
