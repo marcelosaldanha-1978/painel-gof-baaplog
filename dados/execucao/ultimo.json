@@ -1,13 +1,13 @@
 {
 "versao": 2,
-"data_execucao": "2026-11-23",
+"data_execucao": "2026-11-24",
 "origem": [
 {
-"arquivo": "2026-11-24_emissao_sem_pessoa.tsv (assinatura do TG via ponte)",
-"sha256": "763167c7f7226caf31fabb05f1f6a011ac27f67ab1c4d4fde9d6eb8958abeae4"
+"arquivo": "2026-11-25_emissao_sem_pessoa.tsv (assinatura do TG via ponte)",
+"sha256": "a2467ffeaab2648bb7925360e4cd733efdcedf1854535414c87ad3575a826822"
 },
 {
-"arquivo": "2026-11-24_info_complementar.tsv (assinatura do TG via ponte)",
+"arquivo": "2026-11-25_info_complementar.tsv (assinatura do TG via ponte)",
 "sha256": "3d97746f932ba15b1866820c1a8cf2b1063ede3944c81990a48abc401ad6c582"
 }
 ],
