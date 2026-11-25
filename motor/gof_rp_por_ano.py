@@ -2,7 +2,7 @@
 """
 gof_rp_por_ano.py (v0.1, 24nov2026) — RESTOS A PAGAR NÃO PROCESSADOS POR ANO DE INSCRIÇÃO (bloco `rp_por_ano`, v2.4).
 
-Entrada (assinatura do TG copiada pelo Apps Script para a pasta privada `PONTE_TG_SEM_PESSOA`, SEM favorecido):
+Entrada (assinatura do TG copiada pelo Apps Script para a pasta privada da OM; com favorecido só se o config liberar):
   <entrega>_rpnp_por_ne.csv   «<prefixo>RPNP por NE»: por UG Executora e NE, Movim. Líquido das contas 531xx (inscrição e
                               reinscrição) e 631xx (a liquidar, em liquidação, liquidado, pago, bloqueado, excetuado, cancelado)
 Saída: `dados/encerramento/rp_por_ano.json`, só agregado por UG/OMDS e ano (nenhuma NE individual, nenhuma pessoa).
@@ -91,11 +91,12 @@ def _ug_valida(x, sufixos):
 
 
 # ---------------------------------------------------------------- leitura
-def ler(b, permitir_favorecido=False, config=None):
+def ler(b, permitir_favorecido=False, config=None, guardar_favorecido=False):
     """bytes do CSV -> (linhas por NE agregadas, avisos). Cada linha: {ug, ne, ano, contas{conta: valor}}.
 
     `permitir_favorecido` existe só para a conferência local com a exportação manual (que traz a coluna); na montagem é
-    sempre False (portão P-RP-4). O favorecido nunca é lido nem devolvido."""
+    False salvo quando o config da OM libera o favorecido (dados_pessoais); só então `guardar_favorecido` lê a coluna
+    (pelo nome do cabeçalho) e devolve o favorecido de cada NE, com o CPF conforme o modo do config."""
     sufixos = {o["ug160"][3:] for o in cfg.omds(config)}
     L = linhas(b)
     h = next((i for i, r in enumerate(L) if sum(bool(RE_CONTA.fullmatch(c)) for c in r) >= 2), None)
@@ -104,6 +105,13 @@ def ler(b, permitir_favorecido=False, config=None):
     cab = L[h]
     if any(RE_PESSOA.search(c) for r in L[h:h + 3] for c in r) and not permitir_favorecido:
         raise ValueError("RPNP por NE: o arquivo traz coluna de favorecido (portão P-RP-4); a ponte tem de cortá-la")
+    jfav = None
+    if guardar_favorecido:
+        jfav = next((j for r in L[h:h + 3] for j, c in enumerate(r) if c.strip().strip('"').lower() == "ne ccor - favorecido"),
+                    None)
+        if jfav is None:
+            jfav = next((j for r in L[h:h + 3] for j, c in enumerate(r) if RE_PESSOA.search(c)), None)
+    modo_cpf = cfg.dados_pessoais(config)["cpf"]
     cols = {c: j for j, c in enumerate(cab) if RE_CONTA.fullmatch(c)}
     desconhecidas = sorted(c for c in cols if papel(c) is None)
     if desconhecidas:
@@ -134,9 +142,17 @@ def ler(b, permitir_favorecido=False, config=None):
         if ne[:6] != ug:
             raise ValueError("RPNP por NE: NE de uma UG na linha de outra UG (%s)" % ug)
         x = por_ne.setdefault(ne, {"ug": ug, "ne": ne, "ano": int(RE_NE.match(ne).group(1)), "contas": collections.Counter()})
+        if jfav is not None and jfav < len(r) and r[jfav].strip() and not x.get("favorecido"):
+            x["favorecido"] = cfg.mascarar_cpf(r[jfav].strip(), modo_cpf)
         x["contas"].update(valores)
     if not por_ne:
         raise ValueError("RPNP por NE: nenhuma NE das UG da OM no arquivo")
+    if guardar_favorecido:
+        sem = sum(1 for x in por_ne.values() if not x.get("favorecido"))
+        if jfav is None:
+            avisos["coluna de favorecido não encontrada no cabeçalho"] += 1
+        elif sem:
+            avisos["NE sem favorecido no arquivo"] += sem
     soma = collections.defaultdict(collections.Counter)
     for x in por_ne.values():
         soma[x["ug"]].update(x["contas"])
@@ -244,12 +260,23 @@ def identidade_regua(res, regua):
     return div
 
 
-def calcular(b, regua, data_dado, config=None, permitir_favorecido=False):
+def detalhe_ne(linhas_ne, config=None):
+    """NE com saldo a liquidar (conta 631100000) e o favorecido, do maior para o menor (só quando o config permite)."""
+    chave = cfg.ug_para_chave_intercalado(config)
+    out = [{"omds": chave[x["ug"]], "ug": x["ug"], "ne": x["ne"], "ano": x["ano"], "favorecido": x.get("favorecido") or "",
+            "a_liquidar": round(x["contas"].get("631100000", 0.0), 2)}
+           for x in linhas_ne if abs(round(x["contas"].get("631100000", 0.0), 2)) > TOL]
+    return sorted(out, key=lambda d: (-d["a_liquidar"], d["ne"]))
+
+
+def calcular(b, regua, data_dado, config=None, permitir_favorecido=None):
     """bytes do CSV + regua.json do mesmo dia -> dict de rp_por_ano.json, ou ValueError se um portão falhar."""
     if (regua or {}).get("data_dado") != data_dado:
         raise ValueError("RPNP por NE de %s sem régua do mesmo dia (régua: %s) — portão P-RP-1 não verificável"
                          % (data_dado, (regua or {}).get("data_dado")))
-    linhas_ne, avisos = ler(b, permitir_favorecido=permitir_favorecido, config=config)
+    mostra = cfg.dados_pessoais(config)["favorecido"]
+    linhas_ne, avisos = ler(b, permitir_favorecido=bool(permitir_favorecido) or mostra, config=config,
+                            guardar_favorecido=mostra)
     res = agregar(linhas_ne, config=config)
     if res["nao_fecham"]:
         raise ValueError("portão P-RP-5: %d NE com Σ531 ≠ Σ631 (diferença total R$ %.2f)"
@@ -258,6 +285,8 @@ def calcular(b, regua, data_dado, config=None, permitir_favorecido=False):
     if div:
         raise ValueError("portão P-RP-1: Σ 631100000 por NE ≠ item 43 da régua: %s" % div)
     del res["nao_fecham"]
+    if mostra:
+        res["por_ne"] = detalhe_ne(linhas_ne, config=config)
     res.update({"data_dado": data_dado, "avisos": avisos, "nes": len(linhas_ne),
                 "conferencia": "Σ 631100000 por NE = item 43 da régua em todas as UG; Σ531 = Σ631 em cada NE",
                 "criterio_indice": "(liquidado + cancelado) ÷ (inscrito + reinscrito), Diretriz 26-27"})

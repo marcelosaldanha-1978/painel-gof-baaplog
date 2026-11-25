@@ -83,6 +83,36 @@ def conferir_v24(D):
             for u in sorted(set(item43) | set(aliq)):
                 if not igual(item43.get(u, 0.0), aliq.get(u, 0.0)):
                     falhas.append("RP UG %s a liquidar: régua %.2f, por NE %.2f" % (u, item43.get(u, 0.0), aliq.get(u, 0.0)))
+        if rp.get("por_ne") is not None:
+            dp = cfg.dados_pessoais()
+            if not dp["favorecido"]:
+                falhas.append("RP: detalhe por NE publicado sem permissão do config")
+            soma_ne = defaultdict(float)
+            for x in rp["por_ne"]:
+                soma_ne[x["ug"]] += x["a_liquidar"]
+            al_ug = defaultdict(float)
+            for x in rp["por_ug"]:
+                al_ug[x["ug"]] += x["a_liquidar"]
+            for u in sorted(set(soma_ne) | set(al_ug)):
+                if abs(soma_ne.get(u, 0.0) - al_ug.get(u, 0.0)) > 0.01 + 0.005 * len(rp["por_ne"]):
+                    falhas.append("RP UG %s: detalhe por NE %.2f, por ano %.2f" % (u, soma_ne.get(u, 0.0), al_ug.get(u, 0.0)))
+            if any(cfg._RE_CPF.search(str(x.get("favorecido") or "")) for x in rp["por_ne"]):
+                falhas.append("RP: CPF inteiro no favorecido do detalhe por NE")
+    lq = D.get("liquidacao") or {}
+    if lq.get("por_ne") is not None:
+        dp = cfg.dados_pessoais()
+        if not dp["favorecido"]:
+            falhas.append("Liquidação: detalhe por NE publicado sem permissão do config")
+        soma_ne = defaultdict(float)
+        for x in lq["por_ne"]:
+            soma_ne[x["ug"]] += x["a_liquidar"]
+        pub = {u: r["a_liquidar"] for o in (lq.get("por_omds") or {}).values() for u, r in (o.get("por_ug") or {}).items()}
+        for u in sorted(set(soma_ne) | set(pub)):
+            if abs(soma_ne.get(u, 0.0) - pub.get(u, 0.0)) > 0.01 + 0.005 * len(lq["por_ne"]):
+                falhas.append("Liquidação UG %s: detalhe por NE %.2f, por UG %.2f" % (u, soma_ne.get(u, 0.0), pub.get(u, 0.0)))
+        cpf = cfg._RE_CPF
+        if any(cpf.search(str(x.get(k) or "")) for x in lq["por_ne"] for k in ("favorecido", "documento")):
+            falhas.append("Liquidação: CPF inteiro no detalhe por NE")
     ct = D.get("contratos")
     if ct and not ct.get("ausente"):
         for o in ct["por_omds"]:
@@ -96,11 +126,18 @@ def conferir_v24(D):
                                    ("vencem_365", sum(c["dias_para_vencer"] <= 365 for c in cs), o["vencem_365"])):
                 if not igual(esp, pub):
                     falhas.append("Contratos %s %s: recalculado %s, publicado %s" % (o["omds"], nome, esp, pub))
-            if any(k in c for c in cs for k in ("fornecedor", "cnpj", "cnpj_cpf_idgener", "empenhado", "empenhado_ano")):
-                falhas.append("Contratos %s: campo de fornecedor/CNPJ/empenhado na saída" % o["omds"])
-            doc = re.compile(r"\b\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2}\b|\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b")
-            if any(doc.search(str(c.get("objeto") or "")) for c in cs):
-                falhas.append("Contratos %s: CPF/CNPJ no texto do objeto" % o["omds"])
+            dp = cfg.dados_pessoais()
+            vetadas = ("cnpj_cpf_idgener", "empenhado", "empenhado_ano") + (() if dp["favorecido"] else ("fornecedor", "cnpj", "documento"))
+            if any(k in c for c in cs for k in vetadas):
+                falhas.append("Contratos %s: campo vetado pelo config na saída (fornecedor/CNPJ/empenhado)" % o["omds"])
+            if dp["favorecido"]:
+                doc = cfg._RE_CPF
+                campos = ("objeto", "documento", "fornecedor")
+            else:
+                doc = re.compile(r"\b\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2}\b|\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b")
+                campos = ("objeto",)
+            if doc and any(doc.search(str(c.get(k) or "")) for c in cs for k in campos):
+                falhas.append("Contratos %s: CPF/CNPJ indevido no texto" % o["omds"])
     return falhas
 
 
