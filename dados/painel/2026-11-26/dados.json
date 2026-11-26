@@ -2001,7 +2001,19 @@
       "rpnp_bloqueado": 0.0,
       "vencido_piso": 70524.99,
       "vencido_teto": 186539.67,
-      "celulas_em_tela": 188735.89
+      "celulas_em_tela": 188735.89,
+      "estado": {
+       "cod": "PRAZO_HOJE",
+       "nivel": 4,
+       "cor": "orange",
+       "rotulo": "Prazo hoje: recolher",
+       "valor": 188735.89,
+       "material": true,
+       "faixa": [
+        70524.99,
+        186539.67
+       ]
+      }
      },
      "167238": {
       "provisao": 643281.6,
@@ -2015,7 +2027,19 @@
       "rpnp_bloqueado": 0.0,
       "vencido_piso": 317.55,
       "vencido_teto": 317.55,
-      "celulas_em_tela": 974.34
+      "celulas_em_tela": 974.34,
+      "estado": {
+       "cod": "PRAZO_HOJE",
+       "nivel": 4,
+       "cor": "orange",
+       "rotulo": "Prazo hoje: recolher",
+       "valor": 974.34,
+       "material": false,
+       "faixa": [
+        317.55,
+        317.55
+       ]
+      }
      }
     },
     "provisao": 5117030.54,
@@ -2029,7 +2053,21 @@
     "vencido_teto": 186857.22,
     "pct_empenhado": 96.29,
     "pct_liquidado": 54.6,
-    "semaforo": "AMARELO"
+    "semaforo": "AMARELO",
+    "estado": {
+     "cod": "PRAZO_HOJE",
+     "nivel": 4,
+     "cor": "orange",
+     "rotulo": "Prazo hoje: recolher",
+     "valor": 189710.23,
+     "material": true,
+     "faixa": [
+      70524.99,
+      186539.67
+     ],
+     "n_ug": 2,
+     "de_ug": 2
+    }
    },
    "BCMS": {
     "por_ug": {
@@ -2045,7 +2083,19 @@
       "rpnp_bloqueado": 0.0,
       "vencido_piso": 11.8,
       "vencido_teto": 11.8,
-      "celulas_em_tela": 1295.31
+      "celulas_em_tela": 1295.31,
+      "estado": {
+       "cod": "PRAZO_HOJE",
+       "nivel": 4,
+       "cor": "orange",
+       "rotulo": "Prazo hoje: recolher",
+       "valor": 1295.31,
+       "material": false,
+       "faixa": [
+        11.8,
+        11.8
+       ]
+      }
      },
      "167329": {
       "provisao": 2474967.22,
@@ -2059,7 +2109,19 @@
       "rpnp_bloqueado": 0.0,
       "vencido_piso": 2783.91,
       "vencido_teto": 2783.91,
-      "celulas_em_tela": 2783.91
+      "celulas_em_tela": 2783.91,
+      "estado": {
+       "cod": "PRAZO_HOJE",
+       "nivel": 4,
+       "cor": "orange",
+       "rotulo": "Prazo hoje: recolher",
+       "valor": 2783.91,
+       "material": false,
+       "faixa": [
+        2783.91,
+        2783.91
+       ]
+      }
      }
     },
     "provisao": 12281062.63,
@@ -2073,7 +2135,21 @@
     "vencido_teto": 2795.71,
     "pct_empenhado": 99.97,
     "pct_liquidado": 50.14,
-    "semaforo": "VERDE"
+    "semaforo": "AMARELO",
+    "estado": {
+     "cod": "PRAZO_HOJE",
+     "nivel": 4,
+     "cor": "orange",
+     "rotulo": "Prazo hoje: recolher",
+     "valor": 4079.22,
+     "material": false,
+     "faixa": [
+      11.8,
+      11.8
+     ],
+     "n_ug": 2,
+     "de_ug": 2
+    }
    },
    "BMSA": {
     "por_ug": {
@@ -2089,7 +2165,15 @@
       "rpnp_bloqueado": 0.0,
       "vencido_piso": 0.0,
       "vencido_teto": 0.0,
-      "celulas_em_tela": 777.79
+      "celulas_em_tela": 777.79,
+      "estado": {
+       "cod": "PRAZO_HOJE",
+       "nivel": 4,
+       "cor": "orange",
+       "rotulo": "Prazo hoje: recolher",
+       "valor": 777.79,
+       "material": false
+      }
      },
      "167304": {
       "provisao": 661115.06,
@@ -2103,7 +2187,19 @@
       "rpnp_bloqueado": 0.0,
       "vencido_piso": 3309.88,
       "vencido_teto": 3309.88,
-      "celulas_em_tela": 3309.88
+      "celulas_em_tela": 3309.88,
+      "estado": {
+       "cod": "PRAZO_HOJE",
+       "nivel": 4,
+       "cor": "orange",
+       "rotulo": "Prazo hoje: recolher",
+       "valor": 3309.88,
+       "material": false,
+       "faixa": [
+        3309.88,
+        3309.88
+       ]
+      }
      }
     },
     "provisao": 5297948.89,
@@ -2117,7 +2213,17 @@
     "vencido_teto": 3309.88,
     "pct_empenhado": 99.92,
     "pct_liquidado": 65.34,
-    "semaforo": "VERDE"
+    "semaforo": "AMARELO",
+    "estado": {
+     "cod": "PRAZO_HOJE",
+     "nivel": 4,
+     "cor": "orange",
+     "rotulo": "Prazo hoje: recolher",
+     "valor": 4087.67,
+     "material": false,
+     "n_ug": 2,
+     "de_ug": 2
+    }
    },
    "ECT": {
     "por_ug": {
@@ -2133,7 +2239,19 @@
       "rpnp_bloqueado": 0.0,
       "vencido_piso": 187133.58,
       "vencido_teto": 187133.58,
-      "celulas_em_tela": 187833.69
+      "celulas_em_tela": 187833.69,
+      "estado": {
+       "cod": "PRAZO_HOJE",
+       "nivel": 4,
+       "cor": "orange",
+       "rotulo": "Prazo hoje: recolher",
+       "valor": 187833.69,
+       "material": true,
+       "faixa": [
+        187133.58,
+        187133.58
+       ]
+      }
      },
      "167321": {
       "provisao": 46089.24,
@@ -2147,7 +2265,15 @@
       "rpnp_bloqueado": 0.0,
       "vencido_piso": 7.29,
       "vencido_teto": 7.29,
-      "celulas_em_tela": 7.29
+      "celulas_em_tela": 7.29,
+      "estado": {
+       "cod": "RESIDUO",
+       "nivel": 1,
+       "cor": "gray",
+       "rotulo": "Resíduo a recolher",
+       "valor": 7.29,
+       "material": false
+      }
      }
     },
     "provisao": 6622371.76,
@@ -2161,7 +2287,21 @@
     "vencido_teto": 187140.87,
     "pct_empenhado": 97.16,
     "pct_liquidado": 74.19,
-    "semaforo": "VERMELHO"
+    "semaforo": "AMARELO",
+    "estado": {
+     "cod": "PRAZO_HOJE",
+     "nivel": 4,
+     "cor": "orange",
+     "rotulo": "Prazo hoje: recolher",
+     "valor": 187833.69,
+     "material": true,
+     "faixa": [
+      187133.58,
+      187133.58
+     ],
+     "n_ug": 1,
+     "de_ug": 2
+    }
    },
    "DC Mun": {
     "por_ug": {
@@ -2177,7 +2317,19 @@
       "rpnp_bloqueado": 16500.0,
       "vencido_piso": 0.01,
       "vencido_teto": 0.01,
-      "celulas_em_tela": 9575.32
+      "celulas_em_tela": 9575.32,
+      "estado": {
+       "cod": "PRAZO_HOJE",
+       "nivel": 4,
+       "cor": "orange",
+       "rotulo": "Prazo hoje: recolher",
+       "valor": 9575.32,
+       "material": false,
+       "faixa": [
+        0.01,
+        0.01
+       ]
+      }
      },
      "167246": {
       "provisao": 271867.72,
@@ -2191,7 +2343,19 @@
       "rpnp_bloqueado": 0.0,
       "vencido_piso": 234.85,
       "vencido_teto": 234.85,
-      "celulas_em_tela": 235.33
+      "celulas_em_tela": 235.33,
+      "estado": {
+       "cod": "PRAZO_HOJE",
+       "nivel": 4,
+       "cor": "orange",
+       "rotulo": "Prazo hoje: recolher",
+       "valor": 235.33,
+       "material": false,
+       "faixa": [
+        234.85,
+        234.85
+       ]
+      }
      }
     },
     "provisao": 3894314.75,
@@ -2205,7 +2369,21 @@
     "vencido_teto": 234.86,
     "pct_empenhado": 99.75,
     "pct_liquidado": 69.22,
-    "semaforo": "VERDE"
+    "semaforo": "AMARELO",
+    "estado": {
+     "cod": "PRAZO_HOJE",
+     "nivel": 4,
+     "cor": "orange",
+     "rotulo": "Prazo hoje: recolher",
+     "valor": 9810.65,
+     "material": false,
+     "faixa": [
+      0.01,
+      0.01
+     ],
+     "n_ug": 2,
+     "de_ug": 2
+    }
    },
    "1º D Sup": {
     "por_ug": {
@@ -2221,7 +2399,19 @@
       "rpnp_bloqueado": 0.0,
       "vencido_piso": 54304.76,
       "vencido_teto": 54325.3,
-      "celulas_em_tela": 54327.91
+      "celulas_em_tela": 54327.91,
+      "estado": {
+       "cod": "PRAZO_HOJE",
+       "nivel": 4,
+       "cor": "orange",
+       "rotulo": "Prazo hoje: recolher",
+       "valor": 54327.91,
+       "material": false,
+       "faixa": [
+        54304.76,
+        54325.3
+       ]
+      }
      },
      "167307": {
       "provisao": 1977341.53,
@@ -2235,7 +2425,19 @@
       "rpnp_bloqueado": 0.0,
       "vencido_piso": 71.96,
       "vencido_teto": 71.96,
-      "celulas_em_tela": 71.96
+      "celulas_em_tela": 71.96,
+      "estado": {
+       "cod": "PRAZO_HOJE",
+       "nivel": 4,
+       "cor": "orange",
+       "rotulo": "Prazo hoje: recolher",
+       "valor": 71.96,
+       "material": false,
+       "faixa": [
+        71.96,
+        71.96
+       ]
+      }
      }
     },
     "provisao": 21221869.52,
@@ -2249,7 +2451,21 @@
     "vencido_teto": 54397.26,
     "pct_empenhado": 99.74,
     "pct_liquidado": 55.88,
-    "semaforo": "AMARELO"
+    "semaforo": "AMARELO",
+    "estado": {
+     "cod": "PRAZO_HOJE",
+     "nivel": 4,
+     "cor": "orange",
+     "rotulo": "Prazo hoje: recolher",
+     "valor": 54399.87,
+     "material": false,
+     "faixa": [
+      54304.76,
+      54325.3
+     ],
+     "n_ug": 2,
+     "de_ug": 2
+    }
    }
   },
   "total": {
@@ -2263,7 +2479,8 @@
    "vencido_piso": 318700.58,
    "vencido_teto": 434735.8,
    "pct_empenhado": 99.17,
-   "pct_liquidado": 58.57
+   "pct_liquidado": 58.57,
+   "fora_portaria": 0.0
   },
   "recolhido_no_ano": {
    "ncs": 418,
@@ -2291,6 +2508,7 @@
     }
    ],
    "nota": "Índice = (liquidado + cancelado) / inscrito, critério do 1º CGCFEx. Planilha «RPNP por Região Militar» recebida do Cmt em 12/11: movimento até 09/11, só a ação 212B e com filtro de PI (subsistência à vista; água, esgoto e energia ocultos). As 51 linhas das 6 OMDS conferem ao centavo com o TG. Pendências do recorte: DC Mun (PASA, R$ 99.944,50) e 1º D Sup."
-  }
+  },
+  "regra_estado": "etiqueta pela Portaria: a UGR recolhe todo o crédito em tela em 26/11; depois disso, saldo sem prazo escrito futuro (ou prorrogação registrada) fica «fora da Portaria»; menos de R$ 10 é resíduo"
  }
 }
