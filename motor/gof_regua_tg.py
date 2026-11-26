@@ -11,6 +11,12 @@ Entradas (assinaturas do TG copiadas pelo Apps Script `v2PonteTG` para a pasta p
 Os CSV ficam só no Drive privado; a saída é SEM texto de NC e sem pessoa (totais por UG/OMDS).
 Leitor tolerante: UTF-16 (assinatura) ou cp1252 (exportação manual); tabulação ou vírgula; itens nas linhas ou colunas.
 
+Formato documento (P-016 do PAINEL GOF DF, 25nov2026): onde o «Crédito por NC» não alcança a provisão (NC = -9), o
+trio vem como régua + crédito por célula (item 19 por UG, PI, ND e UGR, SEM NC) + «NC recebidas documento» (uma linha
+por célula de NC, valor sempre positivo, anulação pela operação). O documento é reconhecido pelo cabeçalho
+«NC Célula - Valor»; as NC ligam-se às células pelo endereço (UG, PI, grupo da ND, UGR), pelo valor recebido. A faixa
+piso/teto fica mais larga que a do saldo por NC, mas o piso continua conservador. Sem esse cabeçalho, nada muda.
+
 Vencido = saldo da célula coberto por NC recebida de outra UG com prazo escrito anterior à data de referência
 (dia útil seguinte aos dados). Piso/teto porque o TG não dá saldo por NC. Ajuste de ND feito pela própria UG não é
 rastreado até a NC de origem (a auditoria do LOG-277 fez isso à mão): o piso automático é CONSERVADOR.
@@ -157,11 +163,51 @@ def prazo(textonc, rec):
 
 
 # ---------------------------------------------------------------- tabelas de NC (formato de linhas OU cruzado)
+DOC_VALOR = "NC Célula - Valor"
+
+
+def _eh_documento(L):
+    return any(DOC_VALOR in r for r in L[:30])
+
+
+def _tabela_nc_documento(L):
+    """«NC recebidas documento»: uma linha por célula de NC. -> dicts com os nomes que calcular() usa; a UG é o
+    favorecido da NC; o valor vem positivo e a anulação recebe sinal negativo (como no item 15)."""
+    h = next(i for i, r in enumerate(L) if DOC_VALOR in r)
+    idx = {}
+    for j, c in enumerate(L[h]):
+        if c and c not in idx:
+            idx[c] = j
+    mapa = {"NC": "NC", "NC - Dia Emissão": "NC - Dia Emissão", "NC - Descrição": "NC - Descrição",
+            "NC - Operação (Tipo)": "NC - Operação (Tipo)", "Emitente - UG": "Emitente - UG",
+            "PI": "NC Célula - Plano Interno", "Natureza Despesa": "NC Célula - Natureza Despesa",
+            "UG Responsável": "NC Célula - UG Responsável", "Fonte Recursos": "NC Célula - Fonte Recurso Detalhada"}
+    j_ug = idx.get("NC Item - Favorecido")
+    if j_ug is None:
+        raise ValueError("documento de NC sem «NC Item - Favorecido»")
+    out = []
+    for r in L[h + 1:]:
+        ug = _ug(r[j_ug]) if j_ug < len(r) else None
+        if not ug or idx[DOC_VALOR] >= len(r):
+            continue
+        g = {k: (r[idx[c]] if c in idx and idx[c] < len(r) else "") for k, c in mapa.items()}
+        if not g["Fonte Recursos"] and "NC Célula - Fonte Recurso De" in idx:  # rótulo cortado no CSV
+            j = idx["NC Célula - Fonte Recurso De"]
+            g["Fonte Recursos"] = r[j] if j < len(r) else ""
+        x = abs(v(r[idx[DOC_VALOR]]))
+        g["UG Executora"] = ug
+        g["valor"] = -x if "ANULACAO" in g["NC - Operação (Tipo)"].upper() else x
+        out.append(g)
+    return out
+
+
 def _tabela_nc(b, item):
     """-> lista de dicts com UG Executora, NC, Ação Governo, PI, Natureza Despesa, NC - Descrição, NC - Dia Emissão,
     NC - Operação (Tipo), [UG Responsável, PTRES, Fonte Recursos] e 'valor' do item pedido ('19' ou '15').
     Aceita o item como coluna própria ('19') ou o layout com 'Item Informação' nas linhas."""
     L = linhas(b)
+    if _eh_documento(L):
+        return _tabela_nc_documento(L)
     h = next(i for i, r in enumerate(L) if "UG Executora" in r or "Emitente - UG" in r)
     cab = L[h]
     idx = {}
@@ -198,6 +244,11 @@ def _tabela_nc(b, item):
                 break
     if col_item is None:
         raise ValueError("coluna do item %s não encontrada" % item)
+    if "Item Informação" in idx:  # crédito por célula da DF: a «UG Responsável» vem numa linha de cabeçalho abaixo
+        for k in range(1, 4):
+            for j, c in enumerate(L[h + k] if h + k < len(L) else []):
+                if c == "UG Responsável" and c not in idx and j < col_item:
+                    idx[c] = j
     out = []
     for r in L[h + 1:]:
         ug = _ug(r[idx["UG Executora"]]) if "UG Executora" in idx and idx["UG Executora"] < len(r) else None
@@ -236,6 +287,26 @@ def calcular(b_regua, b_credito, b_mov, ref):
             except ValueError:
                 d = None
             cel[k]["meta"][nc] = (d, prazo(g.get("NC - Descrição", ""), d) if d else None)
+    # formato documento: o crédito por célula não traz NC; ligar as NC recebidas às células pelo endereço
+    doc = _eh_documento(linhas(b_mov))
+    if doc and not any(cc["nc"] for cc in cel.values()):
+        ender = collections.defaultdict(lambda: collections.defaultdict(float))
+        meta = {}
+        for g in _tabela_nc(b_mov, "15"):
+            if g["valor"] <= 0.004 or g.get("Emitente - UG", "")[:6] == g["UG Executora"]:
+                continue  # anulação entra pelo «rec» (NC citada na descrição); NC da própria UG não conta
+            e = (g["UG Executora"], g.get("PI", ""), g.get("Natureza Despesa", "")[:4], g.get("UG Responsável", ""))
+            nc = g.get("NC", "").strip()
+            ender[e][nc] += g["valor"]
+            try:
+                d = dt.datetime.strptime(g.get("NC - Dia Emissão", ""), "%d/%m/%Y").date()
+            except ValueError:
+                d = None
+            meta[nc] = (d, prazo(g.get("NC - Descrição", ""), d) if d else None)
+        for k, cc in cel.items():
+            for nc, a in ender.get((k[0], k[2], k[3][:4], k[6]), {}).items():
+                cc["nc"][nc] += a
+                cc["meta"][nc] = meta[nc]
     por_ug = collections.defaultdict(lambda: [0.0, 0.0, 0.0])  # tela, piso, teto
     for k, cc in cel.items():
         S = round(cc["S"], 2)
@@ -277,8 +348,11 @@ def calcular(b_regua, b_credito, b_mov, ref):
     total = {k: round(val, 2) for k, val in tot.items()}
     total["pct_empenhado"] = round(100 * total["empenhado"] / total["provisao"], 2) if total.get("provisao") else 0.0
     total["pct_liquidado"] = round(100 * total["liquidado"] / total["provisao"], 2) if total.get("provisao") else 0.0
-    return {"por_omds": {o: out[o] for o in ORDEM if o in out}, "total": total,
-            "recolhido_no_ano": {"ncs": len(ncs_rec), "valor": round(v_rec, 2)}}
+    r = {"por_omds": {o: out[o] for o in ORDEM if o in out}, "total": total,
+         "recolhido_no_ano": {"ncs": len(ncs_rec), "valor": round(v_rec, 2)}}
+    if doc:
+        r["_formato"] = "documento"  # só em memória: main() troca o texto da fonte e retira a marca
+    return r
 
 
 # ---------------------------------------------------------------- passo da montagem (nuvem)
@@ -337,9 +411,12 @@ def main(argv=None):
         print("REGUA: falhou (%s: %s); régua vigente (%s) mantida" % (type(e).__name__, e, ant.get("data_dado")))
         return 2
     d = dt.date.fromisoformat(data_dado)
+    documento = r.pop("_formato", None) == "documento"
     r.update({"data_dado": data_dado,
               "posicao_siafi": "TG, assinaturas entregues em %s (dados até %s)" % (entrega[8:] + "/" + entrega[5:7], d.strftime("%d/%m")),
-              "fonte": "TG, assinaturas «Execução Crédito e RPNP por UG», «Crédito por NC» e «Crédito por NC movimento 2026», pela ponte P-041",
+              "fonte": ("TG, assinaturas «Execução Crédito e RPNP por UG», «Crédito e empenho por UG, PI, ND e UGR» e «NC recebidas "
+                        "documento», pela ponte; NC ligadas às células pelo endereço (UG, PI, grupo da ND, UGR)" if documento else
+                        "TG, assinaturas «Execução Crédito e RPNP por UG», «Crédito por NC» e «Crédito por NC movimento 2026», pela ponte P-041"),
               "regra_vencido": "vencido = saldo da célula coberto por NC de outra UG com prazo escrito anterior a %s; NC de «empenho imediato» "
                                "conta como vencida; piso e teto porque o TG não dá saldo por NC; ajuste de ND da própria UG não é rastreado "
                                "à NC de origem (piso conservador)" % (entrega[8:] + "/" + entrega[5:7]),
