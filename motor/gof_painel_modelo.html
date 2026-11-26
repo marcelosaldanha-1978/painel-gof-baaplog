@@ -11,12 +11,12 @@
    prazos (Calendário) -> crédito em tela (6.a) -> liquidação (6.d) -> restos a pagar (6.b). Cada OMDS uma a uma, UG 160 e 167.
    Padrão visual: tipografia do sistema, hierarquia por tamanho e peso, espaço, cor só para estado e sempre com texto. */
 :root{--bg:#f5f5f7;--card:#fff;--grp:#f5f5f7;--ink:#1d1d1f;--sec:#6e6e73;--ter:#6e6e73;--sep:#e5e5ea;--fill:#e8e8ed;
---red:#d70015;--orange:#b25000;--green:#248a3d;--blue:#0071e3;--redbg:#fff1f0;--orangebg:#fff4e5;--greenbg:#ecf9ef;
+--red:#d70015;--orange:#b25000;--green:#248a3d;--blue:#0071e3;--redbg:#fff1f0;--orangebg:#fff4e5;--greenbg:#ecf9ef;--amber:#8a6100;--amberbg:#fff8d6;--bluebg:#e8f1fd;
 --bar:#0071e3;--bar2:#c7c7cc;--r:22px;--nav:rgba(245,245,247,.8);
 --f:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif}
 @media (prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--grp:#2c2c2e;--ink:#f5f5f7;--sec:#a1a1a6;--ter:#98989d;--sep:#3a3a3c;
 --fill:#3a3a3c;--red:#ff453a;--orange:#ff9f0a;--green:#30d158;--blue:#0a84ff;--redbg:rgba(255,69,58,.16);--orangebg:rgba(255,159,10,.16);
---greenbg:rgba(48,209,88,.16);--bar:#0a84ff;--bar2:#48484a;--nav:rgba(0,0,0,.72)}}
+--greenbg:rgba(48,209,88,.16);--amber:#ffd60a;--amberbg:rgba(255,214,10,.16);--bluebg:rgba(10,132,255,.16);--bar:#0a84ff;--bar2:#48484a;--nav:rgba(0,0,0,.72)}}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.47 var(--f);-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
@@ -39,7 +39,7 @@ h2{font-size:34px;line-height:1.1;font-weight:700;letter-spacing:-.03em;margin:0
 .big{font-size:56px;line-height:1;font-weight:700;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
 .mid{font-size:30px;line-height:1.05;font-weight:650;letter-spacing:-.025em;font-variant-numeric:tabular-nums}
 .note{font-size:13px;color:var(--ter);margin:16px 0 0}
-.red{color:var(--red)}.orange{color:var(--orange)}.green{color:var(--green)}
+.red{color:var(--red)}.orange{color:var(--orange)}.green{color:var(--green)}.amber{color:var(--amber)}.blue{color:var(--blue)}.gray{color:var(--sec)}
 /* prazos */
 .next{display:flex;flex-wrap:wrap;gap:6px 30px;align-items:flex-end}
 .tl{display:grid;grid-template-columns:72px 1fr 120px;gap:14px;padding:13px 0;border-top:1px solid var(--sep);align-items:baseline}
@@ -63,7 +63,10 @@ img.br{width:auto;height:56px;flex:none}
 .mini-br{display:inline-flex;gap:4px;vertical-align:middle;margin-left:6px}
 img.brs{width:auto;height:20px}
 .tag{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;white-space:nowrap;padding:5px 12px;border-radius:999px}
-.tag.red{background:var(--redbg)}.tag.orange{background:var(--orangebg)}.tag.green{background:var(--greenbg)}
+.tag.red{background:var(--redbg)}.tag.orange{background:var(--orangebg)}.tag.green{background:var(--greenbg)}.tag.amber{background:var(--amberbg);box-shadow:inset 0 0 0 1px currentColor}.tag.blue{background:var(--bluebg)}.tag.gray{background:var(--fill)}
+.leg{margin:0 0 20px}.leg summary{cursor:pointer;color:var(--blue);font-size:15px;list-style:none}.leg summary::-webkit-details-marker{display:none}.leg ul{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:10px}.leg li{display:flex;gap:12px;align-items:baseline;font-size:15px;color:var(--sec)}.leg .tag{flex:none;min-width:210px;justify-content:flex-start}
+@media (max-width:600px){.leg li{flex-direction:column;gap:6px}.leg .tag{min-width:0}}
+.cap b{white-space:nowrap}
 .ugs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .ug{background:var(--grp);border-radius:16px;padding:18px 20px}
 .ug h4{font-size:13px;font-weight:600;margin:0 0 6px;color:var(--sec);text-transform:uppercase;letter-spacing:.04em}
@@ -141,6 +144,8 @@ var hoje=new Date();hoje.setHours(0,0,0,0);
 function uteis(iso){if(!iso)return null;var d=new Date(String(iso).slice(0,10)+"T00:00:00"),k=0;while(d<hoje){d.setDate(d.getDate()+1);if(d.getDay()>0&&d.getDay()<6)k++;}return k;}
 function idadePill(rot,iso,manual){var a=uteis(iso),c=a===null?"orange":(a<=2?"green":(a<=5?"orange":"red"));
  return '<span class="pill '+c+'"><span class="dot"></span>'+esc(rot)+': dados até '+dbr(iso)+(manual?" · atualização manual":" · diário")+'</span>';}
+function semE(s){if(!s||typeof s!=="object")return sem(s);var v=s.nivel>0?' · '+mi(s.valor):"";
+ return '<span class="tag '+esc(s.cor)+'" title="'+(s.de_ug?s.n_ug+" de "+s.de_ug+" UG nesta situação":"")+'"><span class="dot"></span>'+esc(s.rotulo)+v+'</span>';}
 function sem(s){var m={VERMELHO:["red","Tela vencida"],AMARELO:["orange","Atenção"],VERDE:["green","Em dia"]}[s]||["","—"];
  return '<span class="tag '+m[0]+'"><span class="dot"></span>'+m[1]+'</span>';}
 var E=D.encerramento||{},G=D.regua,L=D.liquidacao,B=D.b1;
@@ -175,7 +180,7 @@ el.innerHTML=h+'</div>';})();
 
 // ---------- 2. AS 6 OMDS JUNTAS (resumo de 4 números)
 (function(){var el=document.getElementById("resumo"),h='<p class="kicker">Itens 6.a, 6.d e 6.b</p><h2 id="tresumo">As seis OMDS juntas</h2><p class="sub">Quatro números para a decisão. O detalhe de cada OMDS, UG a UG, vem logo abaixo.</p><div class="tiles">';
-if(G)h+='<div class="tile"><p class="lbl">Crédito em tela</p><div class="mid">'+mi(G.total.em_tela)+'</div><p class="note"><span class="red">vencido: no mínimo '+mi(G.total.vencido_piso)+'</span><br>tirar da tela; o que sobrar a UGR recolhe (6.a.3)</p></div>';
+if(G)h+='<div class="tile"><p class="lbl">Crédito em tela</p><div class="mid">'+mi(G.total.em_tela)+'</div><p class="note">'+(function(){var fp=G.total.fora_portaria||0,ph=0;Object.keys(G.por_omds||{}).forEach(function(o){var s=G.por_omds[o].estado;if(s&&s.cod==="PRAZO_HOJE")ph+=s.valor;});return fp>0.005?'<span class="red">fora da Portaria: '+mi(fp)+'</span><br>saldo em tela depois do prazo de recolhimento (6.a.3)':(ph>0.005?'<span class="orange">recolher hoje: '+mi(ph)+'</span><br>a UGR recolhe todo o crédito que restar em tela (6.a.3)':'<span class="red">vencido: no mínimo '+mi(G.total.vencido_piso)+'</span><br>tirar da tela; o que sobrar a UGR recolhe (6.a.3)');})()+'</p></div>';
 if(L)h+='<div class="tile"><p class="lbl">Liquidado do empenhado</p><div class="mid">'+pc(L.total.pct_liquidado)+'</div><p class="note">a liquidar '+mi(L.total.a_liquidar)+'<br>liquidar até 29/12 (evento 27)</p></div>';
 if(L)h+='<div class="tile"><p class="lbl">A liquidar há mais de 60 dias</p><div class="mid orange">'+mi(L.total.mais60_valor)+'</div><p class="note">'+n(L.total.mais60_ne)+' NE · '+mi(L.total.mais60_sem_nenhuma_liq_valor)+' sem nenhuma liquidação</p></div>';
 if(G)h+='<div class="tile"><p class="lbl">Restos a pagar a liquidar</p><div class="mid">'+mi(G.total.rpnp_a_liquidar)+'</div><p class="note">'+(G.total.rpnp_bloqueado?'<span class="red">bloqueado '+rs(G.total.rpnp_bloqueado)+': cancela em 30/12</span>':'sem RPNP bloqueado')+'</p></div>';
@@ -190,13 +195,18 @@ var h='<p class="kicker">Uma a uma</p><h2 id="tomds">Cada OMDS, UG 160 e UG 167<
 ORDEM.forEach(function(o){var g=G&&G.por_omds[o],l=L&&L.por_omds[o],e=b1[o];if(!g&&!l&&!e)return;
  var ugs=[];[g&&g.por_ug,l&&l.por_ug].forEach(function(x){if(x)Object.keys(x).forEach(function(u){if(ugs.indexOf(u)<0)ugs.push(u);});});
  if(!ugs.length&&e)ugs=[e.ug160,e.ug167];ugs.sort();
- h+='<div class="card" id="'+slug(o)+'"><div class="oh"><div class="ot">'+brasao(o)+'<h3>'+esc(o)+'</h3></div>'+(g?sem(g.semaforo):'')+'</div><div class="ugs">';
+ h+='<div class="card" id="'+slug(o)+'"><div class="oh"><div class="ot">'+brasao(o)+'<h3>'+esc(o)+'</h3></div>'+(g?semE(g.estado||g.semaforo):'')+'</div><div class="ugs">';
  ugs.forEach(function(u){var gu=g&&g.por_ug&&g.por_ug[u],lu=l&&l.por_ug&&l.por_ug[u],is160=u.slice(0,3)==="160";
   var emp=lu?lu.empenhado:(e?(is160?e.valor160:e.valor167):0),nne=e?(is160?e.ne160:e.ne167):null;
   function val(v,cls){return Math.abs(v||0)<0.005?'<b class="zero">—</b>':'<b'+(cls?' class="'+cls+'"':'')+'>'+rs(v);}
   h+='<div class="ug"><h4>UG <b>'+esc(u)+'</b>'+(UGNOME[u]?' <span class="un">· '+esc(UGNOME[u])+'</span><span class="mini-br">'+brasao("Cia Cmdo","brs")+brasao("HCmp","brs")+'</span>':'')+'</h4>';
   // 1º o que a Portaria cobra agora (6.a): crédito em tela e o vencido
-  if(gu){var vc=gu.vencido_piso>0.005,cv=gu.vencido_piso>=1000?"red":(vc?"orange":(gu.em_tela>0.005?"":"green"));
+  if(gu&&gu.estado){var es=gu.estado,cv={red:"red",orange:"orange",amber:"amber",green:"green"}[es.cor]||"",vv=es.material?'<b>'+rs(es.valor)+'</b>':rs(es.valor),
+    fx=es.faixa?(Math.abs(es.faixa[0]-es.faixa[1])<0.01?rs(es.faixa[1]):rs(es.faixa[0])+' a '+rs(es.faixa[1])):'',
+    igual=Math.abs(es.valor-gu.em_tela)<0.01,cap={FORA:igual?'':vv+' sem prazo',PRAZO_HOJE:(igual?'':vv+' a recolher')+(fx?(igual?'':'<br>')+'vencido '+fx:''),RECOLHER_ATE:'vencido '+fx,VERIFICAR:'pode ter vencido até '+rs(es.faixa?es.faixa[1]:es.valor),
+     NO_PRAZO:es.motivo?esc(es.motivo):'',RESIDUO:rs(es.valor),TELA_ZERADA:''}[es.cod]||'';
+   h+='<div class="ugtop"><div><p class="lbl">Crédito em tela</p><div class="v '+cv+'">'+(gu.em_tela>0.005?rs(gu.em_tela):"R$\u00a00,00")+'</div></div><div class="cap"><span class="'+esc(es.cor)+'"><b>'+esc(es.rotulo)+'</b>'+(cap?'<br>'+cap:'')+'</span></div></div>';}
+  else if(gu){var vc=gu.vencido_piso>0.005,cv=gu.vencido_piso>=1000?"red":(vc?"orange":(gu.em_tela>0.005?"":"green"));
    h+='<div class="ugtop"><div><p class="lbl">Crédito em tela</p><div class="v '+cv+'">'+(gu.em_tela>0.005?rs(gu.em_tela):"R$ 0,00")+'</div></div><div class="cap">'+
     (vc?'<span class="'+cv+'">vencido '+(Math.abs(gu.vencido_piso-gu.vencido_teto)<0.01?rs(gu.vencido_piso):rs(gu.vencido_piso)+'<br>a '+rs(gu.vencido_teto))+'</span>':(gu.em_tela>0.005?'nada vencido':'tela zerada'))+'</div></div>';}
   h+='<div class="kv"><span>Empenhado</span><b>'+rs(emp)+'<small>'+(nne!=null?n(nne)+' NE':'')+(gu?(nne!=null?' · ':'')+pc(gu.pct_empenhado)+' do recebido':'')+'</small></b></div>';
@@ -211,11 +221,20 @@ el.innerHTML=h;})();
 // ---------- rodapé
 var f='<p>Norma balizadora: __NORMA_RODAPE__. Sem dado pessoal por construção. Gerado em '+dbr(D.meta.hoje)+'.</p><details><summary>Fontes e método</summary><p>';
 (D.meta.fontes||[]).forEach(function(x,i){f+=(i?"; ":"")+esc(x.arquivo)+" ("+dbr(x.data_dado)+", sha256 <code>"+esc(String(x.sha256).slice(0,12))+"</code>)";});
-f+='.</p>'+(G?'<p>Crédito em tela e RPNP: '+esc(G.posicao_siafi)+'. '+esc(G.regra_vencido)+'.</p>':'')+(L?'<p>Empenho e liquidação: '+esc(L.fonte)+'; '+esc(L.regra)+'.</p>':'')+'<p>Motor v'+esc(D.meta.versao_motor)+' · hash dos dados <code>__HASH__</code>.</p></details>';
+f+='.</p>'+(G?'<p>Crédito em tela e RPNP: '+esc(G.posicao_siafi)+'. '+esc(G.regra_vencido)+'.'+(G.regra_estado?' Etiqueta: '+esc(G.regra_estado)+'.':'')+'</p>':'')+(L?'<p>Empenho e liquidação: '+esc(L.fonte)+'; '+esc(L.regra)+'.</p>':'')+'<p>Motor v'+esc(D.meta.versao_motor)+' · hash dos dados <code>__HASH__</code>.</p></details>';
 document.getElementById("rodape").innerHTML=f;
+(function(){var s=document.getElementById("omds"),sub=s&&s.querySelector(".sub");if(!sub||!G||!G.regra_estado)return;
+ var L=[["red","Fora da Portaria há N dias","saldo em tela depois da data de recolhimento, sem prazo escrito futuro. Descumprimento: regularizar já."],
+  ["orange","Prazo hoje: recolher","hoje é a data em que a UGR recolhe todo o crédito em tela. Último dia."],
+  ["orange","Recolher até dd/mm","há crédito com prazo da NC vencido; recolher até a data da Portaria."],
+  ["amber","Verificar","pode haver crédito vencido: o TG não dá saldo por NC, só a faixa."],
+  ["blue","No prazo até dd/mm","saldo dentro do prazo: remanejado até 03/12, NC com prazo futuro ou prorrogação da UGR."],
+  ["gray","Resíduo a recolher","menos de R$ 10 em tela."],["green","Tela zerada","cumpre a Portaria."]];
+ var d=document.createElement("details");d.className="leg";d.innerHTML='<summary>Como ler as etiquetas</summary><ul>'+L.map(function(x){return '<li><span class="tag '+x[0]+'"><span class="dot"></span>'+x[1]+'</span><span>'+x[2]+'</span></li>';}).join("")+'</ul>';
+ sub.parentNode.insertBefore(d,sub.nextSibling);})();
 // navegação fixa: prazos, resumo e as 6 OMDS
 (function(){var nv='<a href="#prazos">Prazos</a><a href="#resumo">As seis juntas</a>';
-ORDEM.forEach(function(o){var g=G&&G.por_omds[o];var c=g?({VERMELHO:"red",AMARELO:"orange",VERDE:"green"}[g.semaforo]||""):"";
+ORDEM.forEach(function(o){var g=G&&G.por_omds[o];var c=g?(g.estado?g.estado.cor:({VERMELHO:"red",AMARELO:"orange",VERDE:"green"}[g.semaforo]||"")):"";
  nv+='<a href="#'+slug(o)+'">'+(c?'<span class="dot '+c+'" style="background:currentColor"></span>':'')+esc(o)+'</a>';});
 document.getElementById("nav").innerHTML=nv;})();
 })();
