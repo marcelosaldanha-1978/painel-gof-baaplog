@@ -49,6 +49,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import gcalc_transparencia as tr  # noqa: E402
 import gof_config as cfg  # noqa: E402
+import gof_estado_tela  # noqa: E402
 from vinculo_siasg import VERSAO_REGRA as VERSAO_VINCULO_SIASG  # noqa: E402
 
 VERSAO_MOTOR = "0.4"
@@ -578,6 +579,9 @@ def main(argv=None):
     # Encerramento do exercício (Portaria 399-SEF): liquidação diária (ponte) e crédito em tela/régua (leitura datada)
     for chave, caminho in (("liquidacao", o.liquidacao), ("regua", o.regua)):
         dados[chave] = json.load(open(caminho, encoding="utf-8")) if caminho and Path(caminho).exists() else None
+        if chave == "regua" and dados[chave]:  # etiqueta de cada UG/OMDS pela data da Portaria (decisão de 26/11/2026)
+            gof_estado_tela.aplicar(dados[chave], hoje, MARCOS_ENCERRAMENTO,
+                                    cfg.carregar().get("prorrogacoes_tela") or [])
         if dados[chave]:
             dados["meta"]["fontes"].append({"nome": chave, "arquivo": Path(caminho).name, "sha256": sha256(caminho),
                                             "data_dado": dados[chave].get("data_dado")})

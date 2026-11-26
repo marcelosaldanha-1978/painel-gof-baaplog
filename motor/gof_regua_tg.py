@@ -236,7 +236,7 @@ def calcular(b_regua, b_credito, b_mov, ref):
             except ValueError:
                 d = None
             cel[k]["meta"][nc] = (d, prazo(g.get("NC - Descrição", ""), d) if d else None)
-    por_ug = collections.defaultdict(lambda: [0.0, 0.0, 0.0])  # tela, piso, teto
+    por_ug = collections.defaultdict(lambda: [0.0, 0.0, 0.0, 0.0, None])  # tela, piso, teto, no prazo, 1º prazo futuro
     for k, cc in cel.items():
         S = round(cc["S"], 2)
         if S <= 0.004:
@@ -249,14 +249,20 @@ def calcular(b_regua, b_credito, b_mov, ref):
         u[0] += S
         u[1] += min(sv, max(0.0, S - snv))
         u[2] += min(S, sv)
+        # parte com prazo escrito ainda futuro (remanejado até 03/12, NC tardia): fica fora da etiqueta «fora da Portaria»
+        fut = [t for t in ncs if t[2] and t[2] >= ref]
+        u[3] += min(S, sum(t[0] for t in fut))
+        if fut:
+            u[4] = min([d for d in [u[4]] if d] + [t[2] for t in fut])
     out = {}
     tot = collections.Counter()
     for ug in sorted(reg):
         o = OM[ug[3:]]
         x = linha_regua(reg[ug])
-        p = por_ug.get(ug, [0.0, 0.0, 0.0])
+        p = por_ug.get(ug, [0.0, 0.0, 0.0, 0.0, None])
         x["vencido_piso"], x["vencido_teto"] = round(p[1], 2), round(p[2], 2)
         x["celulas_em_tela"] = round(p[0], 2)
+        x["tela_no_prazo"], x["prazo_ate"] = round(p[3], 2), (p[4].isoformat() if p[4] else None)
         # trava: a soma das células (crédito por NC) tem de fechar com o crédito disponível da régua, UG a UG
         if abs(x["celulas_em_tela"] - x["em_tela"]) > max(1.0, 0.001 * abs(x["em_tela"])):
             raise ValueError("UG %s: células (%.2f) não fecham com a régua (%.2f)" % (ug, x["celulas_em_tela"], x["em_tela"]))
