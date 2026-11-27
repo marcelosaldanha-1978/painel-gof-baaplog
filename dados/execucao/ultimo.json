@@ -1,19 +1,19 @@
 {
 "versao": 2,
-"data_execucao": "2026-11-25",
+"data_execucao": "2026-11-26",
 "origem": [
 {
-"arquivo": "2026-11-26_emissao_sem_pessoa.tsv (assinatura do TG via ponte)",
-"sha256": "f0d74248fe881e21d5ad5f6e6ac2e6819e0362308cab4273944f6eb40a6d557e"
+"arquivo": "2026-11-27_emissao_sem_pessoa.tsv (assinatura do TG via ponte)",
+"sha256": "257a064731ec7d3aee4b4879f1d1f066673407bf707d0930faf35a0272284ff5"
 },
 {
-"arquivo": "2026-11-26_info_complementar.tsv (assinatura do TG via ponte)",
-"sha256": "16e770335de13bfd109b882e76a1bbebb6e2bce591be80f2032d35c9c5c4677c"
+"arquivo": "2026-11-27_info_complementar.tsv (assinatura do TG via ponte)",
+"sha256": "78c103acc610c4f5bcd24632d2d6ad89e948116d83cf7c89aeb37407c5845d76"
 }
 ],
 "regra_vinculo": "2.0",
 "base": "liquido_6229201",
-"total_item23": 53984669.47,
+"total_item23": 54043844.67,
 "campos": [
 "documento",
 "ug",
@@ -5958,6 +5958,108 @@
 "chave": "160307-05-90006/2025"
 },
 {
+"documento": "160238000012026NE000487",
+"ug": "160238",
+"data": "26/11/2026",
+"valor": 2640.0,
+"valor_emitido": 2640.0,
+"modalidade": "12",
+"nivel": null,
+"pregao": null,
+"candidatos": [],
+"chave": null
+},
+{
+"documento": "160238000012026NE000488",
+"ug": "160238",
+"data": "26/11/2026",
+"valor": 2118.0,
+"valor_emitido": 2118.0,
+"modalidade": "12",
+"nivel": "SEM_CHAVE_CITA",
+"pregao": null,
+"candidatos": [
+"PE 90008/2025"
+],
+"chave": null
+},
+{
+"documento": "160238000012026NE000489",
+"ug": "160238",
+"data": "26/11/2026",
+"valor": 2600.0,
+"valor_emitido": 2600.0,
+"modalidade": "12",
+"nivel": "SEM_CHAVE_CITA",
+"pregao": null,
+"candidatos": [
+"PE 90008/2025"
+],
+"chave": null
+},
+{
+"documento": "160238000012026NE000490",
+"ug": "160238",
+"data": "26/11/2026",
+"valor": 1940.0,
+"valor_emitido": 1940.0,
+"modalidade": "12",
+"nivel": null,
+"pregao": null,
+"candidatos": [],
+"chave": null
+},
+{
+"documento": "160238000012026NE000491",
+"ug": "160238",
+"data": "26/11/2026",
+"valor": 1517.0,
+"valor_emitido": 1517.0,
+"modalidade": "12",
+"nivel": null,
+"pregao": null,
+"candidatos": [],
+"chave": null
+},
+{
+"documento": "160238000012026NE000492",
+"ug": "160238",
+"data": "26/11/2026",
+"valor": 922.0,
+"valor_emitido": 922.0,
+"modalidade": "12",
+"nivel": null,
+"pregao": null,
+"candidatos": [],
+"chave": null
+},
+{
+"documento": "160238000012026NE000493",
+"ug": "160238",
+"data": "26/11/2026",
+"valor": 10191.81,
+"valor_emitido": 10191.81,
+"modalidade": "12",
+"nivel": "SEM_CHAVE_CITA",
+"pregao": null,
+"candidatos": [
+"PE 90008/2025"
+],
+"chave": null
+},
+{
+"documento": "160238000012026NE000494",
+"ug": "160238",
+"data": "26/11/2026",
+"valor": 42707.5,
+"valor_emitido": 42707.5,
+"modalidade": "12",
+"nivel": null,
+"pregao": null,
+"candidatos": [],
+"chave": null
+},
+{
 "documento": "160246000012026NE000001",
 "ug": "160246",
 "data": "30/01/2026",
@@ -10968,6 +11070,30 @@
 "PE 90012/2026"
 ],
 "chave": "160238-05-90012/2026"
+},
+{
+"documento": "160246000012026NE000408",
+"ug": "160246",
+"data": "26/11/2026",
+"valor": 6650.0,
+"valor_emitido": 6650.0,
+"modalidade": "08",
+"nivel": null,
+"pregao": null,
+"candidatos": [],
+"chave": null
+},
+{
+"documento": "160246000012026NE000409",
+"ug": "160246",
+"data": "26/11/2026",
+"valor": 2830.31,
+"valor_emitido": 2830.31,
+"modalidade": "08",
+"nivel": null,
+"pregao": null,
+"candidatos": [],
+"chave": null
 },
 {
 "documento": "160304000012026NE000001",
@@ -23539,7 +23665,7 @@
 "documento": "160307000012026NE000532",
 "ug": "160307",
 "data": "25/11/2026",
-"valor": 14000.0,
+"valor": 0.0,
 "valor_emitido": 14000.0,
 "modalidade": "12",
 "nivel": null,
@@ -25411,7 +25537,7 @@
 "documento": "160321000012026NE000153",
 "ug": "160321",
 "data": "09/07/2026",
-"valor": 134224.32,
+"valor": 133697.5,
 "valor_emitido": 134224.32,
 "modalidade": "08",
 "nivel": null,
@@ -26071,7 +26197,7 @@
 "documento": "160321000012026NE000208",
 "ug": "160321",
 "data": "08/09/2026",
-"valor": 3195.0,
+"valor": 2007.5,
 "valor_emitido": 3195.0,
 "modalidade": "08",
 "nivel": null,
@@ -26289,7 +26415,7 @@
 "documento": "160321000012026NE000226",
 "ug": "160321",
 "data": "29/09/2026",
-"valor": 86214.0,
+"valor": 86040.0,
 "valor_emitido": 86214.0,
 "modalidade": "08",
 "nivel": null,
@@ -38994,6 +39120,18 @@
 "PE 90012/2026"
 ],
 "chave": "160238-05-90012/2026"
+},
+{
+"documento": "167329000012026NE000121",
+"ug": "167329",
+"data": "26/11/2026",
+"valor": 946.9,
+"valor_emitido": 946.9,
+"modalidade": "08",
+"nivel": null,
+"pregao": null,
+"candidatos": [],
+"chave": null
 }
 ]
 }
