@@ -43,3 +43,6 @@ if(CT!==undefined){var ec=sec("contratos","tcontratos");
    c+='</div>';});}
  ec.innerHTML=c;if(nv)nv.innerHTML+='<a href="#contratos">Contratos</a>';}
 })();
+
+// celular: tabela larga vira lista empilhada (padrão Apple), rótulos do cabeçalho
+(function(){if(window.innerWidth>700)return;document.querySelectorAll('main table').forEach(function(t){var w=t.parentElement;if(t.scrollWidth<=w.clientWidth+2)return;var H=[].map.call(t.querySelectorAll('thead th'),function(x){return x.textContent;});t.classList.add('pilha');t.querySelectorAll('tbody tr').forEach(function(r){[].forEach.call(r.children,function(c,i){if(i>0)c.setAttribute('data-l',H[i]||'');});});});})();

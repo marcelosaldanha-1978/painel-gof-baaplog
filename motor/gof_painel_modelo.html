@@ -66,6 +66,7 @@ img.brs{width:auto;height:20px}
 .tag.red{background:var(--redbg)}.tag.orange{background:var(--orangebg)}.tag.green{background:var(--greenbg)}.tag.amber{background:var(--amberbg);box-shadow:inset 0 0 0 1px currentColor}.tag.blue{background:var(--bluebg)}.tag.gray{background:var(--fill)}
 .leg{margin:0 0 20px}.leg summary{cursor:pointer;color:var(--blue);font-size:15px;list-style:none}.leg summary::-webkit-details-marker{display:none}.leg ul{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:10px}.leg li{display:flex;gap:12px;align-items:baseline;font-size:15px;color:var(--sec)}.leg .tag{flex:none;min-width:210px;justify-content:flex-start}
 @media (max-width:600px){.leg li{flex-direction:column;gap:6px}.leg .tag{min-width:0}}
+.ugs>*{min-width:0}
 .cap b{white-space:nowrap}
 .ugs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .ug{background:var(--grp);border-radius:16px;padding:18px 20px}
@@ -100,7 +101,7 @@ footer code{word-break:break-all}
 footer details summary{font-size:13px}
 .tile .mid,.big{white-space:nowrap}
 @media (max-width:860px){.tiles{grid-template-columns:1fr 1fr}}
-@media (max-width:700px){
+@media (max-width:700px){ table.pilha thead{display:none}table.pilha,table.pilha tbody{display:block;width:100%!important;min-width:0!important}table.pilha tr{display:block;padding:10px 0;border-bottom:1px solid var(--sep)}table.pilha td{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:3px 0!important;text-align:right!important;border:0!important;position:static!important;background:none!important;white-space:normal!important}table.pilha td:first-child{font-weight:600;font-size:15px;padding:0 0 4px!important;text-align:left!important}table.pilha td[data-l]::before{content:attr(data-l);color:var(--sec);font-weight:400;text-align:left}table.pilha td:empty{display:none} .ugtop{flex-direction:column;align-items:flex-start;gap:6px}.ugtop .cap{text-align:left}.avh{flex-direction:column;gap:2px}.avh span{font-size:14px}
  header{padding-top:30px}h1{font-size:34px}.lead{font-size:17px}h2{font-size:27px}
  .big{font-size:40px}.mid{font-size:22px}.card{padding:22px 18px}.tile{padding:16px}
  .ugs{grid-template-columns:1fr}.tl{grid-template-columns:58px 1fr}.tl .q{grid-column:2;text-align:left}
@@ -136,7 +137,7 @@ try{D=JSON.parse(document.getElementById("dados").textContent);}catch(e){
  document.querySelector("main").innerHTML='<section><h2>Dados ilegíveis</h2><p class="sub">O bloco de dados embutido está corrompido. Use a última versão boa do painel.</p></section>';return;}
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
 function rs(v){return "R$ "+Number(v||0).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});}
-function mi(v){v=Number(v||0);return Math.abs(v)>=1e6?"R$ "+(v/1e6).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})+" mi":"R$ "+(v/1e3).toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})+" mil";}
+function mi(v){v=Number(v||0);return Math.abs(v)>=1e6?"R$ "+(v/1e6).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})+"\u00a0mi":"R$ "+(v/1e3).toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})+"\u00a0mil";}
 function pc(v){return Number(v||0).toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1})+"%";}
 function n(v){return Number(v||0).toLocaleString("pt-BR");}
 function dbr(iso){if(!iso)return "—";var p=String(iso).slice(0,10).split("-");return p.length===3?p[2]+"/"+p[1]:esc(iso);}
