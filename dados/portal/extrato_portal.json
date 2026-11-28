@@ -1,7 +1,7 @@
 {
 "versao": 1,
 "data_execucao": "2026-11-25",
-"origem": "Portal da Transparência, API despesas/documentos fase 1, coleta de 2026-11-13 a 2026-11-27 em 2026-11-27",
+"origem": "Portal da Transparência, API despesas/documentos fase 1, coleta de 2026-11-16 a 2026-11-28 em 2026-11-28",
 "regra_vinculo": "1.2",
 "campos": [
 "documento",
@@ -30870,13 +30870,13 @@
 ],
 "meta": {
 "janela": [
-"2026-11-13",
-"2026-11-27"
+"2026-11-16",
+"2026-11-28"
 ],
-"ne_na_janela": 115,
-"ne_zero_retiradas": 15,
-"ne_fora_da_janela_mantidas": 2888,
+"ne_na_janela": 95,
+"ne_zero_retiradas": 12,
+"ne_fora_da_janela_mantidas": 2908,
 "pares_falhos": [],
-"coletado_em": "2026-11-27T23:43:15"
+"coletado_em": "2026-11-28T09:07:48"
 }
 }
